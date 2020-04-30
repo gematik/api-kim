@@ -1,0 +1,271 @@
+:toc: macro
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:images/gematik_logo.jpg[width=35%]
+
+toc::[]
+
+
+== Clientmodul
+
+Für KOM-LE 1.5 ist es notwenig das Clientmodul um folgendes anzupassen:
+
+* [*] Optional kann der Funktionsumfang des Clientmoduls in das PVS integriert werden.
+* [*] Das Clientmodul wird für den Umgang mit großen Anhängen erweitert.
+* [*] Das Clientmodul wird für die Unterstützung von Mail-Kategorien erweitert.
+* [*] Das Clientmodul wird um das Administrationsmodul erweitert. 
+
+
+=== Optionale Integration in das Clientsystem
+
+Ab KOM-LE 1.5 kann der Funktionsumfang des Clientmodules in das PVS optional integriert werden. Somit ist kein seperates Clientmodul mehr notwendig.
+Die folgende Abbildung verdeutlicht die optionale Intergration in das PVS:
+
+image:images/CM_Integration.png[width=60%]
+
+
+=== Umgang mit großen Anhängen
+
+Für die Aufhebung der Größenbeschränkungen von Nachrichten ist eine Erweiterung am Clientmodul notwendig. Wie das Clientmodul mit größeren Anhängen umgeht, ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert.
+
+
+=== Umgang mit E-Mail-Kategorien
+
+Das Clientmodul ermöglicht die Kategorisierung von zu versendenden E-Mails. Die Header-Felder einer gültigen E-Mail werden um ein weiteres Attribut ergänzt. Die Befüllung dieses Attributes erfolgt durch Informationen, die der E-Mail-Client liefert. Das Header-Feld "X-KIM-Dienstkennung" wird im unverschlüsselten Header der E-Mail enthalten sein, um eine eventuelle Verarbeitung der E-Mail auf Seiten des Empfängers zu ermöglichen. Die Anpassungen sind in  *[gemSpec_CM_KOMLE#3.6]* spezifiziert.
+
+
+=== KIM-API vom KAS 
+
+Die Aufrufe der Operationen vom Clientmodul zu der REST-Schnittstelle des KAS des Fachdienstes wird im Folgenden beschrieben.
+
+==== add_Attachment() 
+Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
+
+Request-Header:
+[source]
+-----------------
+ Method: "POST",
+ "Request-URI": "https://to.be.defined/v1/",
+ "HTTP-Version": "HTTP/1.1"
+ "Content-Type": "multipart/from-data"
+-----------------
+
+Response-Header:
+[source]
+-----------------
+{
+  "Shared-Link": "string"
+}
+-----------------
+
+
+HTTP-Status Codes: + 
+201: Created - Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink hinzugefügt +
+405: Invalid Input +
+
+
+
+Beispiel:
+[source]
+-----------------
+curl -X POST "https://to.be.defined/v1/" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -F "File=string"
+-----------------
+
+
+==== read_Attachment() 
+gibt den unter einem Freigabelink verschlüsselten Anhang zurück
+
+Request-Header:
+[source]
+-----------------
+ Method: "GET",
+ "Request-URI": "/v1/Link",
+ "HTTP-Version": "HTTP/1.1"
+-----------------
+
+Response-Header:
+[source]
+-----------------
+{
+  "file": "string"
+}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Anhang wurde erfolgreich heruntergeladen +
+404: Ressource unter dem angegebenen Link nicht gefunden +
+
+Parameters: +
+
+* `Ressource` - Freigabelink unter dem der Anhang gespeichert wurde
+
+Beispiel:
+[source]
+-----------------
+curl -X GET "https://to.be.defined/v1/Link" -H  "accept: multipart/form-data"
+----------------- 
+
+==== read_MaxMailSize() 
+Gibt die maximale Größe einer gesamten KOM-LE Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
+Mit diesem Wert prüft der Client-Modul die Einhaltung der maximalen Mail Größe (die vom FD Anbieter definiert wird) für zu sendende Mails.
+Dieser Wert wird auf dem Fachdienst definiert, und bleibt über längere Zeit konstant.
+Eine Abfrage ist deshalb nicht für jede zu sendende Mail erforderlich (Empfohlen wird die tägliche Abfrage).
+
+Request-Header:
+[source]
+-----------------
+ Method: "GET",
+ "Request-URI": "/v1/MaxMailSize",
+ "HTTP-Version": "HTTP/1.1"
+-----------------
+
+Response-Header:
+[source]
+-----------------
+{
+  "integer"
+}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Maximale Mail Größe wird in Bytes zurückgegeen +
+
+Parameters: +
+
+* keine Request Parameter
+
+Beispiel:
+[source]
+-----------------
+curl -X GET "https://to.be.defined/v1/MaxMailSize" -H  "accept: application/json"
+----------------- 
+
+== Administrationsmodul
+
+=== KIM-API vom Account Manager
+
+Die Aufrufe der Operationen vom Administrationsmodul zu der REST-Schnittstelle des Account Managers des Fachdienstes wird im Folgenden beschrieben. 
+
+==== register() 
+Ausführung der Registrierung und Download der PKCS#12-Datei.
+
+Request-Header:
+[source]
+-----------------
+ Method: "POST",
+ "Request-URI": "https://to.be.defined/v1/accmgr/register/",
+ "HTTP-Version": "HTTP/1.1"
+-----------------
+
+Response-Content:
+[source]
+-----------------
+{
+  "file": "string"
+}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Die Anfrage wurde erfolgreich bearbeitet und Daten für den Download hinzugefügt +
+401: Unauthorized - Nutzername / Passwort +
+
+==== deregister()
+Anmeldung am Account Manager und Ausführung der Deregistrierung.
+
+Request-Header:
+[source]
+-----------------
+ Method: "POST",
+ "Request-URI": "https://to.be.defined/v1/accmgr/deregister/",
+ "HTTP-Version": "HTTP/1.1"
+-----------------
+
+Response-Content:
+[source]
+-----------------
+{}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Die Anfrage wurde erfolgreich +
+401: Unauthorized - Nutzername / Passwort +
+
+==== register_State()
+Anmeldung am Account Manager mit gleichzeitiger Abfrage des Registrierungsstatus
+
+Request-Header:
+[source]
+-----------------
+ Method: "GET",
+ "Request-URI": "https://to.be.defined/v1/accmgr/register-state/",
+ "HTTP-Version": "HTTP/1.1"
+ "Content-Type": "application/json"
+-----------------
+
+Response-Content:
+[source]
+-----------------
+{
+  [registered, deregistered, unknown]
+}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Die Anfrage wurde erfolgreich +
+401: Unauthorized - Nutzername / Passwort +
+
+==== cm_Version()
+Übermittlung der KIM Version.
+
+Request-Header:
+[source]
+-----------------
+ Method: "PUT",
+ "Request-URI": "https://to.be.defined/v1/accmgr/cm-version/",
+ "HTTP-Version": "HTTP/1.1"
+ "Content-Type": "application/json"
+-----------------
+
+Response-Content:
+[source]
+-----------------
+{}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Die Anfrage wurde erfolgreich +
+401: Unauthorized - Nutzername / Passwort +
+
+==== pw_Change()
+Die Kennwortänderung
+
+Request-Header:
+[source]
+-----------------
+ Method: "PUT",
+ "Request-URI": "https://to.be.defined/v1/accmgr/pw/",
+ "HTTP-Version": "HTTP/1.1"
+-----------------
+
+Response-Header:
+[source]
+-----------------
+{}
+-----------------
+
+
+HTTP-Status Codes: + 
+200: OK - Die Anfrage wurde erfolgreich +
+400: Bad Request - Das neue Passwot entspricht nicht den Regeln +
+401: Unauthorized - Nutzername / Passwort +
+
+
+

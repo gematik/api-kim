@@ -1,0 +1,212 @@
+openapi: 3.0.1
+info:
+  title: I_AccountManager_Service
+  description:  Über diese Schnittstelle wird der KIM Account verwaltet
+  version: 1.0.0
+externalDocs:
+  description: Gitlab
+  url: http://www.gematik.de
+servers:
+- url: https://to.be.defined/v1/
+tags:
+- name: AccountManager
+
+paths:
+  /accmgr/register/:
+    post:
+      tags:
+      - I_AccountManager_Service
+      summary: Einen Account registrieren
+      description: Der Account wird registriert und als Ergebnis das Zertifikat zurückgegeben
+      operationId: register
+      
+      parameters:
+      - in: header
+        name: username
+        description: Nutzername
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: password
+        description: Passwort
+        required: true
+        schema:
+          type: string
+      
+      responses:
+        200:
+          description: OK
+          # Zertifikat wird zurückgegeben 
+          content:
+           multipart/form-data:
+            schema:
+             properties:
+               file:
+                 type: array
+                 items:
+                    type: string
+                    format: binary
+        401:
+          description: Unauthorized
+          # Nutzername / Passwort Fehlerhaft
+          content: {}
+##--
+##------
+
+  /accmgr/deregister/:
+    post:
+      tags:
+      - I_AccountManager_Services
+      summary: Einen Account registrieren
+      description: Der Account wird deregistriert
+      operationId: deregister
+      
+      parameters:
+      - in: header
+        name: Username
+        description: Nutzername
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: Password
+        description: Passwort
+        required: true
+        schema:
+          type: string
+      
+      responses:
+        200:
+          description: OK
+          # Erfilgreich deregistriert 
+          content: {}
+        401:
+          description: Unauthorized
+          # Nutzername / Passwort Fehlerhaft
+          content: {}
+##--
+##------
+
+  /accmgr/register-state/:
+    get:
+      tags:
+      - I_AccountManager_Services
+      summary: Status vom Account ermitteln
+      description: Der Status vom Account wird zurückgegeben
+      operationId: register_State
+      
+      parameters:
+      - in: header
+        name: username
+        description: Nutzername
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: password
+        description: Passwort
+        required: true
+        schema:
+          type: string
+      
+      responses:
+        200:
+          description: OK
+          # Account Status wird zurückgegeben 
+          content:
+            application/json:
+             schema: 
+               type: string
+               enum: [registered, deregistered, unknown]
+               example: registered
+        401:
+          description: Unauthorized
+          # Nutzername / Passwort Fehlerhaft
+          content: {}
+##--
+##------
+
+  /accmgr/cm-version/:
+    get:
+      tags:
+      - I_AccountManager_Services
+      summary: Dem Account Manager vom Fachdienst wird die KIM Version vom Client-Modul übergeben
+      description: Die Version vom CM wird dem Account Manager (FD) übergeben
+      operationId: cm_Version
+      
+      parameters:
+      - in: header
+        name: username
+        description: Nutzername
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: password
+        description: Passwort
+        required: true
+        schema:
+          type: string
+
+      - in: header
+        name: KIM-Version
+        description: Die Version vom Clientmodul wird dem Fachdienst mitgeteilt.
+        #            (Der Fachdienst verwaltet die Versionsangeben im Verzeichnisdienst)
+        required: true
+        schema:
+          type: string
+
+      responses:
+        200:
+          description: OK
+          # Version erfolgreich übergeben 
+          content: {}
+        401:
+          description: Unauthorized
+          # Nutzername / Passwort Fehlerhaft
+          content: {}
+##--
+##------
+
+  /accmgr/pw/:
+    put:
+      tags:
+      - I_AccountManager_Services
+      summary: Passwort vom Account wechseln
+      description: Das Passwort wird aktualisiert
+      operationId: pw_Change
+      
+      parameters:
+      - in: header
+        name: username
+        description: Nutzername
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: password
+        description: Aktuelles Passwort
+        required: true
+        schema:
+          type: string
+
+      - in: header
+        name: newPassword
+        description: Neues Passwort
+        required: true
+        schema:
+          type: string
+
+      responses:
+        200:
+          description: OK
+          # Passwort wurde aktualisiert 
+          content: {}
+        400:
+          description: Bad Request
+          # Das neue Passwot entspricht nicht den Regeln
+        401:
+          description: Unauthorized
+          # Nutzername / Passwort Fehlerhaft
+          content: {}

@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: I_Attachment_Service
+  description:  Über diese Schnittstelle können verschlüsselte EMail-Anhänge <br>
+                hochgeladen und bereitgestellt werden. 
+  version: 0.0.1
+externalDocs:
+  description: Gitlab
+  url: http://www.gematik.de
+servers:
+- url: https://to.be.defined/v1/
+tags:
+- name: Attachments
+
+paths:
+  /:
+##--
+##------
+    get:
+      tags:
+      - Attachments
+      summary: Einen Anhang herunterladen
+      description: gibt den unter einem Freigabelink verschlüsselten Anhang zurück
+      operationId: read_Attachment
+      
+      parameters:
+      - name: Ressource
+        in: path
+        description: Link-Referenz auf den verschüsselten Anhang im Dienst
+        required: true
+        schema:
+          type: string
+      
+      responses:
+        200:
+          description: OK
+             # Anhang wurde erfolgreich heruntergeladen 
+          content:
+           multipart/form-data:
+            schema:
+             properties:
+               file:
+                 type: array
+                 items:
+                    type: string
+                    format: binary
+        404:
+          description: Ressource unter dem angegebenen Link nicht gefunden
+          content: {}
+##--
+##------
+    post:
+      tags:
+      - Attachments
+      summary: Einen Anhang hinzufügen
+      description: Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
+      operationId: add_Attachment
+      
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+             properties:
+               File:
+                 type: array
+                 items:
+                    type: string
+                    format: binary
+        required: true
+      
+      responses:
+          201:
+            description: Created
+                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink hinzugefügt. 
+            content:
+             application/json:
+              schema:
+               properties:
+                 Shared-Link:
+                   type: string
+
+          405:
+            description: Invalid input
+            content: {}
+ 
+  /MaxMailSize:
+     get:
+      tags:
+      - MaxMailSize
+      summary: Die maximale Größe einer KIM Mail ermitteln
+      description: Gibt die maximale Größe einer gesamten KIM Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
+                   Dieser Wert wird auf dem Fachdienst definiert, und bleibt über längere Zeit konstant.
+                   Eine Abfrage ist deshalb nicht für jede Mail erforderlich (Empfohlen wird die tägliche Abfrage)
+      operationId: read_MaxMailSize
+
+      responses:
+        200:
+          description: OK
+                # Gibt die maximale Größe einer KIM Mail zurück
+          content:
+            application/json:            
+             schema:
+              type: "integer"     
+              example: 200

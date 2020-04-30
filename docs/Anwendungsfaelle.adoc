@@ -1,0 +1,114 @@
+:toc: macro
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:images/gematik_logo.jpg[width=35%]
+
+toc::[]
+
+
+== Anwendungsfälle
+Im Folgenden werden die KOM-LE 1.5-Anwendungsfälle beschrieben: 
+
+*Account Manager:* +
+
+* Kontoverwaltung: +
+    (-) Registrierung durch den Leistungserbringer +
+    (-) Registerstatus abfragen durch den Leistungserbringer +
+    (-) Deregistrierung durch den Leistungserbringer +
+    (-) Kennwort Management + 
+    (-) Clientmodul-Version an den Account Manager melden
+ 
+
+*Mail Server/ KAS:* +
+
+* E-Mail senden +
+    (-) E-Mail senden mit einer Dateigröße bis zu 25 MB +
+    (-) E-Mail senden mit einer Dateigröße größer 25 MB
+* E-Mail empfangen +
+    (-) E-Mail empfangen mit einer Dateigröße bis zu 25 MB +
+    (-) E-Mail empfangen mit einer Dateigröße größer 25 MB +
+* E-Mail-Kategorien 
+
+
+***
+
+=== Kontoverwaltung
+
+Über den _Account Manager_ des Fachdienstes können sich Leistungserbringer als KOM-LE-Teilnehmer registrieren oder deregistrieren sowie den aktuellen Registrierungsstatus ermitteln.
+Die folgende Abbildung verdeutlicht die Interaktion zwischen Addmimistrationsmodul und _Account Manager_:
+
+image:images/Anw_account_mgr_v1.PNG[width=70%]
+
+==== Registrierung
+
+Zukünftige KOM-LE-Teilnehmer registrieren sich im ersten Schritt am _Account Manager_. Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
+Im Rahmen der Anmeldung mit Username und Kennwort erfolgt auch die Registrierung. Die Informationen für die Anmeldung hat der Teilnehmer zuvor vom KOM-LE-Anbieter erhalten. Nach erfolgreicher Registrierung wird die PKCS#12-Datei mit den Zertifikaten vom _Account Manager_ heruntergeladen.
+Ist die PKCS#12-Datei heruntergeladen, werden die Zertifikate automatisiert entpackt und dem Clientmodul zur Verfügung gestellt.
+Die Registrierung wird mit dem Aufruf der Operation _register_, die der Account Manager zur bereitstellt, durchgeführt.
+
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem _Account Manager_ für die Operation _register_ dargestellt.
+
+image:images/Seq_acc_mgr.PNG[width=70%]
+
+
+==== Deregistrierung
+
+Ebenfalls kann der KOM-LE-Teilnehmer über das _Administrationsmodul_ die Deregistrierung vornehmen. Auch hierfür baut das Administrationsmodul eine TLS-gesicherte Verbindung zum _Account Manager_ auf.
+Die Deregistrierung wird mit dem Aufruf der Operation _deregister_, die der Account Manager bereitstellt, durchgeführt.
+
+==== Registerstatus
+
+Möchte der KOM-LE-Teilnehmer seinen aktuellen Registrierungsstatus abfragen, wird durch das Administrationsmodul die Operation _register_state_ aufgerufen.
+
+==== Kennwort ändern
+
+Durch den Aufruf der Operation _pw_change_ kann der KOM-LE-Teilnehmer das Kennwort für die Anmeldung am Fachdienst verändern.
+
+==== Clientmodul-Version
+
+Durch den Aufruf der Operation _cm_version_ überträgt das Administrationsmodul die Versionnummer des Clientmoduls an den Account Manager.
+
+=== E-Mail-Nachrichten
+
+==== E-Mail senden
+
+Will der KOM-LE-Teilnehmer eine E-Mail versenden, wird im ersten Schritt der KOM-LE-Fachdienst über DNS Service Discovery durch das Clientmodul ermittelt.
+Danach kann das Clientmodul die Nachricht mit SMTPS an den Mail Server des KOM-LE Fachdienstes senden. Ist in der E-Mail ein Anhang enthalten größer 25 MB, wird im Clientmodul automatisch der Anhang aus der E-Mail entfernt, symmetrisch verschlüsselt und separat auf einem Speicherort (KAS) verschlüsselt abgelegt. 
+In die E-Mail wird der vom KAS generierte Freigabelink auf den Ablageort im KAS eingefügt. Anschließend wird die Nachricht signiert und verschlüsselt versendet.
+Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
+
+image:images/Anw_email_send.PNG[width=70%]
+
+Die folgende Darstellung zeigt das dazugehörige Sequenzdiagramm für diesen Ablauf:
+
+image:images/Seq_email_senden.PNG[width=70%]
+
+Dabei wird deutlich, dass das Clientmodul eine zentrale Rolle in der Interaktion mit dem Mail-Server und dem KAS einnimmt.
+
+==== E-Mail empfangen
+
+Zuerst ermittelt das Clientmodul über Service Discovery den passenden KOM-LE-Fachdienst. Danach überprüft das Clientmodul mit POP3S beim Mail Server, ob eine neue Nachricht im Postfach liegt.
+Ist eine neue Nachricht vorhanden, wird diese durch das Clientmodul auf den Client übertragen. 
+Anschließend erfolgt die Entschlüsslung der Nachricht. Stellt das Clientmodul fest, dass sich in der
+Nachricht ein Link zum KAS (des versendenden KOM-LE-Fachdienstes) befindet, erfolgt der automatisierte Download des Anhanges von diesem, über den Link adressierten, KAS und die Entschlüsselung des Anhanges. Abschließend wird die
+entschlüsselte Nachricht verifiziert und inklusive des Anhangs an den E-Mail-Client oder dem PVS übermittelt.
+
+image:images/Anw_email_receive.PNG[width=70%]
+
+Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar:
+
+image:images/Seq_email_empfangen.PNG[width=70%]
+
+Auch in diesem Sequenzdiagramm wird deutlich, dass das Clientmodul eine zentrale Rolle einnimmt.  
+Zum einen sorgt es dafür, dass neue Nachrichten vom Mail Server abgeholt werden und zum anderen lädt das Clientmodul auch den Anhang vom KAS herunter.
+Nach Abschluss aller Operationen wird die aufbereitete Mail an das PVS übergeben.
+
+==== E-Mail-Kategorien
+
+Der KOM-LE-Teilnehmer kann eine zu versendende Nachricht mit einer Kategorie z.B. "eAU" versehen. 
+Die Kategorien werden in den Nachrichten-Header eingetragen, so dass die Mail Server die Kategorien auswerten können. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet X-KIM-Dienstkennung. Dadurch sind die Mail Server
+in der Lage, automatisiert Nachrichten gleicher Kategorie an ein definiertes Mail-Konto weiterzuleiten. 
+Zudem kann der KOM-LE-Teilnehmer auf Basis der Kategorien  entscheiden, wir er mit eingruppierten Nachrichten verfahren will. 
+

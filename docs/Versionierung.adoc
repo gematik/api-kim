@@ -1,0 +1,29 @@
+:toc: macro
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:images/gematik_logo.jpg[width=35%]
+
+toc::[]
+
+== Versionierung
+
+Mittels der URI-Versionierung wird die Rückwärtskompatibilität der KIM-REST-API gewährleistet. 
+Die Versionierung ist in allen REST Schnitstellendefinitionen (YAML-Files) enthalten.
+
+//version: 1.0.1
+//In dieser Versionsnummer wird die letzte Nummer (dritte Stelle) für die Versionierung von kompatiblen Änderungen genutzt.
+
+
+[source,bash]
+-----------------
+<protokoll>://<base_url>/<version/<resource>
+-----------------
+
+*Beispiel:* +
+https://kim-fachdienst.de/v1.0/ressource
+
+
+
+
