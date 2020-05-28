@@ -19,7 +19,7 @@ Zusätzlich soll es dem KOM-LE Fachdienst ermöglichen die _KIM-Version_ auf Sei
 == Account Manager
 Über die Teilkomponete Account Manager des Fachdienstes können sich Leistungserbringer als KOM-LE-Teilnehmer registrieren oder deregistrieren sowie den aktuellen Registerstatus ermitteln.
 Für die Kontoverwaltung wird clientseitig das _Administrationsmodul_ genutzt, dass die entsprechenden Schnittstellen des Account Manager aufruft.
-Zudem stellt der KOM-LE Fachdienst über den Account Manager die benötigt öffentlichen und privaten Schlüssel in einer PKCS#12 Datei für jeden seiner KOM-LE-Teilnehmer 
+Zudem stellt der KOM-LE Fachdienst über den Account Manager die benötigten öffentlichen und privaten Schlüssel in einer PKCS#12 Datei für jeden seiner KOM-LE-Teilnehmer 
 zum Download bereit. 
 
 Die Teilkomponente Account Manager des Fachdienstes ist in *[gemSpec_FD_KOMLE#4.3]* spezifiziert.
