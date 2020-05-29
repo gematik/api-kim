@@ -83,7 +83,7 @@ paths:
     put:
       tags:
       - I_AccountManager_Services
-      summary: Einen Account registrieren
+      summary: Einen Account deregistrieren
       description: Der Account wird deregistriert
       operationId: deregister
       
@@ -127,7 +127,7 @@ paths:
       responses:
         200:
           description: OK
-          # Erfilgreich deregistriert 
+          # Erfolgreich deregistriert 
           content: {}
         401:
           description: Unauthorized
