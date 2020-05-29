@@ -54,6 +54,7 @@ paths:
                   # 1. Der Pfad /accmgr/register/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
                   # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
                   # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
         required: true
         schema:
@@ -119,6 +120,7 @@ paths:
                   # 1. Der Pfad /accmgr/deregister/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
                   # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
                   # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
         required: true
         schema:
@@ -176,6 +178,7 @@ paths:
                   # 1. Der Pfad /accmgr/register-state/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
                   # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
                   # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
         required: true
         schema:
@@ -246,6 +249,7 @@ paths:
                   # 1. Der Pfad /accmgr/cm-version/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
                   # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
                   # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
         required: true
         schema:
@@ -310,6 +314,7 @@ paths:
                   # 1. Der Pfad /accmgr/pw/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
                   # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
                   # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
         required: true
         schema:
