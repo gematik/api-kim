@@ -2,7 +2,8 @@ openapi: 3.0.1
 info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet
-  version: 1.0.0
+  version: 1.1.0
+  # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
 externalDocs:
   description: Gitlab
   url: http://www.gematik.de
@@ -13,11 +14,12 @@ tags:
 
 paths:
   /accmgr/register/:
-    post:
+    put:
       tags:
       - I_AccountManager_Service
       summary: Einen Account registrieren
-      description: Der Account wird registriert und als Ergebnis das Zertifikat zurückgegeben
+      description: Der Account wird registriert und als Ergebnis die PKCS#12 Datei zurückgegeben
+                #  Wird die Operation nach erfolgreicher Registrierung erneut aufgerufen, dann wird die PKCS#12 Datei zurückgegeben
       operationId: register
       
       parameters:
@@ -33,7 +35,30 @@ paths:
         required: true
         schema:
           type: string
-      
+      - in: header
+        name: nonce
+        description: Zufälliges 256bit Nonce
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: timestamp 
+        description: Unix-Timestamp mit der aktuellen Zeit
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: signedHash 
+        description: Signierter Hash Wert der Request Parameter
+                  # Bildungsvorschrift für den zu signierenden String:
+                  # 1. Der Pfad /accmgr/register/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
+                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
+                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
+        required: true
+        schema:
+          type: string
+
       responses:
         200:
           description: OK
@@ -49,13 +74,13 @@ paths:
                     format: binary
         401:
           description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft
+          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
           content: {}
 ##--
 ##------
 
   /accmgr/deregister/:
-    post:
+    put:
       tags:
       - I_AccountManager_Services
       summary: Einen Account registrieren
@@ -75,6 +100,29 @@ paths:
         required: true
         schema:
           type: string
+      - in: header
+        name: nonce
+        description: Zufälliges 256bit Nonce
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: timestamp 
+        description: Unix-Timestamp mit der aktuellen Zeit
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: signedHash 
+        description: Signierter Hash Wert der Request Parameter
+                  # Bildungsvorschrift für den zu signierenden String:
+                  # 1. Der Pfad /accmgr/deregister/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
+                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
+                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
+        required: true
+        schema:
+          type: string
       
       responses:
         200:
@@ -83,7 +131,7 @@ paths:
           content: {}
         401:
           description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft
+          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
           content: {}
 ##--
 ##------
@@ -109,6 +157,29 @@ paths:
         required: true
         schema:
           type: string
+      - in: header
+        name: nonce
+        description: Zufälliges 256bit Nonce
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: timestamp 
+        description: Unix-Timestamp mit der aktuellen Zeit
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: signedHash 
+        description: Signierter Hash Wert der Request Parameter
+                  # Bildungsvorschrift für den zu signierenden String:
+                  # 1. Der Pfad /accmgr/register-state/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
+                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
+                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
+        required: true
+        schema:
+          type: string
       
       responses:
         200:
@@ -122,7 +193,7 @@ paths:
                example: registered
         401:
           description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft
+          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
           content: {}
 ##--
 ##------
@@ -156,6 +227,29 @@ paths:
         required: true
         schema:
           type: string
+      - in: header
+        name: nonce
+        description: Zufälliges 256bit Nonce
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: timestamp 
+        description: Unix-Timestamp mit der aktuellen Zeit
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: signedHash 
+        description: Signierter Hash Wert der Request Parameter
+                  # Bildungsvorschrift für den zu signierenden String:
+                  # 1. Der Pfad /accmgr/cm-version/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
+                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
+                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
+        required: true
+        schema:
+          type: string
 
       responses:
         200:
@@ -164,7 +258,7 @@ paths:
           content: {}
         401:
           description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft
+          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
           content: {}
 ##--
 ##------
@@ -197,6 +291,29 @@ paths:
         required: true
         schema:
           type: string
+      - in: header
+        name: nonce
+        description: Zufälliges 256bit Nonce
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: timestamp 
+        description: Unix-Timestamp mit der aktuellen Zeit
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: signedHash 
+        description: Signierter Hash Wert der Request Parameter
+                  # Bildungsvorschrift für den zu signierenden String:
+                  # 1. Der Pfad /accmgr/pw/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
+                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
+                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
+                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
+        required: true
+        schema:
+          type: string
 
       responses:
         200:
@@ -208,5 +325,5 @@ paths:
           # Das neue Passwot entspricht nicht den Regeln
         401:
           description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft
+          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
           content: {}
