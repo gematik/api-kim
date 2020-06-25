@@ -18,6 +18,8 @@ Der Funktionsumfang für KOM-LE 1.5 erweitert sich um,
 
 Die Einordnung von KOM-LE 1.5 für das Release 4.0 liefert das Systemdesign der Telematikinfrastruktur - Release 4.0.0 - [gemKPT_SysD_TI].
 
+_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist mit Stand Release 4.0.0 nicht geplant._
+
 ## Systemarchitektur
 
 Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KOM-LE 1.5
