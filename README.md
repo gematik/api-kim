@@ -1,8 +1,5 @@
 # KIM-API Dokumentation
 
-Author: gematik GmbH  
-v0.1, 2020
-
 ![gematik logo](images/gematik_logo.jpg)
 
 ## Allgemeines
@@ -62,7 +59,7 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     │        └── AttachmentServices.yaml
     └── README.adoc
 
-## Links
+## Weiterführende Seiten
 
 [- Anwendungsfälle](docs/Anwendungsfaelle.adoc)  
 
