@@ -16,7 +16,7 @@ Der Funktionsumfang für KOM-LE 1.5 erweitert sich um,
 
 -   ✓ Unterstützung syntaktischer Nachrichtenkategorien
 
-Die Einordung von KOM-LE 1.5 für das Release 4.0 liefert das entsprechende Systemdesign der TI. Weitere Details werden im Kapitel „Systemarchitektur“ im Systemdesign beschrieben.
+Die Einordnung von KOM-LE 1.5 für das Release 4.0 liefert das Systemdesign der Telematikinfrastruktur - Release 4.0.0 - [gemKPT_SysD_TI].
 
 ## Systemarchitektur
 
