@@ -1,6 +1,6 @@
 # KIM-API Dokumentation
 
-![gematik logo](images/gematik_logo.jpg)
+<img src="images/gematik_logo.jpg" alt="gematik_logo" width="35%"/>
 
 ## Allgemeines
 
