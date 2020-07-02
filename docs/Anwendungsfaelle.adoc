@@ -15,9 +15,9 @@ Im Folgenden werden die KOM-LE 1.5-Anwendungsfälle beschrieben:
 
 * Kontoverwaltung: +
     (-) Registrierung durch den Leistungserbringer +
-    (-) Registrierungsstatus abfragen durch den Leistungserbringer +
+    (-) Registerstatus abfragen durch den Leistungserbringer +
     (-) Deregistrierung durch den Leistungserbringer +
-    (-) Kennwort-Management + 
+    (-) Kennwort Management + 
     (-) Clientmodul-Version an den Account Manager melden
  
 
@@ -58,9 +58,9 @@ image:images/Seq_acc_mgr.PNG[width=70%]
 Ebenfalls kann der KOM-LE-Teilnehmer über das _Administrationsmodul_ die Deregistrierung vornehmen. Auch hierfür baut das Administrationsmodul eine TLS-gesicherte Verbindung zum _Account Manager_ auf.
 Die Deregistrierung wird mit dem Aufruf der Operation _deregister_, die der Account Manager bereitstellt, durchgeführt.
 
-==== Registrierungsstatus
+==== Registerstatus
 
-Der KOM-LE-Teilnehmer kann über das Administrationsmodul seinen aktuellen Registrierungsstatus abfragen. Dazu dient die Operation _register_state_.
+Möchte der KOM-LE-Teilnehmer seinen aktuellen Registrierungsstatus abfragen, wird durch das Administrationsmodul die Operation _register_state_ aufgerufen.
 
 ==== Kennwort ändern
 
@@ -68,14 +68,14 @@ Durch den Aufruf der Operation _pw_change_ kann der KOM-LE-Teilnehmer das Kennwo
 
 ==== Clientmodul-Version
 
-Durch den Aufruf der Operation _cm_version_ überträgt das Administrationsmodul die Versionsnummer des Clientmoduls an den Account Manager.
+Durch den Aufruf der Operation _cm_version_ überträgt das Administrationsmodul die Versionnummer des Clientmoduls an den Account Manager.
 
 === E-Mail-Nachrichten
 
 ==== E-Mail senden
 
 Will der KOM-LE-Teilnehmer eine E-Mail versenden, wird im ersten Schritt der KOM-LE-Fachdienst über DNS Service Discovery durch das Clientmodul ermittelt.
-Danach kann das Clientmodul die Nachricht mit SMTPS an den Mail Server des KOM-LE-Fachdienstes senden. Ist in der E-Mail ein Anhang enthalten größer 25 MB, wird im Clientmodul automatisch der Anhang aus der E-Mail entfernt, symmetrisch verschlüsselt und separat auf einem Speicherort (KAS) verschlüsselt abgelegt. 
+Danach kann das Clientmodul die Nachricht mit SMTPS an den Mail Server des KOM-LE Fachdienstes senden. Ist in der E-Mail ein Anhang enthalten größer 25 MB, wird im Clientmodul automatisch der Anhang aus der E-Mail entfernt, symmetrisch verschlüsselt und separat auf einem Speicherort (KAS) verschlüsselt abgelegt. 
 In die E-Mail wird der vom KAS generierte Freigabelink auf den Ablageort im KAS eingefügt. Anschließend wird die Nachricht signiert und verschlüsselt versendet.
 Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
@@ -91,9 +91,9 @@ Dabei wird deutlich, dass das Clientmodul eine zentrale Rolle in der Interaktion
 
 Zuerst ermittelt das Clientmodul über Service Discovery den passenden KOM-LE-Fachdienst. Danach überprüft das Clientmodul mit POP3S beim Mail Server, ob eine neue Nachricht im Postfach liegt.
 Ist eine neue Nachricht vorhanden, wird diese durch das Clientmodul auf den Client übertragen. 
-Anschließend erfolgt die Entschlüsselung der Nachricht. Stellt das Clientmodul fest, dass sich in der
+Anschließend erfolgt die Entschlüsslung der Nachricht. Stellt das Clientmodul fest, dass sich in der
 Nachricht ein Link zum KAS (des versendenden KOM-LE-Fachdienstes) befindet, erfolgt der automatisierte Download des Anhanges von diesem, über den Link adressierten, KAS und die Entschlüsselung des Anhanges. Abschließend wird die
-entschlüsselte Nachricht verifiziert und inklusive des Anhangs an den E-Mail-Client oder das PVS übermittelt.
+entschlüsselte Nachricht verifiziert und inklusive des Anhangs an den E-Mail-Client oder dem PVS übermittelt.
 
 image:images/Anw_email_receive.PNG[width=70%]
 
@@ -103,12 +103,12 @@ image:images/Seq_email_empfangen.PNG[width=70%]
 
 Auch in diesem Sequenzdiagramm wird deutlich, dass das Clientmodul eine zentrale Rolle einnimmt.  
 Zum einen sorgt es dafür, dass neue Nachrichten vom Mail Server abgeholt werden und zum anderen lädt das Clientmodul auch den Anhang vom KAS herunter.
-Nach Abschluss aller Operationen wird die aufbereitete E-Mail an das PVS übergeben.
+Nach Abschluss aller Operationen wird die aufbereitete Mail an das PVS übergeben.
 
 ==== E-Mail-Kategorien
 
 Der KOM-LE-Teilnehmer kann eine zu versendende Nachricht mit einer Kategorie z.B. "eAU" versehen. 
 Die Kategorien werden in den Nachrichten-Header eingetragen, so dass die Mail Server die Kategorien auswerten können. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet X-KIM-Dienstkennung. Dadurch sind die Mail Server
 in der Lage, automatisiert Nachrichten gleicher Kategorie an ein definiertes Mail-Konto weiterzuleiten. 
-Zudem kann der KOM-LE-Teilnehmer auf Basis der Kategorien  entscheiden, wie er mit eingruppierten Nachrichten verfahren will. 
+Zudem kann der KOM-LE-Teilnehmer auf Basis der Kategorien  entscheiden, wir er mit eingruppierten Nachrichten verfahren will. 
 
