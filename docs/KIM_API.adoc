@@ -1,9 +1,10 @@
+:imagesdir: ../images
 :toc: macro
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
 :numbered:
 
-image:images/gematik_logo.jpg[width=35%]
+image:gematik_logo.jpg[width=35%]
 
 toc::[]
 
