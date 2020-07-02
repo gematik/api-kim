@@ -19,5 +19,5 @@ Die Authentifizierung in der KOM-LE 1.5-Architektur erfolgt konform zur Authenti
 Wenn der Empfänger bei einem anderen Fachdienst Anbieter ist, lädt er die Anhänge vom KAS-Fachdienst des Mail-Senders. 
 Diese Authentifizierung erfolgt analog zu der Authentifizierung bei seinem eigenen KOM-LE-Fachdienst (mit den gleichen Zertifikaten).
 Im Rahmen der Registrierung authentifiziert sich der neue Teilnehmer mit Benutzername und Kennwort am Account Manager. Diese Informationen
-hat der Teilnehmer zuvor vom Fachdienst Anbieter z.B. über den Postweg erhalten. Die Details sowie die entsprechenden Anforderungen zur Authentifizierung bei der Registrierung sind in *[gemSpec_CM_KOMLE#3.7]* und *[gemSpec_FD_KOMLE#3.2]* zu finden.
+hat der Teilnehmer zuvor vom Fachdienst-Anbieter z.B. über den Postweg erhalten. Die Details sowie die entsprechenden Anforderungen zur Authentifizierung bei der Registrierung sind in *[gemSpec_CM_KOMLE#3.7]* und *[gemSpec_FD_KOMLE#3.2]* zu finden.
 

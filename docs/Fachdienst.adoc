@@ -8,16 +8,16 @@ image:images/gematik_logo.jpg[width=35%]
 toc::[]
 
 == Mail-Server
-Der KOM-LE Fachdienst wird die Möglichkeit der Kategorisierung von versendeten E-Mails anbieten.
-Dazu wird ein weiteres Headerfeld im Mail-Header (_X-KIM-Dienstkennung_) erzeugt und mit Werten befüllt welche bei Bedarf den Inhalt der Mail beschreibt. Die verwendeten E-Mail Kategorien müssen von allen KOM-LE-Fachdiensten einheitlich verwendet werden, um Anbietern übergreifend eine Auswertung zu ermöglichen.
+Der KOM-LE-Fachdienst wird die Möglichkeit der Kategorisierung von versendeten E-Mails anbieten.
+Dazu wird ein weiteres Headerfeld im Mail-Header (_X-KIM-Dienstkennung_) erzeugt und mit Werten befüllt, welche bei Bedarf den Inhalt der Mail beschreibt. Die verwendeten E-Mail-Kategorien müssen von allen KOM-LE-Fachdiensten einheitlich verwendet werden um Anbieter übergreifend eine Auswertung zu ermöglichen.
 Erreicht wird damit eine spätere automatische Bearbeitung eingehender Mails auf der Empfängerseite. Eine Auswertung der E-Mail Kategorie durch dem Mail-Server erfolgt nicht. Die dafür nowendigen Spezifikationsanpassungen sind in *[gemSpec_CM_KOMLE#3.6]* spezifiziert.
 
 Die ausschließliche Versionierung über das Header-Element X-KOM-LE-Version wird durch eine wahlweise Befüllung gemäß der über das KOM-LE-Client-Module verwendeten Version ersetzt. Die dafür notwendige Änderung wird mit der Anpassung der Anforderung *[gemSMIME_KOMLE#KOM-LE-A_2100]* in "Wert Header-Element X-KOM-LE-Version" erfolgen.
-Zusätzlich soll es dem KOM-LE-Fachdienst ermöglichen die, _KIM-Version_ auf Seiten des Senders zu erkennen und mit dessen Profil im TI-Verzeichnisdienst abzugleichen. Ein dafür notwendiger Prozess ist durch den KOM-LE-Fachdienstanbieter zu etablieren.
+Zusätzlich soll es dem KOM-LE-Fachdienst ermöglichen, die _KIM-Version_ auf Seiten des Senders zu erkennen und mit dessen Profil im TI-Verzeichnisdienst abzugleichen. Ein dafür notwendiger Prozess ist durch den KOM-LE-Fachdienstanbieter zu etablieren.
 
 
 == Account Manager
-Über die Teilkomponete Account Manager des Fachdienstes können sich Leistungserbringer als KOM-LE-Teilnehmer registrieren oder deregistrieren sowie den aktuellen Registerstatus ermitteln.
+Über die Teilkomponente Account Manager des Fachdienstes können sich Leistungserbringer als KOM-LE-Teilnehmer registrieren oder deregistrieren sowie den aktuellen Registrierungsstatus ermitteln.
 Für die Kontoverwaltung wird clientseitig das _Administrationsmodul_ genutzt, dass die entsprechenden Schnittstellen des Account Manager aufruft.
 Zudem stellt der KOM-LE-Fachdienst über den Account Manager die benötigten öffentlichen und privaten Schlüssel in einer PKCS#12 Datei für jeden seiner KOM-LE-Teilnehmer 
 zum Download bereit. 
@@ -34,9 +34,9 @@ Im Anschluss erfolgt automatisch der Download der notwendigen-PKCS#12 Datei.
 Der Account Manager stellt für die Registrierung die Operation _register()_ bereit.
 
 ====  Deregistrierung
-Der Account Manager stellt die Operation _deregister()_ bereit. Mit dieser Operation kann der KOM-LE-Teilnehmer die Deregistrierung am Account Manager durchführen.
+Der Account Manager stellt die Operation _deregister()_ bereit. Mit dieser Operation kann der KOM-LE-Teilnehmer die Deregistrierung am Account Manager  durchführen.
 
-====  Registerstatus
+====  Registrierungsstatus
 Der Account Manager stellt für die Statusabfrage die Operation _register_State()_ bereit. Mit dieser Operation kann der KOM-LE-Teilnehmer seinen aktuellen Registrierungsstatus ermitteln.
 
 ====  Kennwortänderung
@@ -47,7 +47,7 @@ Mit dieser Operation überträgt das Administrationsmodul die _KIM-Version_ an d
 
 
 == KOM-LE Attachment Service (KAS)
-Der KOM-LE-Fachdienst wird um die Teilkomponente KOM-LE Attachment Service (KAS) erweitert. Der KAS dient als Speicherort für verschlüsselte Anhänge größer 25 MB. 
+Der KOM-LE Fachdienst wird um die Teilkomponente KOM-LE Attachment Service (KAS) erweitert. Der KAS dient als Speicherort für verschlüsselte Anhänge größer 25 MB. 
 Die Teilkomponente KAS des Fachdienstes stellt eine REST-Schnittstelle bereit, um verschlüsselte Anhänge hoch- bzw. über einen Freigabelink herunterzuladen. 
 
 Die Teilkomponente KAS ist in *[gemSpec_FD_KOMLE#4.2]* spezifiziert. 
@@ -57,7 +57,7 @@ REST-Schnittstelle: link:../src/openapi/AttachmentService.yaml[KAS]
 Im Folgenden wird kurz auf die Definition der REST-Schnittstelle eingegangen.
 
 ==== Dokument hochladen
-Verschlüsselte Dokumente werden über die Operation _add_Attachment()_ hochgeladen. Hierbei wird ein Freigabelink erzeugt, der auf die Ressource im KAS referenziert. Beim Erfolgreichen hochladen des Dokumentes wird der Freigabelink als Response zurückgegeben. 
+Verschlüsselte Dokumente werden über die Operation _add_Attachment()_ hochgeladen. Hierbei wird ein Freigabelink erzeugt, der auf die Ressource im KAS referenziert. Beim erfolgreichen Hochladen des Dokumentes wird der Freigabelink als Response zurückgegeben. 
 
 
 ==== Dokument herunterladen
@@ -65,7 +65,7 @@ Beim Aufruf des Freigabelinks wird die Operation  _read_Attachment()_ aufgerufen
 
 
 ==== Freigabelink
-Beim Hochladen eines Anhanges wird ein Freigabelink, der aus dem FQDN des KAS und einer zufälligen und eindeutigen ID besteht, erzeugt. Mittels des Freigabelinks kann der Anhang wieder heruntergeladen werden.
+Beim Hochladen eines Anhanges wird ein Freigabelink, der aus dem FQDN des KAS und einer zufälligen und eindeutigen ID besteht, erzeugt. Mittels des Freigabelinks kann der Anhang wieder herunter geladen werden.
 
 
 ==== Ermittlung der maximalen Nachrichtengröße

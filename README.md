@@ -1,9 +1,6 @@
-# KIM-API Dokumentation
+# KIM (Kommunikation im Medizinwesen) - API-Dokumentation
 
-Author: gematik GmbH  
-v0.1, 2020
-
-![gematik logo](images/gematik_logo.jpg)
+<img src="images/gematik_logo.jpg" alt="gematik_logo" width="35%"/>
 
 ## Allgemeines
 
@@ -19,7 +16,9 @@ Der Funktionsumfang für KOM-LE 1.5 erweitert sich um,
 
 -   ✓ Unterstützung syntaktischer Nachrichtenkategorien
 
-Die Einordung von KOM-LE 1.5 für das Release 4.0 liefert das entsprechende Systemdesign der TI. Weitere Details werden im Kapitel „Systemarchitektur“ im Systemdesign beschrieben.
+Die Einordnung von KOM-LE 1.5 für das Release 4.0.0 liefert das Systemdesign der Telematikinfrastruktur - Release 4.0.0 - [gemKPT_SysD_TI].
+
+_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist mit Stand Release 4.0.0 nicht geplant._
 
 ## Systemarchitektur
 
@@ -33,12 +32,12 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KOM
     Das Clientmodul kann jetzt optional in das Clientsystem integriert werden.
 
 -   **Administrationsmodul:**  
-    Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes. Dadurch wird der Leistungserbringer in die Lage versetzt sich beim Fachdient zu registrieren, seinen Registrierungsstatus abzufragen oder eine Deregistrierung vorzunehmen. Zugleich kann über das Administrationsmodul das benötigte Clientzertifikat (PKCS\#12) heruntergeladen werden.
+    Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes. Dadurch wird der Leistungserbringer in die Lage versetzt, sich beim Fachdienst zu registrieren, seinen Registrierungsstatus abzufragen oder eine Deregistrierung vorzunehmen. Zugleich kann über das Administrationsmodul das benötigte Clientzertifikat (PKCS\#12) heruntergeladen werden.
 
 [**Fachdienst**](docs/Fachdienst.adoc)
 
 -   **Account Manager:**  
-    Für die einfache Verwaltung des Accounts eines KOM-LE-Teilnehmers, wird der Account Manager um ein Webservices erweitert.
+    Für die einfache Verwaltung des Accounts eines KOM-LE-Teilnehmers wird der Account Manager um einen Webservice erweitert.
 
 -   **KOM-LE Attachment Service:**  
     Der Fachdienst wird um die Komponente KAS (KOM-LE Attachment Services) ergänzt, der die sichere Speicherung größerer Anhänge erlaubt.
@@ -60,13 +59,10 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     │   └── openapi
     │        ├── AccountManager.yaml
     │        └── AttachmentServices.yaml
-    └── README.adoc
+    ├── README.md
+    └── ReleaseNotes.md
 
-## Lizenz
-
-Copyright 2020 gematik GmbH
-
-## Links
+## Weiterführende Seiten
 
 [- Anwendungsfälle](docs/Anwendungsfaelle.adoc)  
 
@@ -76,3 +72,19 @@ Copyright 2020 gematik GmbH
 
 [- Basisdienste](docs/Basisdienste.adoc)  
 [- Versionierung](docs/Versionierung.adoc)  
+
+## Lizenzbedingungen
+Copyright (c) 2020 gematik GmbH
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
