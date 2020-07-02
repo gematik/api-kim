@@ -13,7 +13,7 @@ Dazu wird ein weiteres Headerfeld im Mail-Header (_X-KIM-Dienstkennung_) erzeugt
 Erreicht wird damit eine spätere automatische Bearbeitung eingehender Mails auf der Empfängerseite. Eine Auswertung der E-Mail Kategorie durch dem Mail-Server erfolgt nicht. Die dafür nowendigen Spezifikationsanpassungen sind in *[gemSpec_CM_KOMLE#3.6]* spezifiziert.
 
 Die ausschließliche Versionierung über das Header-Element X-KOM-LE-Version wird durch eine wahlweise Befüllung gemäß der über das KOM-LE-Client-Module verwendeten Version ersetzt. Die dafür notwendige Änderung wird mit der Anpassung der Anforderung *[gemSMIME_KOMLE#KOM-LE-A_2100]* in "Wert Header-Element X-KOM-LE-Version" erfolgen.
-Zusätzlich soll es dem KOM-LE-Fachdienst ermöglichen die _KIM-Version_ auf Seiten des Senders zu erkennen und mit dessen Profil im TI-Verzeichnisdienst abzugleichen. Ein dafür notwendiger Prozess ist durch den KOM-LE-Fachdienstanbieter zu etablieren.
+Zusätzlich soll es dem KOM-LE-Fachdienst ermöglichen, die _KIM-Version_ auf Seiten des Senders zu erkennen und mit dessen Profil im TI-Verzeichnisdienst abzugleichen. Ein dafür notwendiger Prozess ist durch den KOM-LE-Fachdienstanbieter zu etablieren.
 
 
 == Account Manager
