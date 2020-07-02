@@ -24,7 +24,7 @@ Für KOM-LE 1.5 ist es notwendig das Clientmodul um Folgendes anzupassen:
 Ab KOM-LE 1.5 kann der Funktionsumfang des Clientmodules in das PVS optional integriert werden. Somit ist kein seperates Clientmodul mehr notwendig.
 Die folgende Abbildung verdeutlicht die optionale Integration in das PVS:
 
-image:images/CM_Integration.png[width=60%]
+image:CM_Integration.png[width=60%]
 
 
 === Umgang mit großen Anhängen
