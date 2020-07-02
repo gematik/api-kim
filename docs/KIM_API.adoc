@@ -10,7 +10,7 @@ toc::[]
 
 == Clientmodul
 
-Für KOM-LE 1.5 ist es notwenig das Clientmodul um folgendes anzupassen:
+Für KOM-LE 1.5 ist es notwendig das Clientmodul um Folgendes anzupassen:
 
 * [*] Optional kann der Funktionsumfang des Clientmoduls in das PVS integriert werden.
 * [*] Das Clientmodul wird für den Umgang mit großen Anhängen erweitert.
@@ -21,7 +21,7 @@ Für KOM-LE 1.5 ist es notwenig das Clientmodul um folgendes anzupassen:
 === Optionale Integration in das Clientsystem
 
 Ab KOM-LE 1.5 kann der Funktionsumfang des Clientmodules in das PVS optional integriert werden. Somit ist kein seperates Clientmodul mehr notwendig.
-Die folgende Abbildung verdeutlicht die optionale Intergration in das PVS:
+Die folgende Abbildung verdeutlicht die optionale Integration in das PVS:
 
 image:images/CM_Integration.png[width=60%]
 
@@ -41,7 +41,7 @@ Das Clientmodul ermöglicht die Kategorisierung von zu versendenden E-Mails. Die
 Die Aufrufe der Operationen vom Clientmodul zu der REST-Schnittstelle des KAS des Fachdienstes wird im Folgenden beschrieben.
 
 ==== add_Attachment() 
-Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
+Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt.
 
 Request-Header:
 [source]
@@ -75,7 +75,7 @@ curl -X POST "https://to.be.defined/v1/" -H  "accept: application/json" -H  "Con
 
 
 ==== read_Attachment() 
-gibt den unter einem Freigabelink verschlüsselten Anhang zurück
+Gibt den unter einem Freigabelink verschlüsselten Anhang zurück.
 
 Request-Header:
 [source]
@@ -100,7 +100,7 @@ HTTP-Status Codes: +
 
 Parameters: +
 
-* `Ressource` - Freigabelink unter dem der Anhang gespeichert wurde
+* `Ressource` - Freigabelink, unter dem der Anhang gespeichert wurde
 
 Beispiel:
 [source]
@@ -109,8 +109,8 @@ curl -X GET "https://to.be.defined/v1/Link" -H  "accept: multipart/form-data"
 ----------------- 
 
 ==== read_MaxMailSize() 
-Gibt die maximale Größe einer gesamten KOM-LE Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
-Mit diesem Wert prüft der Client-Modul die Einhaltung der maximalen Mail Größe (die vom FD Anbieter definiert wird) für zu sendende Mails.
+Gibt die maximale Größe einer gesamten KOM-LE-Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
+Mit diesem Wert prüft das Client-Modul die Einhaltung der maximalen Mail Größe (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails.
 Dieser Wert wird auf dem Fachdienst definiert, und bleibt über längere Zeit konstant.
 Eine Abfrage ist deshalb nicht für jede zu sendende Mail erforderlich (Empfohlen wird die tägliche Abfrage).
 
@@ -132,11 +132,11 @@ Response-Header:
 
 
 HTTP-Status Codes: + 
-200: OK - Maximale Mail Größe wird in Bytes zurückgegeen +
+200: OK - Maximale Mail-Größe wird in Bytes zurückgegeben +
 
 Parameters: +
 
-* keine Request Parameter
+* keine Request-Parameter
 
 Beispiel:
 [source]
@@ -218,11 +218,11 @@ Response-Content:
 
 
 HTTP-Status Codes: + 
-200: OK - Die Anfrage wurde erfolgreich +
+200: OK - Die Anfrage wurde erfolgreich bearbeitet +
 401: Unauthorized - Nutzername / Passwort +
 
 ==== cm_Version()
-Übermittlung der KIM Version.
+Übermittlung der KIM-Version.
 
 Request-Header:
 [source]
@@ -241,7 +241,7 @@ Response-Content:
 
 
 HTTP-Status Codes: + 
-200: OK - Die Anfrage wurde erfolgreich +
+200: OK - Die Anfrage wurde erfolgreich bearbeitet +
 401: Unauthorized - Nutzername / Passwort +
 
 ==== pw_Change()
@@ -263,8 +263,8 @@ Response-Header:
 
 
 HTTP-Status Codes: + 
-200: OK - Die Anfrage wurde erfolgreich +
-400: Bad Request - Das neue Passwot entspricht nicht den Regeln +
+200: OK - Die Anfrage wurde erfolgreich bearbeitet +
+400: Bad Request - Das neue Passwort entspricht nicht den Regeln +
 401: Unauthorized - Nutzername / Passwort +
 
 
