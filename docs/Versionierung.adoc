@@ -10,7 +10,7 @@ toc::[]
 == Versionierung
 
 Mittels der URI-Versionierung wird die Rückwärtskompatibilität der KIM-REST-API gewährleistet. 
-Die Versionierung ist in allen REST Schnitstellendefinitionen (YAML-Files) enthalten.
+Die Versionierung ist in allen REST-Schnittstellendefinitionen (YAML-Files) enthalten.
 
 //version: 1.0.1
 //In dieser Versionsnummer wird die letzte Nummer (dritte Stelle) für die Versionierung von kompatiblen Änderungen genutzt.
