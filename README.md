@@ -59,7 +59,8 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     │   └── openapi
     │        ├── AccountManager.yaml
     │        └── AttachmentServices.yaml
-    └── README.adoc
+    └── README.md
+    └── ReleaseNotes.md
 
 ## Weiterführende Seiten
 
