@@ -110,7 +110,7 @@ curl -X GET "https://to.be.defined/v1/Link" -H  "accept: multipart/form-data"
 
 ==== read_MaxMailSize() 
 Gibt die maximale Größe einer gesamten KOM-LE-Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
-Mit diesem Wert prüft das Client-Modul die Einhaltung der maximalen Mail Größe (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails.
+Mit diesem Wert prüft das Clientmodul die Einhaltung der maximalen Mail Größe (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails.
 Dieser Wert wird auf dem Fachdienst definiert, und bleibt über längere Zeit konstant.
 Eine Abfrage ist deshalb nicht für jede zu sendende Mail erforderlich (Empfohlen wird die tägliche Abfrage).
 
@@ -193,7 +193,7 @@ Response-Content:
 
 
 HTTP-Status Codes: + 
-200: OK - Die Anfrage wurde erfolgreich +
+200: OK - Die Anfrage wurde erfolgreich bearbeitet +
 401: Unauthorized - Nutzername / Passwort +
 
 ==== register_State()
