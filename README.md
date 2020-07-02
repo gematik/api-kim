@@ -1,4 +1,4 @@
-# KIM (Kommunikation im Medizinwesen) - API Dokumentation
+# KIM (Kommunikation im Medizinwesen) - API-Dokumentation
 
 <img src="images/gematik_logo.jpg" alt="gematik_logo" width="35%"/>
 
@@ -16,7 +16,7 @@ Der Funktionsumfang für KOM-LE 1.5 erweitert sich um,
 
 -   ✓ Unterstützung syntaktischer Nachrichtenkategorien
 
-Die Einordnung von KOM-LE 1.5 für das Release 4.0 liefert das Systemdesign der Telematikinfrastruktur - Release 4.0.0 - [gemKPT_SysD_TI].
+Die Einordnung von KOM-LE 1.5 für das Release 4.0.0 liefert das Systemdesign der Telematikinfrastruktur - Release 4.0.0 - [gemKPT_SysD_TI].
 
 _Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist mit Stand Release 4.0.0 nicht geplant._
 
@@ -32,12 +32,12 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KOM
     Das Clientmodul kann jetzt optional in das Clientsystem integriert werden.
 
 -   **Administrationsmodul:**  
-    Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes. Dadurch wird der Leistungserbringer in die Lage versetzt sich beim Fachdient zu registrieren, seinen Registrierungsstatus abzufragen oder eine Deregistrierung vorzunehmen. Zugleich kann über das Administrationsmodul das benötigte Clientzertifikat (PKCS\#12) heruntergeladen werden.
+    Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes. Dadurch wird der Leistungserbringer in die Lage versetzt, sich beim Fachdienst zu registrieren, seinen Registrierungsstatus abzufragen oder eine Deregistrierung vorzunehmen. Zugleich kann über das Administrationsmodul das benötigte Clientzertifikat (PKCS\#12) heruntergeladen werden.
 
 [**Fachdienst**](docs/Fachdienst.adoc)
 
 -   **Account Manager:**  
-    Für die einfache Verwaltung des Accounts eines KOM-LE-Teilnehmers, wird der Account Manager um ein Webservices erweitert.
+    Für die einfache Verwaltung des Accounts eines KOM-LE-Teilnehmers wird der Account Manager um einen Webservice erweitert.
 
 -   **KOM-LE Attachment Service:**  
     Der Fachdienst wird um die Komponente KAS (KOM-LE Attachment Services) ergänzt, der die sichere Speicherung größerer Anhänge erlaubt.
