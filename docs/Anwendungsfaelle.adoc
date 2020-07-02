@@ -40,7 +40,7 @@ Im Folgenden werden die KOM-LE 1.5-Anwendungsfälle beschrieben:
 Über den _Account Manager_ des Fachdienstes können sich Leistungserbringer als KOM-LE-Teilnehmer registrieren oder deregistrieren sowie den aktuellen Registrierungsstatus ermitteln.
 Die folgende Abbildung verdeutlicht die Interaktion zwischen Addmimistrationsmodul und _Account Manager_:
 
-image:images/Anw_account_mgr_v1.PNG[width=70%]
+image:Anw_account_mgr_v1.PNG[width=70%]
 
 ==== Registrierung
 
@@ -51,7 +51,7 @@ Die Registrierung wird mit dem Aufruf der Operation _register_, die der Account 
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem _Account Manager_ für die Operation _register_ dargestellt.
 
-image:images/Seq_acc_mgr.PNG[width=70%]
+image:Seq_acc_mgr.PNG[width=70%]
 
 
 ==== Deregistrierung
@@ -80,11 +80,11 @@ Danach kann das Clientmodul die Nachricht mit SMTPS an den Mail Server des KOM-L
 In die E-Mail wird der vom KAS generierte Freigabelink auf den Ablageort im KAS eingefügt. Anschließend wird die Nachricht signiert und verschlüsselt versendet.
 Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
-image:images/Anw_email_send.PNG[width=70%]
+image:Anw_email_send.PNG[width=70%]
 
 Die folgende Darstellung zeigt das dazugehörige Sequenzdiagramm für diesen Ablauf:
 
-image:images/Seq_email_senden.PNG[width=70%]
+image:Seq_email_senden.PNG[width=70%]
 
 Dabei wird deutlich, dass das Clientmodul eine zentrale Rolle in der Interaktion mit dem Mail-Server und dem KAS einnimmt.
 
@@ -96,11 +96,11 @@ Anschließend erfolgt die Entschlüsselung der Nachricht. Stellt das Clientmodul
 Nachricht ein Link zum KAS (des versendenden KOM-LE-Fachdienstes) befindet, erfolgt der automatisierte Download des Anhanges von diesem, über den Link adressierten, KAS und die Entschlüsselung des Anhanges. Abschließend wird die
 entschlüsselte Nachricht verifiziert und inklusive des Anhangs an den E-Mail-Client oder das PVS übermittelt.
 
-image:images/Anw_email_receive.PNG[width=70%]
+image:Anw_email_receive.PNG[width=70%]
 
 Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar:
 
-image:images/Seq_email_empfangen.PNG[width=70%]
+image:Seq_email_empfangen.PNG[width=70%]
 
 Auch in diesem Sequenzdiagramm wird deutlich, dass das Clientmodul eine zentrale Rolle einnimmt.  
 Zum einen sorgt es dafür, dass neue Nachrichten vom Mail Server abgeholt werden und zum anderen lädt das Clientmodul auch den Anhang vom KAS herunter.
