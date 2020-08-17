@@ -3,17 +3,20 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte EMail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 0.0.1
+  version: 1.0.0
+  # 0.0.1 initiale Version des Interfaces
+  # 1.0.0 Aufnahme der API-Versionierung in der URI und Detallierung des FQDN des KAS sowie Fehlerbehebung des Ressourcen-Parameters in der URI
+          
 externalDocs:
   description: Gitlab
   url: http://www.gematik.de
 servers:
-- url: https://to.be.defined/v1/
+- url: https://kas.hrst1.kim.telematik/v1.0/
 tags:
 - name: Attachments
 
 paths:
-  /:
+  /{Ressource}:
 ##--
 ##------
     get:
@@ -49,6 +52,7 @@ paths:
           content: {}
 ##--
 ##------
+  /:
     post:
       tags:
       - Attachments

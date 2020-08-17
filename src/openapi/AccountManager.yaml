@@ -2,13 +2,15 @@ openapi: 3.0.1
 info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet
-  version: 1.1.0
+  version: 1.1.1
   # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
+  # 1.1.1 Aufnahme der API-Versionierung in der URI und Detaillierung des FQDN des Accountmanagers
 externalDocs:
   description: Gitlab
   url: http://www.gematik.de
 servers:
-- url: https://to.be.defined/v1/
+- url: https://account-manager.hrst1.kim.telematik/v1.0/
+  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
 tags:
 - name: AccountManager
 

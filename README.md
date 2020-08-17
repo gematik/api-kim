@@ -20,6 +20,7 @@ Die Einordnung von KOM-LE 1.5 für das Release 4.0.0 liefert das Systemdesign de
 
 _Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist mit Stand Release 4.0.0 nicht geplant._
 
+
 ## Systemarchitektur
 
 Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KOM-LE 1.5
@@ -45,7 +46,7 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KOM
 [**Basisdienste**](docs/Basisdienste.adoc)
 
 -   **Verzeichnisdienst:**  
-    Um die Kompatibilität von KOM-LE 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst mit einem neuen Attribut (*KIM-Version*) erweitert.
+    Um die Kompatibilität von KOM-LE 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst mit einem neuen Attribut (*KOM-LE-Version*) erweitert.
 
 ## Ordnerstruktur
 
@@ -56,9 +57,11 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     ├─ images
     ├─ samples
     ├─ src
-    │   └── openapi
-    │        ├── AccountManager.yaml
-    │        └── AttachmentServices.yaml
+    │   ├──── openapi
+    │   │    ├── AccountManager.yaml
+    │   │    └── AttachmentServices.yaml
+    │   └──── schema
+    │        └── Attachment_schema.json
     ├── README.md
     └── ReleaseNotes.md
 
@@ -70,8 +73,14 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
 [- Clientsystem](docs/KIM_API.adoc)  
 [- Fachdienst](docs/Fachdienst.adoc)  
 
+**Leitfaden für Primärsystemhersteller**  
+[- Primärsystem](docs/Primaersystem.adoc)  
+
+**Diverses**  
 [- Basisdienste](docs/Basisdienste.adoc)  
 [- Versionierung](docs/Versionierung.adoc)  
+
+
 
 ## Lizenzbedingungen
 Copyright (c) 2020 gematik GmbH
@@ -86,5 +95,4 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.
-
+limitations under the License. 

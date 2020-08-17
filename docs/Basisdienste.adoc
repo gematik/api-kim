@@ -11,7 +11,7 @@ toc::[]
 == Verzeichnisdienst
 
 Der Verzeichnisdienst wird zur Ermittlung der Mail-Adressen und Verschlüsselungszertifikate der Empfänger von Mails genutzt.
-Weiterhin enthält der Verzeichniseintrag neben der Mail-Adresse auch die Version von dem jeweiligen Client. Anhand dieser Version entscheidet das Sende-Clientmodul, ob der Client des Empfängers kompatibel zu der Mail ist. Die Erweiterung um das LDAP-Directory Attributes _version_ ist in  *[gemSpec_VZD#5]* spezifiziert.
+Weiterhin enthält der Verzeichniseintrag neben der Mail-Adresse auch die Version von dem jeweiligen Client. Anhand dieser Version entscheidet das Sende-Clientmodul, ob der Client des Empfängers kompatibel zu der Mail ist. Die Erweiterung um das LDAP-Directory Attributes _KOM-LE-Version_ ist in  *[gemSpec_VZD#5]* spezifiziert.
 
 
 == Authentifizierung

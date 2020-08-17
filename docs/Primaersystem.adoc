@@ -1,0 +1,259 @@
+:imagesdir: ../images
+:toc: macro
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:gematik_logo.jpg[width=35%]
+
+toc::[]
+
+= Primärsystem
+Das folgende Kapitel beschreibt, wie das Primärsystem die Funktionalität von KOM-LE nutzt.
+
+IMPORTANT: Die Nutzung der in diesem Kapitel geschilderten Funktionalität ist abhängig von der Verfügbarkeit eines QES-fähigen Konnektors.
+
+_Hinweis: Die Primärsystemschnittstellenversion kann sich im Laufe der Zeit ändern, insbesondere aufgrund von  Änderungen/Updates am Konnektor. Daneben kann sich ab bestimmten Zeitpunkten noch der Wertebereich von Datenfeldern ändern. In diesem Kapitel werden nur Änderungen aufgeführt, die für das sichere Übermittlungsverfahren KOM-LE wichtig sind. Informationen zu einzelnen Unterschieden zwischen Primärsystemschnittstellenversionen veröffentlicht die gematik auf ihrem link:https://fachportal.gematik.de[Fachportal]_
+
+== Übersicht
+Das sichere Übermittlungsverfahren KOM-LE stellt Primärsystemen die Möglichkeit zur Verfügung, mit anderen KOM-LE-Teilnehmern (Ärzten, Arztpraxen, Krankenhäusern usw.) 
+eine Ende-zu-Ende-gesicherte E-Mail-Kommunikation zu führen. Die Ver-/Entschlüsselung sowie die Erstellung der Signatur und Signaturprüfung werden
+unter Nutzung der Smartcards (SM-B und HBA) dabei vollständig vom KOM-LE-Clientmodul übernommen.
+
+== Voraussetzungen
+Für die Nutzung von KOM-LE müssen die folgenden Punkte erfüllt sein:
+
+IMPORTANT: - die Basisdaten des KOM-LE-Nutzers sind in dem Verzeichnisdienst eingetragen, +
+     - der Nutzer hat sich bei einem KOM-LE-Provider angemeldet, +
+     - die KOM-LE-E-Mail-Adresse für den Nutzer ist eingerichtet, +
+    - der Nutzer verfügt über eine freigeschaltete SM-B (bzw. einen freigeschalteten HBA) +
+    - der Konnektor ist für den Online-Modus konfiguriert.
+
+* [x] *Umkonfigurieren in den Online-Modus* +
+Es ist erforderlich, dass das Primärsystem den Anwender darüber informiert, wenn sich der Konnektor im Offline-Modus befindet.
+Eine Umkonfiguration des Konnektors ist durch den Anwender vorzunehmen.
+
+== Schnittstellen
+Das Primärsystem nutzt die Schnittstellen des Konnektors sowie des KOM-LE-Clientmoduls. 
+Die LDAP-Schnittstelle des Konnektors wird durch das Primärsystem genutzt, um mit dem Verzeichnisdienst zu kommunizieren. Damit ist es dem Primärsystem möglich, 
+um zum Beispiel die KOM-LE-Mailadresse eines Empfängers zu ermitteln. Das Primärsystem kommuniziert mit dem KOM-LE-Clientmodul unter Verwendung der gängigen E-Mail–Standards SMTP und POP3.
+Dabei agiert das KOM-LE-Clientmodul als Mail Transport Agent (MTA). +
+
+Das folgende Komponentendiagramm stellt die Abhängigkeitsbeziehungen zwischen den einzelnen Komponenten dar.
+
+image:Int_PS-KOMLE.png[width=50%]
+
+* [x] *Verwendung des LDAP-Proxys im Konnektor* +
+Es ist erforderlich, dass das Primärsystem mit der LDAP-Schnittstelle des Konnektors kommuniziert, um Verzeichnisdienstabfragen durchzuführen.
+
+* [x] *Verwendung des KOM-LE-Clientmoduls* +
+Es ist erforderlich, dass das Primärsystem mit dem KOM-LE-Clientmodul kommuniziert, um E-Mails zu versenden und zu empfangen. 
+
+== Anwendungsfälle
+In der folgenden Abbildung sind die KOM-LE-Anwendungsfälle dargestellt.
+
+image:UC_PS-KOMLE.png[width=40%]
+
+=== Nachrichten generieren und übernehmen
+Die Eingabe des Nachrichtentextes wird direkt vom Primärsystem heraus gesteuert. 
+Als Anlage der KOM-LE-Nachricht kommen neben unsignierten Dokumenten auch (qualifiziert) signierte Dokumente in Frage. Alle Anhänge können jeweils 
+auch separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt sein.
+
+* [x]  *Nachrichtengenerierung im Primärsystem* +
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, Nachrichten und ggf. Anhänge zum Versand mittels KOM-LE direkt aus dem Primärsystem heraus zu 
+erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
+
+* [x]  *E-Mail-Kategorisierung im Primärsystem* +
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, die E-Mail entsprechend zu kategorisieren. Eine Kategorisierung im KOM-LE Client-Modul ist nicht möglich. 
+Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden. Ist in der dem KOM-LE Client-Modul
+übergebenen Mail keine Dienstkennung gesetzt, wird durch das KOM-LE Client-Modul eine Defaultkennung automatisch befüllt. 
+
+
+=== Empfänger ermitteln
+In KOM-LE können nur E-Mails an Empfänger versendet werden, die als KOM-LE-Teilnehmer im Verzeichnisdienst aufgenommen und deren Verschlüsselungszertifikate sowie 
+deren KOM-LE-E-Mail-Adressen hinterlegt sind. 
+
+IMPORTANT: E-Mail-Nachrichten können nur für KOM-LE-Teilnehmer verschlüsselt werden.
+
+* [x]  *Verwendung von KOM-LE-E-Mail-Adressen* +
+Zum Versand einer E-Mail ist es erforderlich, dass das Primärsystem die Header-Felder `to`, `cc`, `bcc` gemäß *[RFC822]* mit KOM-LE-E-Mail-Adresse aus dem 
+Verzeichnisdienst befüllt. Die Empfänger-Adressen können dabei aus dem Verzeichnisdienst abgefragt werden.
+
+Zur Abfrage der Empfänger-Adresse aus dem Verzeichnisdienst, agiert das Primärsystem als LDAP-Client gegenüber dem LDAP-Proxy des Konnektors. 
+Falls die Verbindung zwischen Primärsystem und Konnektor über TLS abgesichert wird, ist LDAPS zu verwenden.
+
+* [x] *VZD-Suchanfragen mittels LDAP* +
+Es ist erforderlich, dass das Primärsystem als LDAP-Client aus den LDAPv3 Standard die LDAP-Operationen `Bind`, `Unbind`, `Search`, `Abandon` gemäß *[RFC4510]* nutzt, um 
+ein LDAP `search` durchzuführen.
+
+Der Verzeichnisdienst ist für LDAP-Suchoperationen des Primärsystems über den Konnektor erreichbar, der als LDAP-Proxy agiert. 
+
+* [x] *Nutzung des LDAP-Proxys des Konnektors* +
+Es ist erforderlich, dass das Primärsystem die LDAP `search`-Operation gemäß *[RFC4511#4.5.1]* über den LDAP-Proxy des Konnektors ausführt. 
+
+Die Suche nach der KOM-LE–E-Mail-Adresse des Nachrichtenempfängers erfolgt primär über den Namen des Empfängers – also den Personennamen oder den Institutionennamen – aber auch über zusätzliche Informationen wie Adressen, Fachgebiet oder Institutionstyp.
+
+* [x] *Search Operation mittels des LDAP-Directory-Basisdatensatz-Attributs* +
+Es ist erforderlich, dass das Primärsystem die E-Mail-Adressen der Empfänger über die Suchkriterien des Namens, der Postadresse der Leistungserbringerinstitution oder des Fachgebiets 
+in einer LDAP `search`-Operation gemäß *[RFC4511#4.5.1]* nach einem entsprechenden LDAP-Directory-Basisdatensatz-Attribut nach Tabelle 
+*[gemSpec_VZD#Tab_VZD_Datenbeschreibung]* suchen kann. 
+
+Mittels der Suchkriterien kann das Primärsystem die KOM-LE-E-Mail-Empfänger im Verzeichnisdienst ermitteln. Diese Suchkriterien sind in 
+*[gemSpec_VZD#Tab_VZD_Datenbeschreibung]* aufgeführt. Über die LDAP-Suche sind Einträge ohne Zertifikate nicht erreichbar.  
+
+* [x] *Auswahl der E-Mail-Adresse des gewünschten Empfängers* +
+Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere 
+Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt. 
+
+===  Nachrichten versenden
+Der Versand von KOM-LE–Nachrichten erfolgt über das KOM-LE–Clientmodul, das die Nachricht für jeden Empfänger zuerst signiert und anschließend verschlüsselt. +
+
+IMPORTANT: In KOM-LE 1.0 darf die Gesamtgröße 25 MB nicht überschritten werden.
+
+Die Einschränkung auf 25 MB wird durch den Konnektor verursacht, der in KOM-LE 1.0 für die Signierung und Verschlüsselung verantwortlich ist.
+
+Mit KOM-LE 1.5 übernimmt das KOM-LE-Clientmodul die Verschlüsselung der Anhänge. Somit ist der Versand von größeren Anhängen möglich. 
+
+* [x] *E-Mail-Versand als Funktion des Primärsystems* +
+Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus seinem E-Mail-Modul heraus versendet.
+
+Die zu versendenden Dokumente können vor dem Versand vom Primärsystem über einen Aufruf der Signaturschnittstelle des Konnektors vom Leistungserbringer signiert werden. 
+
+* [x] *Erstellung von MIME-Nachrichten* +
+Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt.  
+Diese muss anschließend über das KOM-LE-Clientmodul versendet werden.
+
+Dabei signiert das KOM-LE-Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger. 
+Hierbei wird der S-MIME-Standard verwendet.
+
+* [x] *SMTP-Kommunikation über das KOM-LE-Clientmodul* + 
+Es ist erforderlich, dass das Primärsystem ausschließlich mit dem KOM-LE–Client mittels SMTP-Kommandos kommuniziert.
+
+* [x] *SMTP-Authentifizierung über KOM-LE–Clientmodul* + 
+Für die SMTP-Authentifizierung über das KOM-LE–Clientmodul ist es erforderlich, dass das Primärsystem die SASL-Mechanismen `PLAIN` und `LOGIN` verwendet.
+
+Beim Aufbau der SMTP-Verbindung ist es erforderlich, Kartenverwaltungsinformationen zur SM-B mitzuliefern, die zum Integritätsschutz der 
+Nachricht verwendet werden sollen. Dazu müssen `MandantId`, `ClientsystemId` und `WorkplaceId` der Kartensitzung der erforderlichen SM-B 
+über den Benutzernamen dem Clientmodul mitgeteilt werden.
+
+* [x] *Nutzerkreis der KOM-LE-E-Mail-Adresse beim Nachrichtenversand* +
+Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Nachrichtenversand nur durch autorisierte Personen erfolgt. 
+Die autorisierten Personen werden mit dem KOM-LE Antrag festgelegt. 
+
+* [x] *Angaben zum Aufbau der SMTP-Verbindung zum KOM-LE-Clientmodul* + 
+Bei Anwendung der SASL-Mechanismen `PLAIN` und `LOGIN` für die SMTP-Authentifizierung ist es erforderlich, dass das Primärsystem einen persistent gespeicherten 
+SMTP-Benutzernamen gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_SMTP-POP3_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber 
+dem KOM-LE-Dienst (MTA) verwendet wird, wird ebenfalls dem persistenten Datensatz entnommen. Die Attribute der Tabelle 
+_Tab_ILF_PS_Bildungsregel_SMTP-POP3_Benutzername_ werden durch das „#“ – Zeichen getrennt. 
+
+
+[cols="1,2",options="header",autowidth]
+.Tab_ILF_PS_Bildungsregel_SMTP-POP3_Benutzername
+|===
+|Attribut | Beispiel
+|Benutzername des Absenders am KOM-LE-Dienst (E-Mail-Adresse) | Benutzername des Absenders am KOM-LE-Dienst (E-Mail-Adresse)
+|Domain Adresse des KOM-LE-Dienstes (des MTAs) inkl. Portnummer | mail.komle.telematik:465 oder +
+mail.kim.telematik:465
+|MandantId | 1
+|ClientsystemId| KOM_LE
+|WorkplaceId | 7
+|===
+
+
+Für das aufgeführte Beispiel ergibt sich der SMTP-Benutzername:
+
+*Beispiel*
+----
+erik.mustermann@komle.de#mail.komle.telematik:465#1#KOM_LE#7
+----
+
+Als Ergebnis der Authentisierung erhält das Primärsystem die SMTP-Antwortcodes vom KOM-LE-Client, der die Verbindung zum KOM-LE-Dienst (MTA) 
+als Proxy offen hält.
+
+* [x] *Nutzung des SMTP-DATA-Kommandos* + 
+Es ist erforderlich, dass das Primärsystem das `DATA`-Kommando zum Versenden einer KOM-LE-Nachricht ausführt. Mit der 
+Zeichensequenz „`<CRLF>`.`<CRLF>`“ wird das Ende der Nachricht markiert und anschließend weiterverarbeitet.
+
+* [x] *Schließung der SMTP-Verbindung mit QUIT* +
+Es ist erforderlich, dass das Primärsystem die SMTP-Verbindung mit dem `QUIT`-Kommando beendet.
+
+* [x] *Informieren über gescheiterten Nachrichtenversand* +
+Wenn das KOM-LE-Clientmodul für alle Empfänger der zu versendenden Nachricht keine Verschlüsselungszertifikate ermitteln kann, bricht es den Versand ab 
+und liefert dem Primärsystem den Antwortcode „`451`“ zurück. Es ist erforderlich, dass das Primärsystem beim Erhalt dieses Antwortcodes den Nutzer über das Scheitern 
+des Nachrichtenversandes mit folgendem Fehlertext informiert: + 
+
+_„Die Nachricht konnte nicht gesendet werden, weil für keinen Empfänger gültige Verschlüsselungszertifikate ermittelt werden konnten.“_ +
+
+Wenn nur ein Teil des gewünschten Empfängerkreises adressiert werden konnte, wird der Nutzer mit der entsprechenden Meldung darüber informiert: + 
+
+_„Die Nachricht wurde nur an einen Teil der gewünschten Adressaten versendet, denn es konnten nicht für alle Empfänger gültige Verschlüsselungszertifikate ermittelt werden.“_
+
+=== Nachrichten empfangen
+Der Empfang von KOM-LE-Nachrichten erfolgt über das KOM-LE-Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern 
+die dafür erforderliche Smartcard/HSM im System registriert und freigeschaltet ist.
+
+* [x] *Nutzerkreis der KOM-LE-E-Mail-Adresse beim Nachrichtenempfang* +
+Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Zugriff auf empfangene KOM-LE-Nachrichten nur durch autorisierte Personen erfolgt.
+
+* [x] *Freischaltung der für KOM-LE erforderlichen Smartcards* +
+Für den Empfang entschlüsselter Nachrichten ist es erforderlich, dass Smartcards/HSMs freigeschaltet vorliegen. 
+Ohne diese Freischaltung können Nachrichten nicht entschlüsselt entgegengenommen werden. Es ist erforderlich, dass das Primärsystem den Status der Freischaltung 
+der Smartcards sichtbar macht. Ebenfalls ist es erforderlich, dass der Benutzer darauf aufmerksam gemacht wird, dass er zum Empfang entschlüsselter Nachrichten 
+diese Smartcards freischalten muss.
+
+Das Primärsystem übergibt dem KOM-LE-Clientmodul in der POP3-Kommunikation alle zum Nachrichtenempfang erforderlichen Informationen. 
+Auch für die Abholung von Nachrichten ist es erforderlich, dass Angaben über die Ansteuerung der Smartcards des Empfängers
+innerhalb der POP3-Authentifizierung übergeben werden.
+
+* [x] *Angaben zum Aufbau der POP3-Verbindung zum KOM-LE-Clientmodul* +
+Zur POP3-Authentifizierung gegenüber dem KOM-LE-Dienst (MTA als POP3-Server) ist es erforderlich, dass das Primärsystem einen persistent gespeicherten POP3-Benutzernamen 
+gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_SMTP-POP3_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber 
+dem KOM-LE-Dienst (MTA) verwendet wird, wird ebenfalls dem persistenten Datensatz entnommen. Die Attribute der Tabelle werden durch das „ # “ – Zeichen getrennt.  
+Ist die KOM-LE-E-Mail-Adresse des Empfängers nicht einer SM-B, sondern eines HBA zugeordnet, ist es erforderlich, an das Ende des POP3-Benutzernamens zusätzlich 
+ein „#“ sowie die `UserId` für den Zugriff auf den HBA anzuhängen.
+ 
+*Beispiel*
+----
+erik.mustermann@komle.de#mail.komle.telematik:465#1#KOM_LE#7#4 
+----
+ 
+Die folgende POP3-Kommunikation erfolgt gemäß POP3-Protokoll über den KOM-LE–Client.
+
+Das KOM-LE–Clientmodul leitet die POP3-Anfragen des Primärsystems an den KOM-LE-Fachdienst (MTA) weiter und entschlüsselt abgeholte Nachrichten, 
+um sie in entschlüsselter und verifizierter Form an das Primärsystem weiterzugeben.
+
+Enthält eine KOM-LE-Nachricht externe Anhänge vom KAS, so werden diese in KOM-LE 1.5 vom Clientmodul automatisch heruntergeladen 
+und für das Primärsystem in die Mail eingefügt.
+
+* [x] *Nachrichten mittels POP3 abholen* +
+Es ist erforderlich, dass das Primärsystem gemäß *[RFC2449]* dem KOM-LE-Clientmodul POP3-Anfragen zusenden kann sowie POP3-Antwortcodes von ihm erhält.
+
+* [x] *Anzeige entgegengenommener Nachrichten* +
+Es ist erforderlich, dass das Primärsystem empfangene Nachrichten entgegennehmen kann sowie eine Anzeige der Nachricht ermöglicht.
+
+* [x] *E-Mail-Anhänge darstellen* +
+Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge in den Standardformaten `PDF`, `JPEG`, `GIF`, `TXT`, `DOC` anzeigt.
+
+* [x] *E-Mail-Anhänge verarbeiten* +
+Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der 
+Patientenidentifikation benutzt.
+
+Das Clientmodul erzeugt bei der Prüfung der Nachrichtensignatur einen Signaturprüfungsbericht im PDF-Format. Der Bericht wird durch das 
+Clientmodul als Anhang mit dem Namen `Signaturpruefungsbericht.pdf` der Originalnachricht beigefügt.
+
+== Integration des Clientmoduls in das Primärsystem
+Ab KOM-LE 1.5 ist es möglich, die Funktionalität des KOM-LE-Clientmoduls in das Primärsystem zu integrieren. Somit ist kein separates Clientmodul mehr notwendig.
+Die folgende Abbildung stellt eine mögliche Integration dar:
+
+image:CM_Integration.png[width=50%]
+
+Wenn das Clientmodul in das Primärsystem integriert wird, richten sich die Anforderungen des Clientmoduls an das Primärsystem. 
+Durch die optionale Integration entfallen alle Anforderungen an die Schnittstelle zwischen Primärsystem und Clientmodul, 
+da diese nicht mehr existiert. 
+
+Die zu erfüllenden Anforderungen für die Integration des Clientmoduls in das Primärsystem können dem Produkttypsteckbrief des Clientmoduls *[gemProdT_CM_KOMLE]* 
+entnommen werden.
+
+
+
+

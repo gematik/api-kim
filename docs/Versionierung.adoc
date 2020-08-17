@@ -9,22 +9,42 @@ image:gematik_logo.jpg[width=35%]
 toc::[]
 
 == Versionierung
+Im Folgenden wird die Versionierung der REST-Schnittstelle sowie der Versionierung der YAML-Files beschrieben.
+
+=== Versionierung der REST-Schnittstelle 
 
 Mittels der URI-Versionierung wird die Rückwärtskompatibilität der KIM-REST-API gewährleistet. 
-Die Versionierung ist in allen REST-Schnittstellendefinitionen (YAML-Files) enthalten.
+ +
+In der URI wird das folgende Versionierungsschema verwendet: *<MAJOR>*.*<MINOR>*
 
 //version: 1.0.1
 //In dieser Versionsnummer wird die letzte Nummer (dritte Stelle) für die Versionierung von kompatiblen Änderungen genutzt.
 
 
+*Beispiel*
+
 [source,bash]
 -----------------
-<protokoll>://<base_url>/<version/<resource>
+https://account-manager.hrst1.kim.telematik/v1.0/accmgr/cm-version/
+https://account-manager.hrst1.kim.telematik/v1.1/accmgr/cm-version/
 -----------------
 
-*Beispiel:* +
-https://kim-fachdienst.de/v1.0/ressource
+Die Änderung der URI sollte möglichst selten erfolgen, damit der Implementierungaufwand bei den Clients gering gehalten wird. Daher erhöhen sich *MAJOR* und *MINOR* nur 
+dann, wenn es die Notwendigkeit gibt, die Schnittstelle unter einer neuen URI zur Verfügung zu stellen. Zum Beispiel wenn inkompatible API-Änderungen vorgenommen wurden. 
 
+=== Versionierung der YAML-Files
 
+Für die Versionierung der YAML-Files gelten die gematik-Vorgaben aus *[gemSpec_OM#2]*. Die Versionierung ist in allen REST-Schnittstellendefinitionen (YAML-Files) enthalten.
 
+*Beispiel*
 
+[source,bash]
+-----------------
+openapi: 3.0.1
+info:
+  title: I_AccountManager_Service
+  description:  Über diese Schnittstelle wird der KIM Account verwaltet
+  version: 1.1.1
+  # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
+  # 1.1.1 Aufnahme der API-Versionierung in der URI und Detaillierung des FQDN des Accountmanagers
+-----------------
