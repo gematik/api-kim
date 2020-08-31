@@ -1,3 +1,6 @@
+# Release 4.0.1-Pre2
+# Release 4.0.1-Pre2 - included implementation guideline for PS - subchapter versioning added - added JSON schema for attachments - added KIM S/SMIME sample messages - updated folder structure in Readme.md
+
 # Release 4.0.1-Pre1
 - included implementation guideline for PS
  - subchapter versioning added
