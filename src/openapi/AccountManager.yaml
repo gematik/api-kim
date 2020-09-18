@@ -1,12 +1,14 @@
 openapi: 3.0.1
 info:
   title: I_AccountManager_Service
-  description:  Über diese Schnittstelle wird der KIM Account verwaltet
-  version: 1.1.1
+  description:  Über diese Schnittstelle wird der KIM Account verwaltet.
+  #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
+  version: 1.1.2
   # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
   # 1.1.1 Aufnahme der API-Versionierung in der URI und Detaillierung des FQDN des Accountmanagers
+  # 1.1.2 Parameter referenceID in die register Operation aufgenommen und Format der Parameter konkretisiert
 externalDocs:
-  description: Gitlab
+  description: Gitlab Dokumentation
   url: http://www.gematik.de
 servers:
 - url: https://account-manager.hrst1.kim.telematik/v1.0/
@@ -31,12 +33,22 @@ paths:
         required: true
         schema:
           type: string
+          maxLength: 256
+      - in: header
+        name: referenceID
+        description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
+                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                     Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
+        schema:
+          type: string
+          maxLength: 256
       - in: header
         name: password
         description: Passwort
         required: true
         schema:
           type: string
+          format: password
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -92,17 +104,19 @@ paths:
       
       parameters:
       - in: header
-        name: Username
+        name: username
         description: Nutzername
         required: true
         schema:
           type: string
+          maxLength: 256
       - in: header
-        name: Password
+        name: password
         description: Passwort
         required: true
         schema:
           type: string
+          maxLength: 256
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -155,12 +169,14 @@ paths:
         required: true
         schema:
           type: string
+          maxLength: 256
       - in: header
         name: password
         description: Passwort
         required: true
         schema:
           type: string
+          maxLength: 256
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -218,20 +234,23 @@ paths:
         required: true
         schema:
           type: string
+          maxLength: 256
       - in: header
         name: password
         description: Passwort
         required: true
         schema:
           type: string
-
+          maxLength: 256
       - in: header
-        name: KIM-Version
-        description: Die Version vom Clientmodul wird dem Fachdienst mitgeteilt.
+        name: kim-version
+        description: Die KIM-Version vom Clientmodul wird dem Fachdienst mitgeteilt.
         #            (Der Fachdienst verwaltet die Versionsangeben im Verzeichnisdienst)
         required: true
         schema:
           type: string
+          maxLength: 256
+          example: "1.5"
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -284,13 +303,14 @@ paths:
         required: true
         schema:
           type: string
+          maxLength: 256
       - in: header
         name: password
-        description: Aktuelles Passwort
+        description: Passwort
         required: true
         schema:
           type: string
-
+          maxLength: 256
       - in: header
         name: newPassword
         description: Neues Passwort

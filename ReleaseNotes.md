@@ -1,3 +1,6 @@
+# Release 4.0.1-Pre3
+# Release 4.0.1-Pre3 New features - included implementation guideline for PS - subchapter versioning added - added JSON schema for attachments - added KIM S/SMIME sample messages Changes - added errorcode 413 in operation add_Attachment in I_Attachment_Service - added parameter referenceID in I_AccountManager_Service - updated folder structure in Readme.md
+
 # Release 4.0.1-Pre2
 # Release 4.0.1-Pre2 - included implementation guideline for PS - subchapter versioning added - added JSON schema for attachments - added KIM S/SMIME sample messages - updated folder structure in Readme.md
 

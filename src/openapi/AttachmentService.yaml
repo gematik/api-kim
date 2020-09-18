@@ -3,9 +3,10 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte EMail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 1.0.0
+  version: 1.0.1
   # 0.0.1 initiale Version des Interfaces
   # 1.0.0 Aufnahme der API-Versionierung in der URI und Detallierung des FQDN des KAS sowie Fehlerbehebung des Ressourcen-Parameters in der URI
+  # 1.0.1 Aufnahme Fehlercode 413 in der Operation add_Attachment
           
 externalDocs:
   description: Gitlab
@@ -86,6 +87,10 @@ paths:
           405:
             description: Invalid input
             content: {}
+          413:
+            description: Payload Too Large
+            # Die maximal zulässige Dokumentengröße wurde überschritten 
+            content: {}            
  
   /MaxMailSize:
      get:
