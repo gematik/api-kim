@@ -128,8 +128,8 @@ Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus sei
 Die zu versendenden Dokumente können vor dem Versand vom Primärsystem über einen Aufruf der Signaturschnittstelle des Konnektors vom Leistungserbringer signiert werden. 
 
 * *Erstellung von MIME-Nachrichten* +
-Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt.  
-Diese muss anschließend über das KOM-LE-Clientmodul versendet werden.
+Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt. Die Message-IDs der Nachrichten dürfen keine datenschutzrelevanten Informationen - wie z.B. FQDNs - enthalten. 
+Die E-Mail-Nachricht muss anschließend über das KOM-LE-Clientmodul versendet werden.
 
 Dabei signiert das KOM-LE-Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger. 
 Hierbei wird der S-MIME-Standard verwendet.

@@ -1,29 +1,37 @@
 openapi: 3.0.1
 info:
   title: I_AccountManager_Service
-  description:  Über diese Schnittstelle wird der KIM Account verwaltet.
+  description:  Über diese Schnittstelle wird der KIM-Account verwaltet
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 1.1.2
-  # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
-  # 1.1.1 Aufnahme der API-Versionierung in der URI und Detaillierung des FQDN des Accountmanagers
+  version: 1.2.0
+  # 1.2.0 
+  #  - Parameter "cert" in allen Operationen ergänzt. Er enthält das AUT-Zertifikat, mit dem die Operation signiert wird. Das Zertifikat wird vom KIM Fachdienst zur Signaturprüfung benötigt.
+  #  - tags korrigiert
+  #  - format von Parameter username konkretisiert (email & maxlength)
+  #  - Antwort beim „register“ auf 201 „Created“ anstatt von 200 „OK“ geändert
+  #  - Operation deregister von PUT auf DELETE geändert
+  #  - Operation cm_Version von GET auf PUT geändert (Version wird im Fachdienst gesetzt, nicht gelesen)
+  #  - register_State: Response JSON konform korrigiert
   # 1.1.2 Parameter referenceID in die register Operation aufgenommen und Format der Parameter konkretisiert
+  # 1.1.1 Aufnahme der API-Versionierung in der URI und Detaillierung des FQDN des Accountmanagers
+  # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
 externalDocs:
-  description: Gitlab Dokumentation
+  description: Gitlab-Dokumentation
   url: http://www.gematik.de
 servers:
-- url: https://account-manager.hrst1.kim.telematik/v1.0/
-  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
+- url: https://account-manager.hrst1.kim.telematik/v1.1/
+  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber                                                         
 tags:
-- name: AccountManager
+- name: I_AccountManager_Services
 
 paths:
   /accmgr/register/:
     put:
       tags:
-      - I_AccountManager_Service
+      - I_AccountManager_Services
       summary: Einen Account registrieren
-      description: Der Account wird registriert und als Ergebnis die PKCS#12 Datei zurückgegeben
-                #  Wird die Operation nach erfolgreicher Registrierung erneut aufgerufen, dann wird die PKCS#12 Datei zurückgegeben
+      description: Der Account wird registriert und als Ergebnis die PKCS#12-Datei zurückgegeben
+                #  Wird die Operation nach erfolgreicher Registrierung erneut aufgerufen, dann wird die PKCS#12 Datei zurückgegeben                                        
       operationId: register
       
       parameters:
@@ -34,21 +42,23 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: email
       - in: header
         name: referenceID
-        description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
-                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
-                     Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
+        description: Der KIM-Anbieter kann den Inhalt dieses Parameters festlegen.
+                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM-Anbieter muss seine KIM-Teilnehmer über die Nutzung dieses Parameters informieren.
+                     Alle Administrationsmodule (bzw. Client-Module) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM- Fachdiensten - unterstützen.
         schema:
           type: string
-          maxLength: 256
+          maxLength: 256                                         
       - in: header
         name: password
         description: Passwort
         required: true
         schema:
           type: string
-          format: password
+          maxLength: 256
+          format: password                          
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -62,8 +72,16 @@ paths:
         schema:
           type: string
       - in: header
+        name: cert 
+        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
+        required: true
+        schema:
+          type: string
+          format: byte 
+                # base64-encoded AUT-Zertifikat
+      - in: header
         name: signedHash 
-        description: Signierter Hash Wert der Request Parameter
+        description: Signierter Hash-Wert der Request-Parameter
                   # Bildungsvorschrift für den zu signierenden String:
                   # 1. Der Pfad /accmgr/register/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
@@ -75,18 +93,14 @@ paths:
           type: string
 
       responses:
-        200:
-          description: OK
-          # Zertifikat wird zurückgegeben 
+        201:
+          description: Created
+          # Zertifikat wird binär (keine base64 Kodierung) zurückgegeben 
           content:
-           multipart/form-data:
-            schema:
-             properties:
-               file:
-                 type: array
-                 items:
-                    type: string
-                    format: binary
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
         401:
           description: Unauthorized
           # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
@@ -95,7 +109,7 @@ paths:
 ##------
 
   /accmgr/deregister/:
-    put:
+    delete:
       tags:
       - I_AccountManager_Services
       summary: Einen Account deregistrieren
@@ -110,13 +124,15 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: email
       - in: header
         name: password
         description: Passwort
         required: true
         schema:
           type: string
-          maxLength: 256
+          maxLength: 256 
+          format: password           
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -130,8 +146,16 @@ paths:
         schema:
           type: string
       - in: header
+        name: cert 
+        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
+        required: true
+        schema:
+          type: string
+          format: byte 
+                # base64-encoded AUT-Zertifikat
+      - in: header
         name: signedHash 
-        description: Signierter Hash Wert der Request Parameter
+        description: Signierter Hash-Wert der Request-Parameter
                   # Bildungsvorschrift für den zu signierenden String:
                   # 1. Der Pfad /accmgr/deregister/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
@@ -170,6 +194,7 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: email
       - in: header
         name: password
         description: Passwort
@@ -177,6 +202,7 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: password
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -190,8 +216,16 @@ paths:
         schema:
           type: string
       - in: header
+        name: cert 
+        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
+        required: true
+        schema:
+          type: string
+          format: byte 
+                # base64-encoded AUT-Zertifikat
+      - in: header
         name: signedHash 
-        description: Signierter Hash Wert der Request Parameter
+        description: Signierter Hash-Wert der Request-Parameter
                   # Bildungsvorschrift für den zu signierenden String:
                   # 1. Der Pfad /accmgr/register-state/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
@@ -209,9 +243,11 @@ paths:
           content:
             application/json:
              schema: 
-               type: string
-               enum: [registered, deregistered, unknown]
-               example: registered
+              properties:
+               registerState:
+                type: string
+                enum: [registered, deregistered, unknown]
+                example: registered
         401:
           description: Unauthorized
           # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
@@ -220,11 +256,11 @@ paths:
 ##------
 
   /accmgr/cm-version/:
-    get:
+    put:
       tags:
       - I_AccountManager_Services
-      summary: Dem Account Manager vom Fachdienst wird die KIM Version vom Client-Modul übergeben
-      description: Die Version vom CM wird dem Account Manager (FD) übergeben
+      summary: Dem Account-Manager vom Fachdienst wird die KIM-Version vom Client-Modul übergeben
+      description: Die Version vom CM wird dem Account-Manager (FD) übergeben
       operationId: cm_Version
       
       parameters:
@@ -235,6 +271,7 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: email
       - in: header
         name: password
         description: Passwort
@@ -242,15 +279,16 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: password
       - in: header
-        name: kim-version
-        description: Die KIM-Version vom Clientmodul wird dem Fachdienst mitgeteilt.
-        #            (Der Fachdienst verwaltet die Versionsangeben im Verzeichnisdienst)
+        name: KIM-Version
+        description: Die Version vom Client-Modul wird dem Fachdienst mitgeteilt.
+        #            (Der Fachdienst verwaltet die Versionsangaben im Verzeichnisdienst)
         required: true
         schema:
           type: string
           maxLength: 256
-          example: "1.5"
+          example: "1.5"                        
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -264,8 +302,16 @@ paths:
         schema:
           type: string
       - in: header
+        name: cert 
+        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
+        required: true
+        schema:
+          type: string
+          format: byte 
+                # base64-encoded AUT-Zertifikat
+      - in: header
         name: signedHash 
-        description: Signierter Hash Wert der Request Parameter
+        description: Signierter Hash-Wert der Request-Parameter
                   # Bildungsvorschrift für den zu signierenden String:
                   # 1. Der Pfad /accmgr/cm-version/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
@@ -304,19 +350,23 @@ paths:
         schema:
           type: string
           maxLength: 256
+          format: email
       - in: header
         name: password
-        description: Passwort
+        description: Aktuelles Passwort
         required: true
         schema:
           type: string
           maxLength: 256
+          format: password
       - in: header
         name: newPassword
         description: Neues Passwort
         required: true
         schema:
           type: string
+          maxLength: 256
+          format: password          
       - in: header
         name: nonce
         description: Zufälliges 256bit Nonce
@@ -330,8 +380,16 @@ paths:
         schema:
           type: string
       - in: header
+        name: cert 
+        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
+        required: true
+        schema:
+          type: string
+          format: byte 
+                # base64-encoded AUT-Zertifikat
+      - in: header
         name: signedHash 
-        description: Signierter Hash Wert der Request Parameter
+        description: Signierter Hash-Wert der Request-Parameter
                   # Bildungsvorschrift für den zu signierenden String:
                   # 1. Der Pfad /accmgr/pw/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
                   # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]

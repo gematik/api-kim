@@ -1,18 +1,25 @@
 openapi: 3.0.1
 info:
   title: I_Attachment_Service
-  description:  Über diese Schnittstelle können verschlüsselte EMail-Anhänge <br>
+  description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 1.0.1
-  # 0.0.1 initiale Version des Interfaces
-  # 1.0.0 Aufnahme der API-Versionierung in der URI und Detallierung des FQDN des KAS sowie Fehlerbehebung des Ressourcen-Parameters in der URI
-  # 1.0.1 Aufnahme Fehlercode 413 in der Operation add_Attachment
-          
+  version: 1.1.0
+  ### 1.1.0 
+  # changed data type in read_MaxMailSize()
+  # changed error code 405 to 400 in add_Attachment() 
+  # changed MIME type multipart/form-data to application/octect-stream in add_Attachment() and read_Attachment() 
+  ### 1.0.1
+  # added errorcode 413 in operation add_Attachment()
+  ### 1.0.0
+  # extended URI to interface releases 
+  ### 0.0.1 
+  # initial Version of I_Attachment_Service 
+
 externalDocs:
   description: Gitlab
   url: http://www.gematik.de
 servers:
-- url: https://kas.hrst1.kim.telematik/v1.0/
+- url: https://kas.hrst1.kim.telematik/v1.1/
 tags:
 - name: Attachments
 
@@ -40,14 +47,10 @@ paths:
           description: OK
              # Anhang wurde erfolgreich heruntergeladen 
           content:
-           multipart/form-data:
+           application/octet-stream:
             schema:
-             properties:
-               file:
-                 type: array
-                 items:
-                    type: string
-                    format: binary
+             type: string
+             format: binary
         404:
           description: Ressource unter dem angegebenen Link nicht gefunden
           content: {}
@@ -63,16 +66,12 @@ paths:
       
       requestBody:
         content:
-          multipart/form-data:
+          application/octet-stream:
             schema:
-             properties:
-               File:
-                 type: array
-                 items:
-                    type: string
-                    format: binary
+             type: string
+             format: binary
         required: true
-      
+
       responses:
           201:
             description: Created
@@ -83,9 +82,8 @@ paths:
                properties:
                  Shared-Link:
                    type: string
-
-          405:
-            description: Invalid input
+          400:
+            description: Bad Request
             content: {}
           413:
             description: Payload Too Large
@@ -96,18 +94,21 @@ paths:
      get:
       tags:
       - MaxMailSize
-      summary: Die maximale Größe einer KIM Mail ermitteln
-      description: Gibt die maximale Größe einer gesamten KIM Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
-                   Dieser Wert wird auf dem Fachdienst definiert, und bleibt über längere Zeit konstant.
+      summary: Die maximale Größe einer KIM-Mail ermitteln
+      description: Gibt die maximale Größe einer gesamten KIM-Mail inklusive aller Anhänge (Mail base64 kodiert) zurück. 
+                   Dieser Wert wird auf dem Fachdienst definiert und bleibt über längere Zeit konstant.
                    Eine Abfrage ist deshalb nicht für jede Mail erforderlich (Empfohlen wird die tägliche Abfrage)
       operationId: read_MaxMailSize
 
       responses:
         200:
           description: OK
-                # Gibt die maximale Größe einer KIM Mail zurück
+                # Gibt die maximale Größe einer KIM-Mail in Bytes zurück
           content:
             application/json:            
              schema:
-              type: "integer"     
-              example: 200
+              properties:
+               MaxMailSize:
+                 type: "integer"     
+                 format: int64
+                 example: 734003200
