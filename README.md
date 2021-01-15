@@ -56,7 +56,9 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     ├─ docs
     ├─ images
     ├─ samples
-    │    └─── SMIME-Profil.zip
+    │   ├──── KAS
+    │   │    └── MultipleAttachments.zip
+    │   └──── SMIME-Profil.zip
     ├─ src
     │   ├──── openapi
     │   │    ├── AccountManager.yaml
