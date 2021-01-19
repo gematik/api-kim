@@ -5,7 +5,7 @@ The specification KIM (KOM-LE) 1.5 is a part of gematik document release 4
 
 ## Document Release 4.0.1 - Hotfix 1
 
-New feature 4
+New feature:
 - added a KAS sample for multiple attachments
 
 Changes
