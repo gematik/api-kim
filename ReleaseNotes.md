@@ -1,8 +1,6 @@
 # KIM API
 
-Notes: Since April 2021 KIM is no longer a part of a gematik document release. Starting with KIM v1.5.1 it will be develop in a separate branch (see also https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen). I
-
--------------------------------------------------------------------------------
+Notes: Since April 2021 KIM is no longer a part of a gematik document release. Starting with KIM v1.5.1 it will be develop in a separate branch (see also https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen). 
 
 ## KIM v1.5.1 - Release Notes 
 
@@ -31,8 +29,6 @@ Changes
 
 The specification KIM (KOM-LE) v1.5 is a part of gematik document release 4 
 (see also https://fachportal.gematik.de)
-
--------------------------------------------------------------------------------
 
 ## Document Release 4.0.1 - Hotfix 1
 
