@@ -1,10 +1,38 @@
-# Release 1.5.1
-## KIM v1.5.1 - Release Notes New feature - added support for Multi-Konnektor environments - updated operations for registration process - added new operations for user administration - added new operations for out of office messages - added new operations to port an TelematikID to new mail address - added new interface DiretoryApplicationMaintenance v1.0.0 - added JSON-Web-Token for authentication - added HTTP-Auth for uploading files to KAS Changes - updated I_AccountManager_Service to v2.0.0 (see [I_AccountManager_Service](https://github.com/gematik/api-kim/blob/master/src/openapi/AccountManager.yaml) for more details) - updated I_Attachment_Service to v2.0.0 (see [I_Attachment_Service](https://github.com/gematik/api-kim/blob/master/src/openapi/AttachmentService.yaml) for more details) - refactored the API of KAS and Account Manager in KIM_API.adoc - refactored the overview of KIM use cases in Anwendungsfaelle.adoc - refactored implementation guideline for PS in Primaersystem.adoc - renamed parameter in Attachment_schema.json - updated the description of VZD in Basisdienste.adoc - added new section Authentisierung.adoc - updated folder structure in Readme.md
+# KIM API
+
+Notes: Since April 2021 KIM is no longer a part of a gematik document release. Starting with KIM v1.5.1 it will be develop in a separate branch (see also https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen). I
+
+-------------------------------------------------------------------------------
+
+## KIM v1.5.1 - Release Notes 
+
+New feature 
+- added support for Multi-Konnektor environments 
+- updated operations for registration process 
+- added new operations for user administration 
+- added new operations for out of office messages
+- added new operations to port an TelematikID to new mail address 
+- added new interface DiretoryApplicationMaintenance v1.0.0 
+- added JSON-Web-Token for authentication 
+- added HTTP-Auth for uploading files to KAS 
+
+Changes 
+- updated I_AccountManager_Service to v2.0.0 (see [I_AccountManager_Service](https://github.com/gematik/api-kim/blob/master/src/openapi/AccountManager.yaml) for more details) 
+- updated I_Attachment_Service to v2.0.0 (see [I_Attachment_Service](https://github.com/gematik/api-kim/blob/master/src/openapi/AttachmentService.yaml) for more details) 
+- refactored the API of KAS and Account Manager in KIM_API.adoc 
+- refactored the overview of KIM use cases in Anwendungsfaelle.adoc 
+- refactored implementation guideline for PS in Primaersystem.adoc
+- renamed parameter in Attachment_schema.json 
+- updated the description of VZD in Basisdienste.adoc 
+- added new section Authentisierung.adoc 
+- updated folder structure in Readme.md
 
 # KIM v1.5
 
-The specification KIM (KOM-LE) 1.5 is a part of gematik document release 4 
+The specification KIM (KOM-LE) v1.5 is a part of gematik document release 4 
 (see also https://fachportal.gematik.de)
+
+-------------------------------------------------------------------------------
 
 ## Document Release 4.0.1 - Hotfix 1
 
