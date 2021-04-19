@@ -9,16 +9,12 @@ image:gematik_logo.jpg[width=35%]
 toc::[]
 
 == Verzeichnisdienst
+Der Verzeichnisdienst bietet über die Schnittstelle `I_Directory_Application_Maintenance` als LDAPv3 und Webservice (REST) die Möglichkeit KIM-Fachdaten zu pflegen sowie abzufragen. Zu den Fachdaten gehören die KIM-Mail-Adressen, sowie die verwendete KOM-LE-Version der Clientmodule. Ausgehend von dieser Version entscheidet das Clientmodul des Senders, ob das Clientmodul des Empfängers kompatibel ist. Die KIM 1.5.1 Erweiterung um das LDAP-Directory Attributes `KOM-LE-Version` ist in  *[gemSpec_VZD#5]* spezifiziert.
 
-Der Verzeichnisdienst wird zur Ermittlung der Mail-Adressen und Verschlüsselungszertifikate der Empfänger von Mails genutzt.
-Weiterhin enthält der Verzeichniseintrag neben der Mail-Adresse auch die Version von dem jeweiligen Client. Anhand dieser Version entscheidet das Sende-Clientmodul, ob der Client des Empfängers kompatibel zu der Mail ist. Die Erweiterung um das LDAP-Directory Attributes _KOM-LE-Version_ ist in  *[gemSpec_VZD#5]* spezifiziert.
+Die Beschreibung der REST-Schnittstelle des Verzeichnisdienstes für KIM ist hier zu finden: link:../src/openapi/DirectoryApplicationMaintenance.yaml[Verzeichnisdienst] 
 
+Im Folgenden sind die LDAP-Directory-Attribute der KIM-Fachdaten dargestellt: +
 
-== Authentifizierung
+image:KOMLE_Fachdaten.PNG[width=45%]
 
-Die Authentifizierung in der KOM-LE 1.5-Architektur erfolgt konform zur Authentifizierung des Clientmoduls beim Fachdienst. Eine Besonderheit tritt bei dem KAS des Fachdienstes auf: Ein Mail-Sender lädt große Anhänge immer auf den KAS seines KOM-LE-Fachdienst-Anbieters.
-Wenn der Empfänger bei einem anderen Fachdienst Anbieter ist, lädt er die Anhänge vom KAS-Fachdienst des Mail-Senders. 
-Diese Authentifizierung erfolgt analog zu der Authentifizierung bei seinem eigenen KOM-LE-Fachdienst (mit den gleichen Zertifikaten).
-Im Rahmen der Registrierung authentifiziert sich der neue Teilnehmer mit Benutzername und Kennwort am Account Manager. Diese Informationen
-hat der Teilnehmer zuvor vom Fachdienst-Anbieter z.B. über den Postweg erhalten. Die Details sowie die entsprechenden Anforderungen zur Authentifizierung bei der Registrierung sind in *[gemSpec_CM_KOMLE#3.7]* und *[gemSpec_FD_KOMLE#3.2]* zu finden.
-
+TIP: Die Abfrage der KIM-Fachdaten sollte aus den strukturierten KIM-Fachdaten erfolgen (nicht aus der flachen Liste). Die flache Liste enthält die niedrigste KIM-Version aller KIM-Anbieter für diesen Verzeichniseintrag.  

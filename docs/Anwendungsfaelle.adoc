@@ -8,108 +8,97 @@ image:gematik_logo.jpg[width=35%]
 
 toc::[]
 
+= Anwendungsfälle
+Die hier beschriebenen Anwendungsfälle gelten ab KIM 1.5.1. Die dargestellen Sequenzdiagramme dienen nur zum allgemeinen Verständnis und berücksichtigen nicht alle Kommunikationspartner (z. B. DNS-Services-Lokalisierung). Die in den Sequenzdiagrammen dargestellten Operationen 
+sollen lediglich den Ablauf des Anwendungsfalles verdeutlichen. 
 
-== Anwendungsfälle
-Im Folgenden werden die KOM-LE 1.5-Anwendungsfälle beschrieben: 
-
-*Account Manager:* +
-
-* Kontoverwaltung: +
-    (-) Registrierung durch den Leistungserbringer +
-    (-) Registrierungsstatus abfragen durch den Leistungserbringer +
-    (-) Deregistrierung durch den Leistungserbringer +
-    (-) Kennwort-Management + 
-    (-) Clientmodul-Version an den Account Manager melden
- 
-
-*Mail Server/ KAS:* +
-
-* E-Mail senden +
-    (-) E-Mail senden mit einer Dateigröße bis zu 25 MB +
-    (-) E-Mail senden mit einer Dateigröße größer 25 MB
-* E-Mail empfangen +
-    (-) E-Mail empfangen mit einer Dateigröße bis zu 25 MB +
-    (-) E-Mail empfangen mit einer Dateigröße größer 25 MB +
-* E-Mail-Kategorien 
+TIP: Auf die Angaben der zu übergebenden Parameter bei den hier beschriebenen Operationen wird der Übersichtlichkeit halber verzichtet. Diese können in der KIM-API (link:/KIM_API.adoc[Link]) nachgelesen werden. 
 
 
-***
+== KIM-Kontoverwaltung
+Über des Administrationsmodul kann ein KIM-Teilnehmer am Account Manager des gewählten Fachdienstes seine Registrierung durchführen, seinen Account verwalten oder Abwesenheitnotizen einstellen. Im Folgenden sind die Operationen aufgeführt, die das Administrationsmodul am Account Manager aufruft. 
 
-=== Kontoverwaltung
+image:acmgr_overview.png[width=65%]
 
-Über den _Account Manager_ des Fachdienstes können sich Leistungserbringer als KOM-LE-Teilnehmer registrieren oder deregistrieren sowie den aktuellen Registrierungsstatus ermitteln.
-Die folgende Abbildung verdeutlicht die Interaktion zwischen Addmimistrationsmodul und _Account Manager_:
+=== Registrierung durchführen
+Zukünftige KIM-Teilnehmer registrieren sich im ersten Schritt am Account Manager über das Frontend (GUI) des Administrationsmoduls (optional ist dies auch über das Primärsystem möglich - das Clientsystem mit dem Administrationsmodul ist in diesem Fall Bestandteil des Primärsystems). Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
-image:Anw_account_mgr_v1.PNG[width=70%]
+Informationen mit den für die Registrierung benötigten Parametern erhält der Teilnehmer vorab von seinem gewählten KIM-Anbieter. Dazu gehören die `referenceID`, das initiale Passwort (`iniPassword`) und ggf. eine vom Anbieter festgelegte KIM-E-Mail-Adresse, die dann als `referenceID` genutzt wird. Nach erfolgreicher Registrierung wird die PKCS#12-Datei mit dem Zertifikat vom Account Manager heruntergeladen, automatisiert entpackt und dem Clientmodul zur Verfügung gestellt. Das Zertifikat wird nur beim Account Manager beantragt, wenn im Clientmodul nicht bereits ein Zertifikat hinterlegt wurde. Das Administrationsmodul muss vor Ablauf dieses Zertifikates ein neues Zertifikat beim Account Manager beantragen und dem Clientmodul zur Verfügung stellen, welches damit das abgelaufene Zertifikat ersetzt. Die während der Registrierung übergebenen KIM-Fachdaten des Nutzers werden vom Account Manager in den zum Nutzer gehörenden Eintrag im Verzeichnisdienst eingetragen (z. B. KIM-Version).
 
-==== Registrierung
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-Zukünftige KOM-LE-Teilnehmer registrieren sich im ersten Schritt am _Account Manager_. Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
-Im Rahmen der Anmeldung mit Username und Kennwort erfolgt auch die Registrierung. Die Informationen für die Anmeldung hat der Teilnehmer zuvor vom KOM-LE-Anbieter erhalten. Nach erfolgreicher Registrierung wird die PKCS#12-Datei mit den Zertifikaten vom _Account Manager_ heruntergeladen.
-Ist die PKCS#12-Datei heruntergeladen, werden die Zertifikate automatisiert entpackt und dem Clientmodul zur Verfügung gestellt.
-Die Registrierung wird mit dem Aufruf der Operation _register_, die der Account Manager zur bereitstellt, durchgeführt.
+image:Seq_acc_register.png[width=70%]
 
-Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem _Account Manager_ für die Operation _register_ dargestellt.
+=== Deregistrierung durchführen
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine Deregistrierung an ihrem Fachdienst veranlassen. Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
-image:Seq_acc_mgr.PNG[width=70%]
+Nach erfolgreicher Deregistrierung ist der KIM-Account für eine definierte Zeit ausschließlich zur Abholung vorhandener E-Mails erreichbar. Danach werden alle zu diesem Mail-Account gehörenden Daten gelöscht. Der KIM-Teilnehmer kann zu einem späteren Zeitpunkt die erneute Verwendung dieser E-Mail-Adresse nur dann beantragen, wenn er unter Angabe seiner Telematik-ID eine Berechtigung nachweisen kann. 
 
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-==== Deregistrierung
+image:Seq_acc_deregister.png[width=70%]
 
-Ebenfalls kann der KOM-LE-Teilnehmer über das _Administrationsmodul_ die Deregistrierung vornehmen. Auch hierfür baut das Administrationsmodul eine TLS-gesicherte Verbindung zum _Account Manager_ auf.
-Die Deregistrierung wird mit dem Aufruf der Operation _deregister_, die der Account Manager bereitstellt, durchgeführt.
+=== Account Daten abrufen und ändern
+Ein KIM-Teilnehmer kann über das Administrationsmodul Informationen von seinem Account abrufen oder ändern (z. B. sein Passwort ändern). Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
-==== Registrierungsstatus
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-Der KOM-LE-Teilnehmer kann über das Administrationsmodul seinen aktuellen Registrierungsstatus abfragen. Dazu dient die Operation _register_state_.
+image:Seq_acc_kontoverwaltung.png[width=70%]
 
-==== Kennwort ändern
+=== Portierung einer Telematik-ID
+Mittels des Administrationsmoduls kann ein KIM-Teilnehmer eine Portierung seiner KIM-E-Mail-Adresse zu einer anderen Telematik-ID (neue Smartcard) durchführen. Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
-Durch den Aufruf der Operation _pw_change_ kann der KOM-LE-Teilnehmer das Kennwort für die Anmeldung am Fachdienst verändern.
+Im Anwendungsfall wird ein One-Time Password (OTP) vom Account Manager generiert, welches für die einmalige Authentisierung bei der Portierung, vom Administrationsmodule, verwendet werden muss. Über das ausgestellte One-Time-Passwort besteht die Möglichkeit des Nachweises über den Besitz der alten Smartcard (alte Telematik-ID). Das One-Time-Password ist eine Woche lange gültig. Nach der erfolgreichen Portierung wird durch den Account Manager der Eintrag mit der neuen Telematik-ID zur bisheriegen KIM-Mail-Adresse im Verzeichnisdienst angepasst. 
 
-==== Clientmodul-Version
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-Durch den Aufruf der Operation _cm_version_ überträgt das Administrationsmodul die Versionsnummer des Clientmoduls an den Account Manager.
+image:Seq_acc_portierung.png[width=70%]
 
-=== E-Mail-Nachrichten
+=== Aktualisierung des PKCS#12-Zertifikates
+Das bei der erstmaligen Registrierung eines KIM-Teilnehmers vom Account Manager erzeugte TLS-Zertifikat hat nur eine begrenzte Gültigkeit. Einen Monat vor Ablauf der Gültigkeit des Zertifikates muss das Administrationsmodul beim Account Manager ein neues Zertifikat beantragen und herunterladen. Die Überprüfung der Gültigkeit des aktuell benutzten TLS-Zertifikates übernimmt das Clientmodul bei jedem TLS-Verbindungsaufbau.
 
-==== E-Mail senden
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-Will der KOM-LE-Teilnehmer eine E-Mail versenden, wird im ersten Schritt der KOM-LE-Fachdienst über DNS Service Discovery durch das Clientmodul ermittelt.
-Danach kann das Clientmodul die Nachricht mit SMTPS an den Mail Server des KOM-LE-Fachdienstes senden. Ist in der E-Mail ein Anhang enthalten größer 25 MB, wird im Clientmodul automatisch der Anhang aus der E-Mail entfernt, symmetrisch verschlüsselt und separat auf einem Speicherort (KAS) verschlüsselt abgelegt. 
-In die E-Mail wird der vom KAS generierte Freigabelink auf den Ablageort im KAS eingefügt. Anschließend wird die Nachricht signiert und verschlüsselt versendet.
+image:Seq_acc_zertifikat.png[width=70%]
+
+== Abwesenheitnotizen
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Abwesenheitsnotizen für einen definierten Zeitraum konfigurieren oder einsehen. Dafür baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
+
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
+
+image:Seq_acc_abwesenheitsnotiz.png[width=70%]
+
+== KIM-Nachrichten
+Für den Umgang mit KIM-E-Mails, die inklusive Anhang größer 25 MB sind, bietet der KIM-Fachdienst einen KOMLE-Attachment Service (KAS) an. Auf diesen werden die Anhänge aus einer KIM-E-Mail verschlüsselt ausgelagert, aus der zu versendenden KIM-E-Mail entfernt und werden später auf Empfängerseite, nach dem Herunterladen vom KAS des Absenders, wieder entschlüsselt in die KIM-Mail integriert.  
+Im Folgenden sind die Operationen aufgeführt, die das Clientmodul am KOMLE-Attachment Service aufruft. 
+
+image:kas_overview.png[width=65%]
+
+=== KIM-Mail senden
+Will der KIM-Teilnehmer eine E-Mail versenden, wird im ersten Schritt die erstellte KIM-Nachricht an das Clientmodul übergeben. Das Clientmodul überprüft zunächst die Größe der übergebenen Nachricht. Ist die Nachricht kleiner als 25 MB behandelt das Clientmodul die Nachricht wie in KIM 1.0 beschrieben. 
+
+Übersteigt die Größe der Nachricht die 25 MB, dann wird zunächst das `KOM-LE-Version`-Header-Attribut auf KIM 1.5 gesetzt. Anschließend erzeugt das Clientmodul für jeden Anhang einen symmetrischen Schlüssel, sowie einen Hashwert. Mit Hilfe der symmetrischen Schlüssel werden die jeweiligen Anhänge verschlüsselt. Anschließend wird die Operation `add_Attachment()` am KAS seines Anbieters aufgerufen, um alle verschlüsselten Anhänge hochzuladen. Danach entfernt das Clientmodul alle Anhänge aus der KIM-Nachricht und ersetzt diese durch die vom KAS übergebenen Freigabelinks. Ebenfalls integriert das Clientmodul die dazugehörigen symmetrischen Schlüssel und Hashwerte in die KIM-Nachricht. Anschließend wird die Nachricht signiert und mit dem asymmetrischen Schlüssel des Empfängers verschlüsselt und versendet. +
+
 Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
-image:Anw_email_send.PNG[width=70%]
+image:Seq_email_senden.PNG[width=90%]
 
-Die folgende Darstellung zeigt das dazugehörige Sequenzdiagramm für diesen Ablauf:
+=== KIM-Mail empfangen
+Will ein KIM-Teilnehmer eine KIM-E-Mail abrufen, überprüft das Clientmodul im ersten Schritt ob beim Mailserver eine neue Nachricht im Postfach vorliegt. Ist dies der Fall, werden die zur Abholung selektierten Nachrichten vom Mailserver an das Clientmodul übergeben. Anschließend wird die Nachricht mit dem asymmetrischen Schlüssel des Empfängers entschlüsselt und die Signatur der Nachricht geprüft. Weiterhin prüft das Clientmodul, um welche KIM-Version es sich bei der Nachricht handelt. Bei einer KIM 1.0 Nachricht wird diese vom Clientmodul entsprechend den Vorgaben aus KIM 1.0 bearbeitet. 
 
-image:Seq_email_senden.PNG[width=70%]
-
-Dabei wird deutlich, dass das Clientmodul eine zentrale Rolle in der Interaktion mit dem Mail-Server und dem KAS einnimmt.
-
-==== E-Mail empfangen
-
-Zuerst ermittelt das Clientmodul über Service Discovery den passenden KOM-LE-Fachdienst. Danach überprüft das Clientmodul mit POP3S beim Mail Server, ob eine neue Nachricht im Postfach liegt.
-Ist eine neue Nachricht vorhanden, wird diese durch das Clientmodul auf den Client übertragen. 
-Anschließend erfolgt die Entschlüsselung der Nachricht. Stellt das Clientmodul fest, dass sich in der
-Nachricht ein Link zum KAS (des versendenden KOM-LE-Fachdienstes) befindet, erfolgt der automatisierte Download des Anhanges von diesem, über den Link adressierten, KAS und die Entschlüsselung des Anhanges. Abschließend wird die
-entschlüsselte Nachricht verifiziert und inklusive des Anhangs an den E-Mail-Client oder das PVS übermittelt.
-
-image:Anw_email_receive.PNG[width=70%]
+Handelt es sich um eine  KIM 1.5 Nachricht, ruft das Clientmodul zunächst die Operation `read_Attachment()` beim KAS auf, um alle Anhänge über die in der KIM-Mail enthaltenen Freigabelinks herunterzuladen. Anschließend werden die Anhänge mit den in der KIM-Nachricht enthaltenen symmetrischen Schlüsseln entschlüsselt, für jeden Anhang der Hashwert berechnet und mit dem in der KIM-Nachricht enthaltenen Hashwert verglichen. Im letzten Schritt werden durch das Clientmodul die heruntergeladenen Anhänge in die ursprüngliche Nachricht eingefügt und an das Primärsystem oder den E-Mail Client übermittelt. +
 
 Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar:
 
-image:Seq_email_empfangen.PNG[width=70%]
+image:Seq_email_empfangen.PNG[width=90%]
 
-Auch in diesem Sequenzdiagramm wird deutlich, dass das Clientmodul eine zentrale Rolle einnimmt.  
-Zum einen sorgt es dafür, dass neue Nachrichten vom Mail Server abgeholt werden und zum anderen lädt das Clientmodul auch den Anhang vom KAS herunter.
-Nach Abschluss aller Operationen wird die aufbereitete E-Mail an das PVS übergeben.
+== KIM-Dienstkennung
+Der KIM-Teilnehmer kann eine zu versendende Nachricht mit einer Dienstkennung (Kategorie) - z. B. "eAU" - versehen. 
+Die Kategorie wird in den Nachrichten-Header eingetragen, so dass die Mail-Server die Kategorie auf der Empfängerseite auswerten können. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet `X-KIM-Dienstkennung`. Dadurch sind die Mail-Server in der Lage, automatisiert Nachrichten gleicher Kategorie an ein definiertes Mail-Konto weiterzuleiten. Zudem kann der KIM-Teilnehmer auf Basis der Kategorien entscheiden, wie er mit eingruppierten Nachrichten verfahren möchte. 
 
-==== E-Mail-Kategorien
+== Multikonnektor Umgebungen
+Ab KIM 1.5.1 ist es möglich, dass mehrere Konnektoren in einer Umgebung von einem Clientmodul unterstützt werden. Dies ist vor allem im Krankenhausumfeld notwendig. Das folgende Bild veranschaulicht den Einsatz von mehreren Konnektoren in einer Umgebung:
 
-Der KOM-LE-Teilnehmer kann eine zu versendende Nachricht mit einer Kategorie z.B. "eAU" versehen. 
-Die Kategorien werden in den Nachrichten-Header eingetragen, so dass die Mail Server die Kategorien auswerten können. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet X-KIM-Dienstkennung. Dadurch sind die Mail Server
-in der Lage, automatisiert Nachrichten gleicher Kategorie an ein definiertes Mail-Konto weiterzuleiten. 
-Zudem kann der KOM-LE-Teilnehmer auf Basis der Kategorien  entscheiden, wie er mit eingruppierten Nachrichten verfahren will. 
+image:Multikonnektoren.png[width=90%]
 
+In der Zeichenkette SMTP/POP3-Benutzernamens, den der Mail Client zum Clientmodul schickt, wird zusätzlich die `KonnektorID` des zu verwendenden Konnektors übergeben. Dem Clientmodule wird dadurch die Auswahl eines bestimmten Konnektors signalisiert. Die Umsetzung von mehreren Konnektoren in einer Umgebung kann hier: (link:/Primaersystem.adoc[Link]) nachgelesen werden.

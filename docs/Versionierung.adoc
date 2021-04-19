@@ -9,7 +9,7 @@ image:gematik_logo.jpg[width=35%]
 toc::[]
 
 == Versionierung
-Im Folgenden wird die Versionierung der REST-Schnittstelle sowie der Versionierung der YAML-Files beschrieben.
+Im Folgenden wird die Versionierung der REST-Schnittstelle sowie die Versionierung der YAML-Files beschrieben.
 
 === Versionierung der REST-Schnittstelle 
 

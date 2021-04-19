@@ -5,7 +5,7 @@
     {
       "name":           { "type": "string" }, 
       "link":           { "type": "string" }, 
-      "password":       { "type": "string" },  
+      "k":              { "type": "string" },  
       "hash":           { "type": "string" },  
       "size":           { "type": "integer" }, 
       "type":           { "type": "string" }   

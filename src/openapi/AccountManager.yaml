@@ -1,11 +1,23 @@
 openapi: 3.0.1
 info:
   title: I_AccountManager_Service
-  description:  Über diese Schnittstelle wird der KIM-Account verwaltet
+  description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 1.2.0
+  version: 2.0.0
+  # 2.0.0 
+  #  - included new operations for OutOfOffice
+  #  - included new operations for porting an e-mail addess to new telematikID
+  #  - removed operations register_State, cm_version and pw_change
+  #  - added new operations setAccount and getAccount
+  #  - renamed and updated operations for user account (e.g. registerAccount and   
+  #    deregisterAccount)
+  #  - added operation createCert to generate PKCS#12 files
+  #  - added HTTP error code 500
+  #  - changed authentication to JWT
   # 1.2.0 
-  #  - Parameter "cert" in allen Operationen ergänzt. Er enthält das AUT-Zertifikat, mit dem die Operation signiert wird. Das Zertifikat wird vom KIM Fachdienst zur Signaturprüfung benötigt.
+  #  - Parameter "cert" in allen Operationen ergänzt. Er enthält das AUT-Zertifikat, mit dem die
+  #    Operation signiert wird. Das Zertifikat wird vom KIM Fachdienst zur Signaturprüfung 
+  #    benötigt.
   #  - tags korrigiert
   #  - format von Parameter username konkretisiert (email & maxlength)
   #  - Antwort beim „register“ auf 201 „Created“ anstatt von 200 „OK“ geändert
@@ -16,399 +28,639 @@ info:
   # 1.1.1 Aufnahme der API-Versionierung in der URI und Detaillierung des FQDN des Accountmanagers
   # 1.1.0 Authentisierung mit HBA/SMC-B AUT Zertifikat hinzugefügt
 externalDocs:
-  description: Gitlab-Dokumentation
-  url: http://www.gematik.de
+  description: Gitlab Dokumentation
+  url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/v1.1/
-  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber                                                         
+- url: https://account-manager.hrst1.kim.telematik/v2.0/
+  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
 tags:
-- name: I_AccountManager_Services
+- name: Email-Account 
+- name: Certificate
+- name: Out of Office Notification
 
+security: 
+  - bearerAuth: []
+    # Die Authentisierung erfolgt für alle Operatiponen über ein JWT
+    
 paths:
-  /accmgr/register/:
-    put:
-      tags:
-      - I_AccountManager_Services
-      summary: Einen Account registrieren
-      description: Der Account wird registriert und als Ergebnis die PKCS#12-Datei zurückgegeben
-                #  Wird die Operation nach erfolgreicher Registrierung erneut aufgerufen, dann wird die PKCS#12 Datei zurückgegeben                                        
-      operationId: register
-      
-      parameters:
-      - in: header
-        name: username
-        description: Nutzername
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: email
-      - in: header
-        name: referenceID
-        description: Der KIM-Anbieter kann den Inhalt dieses Parameters festlegen.
-                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM-Anbieter muss seine KIM-Teilnehmer über die Nutzung dieses Parameters informieren.
-                     Alle Administrationsmodule (bzw. Client-Module) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM- Fachdiensten - unterstützen.
-        schema:
-          type: string
-          maxLength: 256                                         
-      - in: header
-        name: password
-        description: Passwort
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: password                          
-      - in: header
-        name: nonce
-        description: Zufälliges 256bit Nonce
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: timestamp 
-        description: Unix-Timestamp mit der aktuellen Zeit
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: cert 
-        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
-        required: true
-        schema:
-          type: string
-          format: byte 
-                # base64-encoded AUT-Zertifikat
-      - in: header
-        name: signedHash 
-        description: Signierter Hash-Wert der Request-Parameter
-                  # Bildungsvorschrift für den zu signierenden String:
-                  # 1. Der Pfad /accmgr/register/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
-                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
-                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
-                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
-                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
-        required: true
-        schema:
-          type: string
-
-      responses:
-        201:
-          description: Created
-          # Zertifikat wird binär (keine base64 Kodierung) zurückgegeben 
-          content:
-            application/octet-stream:
-              schema:
-                type: string
-                format: binary
-        401:
-          description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
-          content: {}
 ##--
 ##------
-
-  /accmgr/deregister/:
-    delete:
+  /account:  
+    post:
       tags:
-      - I_AccountManager_Services
-      summary: Einen Account deregistrieren
-      description: Der Account wird deregistriert
-      operationId: deregister
-      
+      - Email-Account
+      summary: Registiriert einen neuen Email Account.
+            #  In allen Fehlerfällen wird der Account nicht erzeugt.
+      operationId: registerAccount
       parameters:
-      - in: header
-        name: username
-        description: Nutzername
+        - in: header
+          name: iniPassword
+          description: Initiales Passwort für den Email-Account
+          required: true
+          schema:
+             type: string
+             format: password          
+      requestBody:
+        description: Registriert neuen Account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
         required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: email
-      - in: header
-        name: password
-        description: Passwort
-        required: true
-        schema:
-          type: string
-          maxLength: 256 
-          format: password           
-      - in: header
-        name: nonce
-        description: Zufälliges 256bit Nonce
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: timestamp 
-        description: Unix-Timestamp mit der aktuellen Zeit
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: cert 
-        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
-        required: true
-        schema:
-          type: string
-          format: byte 
-                # base64-encoded AUT-Zertifikat
-      - in: header
-        name: signedHash 
-        description: Signierter Hash-Wert der Request-Parameter
-                  # Bildungsvorschrift für den zu signierenden String:
-                  # 1. Der Pfad /accmgr/deregister/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
-                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
-                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
-                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
-                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
-        required: true
-        schema:
-          type: string
       
       responses:
-        200:
-          description: OK
-          # Erfolgreich deregistriert 
-          content: {}
-        401:
-          description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
-          content: {}
-##--
-##------
-
-  /accmgr/register-state/:
-    get:
-      tags:
-      - I_AccountManager_Services
-      summary: Status vom Account ermitteln
-      description: Der Status vom Account wird zurückgegeben
-      operationId: register_State
-      
-      parameters:
-      - in: header
-        name: username
-        description: Nutzername
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: email
-      - in: header
-        name: password
-        description: Passwort
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: password
-      - in: header
-        name: nonce
-        description: Zufälliges 256bit Nonce
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: timestamp 
-        description: Unix-Timestamp mit der aktuellen Zeit
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: cert 
-        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
-        required: true
-        schema:
-          type: string
-          format: byte 
-                # base64-encoded AUT-Zertifikat
-      - in: header
-        name: signedHash 
-        description: Signierter Hash-Wert der Request-Parameter
-                  # Bildungsvorschrift für den zu signierenden String:
-                  # 1. Der Pfad /accmgr/register-state/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
-                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
-                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
-                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
-                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
-        required: true
-        schema:
-          type: string
-      
-      responses:
-        200:
-          description: OK
-          # Account Status wird zurückgegeben 
+        204:
+          description: Account erfolgreich registriert.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
           content:
             application/json:
-             schema: 
-              properties:
-               registerState:
-                type: string
-                enum: [registered, deregistered, unknown]
-                example: registered
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
-          description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
-          content: {}
+          description: Authentifizierung fehlgeschlagen
+                    # Die Authentifizierung über referenceID/iniPassword und Signatur des Operation ist fehlgeschlagen.
+                    # Dieser Fehler tritt auch auf, wenn die referenceID nicht zum AUT-Zertifikat (cert) der Signatur passt oder nicht angegeben wurde.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Konflikt mit bereits bestehenden Account mit identischer e-mail (e-mail Adresse bereits vergeben).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        420:
+          description: Username oder Passwort entsprechen nicht den Regeln.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        422:
+          description: kimVersion nicht unterstützt bzw. unbekannt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 ##--
 ##------
-
-  /accmgr/cm-version/:
+  /account/{username}:
     put:
       tags:
-      - I_AccountManager_Services
-      summary: Dem Account-Manager vom Fachdienst wird die KIM-Version vom Client-Modul übergeben
-      description: Die Version vom CM wird dem Account-Manager (FD) übergeben
-      operationId: cm_Version
-      
+      - Email-Account
+      summary: Account ändern
+             # referenceID & username (im Body) können über dieser Operation nicht geändert werden
+      operationId: setAccount
       parameters:
-      - in: header
-        name: username
-        description: Nutzername
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
         required: true
         schema:
           type: string
-          maxLength: 256
-          format: email
+          format: email          
       - in: header
         name: password
-        description: Passwort
+        description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          maxLength: 256
-          format: password
-      - in: header
-        name: KIM-Version
-        description: Die Version vom Client-Modul wird dem Fachdienst mitgeteilt.
-        #            (Der Fachdienst verwaltet die Versionsangaben im Verzeichnisdienst)
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          example: "1.5"                        
-      - in: header
-        name: nonce
-        description: Zufälliges 256bit Nonce
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: timestamp 
-        description: Unix-Timestamp mit der aktuellen Zeit
-        required: true
-        schema:
-          type: string
-      - in: header
-        name: cert 
-        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
-        required: true
-        schema:
-          type: string
-          format: byte 
-                # base64-encoded AUT-Zertifikat
-      - in: header
-        name: signedHash 
-        description: Signierter Hash-Wert der Request-Parameter
-                  # Bildungsvorschrift für den zu signierenden String:
-                  # 1. Der Pfad /accmgr/cm-version/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
-                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
-                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
-                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
-                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
-        required: true
-        schema:
-          type: string
-
-      responses:
-        200:
-          description: OK
-          # Version erfolgreich übergeben 
-          content: {}
-        401:
-          description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
-          content: {}
-##--
-##------
-
-  /accmgr/pw/:
-    put:
-      tags:
-      - I_AccountManager_Services
-      summary: Passwort vom Account wechseln
-      description: Das Passwort wird aktualisiert
-      operationId: pw_Change
-      
-      parameters:
-      - in: header
-        name: username
-        description: Nutzername
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: email
-      - in: header
-        name: password
-        description: Aktuelles Passwort
-        required: true
-        schema:
-          type: string
-          maxLength: 256
-          format: password
-      - in: header
-        name: newPassword
-        description: Neues Passwort
-        required: true
-        schema:
-          type: string
-          maxLength: 256
           format: password          
-      - in: header
-        name: nonce
-        description: Zufälliges 256bit Nonce
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Account'
+             # Bei Passwortwechsel ist das "alte" Passwort Im Header dieser Operation enthalten.
+             # Das neue Passwort ist "password" Parameter im Body der Operation enthalten.
+      
+      responses:
+        204:
+          description: Änderung des Accounts erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        420:
+          description: Neues Passwort entspricht nicht den Regeln.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        422:
+          description: kimVersion nicht unterstützt bzw. unbekannt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'  
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Feler  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Email-Account
+      summary: Deregistriert einen Mailaccount
+      operationId: deregisterAccount
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
         required: true
         schema:
           type: string
+          format: email 
       - in: header
-        name: timestamp 
-        description: Unix-Timestamp mit der aktuellen Zeit
+        name: password
+        description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-      - in: header
-        name: cert 
-        description: AUT-Zertifikat, welches zur Signatur dieser Operation verwendet wird
+          format: password  
+      
+      responses:
+        204:
+          description: Account erfolgreich deregistriert
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+      - Email-Account
+      summary: Anzeige des Accounts
+      operationId: getAccount
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
         required: true
         schema:
           type: string
-          format: byte 
-                # base64-encoded AUT-Zertifikat
+          format: email           
       - in: header
-        name: signedHash 
-        description: Signierter Hash-Wert der Request-Parameter
-                  # Bildungsvorschrift für den zu signierenden String:
-                  # 1. Der Pfad /accmgr/pw/ und die Werte aller Parameter des Requests werden zu einem String zusammengefügt
-                  # 2. Bildung des Hash von diesem String entsprechend A_19644 [gemSpec_Krypt]
-                  # 3. Signatur von diesem Hash mit Operation ExternalAuthenticate [gemSpec_Kon] mit dem AUT Zertifikat der - zum Account passenden - HAB bzw. SMC-B
-                  #    Als Signature Type muss PKCS#1-Signatur gewählt werden (und nach Unterstützung durch alle Konnektoren ECDSA-Signatur).
-                  # 4. Das Signature Object aus dem Ergebnis von ExternalAuthenticate wird in diesen Parameter eingefügt
+        name: password
+        description: Passwort für den Email-Account
         required: true
         schema:
           type: string
+          format: password        
+      responses:
+        200:
+          description: Anzeige des Accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                
+##--
+##------
+  /account/{username}/OTP:
+    get:
+      tags:
+      - Porting
+      summary: Portierung der e-mail Adresse zu einer neuen telematikID
+      operationId: getOTP
+      description: Diese Operation erzeugt für den KIM Account/e-Mail Adresse ein One Time Passwort (OTP), mit dem die e-Mail Adresse zu einer telematikID (Karte) portiert werden kann. Die Authentisierung erfolgt mit der bisherigen Karte.
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      
+      responses:
+        200:
+          description: OTP erfolgreich erzeugt.
+          content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                OTP:
+                  type: string
+                  format: binary
+                  description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
+             
+             
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+##--
+##------
+  /account/{username}/telematikID:
+    put:
+      tags:
+      - Porting
+      summary: Portierung der e-mail Adresse zu einer neuen telematikID
+      operationId: setTID
+      description: Diese Operation entfernt die e-mail Adresse vom bisherigen VZD Eintrag und trägt die für den aktuellen VZD Eintrag (der den Authentisierungsdaten dieser Operation setTID entspricht) ein. Die Authentisierung erfolgt mit der neuen Karte.
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      - in: header
+        name: OTP
+        description: One Time Passwort (OTP) (von getOTP zurückgegeben)
+        required: true
+        schema:
+          type: string
+          format: password        
 
       responses:
         200:
-          description: OK
-          # Passwort wurde aktualisiert 
-          content: {}
-        400:
-          description: Bad Request
-          # Das neue Passwot entspricht nicht den Regeln
+          description: Änderung der TelematikID erfolgreich.
         401:
-          description: Unauthorized
-          # Nutzername / Passwort Fehlerhaft oder Signaturprüfung fehlgeschlagen
-          content: {}
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        408:
+          description: Request Timeout
+          # Gültigkeitsdauer des One Time Passworts ist abgelaufen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+##--
+##------
+  /account/{username}/cert:
+    post:
+      tags:
+      - Certificate
+      summary: Create TLS AUT certificate
+      operationId: createCert
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/CertificateParameters'
+      
+      responses:
+        200:
+          description: Zertifikat wird zurückgegeben.
+          content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Base64-encoded PKCS#12 Container. Der Container ist mit dem Passwort aus dem Request geschützt.
+
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /account/{username}/outofoffice:
+    get:
+      tags:
+      - Out of Office Notification
+      summary: Read the Out of Office Notification
+      operationId: getOutOfOffice
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      
+      responses:
+        200:
+          description: Lesen der Abwesenheitsnotiz erfolgreich.
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/OutOfOfficeNotification'
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+      - Out of Office Notification
+      summary: Update the Out of Office Notification
+      operationId: updateOutOfOffice
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/OutOfOfficeNotification'
+      responses:
+        204:
+          description: Änderung der Abwesenheitsnotiz erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+  schemas:
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+
+    Account:
+      type: object
+      properties:
+        referenceID: 
+            type: string
+            maxLength: 256
+            writeOnly: true
+            description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
+                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                     Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
+                     Die referenceID kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+        username:
+          type: string
+          description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+          format: email 
+        password:
+          type: string
+          format: password
+          writeOnly: true
+        kimVersion:
+          type: string
+          maxLength: 4
+          example: 1.5
+        regStat:
+          type: string
+          description: Der Registrierungsstatus von dem Account. Der KIM Anbieter kann dieses Attribut zur Information des KIM Kunden über den Status des Accounts nutzen.
+          maxLength: 512
+          readOnly: true
+          example: registered
+        deregDate:
+          type: integer   
+          example: 1616588543
+          readOnly: true
+          description: Bestätigtes Kündigungsdatum (Unix Timestamp)
+            # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
+
+
+    CertificateParameters:
+      type: object
+      properties:
+        commonName:
+          type: string
+          writeOnly: true
+          description: Wird im Zertifikat als commonName aufgenommen
+        certPassword:
+          type: string
+          format: binary
+          writeOnly: true
+          description: bas64 kodiertes Passwort für den PKCS#12 Container in dem das Zertifikat transportiert wird
+          
+          
+          
+    OutOfOfficeNotification:
+      type: object
+      properties:
+        startDate:
+          type: string 
+          format: date-time
+          example: 2021-07-20T17:32:28Z
+          description: Ab diesem Zeitpunkt wird die Abwesenheitsnotiz versendet
+        endDate:
+          type: string 
+          format: date-time  
+          example: 2021-07-28T17:32:28Z
+          description: Nach diesem Zeitpunkt wird die Abwesenheitsnotiz nicht mehr versendet
+        message:
+          type: string 
+          description: Inhalt der Abwesenheitsnotiz.
+        active:
+          type: boolean 
+          description: Aktiviert bzw. deaktiviert die Abwesenheitsnotiz.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
+       # Das JWT wird in compact serialization (RFC 7515, Section 3.1) kodiert und im HTTP-Header Authorization nach dem Bearer-Schema übertragen.
+  
+
+        

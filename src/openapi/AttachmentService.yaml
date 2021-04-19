@@ -3,7 +3,12 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 1.1.0
+  version: 2.0.0
+  ### 2.0.0 
+  # added Client Authentication for add_Attachment operation
+  # changed URI for operations add_attachment and read_attachment
+  # added error message strings
+  # added HTTP error code 500
   ### 1.1.0 
   # changed data type in read_MaxMailSize()
   # changed error code 405 to 400 in add_Attachment() 
@@ -16,17 +21,17 @@ info:
   # initial Version of I_Attachment_Service 
 
 externalDocs:
-  description: Gitlab
-  url: http://www.gematik.de
+  description: GitHub - Dokumentation
+  url: https://github.com/gematik/api-kim
 servers:
-- url: https://kas.hrst1.kim.telematik/v1.1/
+- url: https://kas.hrst1.kim.telematik/v2.0/
 tags:
 - name: Attachments
 
 paths:
-  /{Ressource}:
 ##--
 ##------
+  /attachment/{attachmentId}:
     get:
       tags:
       - Attachments
@@ -35,7 +40,7 @@ paths:
       operationId: read_Attachment
       
       parameters:
-      - name: Ressource
+      - name: attachmentId
         in: path
         description: Link-Referenz auf den verschüsselten Anhang im Dienst
         required: true
@@ -53,17 +58,30 @@ paths:
              format: binary
         404:
           description: Ressource unter dem angegebenen Link nicht gefunden
-          content: {}
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                  
 ##--
 ##------
-  /:
+  /attachment/:
     post:
       tags:
       - Attachments
       summary: Einen Anhang hinzufügen
       description: Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
       operationId: add_Attachment
-      
+
+      security:
+        - basicAuth: []
+        # Die Authentifizierung erfolgt mit username/password von dem Mail Account
+        
       requestBody:
         content:
           application/octet-stream:
@@ -75,21 +93,43 @@ paths:
       responses:
           201:
             description: Created
-                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink hinzugefügt. 
+                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink erzeugt. 
             content:
              application/json:
               schema:
                properties:
                  Shared-Link:
                    type: string
+                    # Enthält den Freigabelink
+                    # Über den Freigabelink kann der Anhang vom KAS abgerufen werden. Der Freigabelink enthält die - in Operation read_Attachment nötige - attachmentID.
           400:
-            description: Bad Request
-            content: {}
+            description: Bad request 
+                     # Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          401:
+            description: Authentifizierung fehlgeschlagen.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
           413:
             description: Payload Too Large
             # Die maximal zulässige Dokumentengröße wurde überschritten 
-            content: {}            
- 
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'        
+          500:
+            description: Internal Server Error          
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+##--
+##------               
   /MaxMailSize:
      get:
       tags:
@@ -112,3 +152,24 @@ paths:
                  type: "integer"     
                  format: int64
                  example: 734003200
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                 
+components:
+
+  schemas:
+  
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+  
+  securitySchemes: 
+    basicAuth: 
+      type: http
+      scheme: basic

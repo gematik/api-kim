@@ -4,49 +4,51 @@
 
 ## Allgemeines
 
-Die folgende Dokumentation beschreibt die systemspezifische Lösung von KOM-LE 1.5. Es werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KOM-LE 1.5 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer einer früheren Version uneingeschränkt Nachrichten an Teilnehmern mit KOM-LE 1.5 versenden können.
+Die folgende Dokumentation beschreibt die systemspezifische Lösung von KIM 1.5.1. Es werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5.1 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5.1 verwenden.
 
-Der Funktionsumfang für KOM-LE 1.5 erweitert sich um,
+Der Funktionsumfang für KIM 1.5.1 erweitert sich um:
 
--   ✓ Aufhebung der Größenbeschränkung von Nachrichten
+-   die Aufhebung der Größenbeschränkung von Nachrichten
 
--   ✓ Optionale Integration des Clientmoduls in das PVS
+-   die Optionale Integration des Clientmoduls in das Primärsystem
 
--   ✓ Administrationsmodul für die Konfiguration
+-   ein Administrationsmodul für die Konfiguration des Nutzer-Accounts
 
--   ✓ Unterstützung syntaktischer Nachrichtenkategorien
+-   das Einrichten von Abwesendheitsnotizen
 
-Die Einordnung von KOM-LE 1.5 für das Release 4.0.0 liefert das Systemdesign der Telematikinfrastruktur - Release 4.0.0 - [gemKPT_SysD_TI].
+-   die Unterstützung syntaktischer Nachrichtenkategorien
 
-_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist mit Stand Release 4.0.0 nicht geplant._
+-   die Unterstützung von Multikonnektor-Umgebungen
+
+_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer, sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist aktuell nicht geplant._
 
 
 ## Systemarchitektur
 
-Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KOM-LE 1.5
+Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM 1.5.1.
 
 ![kim overview](images/kim_overview.png)
 
 [**Clientsystem**](docs/KIM_API.adoc)
 
 -   **Clientmodul:**  
-    Das Clientmodul kann jetzt optional in das Clientsystem integriert werden.
+    Das Clientmodul kann jetzt optional in das Clientsystem (z. B. Primärsystem) integriert werden.
 
 -   **Administrationsmodul:**  
-    Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes. Dadurch wird der Leistungserbringer in die Lage versetzt, sich beim Fachdienst zu registrieren, seinen Registrierungsstatus abzufragen oder eine Deregistrierung vorzunehmen. Zugleich kann über das Administrationsmodul das benötigte Clientzertifikat (PKCS\#12) heruntergeladen werden.
+    Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes zur Administration und Konfiguration des Accounts eines KIM-Teilnehmers.
 
 [**Fachdienst**](docs/Fachdienst.adoc)
 
 -   **Account Manager:**  
-    Für die einfache Verwaltung des Accounts eines KOM-LE-Teilnehmers wird der Account Manager um einen Webservice erweitert.
+    Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers wird der Account Manager um einen Webservice erweitert. 
 
 -   **KOM-LE Attachment Service:**  
-    Der Fachdienst wird um die Komponente KAS (KOM-LE Attachment Services) ergänzt, der die sichere Speicherung größerer Anhänge erlaubt.
+    Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Anhänge ermöglicht.
 
 [**Basisdienste**](docs/Basisdienste.adoc)
 
 -   **Verzeichnisdienst:**  
-    Um die Kompatibilität von KOM-LE 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst mit einem neuen Attribut (*KOM-LE-Version*) erweitert.
+    Um die Kompatibilität von KIM 1.5.1 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst mit einem neuen Attribut (KOM-LE-Version) erweitert. Weiterhin wird der Verzeichnisdienst um einen zusätzlichen Webservice erweitert. 
 
 ## Ordnerstruktur
 
@@ -62,7 +64,8 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     ├─ src
     │   ├──── openapi
     │   │    ├── AccountManager.yaml
-    │   │    └── AttachmentServices.yaml
+    │   │    ├── AttachmentServices.yaml
+    │   │    └── DirectoryApplicationMaintenance.yaml
     │   └──── schema
     │        └── Attachment_schema.json
     ├── README.md
@@ -74,16 +77,19 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
 
 **Produkttypen**  
 [- Clientsystem](docs/KIM_API.adoc)  
-[- Fachdienst](docs/Fachdienst.adoc)  
+[- Fachdienst](docs/Fachdienst.adoc) <br>
+[- Verzeichnisdienst](docs/Basisdienste.adoc)    
 
 **Leitfaden für Primärsystemhersteller**  
 [- Primärsystem](docs/Primaersystem.adoc)  
 
 **Diverses**  
-[- Basisdienste](docs/Basisdienste.adoc)  
+[- Authentisierung](docs/Authentisierung.adoc)  
 [- Versionierung](docs/Versionierung.adoc)  
 
-
+**Referenz-Implementierungen**  
+[- KIM-Attachment-Service](https://github.com/gematik/kim-attachment-service) <br>
+[- KIM-Thunderbird Plugin](https://github.com/gematik/app-thunderbird-kim-plugin)
 
 ## Lizenzbedingungen
 Copyright (c) 2020 gematik GmbH
