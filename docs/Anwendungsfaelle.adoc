@@ -1,3 +1,11 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 :imagesdir: ../images
 :toc: macro
 :toclevels: 3
@@ -12,7 +20,7 @@ toc::[]
 Die hier beschriebenen Anwendungsfälle gelten ab KIM 1.5.1. Die dargestellen Sequenzdiagramme dienen nur zum allgemeinen Verständnis und berücksichtigen nicht alle Kommunikationspartner (z. B. DNS-Services-Lokalisierung). Die in den Sequenzdiagrammen dargestellten Operationen 
 sollen lediglich den Ablauf des Anwendungsfalles verdeutlichen. 
 
-TIP: Auf die Angaben der zu übergebenden Parameter bei den hier beschriebenen Operationen wird der Übersichtlichkeit halber verzichtet. Diese können in der KIM-API (link:/KIM_API.adoc[Link]) nachgelesen werden. 
+TIP: Auf die Angaben der zu übergebenden Parameter bei den hier beschriebenen Operationen wird der Übersichtlichkeit halber verzichtet. Diese können in der KIM-API (link:/docs/KIM_API.adoc[Link]) nachgelesen werden. 
 
 
 == KIM-Kontoverwaltung
@@ -101,4 +109,4 @@ Ab KIM 1.5.1 ist es möglich, dass mehrere Konnektoren in einer Umgebung von ein
 
 image:Multikonnektoren.png[width=90%]
 
-In der Zeichenkette SMTP/POP3-Benutzernamens, den der Mail Client zum Clientmodul schickt, wird zusätzlich die `KonnektorID` des zu verwendenden Konnektors übergeben. Dem Clientmodule wird dadurch die Auswahl eines bestimmten Konnektors signalisiert. Die Umsetzung von mehreren Konnektoren in einer Umgebung kann hier: (link:/Primaersystem.adoc[Link]) nachgelesen werden.
+In der Zeichenkette SMTP/POP3-Benutzernamens, den der Mail Client zum Clientmodul schickt, wird zusätzlich die `KonnektorID` des zu verwendenden Konnektors übergeben. Dem Clientmodule wird dadurch die Auswahl eines bestimmten Konnektors signalisiert. Die Umsetzung von mehreren Konnektoren in einer Umgebung kann hier: (link:/docs/Primaersystem.adoc[Link]) nachgelesen werden.
