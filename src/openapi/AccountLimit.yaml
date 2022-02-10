@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: I_AccountLimit_Service
+  description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
+  version: 1.0.0
+  ### 1.0.0
+  # - initial Version of I_AccountLimit_Service
+
+externalDocs:
+  description: GitHub - Dokumentation
+  url: https://github.com/gematik/api-kim
+servers:
+- url: https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0/
+tags:
+- name: AccountLimit
+
+paths:
+##--
+##------
+  /limit:
+    get:
+      tags:
+      - AccountLimit
+      summary: Limits eines Accounts abgefragen
+      description: Gibt die Limits eines Accounts zurück
+      operationId: getLimits
+      
+      security:
+        - basicAuth: []
+
+      responses:
+        200:
+          description: OK
+             # Rückgabe der Metadaten eines Nutzer-Accounts 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLimit'
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                  
+
+##--
+##------               
+components:
+
+  schemas:
+  
+    AccountLimit:
+      type: object
+      properties:
+        dataTimeToLive: 
+          type: integer
+          maxLength: 3
+          minimum: 10
+          maximum: 365
+          default: 90
+          example: 90
+          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen
+        maxMailSize:
+          type: integer
+          format: int64
+          example: 734003200
+          description: Setzt die maximale Größe einer KIM-Mail in Bytes
+        quota:
+          type: "integer"     
+          format: int64
+          example: 160000000000
+          description: Gibt das maximale Speichervolumen für einen Nutzer-Account an
+        remainQuota:
+          type: "integer"     
+          format: int64
+          example: 112000000000
+          description: Gibt das verbleibende Speichervolumen für einen Nutzer-Account an
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+  
+  securitySchemes: 
+    basicAuth: 
+      type: http
+      scheme: basic

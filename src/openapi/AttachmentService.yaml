@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: I_Attachment_Service
+  description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
+                hochgeladen und bereitgestellt werden. 
+  version: 2.2.0
+  ### 2.2.0 
+  # - updated url to https://kas.hrst1.kim.telematik/attachments/v2.2/
+  # - deleted operation read_MaxMailSize
+  # - changed operation add_Attachment: 
+  #   renamed "Shared-Link" to "sharedLink"
+  #   added parameters: expires, recipients, messageID
+  #   added error code 507 
+  # - changed operation read_Attachment: 
+  #   added parameter recipient
+  #   added error code 429 
+  ### 2.0.0 
+  # - added client authentication for operation add_Attachment 
+  # - changed URI for operations add_attachment and read_attachment
+  # - added error message strings
+  # - added HTTP error code 500
+  ### 1.1.0 
+  # - changed data type in operation read_maxMailSize
+  # - changed error code 405 to 400 in operation add_Attachment
+  # - changed MIME type multipart/form-data to application/octect-stream in operation add_Attachment() and read_Attachment() 
+  ### 1.0.1
+  # - added errorcode 413 in operation add_Attachment
+  # - extended URI to interface releases 
+  ### 1.0.0
+  # - initial Version of I_Attachment_Service   
+
+externalDocs:
+  description: GitHub - Dokumentation
+  url: https://github.com/gematik/api-kim
+servers:
+- url: https://kas.hrst1.kim.telematik/attachments/v2.2/
+tags:
+- name: Attachments
+
+paths:
+##--
+##------
+  /attachment/{attachmentId}:
+    get:
+      tags:
+      - Attachments
+      summary: Einen Anhang herunterladen
+      description: gibt den unter einem Freigabelink verschlüsselten Anhang zurück
+      operationId: read_Attachment
+      
+      parameters:
+      - name: attachmentId
+        in: path
+        description: Link-Referenz auf den verschüsselten Anhang im Dienst
+        required: true
+        schema:
+          type: string
+      - name: recipient
+        in: header
+        description: Die übergebene E-Mail-(KIM-)Adresse des Empfängers
+        required: true
+        schema:
+          type: string
+          format: email
+
+      
+      responses:
+        200:
+          description: OK
+             # Anhang wurde erfolgreich heruntergeladen 
+          content:
+           application/octet-stream:
+            schema:
+             type: string
+             format: binary
+        403:
+          description: Recipient nicht in der Empfängerliste der KIM-Mail enthalten
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+        404:
+          description: Ressource unter dem angegebenen Link nicht gefunden
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+        429:
+          description: Anhang zu oft heruntergeladen.
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                  
+##--
+##------
+  /attachment/:
+    post:
+      tags:
+      - Attachments
+      summary: Einen Anhang hinzufügen
+      description: Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
+      operationId: add_Attachment
+
+      security:
+        - basicAuth: []
+        # Die Authentifizierung erfolgt mit username/password von dem Mail Account
+
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                messageID:
+                    type: string
+                    description: MessageID der zugehörigen KIM-Mail
+                recipients:
+                    type: array
+                    description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger
+                    items:
+                      type: string
+                      format: email
+                expires:
+                    type: string
+                    description: Zeitpunkt zu dem der Anhang geloescht werden muss 
+                                # (RFC822 date-time)
+                attachment:
+                   type: string
+                   format: binary
+                   description: Der Anhang
+
+      responses:
+          201:
+            description: Created
+                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink erzeugt. 
+            content:
+             application/json:
+              schema:
+               properties:
+                 sharedLink:
+                   type: string
+                    # Enthält den Freigabelink
+                    # Über den Freigabelink kann der Anhang vom KAS abgerufen werden. Der Freigabelink enthält die - in Operation read_Attachment nötige - attachmentID.
+          400:
+            description: Bad request 
+                     # Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          401:
+            description: Authentifizierung fehlgeschlagen.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          413:
+            description: Payload Too Large
+            # Die maximal zulässige Dokumentengröße wurde überschritten 
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'        
+          500:
+            description: Internal Server Error          
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          507:
+            description: Nicht genügend Speicherplatz vorhanden
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        
+##--
+##------               
+components:
+
+  schemas:
+  
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+  
+  securitySchemes: 
+    basicAuth: 
+      type: http
+      scheme: basic

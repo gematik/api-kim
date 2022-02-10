@@ -1,0 +1,746 @@
+openapi: 3.0.3
+info:
+  title: I_AccountManager_Service
+  description:  Über diese Schnittstelle wird der KIM Account verwaltet.
+  #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
+  version: 2.2.0
+  ### 2.2.0 
+  # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
+  # - changed /components/schemas/Account:
+  #   added parameter dataTimeToLive & maxMailSize
+  #   specified kimVersion with enum
+  # - changed operation createCert:
+  #   added error codes 400 & 404
+  ### 2.0.0 
+  # - included new operations for outOfOffice
+  # - included new operations for porting an e-mail address to new telematikID
+  # - removed operations: register_State, cm_version and pw_change
+  # - added new operations setAccount and getAccount
+  # - renamed and updated operations for user account (e.g. registerAccount and   
+  #   deregisterAccount)
+  # - added operation createCert to generate PKCS#12 files
+  # - added HTTP error code 500
+  # - changed authentication to JWT
+  ### 1.2.0 
+  # - added parameter "cert" to all operations. It includes the auth certificate to sign the operation. This is necessary to check the sign from the Server.  
+  # - adjusted some tags
+  # - more specified parameter "username" (email & maxlength)
+  # - changed response code of the operation "register" from 200 - OK to 201 - created
+  # - changed http method in operation "deregister" from PUT to DELETE
+  # - changed http method in operation "cm_version" from GET to PUT
+  # - changed response in operation "register_state" to JSON format
+  ### 1.1.2 
+  # - added parameter "referenceID" in operation "register"
+  ### 1.1.1 
+  # - extended URI to interface releases
+  ### 1.1.0 
+  # - added authentication with HBA/SMC-B
+  ### 1.0.0
+  # - initial Version of I_AccountManager_Service
+  
+externalDocs:
+  description: Gitlab Dokumentation
+  url: https://github.com/gematik/api-kim
+servers:
+- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/
+  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
+tags:
+- name: Email-Account 
+- name: Certificate
+- name: Out of Office Notification
+
+security: 
+  - bearerAuth: []
+    # Die Authentisierung erfolgt für alle Operatiponen über ein JWT
+    
+paths:
+##--
+##------
+  /account:  
+    post:
+      tags:
+      - Email-Account
+      summary: Registiriert einen neuen Email Account.
+            #  In allen Fehlerfällen wird der Account nicht erzeugt.
+      operationId: registerAccount
+      parameters:
+        - in: header
+          name: iniPassword
+          description: Initiales Passwort für den Email-Account
+          required: true
+          schema:
+             type: string
+             format: password          
+      requestBody:
+        description: Registriert neuen Account
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  referenceID: 
+                    type: string
+                    maxLength: 256
+                    writeOnly: true
+                    description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
+                             Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                             Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
+                             Die referenceID kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+                  username:
+                    type: string
+                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    format: email 
+                  password:
+                    type: string
+                    format: password
+                    writeOnly: true
+                  kimVersion:
+                    type: string
+                    maxLength: 4
+                    example: 1.5
+        required: true
+    
+      responses:
+        204:
+          description: Account erfolgreich registriert.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen
+                    # Die Authentifizierung über referenceID/iniPassword und Signatur des Operation ist fehlgeschlagen.
+                    # Dieser Fehler tritt auch auf, wenn die referenceID nicht zum AUT-Zertifikat (cert) der Signatur passt oder nicht angegeben wurde.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Konflikt mit bereits bestehenden Account mit identischer e-mail (e-mail Adresse bereits vergeben).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        420:
+          description: Username oder Passwort entsprechen nicht den Regeln.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        422:
+          description: kimVersion nicht unterstützt bzw. unbekannt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /account/{username}:
+    put:
+      tags:
+      - Email-Account
+      summary: Account ändern
+             # referenceID & username (im Body) können über dieser Operation nicht geändert werden
+      operationId: setAccount
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email          
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password          
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Account'
+             # Bei Passwortwechsel ist das "alte" Passwort Im Header dieser Operation enthalten.
+             # Das neue Passwort ist "password" Parameter im Body der Operation enthalten.
+      
+      responses:
+        204:
+          description: Änderung des Accounts erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        420:
+          description: Neues Passwort entspricht nicht den Regeln.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        422:
+          description: kimVersion nicht unterstützt bzw. unbekannt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'  
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Feler  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Email-Account
+      summary: Deregistriert einen Mailaccount
+      operationId: deregisterAccount
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email 
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password  
+      
+      responses:
+        204:
+          description: Account erfolgreich deregistriert
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+      - Email-Account
+      summary: Anzeige des Accounts
+      operationId: getAccount
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      responses:
+        200:
+          description: Anzeige des Accounts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    format: email 
+                  kimVersion:
+                    type: string
+                    maxLength: 4
+                    example: 1.5
+                  regStat:
+                    type: string
+                    description: Der Registrierungsstatus von dem Account. Der KIM Anbieter kann dieses Attribut zur Information des KIM Kunden über den Status des Accounts nutzen.
+                    maxLength: 512
+                    readOnly: true
+                    example: registered
+                  deregDate:
+                    type: integer   
+                    example: 1616588543
+                    readOnly: true
+                    description: Bestätigtes Kündigungsdatum (Unix Timestamp)
+                      # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                
+##--
+##------
+  /account/{username}/OTP:
+    get:
+      tags:
+      - Porting
+      summary: Portierung der e-mail Adresse zu einer neuen telematikID
+      operationId: getOTP
+      description: Diese Operation erzeugt für den KIM Account/e-Mail Adresse ein One Time Passwort (OTP), mit dem die e-Mail Adresse zu einer telematikID (Karte) portiert werden kann. Die Authentisierung erfolgt mit der bisherigen Karte.
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      
+      responses:
+        200:
+          description: OTP erfolgreich erzeugt.
+          content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                OTP:
+                  type: string
+                  format: binary
+                  description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
+             
+             
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+##--
+##------
+  /account/{username}/telematikID:
+    put:
+      tags:
+      - Porting
+      summary: Portierung der e-mail Adresse zu einer neuen telematikID
+      operationId: setTID
+      description: Diese Operation entfernt die e-mail Adresse vom bisherigen VZD Eintrag und trägt die für den aktuellen VZD Eintrag (der den Authentisierungsdaten dieser Operation setTID entspricht) ein. Die Authentisierung erfolgt mit der neuen Karte.
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      - in: header
+        name: OTP
+        description: One Time Passwort (OTP) (von getOTP zurückgegeben)
+        required: true
+        schema:
+          type: string
+          format: password        
+
+      responses:
+        204:
+          description: Änderung der TelematikID erfolgreich.
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        408:
+          description: Request Timeout
+          # Gültigkeitsdauer des One Time Passworts ist abgelaufen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+##--
+##------
+  /account/{username}/cert:
+    post:
+      tags:
+      - Certificate
+      summary: Create TLS AUT certificate
+      operationId: createCert
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/CertificateParameters'
+      
+      responses:
+        200:
+          description: Zertifikat wird zurückgegeben.
+          content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Base64-encoded PKCS#12 Container. Der Container ist mit dem Passwort aus dem Request geschützt.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+                      # z.B. kein CommonName oder kein CertPassword angegeben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+                      # z.B. user not registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /account/{username}/outofoffice:
+    get:
+      tags:
+      - Out of Office Notification
+      summary: Read the Out of Office Notification
+      operationId: getOutOfOffice
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      
+      responses:
+        200:
+          description: Lesen der Abwesenheitsnotiz erfolgreich.
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/OutOfOfficeNotification'
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+      - Out of Office Notification
+      summary: Update the Out of Office Notification
+      operationId: updateOutOfOffice
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/OutOfOfficeNotification'
+      responses:
+        204:
+          description: Änderung der Abwesenheitsnotiz erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+  schemas:
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+
+    Account:
+      type: object
+      properties:
+        referenceID: 
+            type: string
+            maxLength: 256
+            writeOnly: true
+            description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
+                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                     Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
+                     Die referenceID kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+        username:
+          type: string
+          description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+          format: email 
+        password:
+          type: string
+          format: password
+          writeOnly: true
+        kimVersion:
+          type: string
+          maxLength: 4
+          example: 1.5
+        regStat:
+          type: string
+          description: Der Registrierungsstatus von dem Account. Der KIM Anbieter kann dieses Attribut zur Information des KIM Kunden über den Status des Accounts nutzen.
+          maxLength: 512
+          readOnly: true
+          example: registered
+        deregDate:
+          type: integer   
+          example: 1616588543
+          readOnly: true
+          description: Bestätigtes Kündigungsdatum (Unix Timestamp)
+            # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
+        dataTimeToLive: 
+          type: integer
+          maxLength: 3
+          minimum: 10
+          maximum: 365
+          default: 90
+          example: 90
+          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen
+        maxMailSize:
+          type: integer
+          format: int64
+          minimum: 524288000
+          example: 734003200
+          readOnly: true
+          description: Setzt die maximale Größe einer KIM-Mail in Bytes
+
+
+
+    CertificateParameters:
+      type: object
+      properties:
+        commonName:
+          type: string
+          writeOnly: true
+          description: Wird im Zertifikat als commonName aufgenommen
+                        Dieses Zertifikat wird auch als TLS Server Zertifikat für die Verbindung mit dem Client/Primärsystem genutzt. Für eine erfolgreiche Zertifikatsprüfung - durch den Client - muss im commonName der Server Name des Clientmoduls stehen (so wie er konfiguriert ist, z.B. example.com, www.example.com)
+        certPassword:
+          type: string
+          format: binary
+          writeOnly: true
+          description: bas64 kodiertes Passwort für den PKCS#12 Container in dem das Zertifikat transportiert wird
+          
+          
+          
+    OutOfOfficeNotification:
+      type: object
+      properties:
+        startDate:
+          type: string 
+          format: date-time
+          example: 2021-07-20T17:32:28Z
+          description: Ab diesem Zeitpunkt wird die Abwesenheitsnotiz versendet
+        endDate:
+          type: string 
+          format: date-time  
+          example: 2021-07-28T17:32:28Z
+          description: Nach diesem Zeitpunkt wird die Abwesenheitsnotiz nicht mehr versendet
+        message:
+          type: string 
+          description: Inhalt der Abwesenheitsnotiz.
+        active:
+          type: boolean 
+          description: Aktiviert bzw. deaktiviert die Abwesenheitsnotiz.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
+       # Das JWT wird in compact serialization (RFC 7515, Section 3.1) kodiert und im HTTP-Header Authorization nach dem Bearer-Schema übertragen.

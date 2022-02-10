@@ -1,0 +1,14 @@
+{
+    "title": "Structure of Attachment",
+    "type": "object",
+    "properties":
+    {
+      "name":           { "type": "string" }, 
+      "link":           { "type": "string" }, 
+      "k":              { "type": "string" },  
+      "hash":           { "type": "string" },  
+      "size":           { "type": "integer" }, 
+      "type":           { "type": "string" }   
+     },
+     "required": ["name", "link", "password", "hash", "size", "type"]
+  }

@@ -1,0 +1,27 @@
+:imagesdir: ../images
+:toc: macro
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:gematik_logo.jpg[width=35%]
+
+toc::[]
+
+== Authentifizierung
+In KIM-Umfeld gibt es drei Authentisierungsmechanismen, um sich bei einem Dienst zu authentifizieren. Dazu gehören:
+
+- die SMTP/POP3-Authentifizierung, 
+- die HTTP-Basic-Authentifizierung und 
+- das Verwenden eines JSON-Web-Tokens. 
+
+Die Details sowie Verweise auf die entsprechenden Anforderungen werden im folgenden beschrieben. 
+
+=== Mail-Server
+Der Mail-Server nimmt SMTP-Nachrichten von Clientmodulen entgegen und leitet diese an die Ziel-Mail-Server weiter. Empfangene Nachrichten werden vom Mail-Server zur Abholung bereitgestellt und auf Anforderung über POP3 an Clientmodule ausgeliefert. Für das Senden sowie das Empfangen von Mails ist eine Authentifizierung am Mail-Server über Username und Passwort notwendig. Die Anforderungen sind in *[gemSpec_FD_KOMLE#3.1]* spezifiziert.
+
+=== Account Manager
+Der Accout Manager bietet für die Registrierung sowie die Kontoverwaltung eine Reihe von Operationen an. Die Operationen werden durch zwei REST-Schnittstellen (`I_AccountManager_Service` und `I_AccountLimit_Service`) am Account Managers bereitgestellt. Für den Aufruf der Operationen an der Schnittstelle `I_AccountManager_Service` durch das Administrationsmodul ist eine Authentifizierung des KIM-Teilnehmers notwendig. Für die Authentisierung erzeugt das Administrationsmodul ein JSON-Web-Token (JWT) gemäß *[RFC7519]* mit von der gematik definierten Elementen und übersendet dies mit dem Passwort des Nutzers an den Account Manager. Anschließend überprüft der Account Manager das ihm übergebene JWT auf Gültigkeit und Zugehörigkeit zur KIM-Mail-Adresse (Account). Die Anforderungen sind in *[gemSpec_CM_KOMLE#3.7.1]* und *[gemSpec_FD_KOMLE#4.3]* spezifiziert. Für den Aufruf der Operationen an der Schnittstelle `I_AccountLimit_Service` durch das Clientmodul ist eine HTTP-Basic-Authentifizierung mit Username und Passwort als Credentials am Account Manager erforderlich 
+
+=== KOMLE-Attachment Service (KAS)
+Der KOMLE-Attachment Service (KAS) des Fachdienstes dient als Speicherort für verschlüsselte Anhänge von Mails. Das sendende Clientmodul legt Anhänge in verschlüsselter Form auf dem KAS ab. Hierfür ruft das Clientmodul die Operation `add_attachment()` auf. Um nur berechtigten KIM-Teilnehmern die Ablage von Anhängen zu ermöglichen, erfolgt eine Authentifizierung am KAS seines Anbieters. Hierfür wird bei Aufruf der Operation `add_attachment()` eine HTTP-Basic-Authentifizierung mit Username und Passwort als Credentials gefordert. Die Anforderungen sind in *[gemSpec_FD_KOMLE#4.2]* spezifiziert.

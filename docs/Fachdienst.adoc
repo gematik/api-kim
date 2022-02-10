@@ -1,0 +1,36 @@
+:imagesdir: ../images
+:toc: macro
+:toclevels: 5
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:gematik_logo.jpg[width=35%]
+
+toc::[]
+
+= Fachdienst
+Der Fachdienst besteht aus den drei Teilkomponenten Account Manager, Mail Server und dem KOM-LE-Attachment Service. Dieser stellt dem Clientmodul verschiedene Schnittstellen bereit, um die Kommunikations mit der jeweiligen Teilkomponente zu ermöglichen. In der folgenden Abbildung (links) sind alle Schnittstellen, die der Fachdienst anbietet, mit der jeweiligen Teilkomponente, dargestellt.
+
+++++
+<p align="left">
+  <img width="50%" src=../images/I_Fachdienst.png>
+</p>
+++++
+
+Im folgenden Kapitel werden die Teilkomponenten weiter beschrieben. 
+
+== Mail-Server
+Die Teilkomponente Mail-Server stellt die Schnittstelle `I_Message_Service` bereit. Diese wird über die Protokolle SMTP und POP3 aufgerufen. Die beim Mail-Server ankommenden E-Mails sind verschlüsselt, sodass nicht auf deren Inhalt geschlossen werden kann. Gehört eine dem Mail-Server übergebene E-Mail nicht zu einem lokalen Nutzer-Account, wird diese an den zuständigen KOM-LE Mail-Server weitergeleitet. Die Teilkomponente Mail Server des Fachdienstes ist in *[gemSpec_FD_KOMLE#4.1]* spezifiziert.
+
+== Account Manager
+Die Teilkomponente Account Manager ermöglicht die Konfiguration von Nutzer-Accounts am Fachdienst. Beginnend mit KIM 1.5 müssen die verschiedenen Clientmodule zu jedem Fachdienst interoperabel sein. Um dies zu gewährleisten, werden die Schnittstellen des Account Managers durch die gematik normiert. Die Schnittstelle `I_AccountManager_Service` ermöglicht eine einheitliche Durchführung der Registrierung eines KIM-Teilnehmers sowie die Verwaltung der Nutzer-Accounts. Für die Registrierung bzw. Kontoverwaltung wird das im Clientmodul integrierte Administrationsmodul genutzt, welches die Schnittstlle `I_AccountManager_Service` am Account Manager des Fachdienstes aufruft. Weitere Funktionen des Account Managers sind das Einstellen von Abwesenheitsnotizen durch einen KIM-Teilnehmer sowie die Portierung einer KIM-E-Mail zu einer neuen Telematik-ID. Für die Abfrage von technischen Konfigurationsparametern eines Nutzer-Accounts bietet der Account Manager dem Clientmodul die Schnittstelle `I_AccountLimit_Service` an. Für die Pflege der Fachdaten in den Verzeichniseinträgen ruft der Account Manager die REST-Schnittstelle `I_Directory_Application_Maintenance` auf. Die Teilkomponente Account Manager des Fachdienstes ist in *[gemSpec_FD_KOMLE#4.3]* spezifiziert.
+
+Die Beschreibung der REST-Schnittstelle `I_AccountManager_Service` ist hier zu finden: link:../src/openapi/AccountManager.yaml[AccountManager.yaml] +
+Die Beschreibung der REST-Schnittstelle `I_AccountLimit_Service` ist hier zu finden: link:../src/openapi/AccountLimit.yaml[AccountLimit.yaml] 
+
+== KOM-LE Attachment Service (KAS)
+Ab KIM 1.5 werden die Anhänge einer Mail, die größer 25 MB (Netto) ist, ausgelagert. Für die Ablage der Anhänge wird der Fachdienst um die Teilkomponente KOM-LE Attachment Service (KAS) erweitert. Die Teilkomponente KAS des Fachdienstes stellt dem Clientmodul die REST-Schnittstelle `I_Attachment_Service` bereit. Die Teilkomponente KAS ist in *[gemSpec_FD_KOMLE#4.2]* spezifiziert. 
+
+Die Beschreibung der REST-Schnittstelle `I_Attachment_Service` ist hier zu finden: link:../src/openapi/AttachmentService.yaml[AttachmentService.yaml] 
+
+Die gematik stellt für den KAS eine Referenzimplementierung bereit. Diese ist unter dem folgenden Link zu finden: link:https://github.com/gematik/kim-attachment-service[KIM-Attachment-Service]

@@ -1,0 +1,62 @@
+:imagesdir: ../images
+:toc: macro
+:toclevels: 3
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+image:gematik_logo.jpg[width=35%]
+
+toc::[]
+
+== Versionierung
+Im Folgenden wird die Versionierung der REST-Schnittstelle sowie die Versionierung der YAML-Files beschrieben.
+
+=== Versionierung der REST-Schnittstelle 
+
+Mittels der URI-Versionierung wird die Rückwärtskompatibilität der KIM-REST-API gewährleistet. 
+ +
+In der URI wird das folgende Versionierungsschema verwendet: *<MAJOR>*.*<MINOR>*
+
+*Beispiel*
+
+[source,bash]
+-----------------
+https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account
+https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.0/account
+-----------------
+
+Die Änderung der URI sollte möglichst selten erfolgen, damit der Implementierungaufwand bei den Clients gering gehalten wird. Daher erhöhen sich *MAJOR* und *MINOR* nur 
+dann, wenn es die Notwendigkeit gibt, die Schnittstelle unter einer neuen URI zur Verfügung zu stellen. Zum Beispiel wenn inkompatible API-Änderungen vorgenommen wurden. 
+
+=== Versionierung der YAML-Files
+
+Für die Versionierung der YAML-Files gelten die gematik-Vorgaben aus *[gemSpec_OM#2]*. Die Versionierung ist in allen REST-Schnittstellendefinitionen (YAML-Files) enthalten.
+
+*Beispiel*
+
+[source,bash]
+-----------------
+openapi: 3.0.3
+info:
+  title: I_AccountManager_Service
+  description:  Über diese Schnittstelle wird der KIM Account verwaltet.
+  #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
+  version: 2.2.0
+  ### 2.2.0 
+  # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
+  # - changed /components/schemas/Account:
+  #   added parameter dataTimeToLive & maxMailSize
+  #   specified kimVersion with enum
+  # - changed operation createCert:
+  #   added error codes 400 & 404
+  ### 2.0.0 
+  # - included new operations for outOfOffice
+  # - included new operations for porting an e-mail address to new telematikID
+  # - removed operations: register_State, cm_version and pw_change
+  # - added new operations setAccount and getAccount
+  # - renamed and updated operations for user account (e.g. registerAccount and   
+  #   deregisterAccount)
+  # - added operation createCert to generate PKCS#12 files
+  # - added HTTP error code 500
+  # - changed authentication to JWT
+-----------------
