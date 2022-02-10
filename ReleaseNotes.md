@@ -85,3 +85,4 @@ Changes
 - enabled the integration of the client module in the PVS (optional)
 - embedded administration module for the configuration of the KIM account
 - support for syntactic message categories
+#
