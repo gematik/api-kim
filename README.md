@@ -85,7 +85,7 @@ Mit der Einführung von KIM unterstützt die gematik das Gesundheitswesen durch 
 
 &nbsp;                | KIM 1.0   | KIM 1.5 
 --------              | --------        | --------
-Release               | [R3.1.3-11](https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Releases/Konzepte_und_Spezifikationen/OPB3.1_R3.1.3_Hotfix11_Spezifikationen_20220209.zip)        | [KIM 1.5.2](https://fachportal.gematik.de/downloadcenter/releases/release-402-und-produkttyp-und-anwendungsreleases#c4779)
+Release               | [R3.1.3-11](https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Releases/Konzepte_und_Spezifikationen/OPB3.1_R3.1.3_Hotfix11_Spezifikationen_20220209.zip)        | [KIM 1.5.2](https://fachportal.gematik.de/downloadcenter/releases/release-402-und-produkttyp-und-anwendungsreleases-1#c5189)
 
 Weitere Informationen zu den Versionen finden Sie hier: [KIM](https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen)
 
