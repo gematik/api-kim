@@ -251,6 +251,11 @@ Patientenidentifikation benutzt.
 Das Clientmodul erzeugt bei der Prüfung der Nachrichtensignatur einen Signaturprüfungsbericht im PDF-Format. Der Bericht wird durch das 
 Clientmodul als Anhang der Originalnachricht beigefügt.
 
+Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird. 
+
+* *Umgang mit unbekannten Dienstkennungen* +
+Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhält.
+
 == Integration des Clientmoduls in das Primärsystem
 Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärsystem zu integrieren. Somit ist kein separates Clientmodul mehr notwendig. Die folgende Abbildung stellt eine mögliche Integration dar:
 
