@@ -52,7 +52,7 @@ image:Int_PS-KOMLE.png[width=50%]
 Es ist erforderlich, dass das Primärsystem mit der LDAP-Schnittstelle des Konnektors kommuniziert, um Verzeichnisdienstabfragen durchzuführen.
 
 * *Verwendung des KIM-Clientmoduls* +
-Es ist erforderlich, dass das Primärsystem mit dem KIM-Clientmodul kommuniziert, um E-Mails zu versenden (SMTPS) und zu empfangen (POP3S). 
+Es ist erforderlich, dass das Primärsystem mit dem KIM-Clientmodul kommuniziert, um E-Mails zu versenden (SMTPS) und zu empfangen (POP3S).
 
 == Anwendungsfälle
 In der folgenden Abbildung sind die vom Primärsystem umzusetzenden KIM-Anwendungsfälle dargestellt.
@@ -60,82 +60,82 @@ In der folgenden Abbildung sind die vom Primärsystem umzusetzenden KIM-Anwendun
 image:UC_PS-KOMLE.png[width=40%]
 
 === Nachrichten generieren und übernehmen
-Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen. 
+Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
 Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signierte Dokumente (qualifizierte) in Frage. Alle Anhänge können, abhängig vom verwendeten Schlüsselmaterial, separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt werden.
 
 * *Nachrichtengenerierung im Primärsystem* +
 Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-Mail (inkl. weiterer Anhänge) zu erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
 
 * *E-Mail-Kategorisierung im Primärsystem* +
-Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden. 
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden.
 
 === Empfänger ermitteln
-Es können nur KIM-E-Mails an Empfänger versendet werden, die als Teilnehmer im Verzeichnisdienst aufgenommen und deren Verschlüsselungszertifikate sowie deren KIM-E-Mail-Adressen hinterlegt sind. 
+Es können nur KIM-E-Mails an Empfänger versendet werden, die als Teilnehmer im Verzeichnisdienst aufgenommen und deren Verschlüsselungszertifikate sowie deren KIM-E-Mail-Adressen hinterlegt sind.
 
 TIP: E-Mail-Nachrichten können nur für KIM-Teilnehmer verschlüsselt werden.
 
 * *Verwendung von KIM-E-Mail-Adressen* +
 Zum Versand einer E-Mail ist es erforderlich, dass das Primärsystem die Header-Felder `to`, `cc`, `bcc` gemäß *[RFC822]* mit KIM-E-Mail-Adressen aus dem Verzeichnisdienst befüllt. Die Empfänger-Adressen können dabei aus dem Verzeichnisdienst abgefragt werden.
 
-Zur Abfrage der Empfänger-Adressen aus dem Verzeichnisdienst, agiert das Primärsystem als LDAP-Client gegenüber dem LDAP-Proxy des Konnektors. 
+Zur Abfrage der Empfänger-Adressen aus dem Verzeichnisdienst, agiert das Primärsystem als LDAP-Client gegenüber dem LDAP-Proxy des Konnektors.
 Falls die Verbindung zwischen Primärsystem und Konnektor über TLS abgesichert wird, ist LDAPS zu verwenden.
 
 * *VZD-Suchanfragen mittels LDAP* +
 Es ist erforderlich, dass das Primärsystem als LDAP-Client aus den LDAPv3 Standard die LDAP-Operationen `Bind`, `Unbind`, `Search`, `Abandon` gemäß *[RFC4510]* nutzt, um ein LDAP `search` durchzuführen.
 
-Der Verzeichnisdienst ist für LDAP-Suchoperationen des Primärsystems über den Konnektor erreichbar, der als LDAP-Proxy agiert. 
+Der Verzeichnisdienst ist für LDAP-Suchoperationen des Primärsystems über den Konnektor erreichbar, der als LDAP-Proxy agiert.
 
 * *Nutzung des LDAP-Proxys des Konnektors* +
-Es ist erforderlich, dass das Primärsystem die LDAP `search`-Operation gemäß *[RFC4511#4.5.1]* über den LDAP-Proxy des Konnektors ausführt. 
+Es ist erforderlich, dass das Primärsystem die LDAP `search`-Operation gemäß *[RFC4511#4.5.1]* über den LDAP-Proxy des Konnektors ausführt.
 
 Die Suche nach der KIM–E-Mail-Adresse des Nachrichtenempfängers erfolgt primär über den Namen des Empfängers – also den Personennamen oder den Namen der Institution – aber auch über zusätzliche Informationen wie Adressen, Fachgebiet oder Institutionstyp.
 
 * *Search Operation mittels des LDAP-Directory-Basisdatensatz-Attributs* +
-Es ist erforderlich, dass das Primärsystem die E-Mail-Adressen der Empfänger über die Suchkriterien des Namens, der Postadresse der Leistungserbringerinstitution oder des Fachgebiets in einer LDAP `search`-Operation gemäß *[RFC4511#4.5.1]* nach einem entsprechenden LDAP-Directory-Basisdatensatz-Attribut gemäß Tabelle *[gemSpec_VZD#Tab_VZD_Datenbeschreibung]* suchen kann. 
+Es ist erforderlich, dass das Primärsystem die E-Mail-Adressen der Empfänger über die Suchkriterien des Namens, der Postadresse der Leistungserbringerinstitution oder des Fachgebiets in einer LDAP `search`-Operation gemäß *[RFC4511#4.5.1]* nach einem entsprechenden LDAP-Directory-Basisdatensatz-Attribut gemäß Tabelle *[gemSpec_VZD#Tab_VZD_Datenbeschreibung]* suchen kann.
 
-Mittels der Suchkriterien kann das Primärsystem die KIM-E-Mail-Empfänger im Verzeichnisdienst ermitteln. Diese Suchkriterien sind in 
-*[gemSpec_VZD#Tab_VZD_Datenbeschreibung]* aufgeführt. Über die LDAP-Suche sind Einträge ohne Zertifikate nicht erreichbar.  
+Mittels der Suchkriterien kann das Primärsystem die KIM-E-Mail-Empfänger im Verzeichnisdienst ermitteln. Diese Suchkriterien sind in
+*[gemSpec_VZD#Tab_VZD_Datenbeschreibung]* aufgeführt. Über die LDAP-Suche sind Einträge ohne Zertifikate nicht erreichbar.
 
 * *Auswahl der E-Mail-Adresse des gewünschten Empfängers* +
-Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere 
-Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt. 
+Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere
+Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
 ===  Nachrichten versenden
 Der Versand von KIM–Nachrichten erfolgt über das Clientmodul, das die Nachricht für jeden Empfänger zuerst signiert und anschließend verschlüsselt. +
 
 TIP: In der KIM Version 1.0 darf die Gesamtgröße einer KIM-Nachricht inkl. Anhänge 25 MB nicht überschreiten.
 
-Die Einschränkung auf 25 MB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 25 MB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit größeren Anhängen zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der auf den KAS ausgelagerten Anhänge. 
+Die Einschränkung auf 25 MB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 25 MB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit größeren Anhängen zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der auf den KAS ausgelagerten Anhänge.
 
 * *E-Mail-Versand als Funktion des Primärsystems* +
 Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus seinem E-Mail-Modul heraus versendet.
 
-Die zu versendenden Dokumente können vor dem Versand vom Primärsystem über einen Aufruf der Signaturschnittstelle des Konnektors vom Leistungserbringer signiert werden. 
+Die zu versendenden Dokumente können vor dem Versand vom Primärsystem über einen Aufruf der Signaturschnittstelle des Konnektors vom Leistungserbringer signiert werden.
 
 * *Erstellung von MIME-Nachrichten* +
-Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt. Die Message-IDs der Nachrichten dürfen keine datenschutzrelevanten Informationen - wie z. B. FQDNs - enthalten. 
+Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt. Die Message-IDs der Nachrichten dürfen keine datenschutzrelevanten Informationen - wie z. B. FQDNs - enthalten.
 Die E-Mail-Nachricht muss anschließend über das Clientmodul versendet werden.
 
-Dabei signiert das Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger. 
+Dabei signiert das Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger.
 Hierbei wird der S-MIME-Standard verwendet.
 
-* *SMTP-Kommunikation über das KIM-Clientmodul* + 
+* *SMTP-Kommunikation über das KIM-Clientmodul* +
 Es ist erforderlich, dass das Primärsystem ausschließlich mit dem Clientmodul mittels SMTP-Kommandos kommuniziert.
 
-* *SMTP-Authentifizierung über KIM–Clientmodul* + 
+* *SMTP-Authentifizierung über KIM–Clientmodul* +
 Für die SMTP-Authentifizierung über das Clientmodul ist es erforderlich, dass das Primärsystem die SASL-Mechanismen `PLAIN` und `LOGIN` verwendet.
 
-Beim Aufbau der SMTP-Verbindung ist es erforderlich, Kartenverwaltungsinformationen zur SM-B mitzuliefern, die zum Integritätsschutz der 
-Nachricht verwendet werden sollen. Dazu müssen `MandantId`, `ClientsystemId` und `WorkplaceId`, der Kartensitzung der erforderlichen SM-B, 
+Beim Aufbau der SMTP-Verbindung ist es erforderlich, Kartenverwaltungsinformationen zur SM-B mitzuliefern, die zum Integritätsschutz der
+Nachricht verwendet werden sollen. Dazu müssen `MandantId`, `ClientsystemId` und `WorkplaceId`, der Kartensitzung der erforderlichen SM-B,
 über den SMTP-Benutzernamen dem Clientmodul mitgeteilt werden.
 
 * *Nutzerkreis der KIM-E-Mail-Adresse beim Nachrichtenversand* +
-Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Nachrichtenversand nur durch autorisierte Personen erfolgt. 
-Die autorisierten Personen werden mit dem KIM-Antrag festgelegt. 
+Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Nachrichtenversand nur durch autorisierte Personen erfolgt.
+Die autorisierten Personen werden mit dem KIM-Antrag festgelegt.
 
-* *Angaben zum Aufbau der SMTP-Verbindung zum KIM-Clientmodul* + 
-Bei Anwendung der SASL-Mechanismen `PLAIN` und `LOGIN` für die SMTP-Authentifizierung ist es erforderlich, dass das Primärsystem einen persistent gespeicherten SMTP-Benutzernamen gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber dem KIM-Dienst (MTA) verwendet wird, wird ebenfalls dem persistenten Datensatz entnommen. Die Attribute der Tabelle 
-_Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ werden durch das „#“ – Zeichen getrennt. 
+* *Angaben zum Aufbau der SMTP-Verbindung zum KIM-Clientmodul* +
+Bei Anwendung der SASL-Mechanismen `PLAIN` und `LOGIN` für die SMTP-Authentifizierung ist es erforderlich, dass das Primärsystem einen persistent gespeicherten SMTP-Benutzernamen gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber dem KIM-Dienst (MTA) verwendet wird, wird ebenfalls dem persistenten Datensatz entnommen. Die Attribute der Tabelle
+_Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ werden durch das „#“ – Zeichen getrennt.
 
 
 [cols="1,2",options="header",autowidth]
@@ -143,7 +143,7 @@ _Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ werden durch das „#“ – Zeiche
 |===
 |Attribut | Beispiel
 |Benutzername des Absenders am KIM-Dienst (E-Mail-Adresse) | erik.mustermann@hrst_domain.kim.telematik
-|Domain Adresse des KIM-Dienstes (des MTAs) inkl. Portnummer | hrst_domain.kim.telematik:465 
+|Domain Adresse des KIM-Dienstes (des MTAs) inkl. Portnummer | hrst_domain.kim.telematik:465
 |MandantId | 1
 |ClientsystemId| KIM
 |WorkplaceId | 7
@@ -160,11 +160,11 @@ erik.mustermann@hrst_domain.kim.telematik#hrst_domain.kim.telematik:465#1#KIM#7
 
 TIP: Erfolgt die Einbindung von KIM in ein bestehendes Mail-Systeme, kann ein übergebener Delimiter ":" zwischen dem Serveranteil und dem Port (z. B. hrst_domain.kim.telematik:9959) des SMTP-Benutzernamens zu Fehlern bei der Interpretation im Bestandsystem führen. Es werden daher weitere Delimiter im Benutzernamen unterstützt, sofern die Funktionalität gemäß der Bestandsanforderungen zu den Benutzernamen, in semantischer Abgrenzung, uneingeschränkt erhalten bleiben. Es gilt, dass die Bestandteile des SMTP-Benutzernames in ihrem semantischen Bezug gemäß [RFC1123, RFC2822] einhalten müssen.
 
-Als Ergebnis der Authentisierung erhält das Primärsystem die SMTP-Antwortcodes vom Clientmodul, das die Verbindung zum KIM-Dienst (MTA) 
+Als Ergebnis der Authentisierung erhält das Primärsystem die SMTP-Antwortcodes vom Clientmodul, das die Verbindung zum KIM-Dienst (MTA)
 als Proxy offen hält.
 
-* *Nutzung des SMTP-DATA-Kommandos* + 
-Es ist erforderlich, dass das Primärsystem das `DATA`-Kommando zum Versenden einer KIM-Nachricht verwendet. Mit der 
+* *Nutzung des SMTP-DATA-Kommandos* +
+Es ist erforderlich, dass das Primärsystem das `DATA`-Kommando zum Versenden einer KIM-Nachricht verwendet. Mit der
 Zeichensequenz „`<CRLF>`.`<CRLF>`“ wird das Ende der Nachricht markiert und anschließend weiterverarbeitet.
 
 * *Schließung der SMTP-Verbindung mit QUIT* +
@@ -177,32 +177,32 @@ Es ist erforderlich, dass das Primärsystem das Header Element `X-KIM-Sendersyst
 Es ist erforderlich, dass das Primärsystem so konfigurierbar ist, dass es beim Versenden einer Nachricht eine Zustellbestätigung gemäß [RFC3461] anfordern kann.
 
 * *Informieren über gescheiterten Nachrichtenversand* +
-Wenn das Clientmodul für alle Empfänger der zu versendenden Nachricht keine Verschlüsselungszertifikate ermitteln kann, bricht es den Versand ab 
-und liefert dem Primärsystem den Antwortcode „`451`“ zurück. Es ist erforderlich, dass das Primärsystem beim Erhalt dieses Antwortcodes den Nutzer über das Scheitern des Nachrichtenversandes mit folgendem Fehlertext informiert: + 
+Wenn das Clientmodul für alle Empfänger der zu versendenden Nachricht keine Verschlüsselungszertifikate ermitteln kann, bricht es den Versand ab
+und liefert dem Primärsystem den Antwortcode „`451`“ zurück. Es ist erforderlich, dass das Primärsystem beim Erhalt dieses Antwortcodes den Nutzer über das Scheitern des Nachrichtenversandes mit folgendem Fehlertext informiert: +
 
 _„Die Nachricht konnte nicht gesendet werden, weil für keinen Empfänger gültige Verschlüsselungszertifikate ermittelt werden konnten.“_ +
 
-Wenn nur ein Teil des gewünschten Empfängerkreises adressiert werden konnte, da nicht für alle Empfänger das notwendige Verschlüsselungszertifikat ermittelt werden konnte, wird der Nutzer mit einer entsprechenden Meldung darüber informiert: + 
+Wenn nur ein Teil des gewünschten Empfängerkreises adressiert werden konnte, da nicht für alle Empfänger das notwendige Verschlüsselungszertifikat ermittelt werden konnte, wird der Nutzer mit einer entsprechenden Meldung darüber informiert: +
 
 _„Die Nachricht wurde nur an einen Teil der gewünschten Adressaten versendet, denn es konnten nicht für alle Empfänger gültige Verschlüsselungszertifikate ermittelt werden.“_
 
 === Nachrichten empfangen
-Der Empfang von KIM-Nachrichten erfolgt über das Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern 
+Der Empfang von KIM-Nachrichten erfolgt über das Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern
 die dafür erforderliche Smartcard/HSM im System registriert und freigeschaltet ist.
 
 * *Nutzerkreis der KIM-E-Mail-Adresse beim Nachrichtenempfang* +
 Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Zugriff auf empfangene KIM-Nachrichten nur durch autorisierte Personen erfolgt.
 
 * *Freischaltung der für KIM erforderlichen Smartcards* +
-Für den Empfang entschlüsselter Nachrichten ist es erforderlich, dass Smartcards/HSMs freigeschaltet vorliegen. Ohne diese Freischaltung können Nachrichten nicht entschlüsselt entgegengenommen werden. Es ist erforderlich, dass das Primärsystem den Status der Freischaltung 
+Für den Empfang entschlüsselter Nachrichten ist es erforderlich, dass Smartcards/HSMs freigeschaltet vorliegen. Ohne diese Freischaltung können Nachrichten nicht entschlüsselt entgegengenommen werden. Es ist erforderlich, dass das Primärsystem den Status der Freischaltung
 der Smartcards sichtbar macht. Ebenfalls ist es erforderlich, dass der Benutzer darauf aufmerksam gemacht wird, dass er zum Empfang entschlüsselter Nachrichten diese Smartcards freischalten muss.
 
-Das Primärsystem übergibt dem Clientmodul in der POP3-Kommunikation alle zum Nachrichtenempfang erforderlichen Informationen. 
+Das Primärsystem übergibt dem Clientmodul in der POP3-Kommunikation alle zum Nachrichtenempfang erforderlichen Informationen.
 Auch für die Abholung von Nachrichten ist es erforderlich, dass Angaben über die Ansteuerung der Smartcards des Empfängers
 innerhalb der POP3-Authentifizierung übergeben werden.
 
 * *Angaben zum Aufbau der POP3-Verbindung zum Clientmodul* +
-Zur POP3-Authentifizierung gegenüber dem KIM-Dienst (MTA als POP3-Server) ist es erforderlich, dass das Primärsystem einen persistent gespeicherten POP3-Benutzernamen gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_POP3_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber 
+Zur POP3-Authentifizierung gegenüber dem KIM-Dienst (MTA als POP3-Server) ist es erforderlich, dass das Primärsystem einen persistent gespeicherten POP3-Benutzernamen gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_POP3_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber
 dem KIM-Dienst (MTA) verwendet wird, wird ebenfalls dem persistenten Datensatz entnommen. Die Attribute der Tabelle werden durch das „ # “ – Zeichen getrennt. Ist die KIM-E-Mail-Adresse des Empfängers nicht einer SM-B, sondern einem HBA zugeordnet, ist es erforderlich, an das Ende des POP3-Benutzernamens zusätzlich ein „#“ - Zeichen sowie die `UserId` für den Zugriff auf den HBA anzuhängen.
 
 [cols="1,2",options="header",autowidth]
@@ -225,12 +225,12 @@ Der POP3-Benutzername muss immer vollständig sein auch wenn nicht alle optional
 ----
 erik.mustermann@hrst_domain.kim.telematik#hrst_domain.kim.telematik:995#1#KOM_LE#7#*#Konn_1
 ----
- 
+
 TIP: Erfolgt die Einbindung von KIM in ein bestehendes Mail-Systeme, kann ein übergebener Delimiter ":" zwischen dem Serveranteil und dem Port (z. B. hrst_domain.kim.telematik:9959) des POP3-Benutzernamens zu Fehlern bei der Interpretation im Bestandsystem führen. Es werden daher weitere Delimiter im Benutzernamen unterstützt, sofern die Funktionalität gemäß der Bestandsanforderungen zu den Benutzernamen, in semantischer Abgrenzung, uneingeschränkt erhalten bleiben. Es gilt, dass die Bestandteile des POP3-Benutzernames in ihrem semantischen Bezug gemäß [RFC1123, RFC2822] einhalten müssen.
 
 Die folgende POP3-Kommunikation erfolgt gemäß POP3-Protokoll über das Clientmodul.
 
-Das Clientmodul leitet die POP3-Anfragen des Primärsystems an den KIM-Fachdienst (MTA) weiter und entschlüsselt abgeholte Nachrichten, 
+Das Clientmodul leitet die POP3-Anfragen des Primärsystems an den KIM-Fachdienst (MTA) weiter und entschlüsselt abgeholte Nachrichten,
 um sie in entschlüsselter und verifizierter Form an das Primärsystem weiterzugeben.
 
 Enthält eine KIM-Nachricht externe Anhänge die auf einem KAS abgelegt wurden, so werden diese in KOM-LE 1.5 vom Clientmodul automatisch heruntergeladen und für das Primärsystem in die KIM-E-Mail eingefügt.
@@ -245,13 +245,13 @@ Es ist erforderlich, dass das Primärsystem empfangene Nachrichten entgegennehme
 Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den Standardformaten `PDF`, `JPEG`, `GIF`, `TXT` und `DOC` anzeigen kann.
 
 * *E-Mail-Anhänge verarbeiten* +
-Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der 
+Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der
 Patientenidentifikation benutzt.
 
-Das Clientmodul erzeugt bei der Prüfung der Nachrichtensignatur einen Signaturprüfungsbericht im PDF-Format. Der Bericht wird durch das 
+Das Clientmodul erzeugt bei der Prüfung der Nachrichtensignatur einen Signaturprüfungsbericht im PDF-Format. Der Bericht wird durch das
 Clientmodul als Anhang der Originalnachricht beigefügt.
 
-Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird. 
+Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
 
 * *Umgang mit unbekannten Dienstkennungen* +
 Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhält.
@@ -267,17 +267,17 @@ Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärs
 </p>
 ++++
 
-Wenn das Clientmodul in das Primärsystem integriert wird, richten sich die Anforderungen des Clientmoduls an das Primärsystem. 
-Durch die optionale Integration entfallen alle Anforderungen an die Schnittstelle zwischen Primärsystem und Clientmodul, da diese nicht mehr existiert. 
+Wenn das Clientmodul in das Primärsystem integriert wird, richten sich die Anforderungen des Clientmoduls an das Primärsystem.
+Durch die optionale Integration entfallen alle Anforderungen an die Schnittstelle zwischen Primärsystem und Clientmodul, da diese nicht mehr existiert.
 
 Die zu erfüllenden Anforderungen für die Integration des Clientmoduls in das Primärsystem können dem Produkttypsteckbrief für das Primärsystem mit integrieten Clientmodul *[gemProdT_PS_KIM]* entnommen werden.
 
 == Zentraler Anti-Viren-Service (AV-Service)
-Im folgenden Kapitel werden Lösungen beschrieben, wie ein zentraler Anti-Viren-Service (AV-Service) zusammen mit KIM genutzt werden kann. 
+Im folgenden Kapitel werden Lösungen beschrieben, wie ein zentraler Anti-Viren-Service (AV-Service) zusammen mit KIM genutzt werden kann.
 
-TIP: Da KIM-Nachrichten Ende-zu-Ende verschlüsselt sind, kann ein AV-Service mit angebundenem AV-Programm erst nach der Entschlüsselung der Nachricht eingesetzt werden. 
+TIP: Da KIM-Nachrichten Ende-zu-Ende verschlüsselt sind, kann ein AV-Service mit angebundenem AV-Programm erst nach der Entschlüsselung der Nachricht eingesetzt werden.
 
-=== Integrierter AV-Service im Clientmodul 
+=== Integrierter AV-Service im Clientmodul
 Einige KIM Anbieter unterstützen die Einbindung eines zentralen AV-Service bzw. AV-Programm direkt in ihrem KIM-Clientmodul. Für eine solche Lösung sind keine zusätzlichen Änderungen am Primärsystem erforderlich. Bitte erfragen Sie bei Ihrem KIM-Anbieter, ob und in welcher Weise eine solche Lösung unterstützt wird.
 
 === Mailserver und AV-Scanner zwischen Primärsystem und Clientmodul
@@ -296,15 +296,19 @@ Der Mailserver ruft die KIM-Nachrichten vom KIM-Fachdienst per POP3 ab. Nach Ent
 
 Diese Lösung setzt voraus, dass im Primärsystem konfiguriert werden kann, wie der Benutzername an den Mailserver übergeben wird, unabhängig vom verwendeten Protokoll zwischen Primärsystem und Mailserver, da marktübliche Mailserver den in KIM verwendeten SMTP/POP3-Benutzernamen (mail-adresse#Aufrufkontext) nicht unterstützen. Der Mailserver muss so konfiguriert werden, dass ein Mapping der Benutzernamen, die im Primärsystem konfiguriert sind, auf die Benutzernamen mit Aufrufkontext erfolgt, sodass der Mailserver das Clientmodul korrekt ansprechen kann.
 
+=== Lastverteilung und Performance beim Einsatz von KIM 1.0
+
+Siehe https://github.com/gematik/api-kim/blob/master/docs/Lastverteilung%20und%20Performance%20beim%20Einsatz%20von%20KIM%201.0.pdf[Lastverteilung und Performance beim Einsatz von KIM 1.0]
+
 * *Unterstützung mehrerer Aufrufvarianten* +
 Es ist erforderlich, dass das Primärsystem die Aufrufvarianten SMTP-/POP3-Benutzername ohne Aufrufkontext und SMTP-/POP3-Benutzername mit Aufrufkontext unterstützt, unabhängig davon welche Schnittstelle zwischen Primärsystem und Mailserver verwendet wird (z. B. IMAP, POP3, SMTP). Die Aufrufvarianten müssen pro Protokoll, also getrennt für SMTP und POP3 ausgeführt werden können, um eine unterschiedliche Konfiguration der Aufrufparameter für das Senden und das Empfangen von KIM-Nachrichten zu ermöglichen.
 
-== Umgang mit Multikonnektor-Umgebungen 
-Um in einer Umgebung mit mehreren Konnektoren mit dem für das Schlüsselmaterial (SMC-B) notwendigen Konnektor zu kommunizieren, muss dieser eindeutig adressierbar sein. Aus diesem Grund wird zusätzlich im SMTP/POP3-Benutzername ein weiterer Parameter vom Clientsystem an das Clientmodul übergeben. Das folgende Bild zeigt beispielhaft in einer Multikonnektor-Umgebung, wie das Clientmodul mit Hilfe des optionalen Parameters mit dem Konnektor (A) kommuniziert. 
+== Umgang mit Multikonnektor-Umgebungen
+Um in einer Umgebung mit mehreren Konnektoren mit dem für das Schlüsselmaterial (SMC-B) notwendigen Konnektor zu kommunizieren, muss dieser eindeutig adressierbar sein. Aus diesem Grund wird zusätzlich im SMTP/POP3-Benutzername ein weiterer Parameter vom Clientsystem an das Clientmodul übergeben. Das folgende Bild zeigt beispielhaft in einer Multikonnektor-Umgebung, wie das Clientmodul mit Hilfe des optionalen Parameters mit dem Konnektor (A) kommuniziert.
 
 image:Multikonnektoren.png[width=90%]
 
-Beispielhaft wird für das Senden einer KIM-Mail der SMTP-Benutzername um den optionalen Parameter `KonnektorId` erweitert. Mit diesem kann das Clientmodul den notwendigen Konnektor adressieren. Der Paramter wird im Aufrufkontext für SM-B optional hinter den Parameter `WorkplaceId` angehägt. 
+Beispielhaft wird für das Senden einer KIM-Mail der SMTP-Benutzername um den optionalen Parameter `KonnektorId` erweitert. Mit diesem kann das Clientmodul den notwendigen Konnektor adressieren. Der Paramter wird im Aufrufkontext für SM-B optional hinter den Parameter `WorkplaceId` angehägt.
 
 image:MTA_SMTP_Benutzername.png[width=90%]
 
@@ -332,6 +336,6 @@ Im folgenden Beispiel ist ein Auszug einer möglichen Clientmodul-Konfigurations
     </SOAP>
   </Connector>
 </Connectors>
------------------ 
+-----------------
 
 Weitere Informationen bzw. die entsprechenden Anforderungen sind in *[gemSpec_CM_KOMLE#3.3.2.2]* und *[gemSpec_CM_KOMLE#3.4.2.2]* beschrieben.
