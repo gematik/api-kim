@@ -296,12 +296,12 @@ Der Mailserver ruft die KIM-Nachrichten vom KIM-Fachdienst per POP3 ab. Nach Ent
 
 Diese Lösung setzt voraus, dass im Primärsystem konfiguriert werden kann, wie der Benutzername an den Mailserver übergeben wird, unabhängig vom verwendeten Protokoll zwischen Primärsystem und Mailserver, da marktübliche Mailserver den in KIM verwendeten SMTP/POP3-Benutzernamen (mail-adresse#Aufrufkontext) nicht unterstützen. Der Mailserver muss so konfiguriert werden, dass ein Mapping der Benutzernamen, die im Primärsystem konfiguriert sind, auf die Benutzernamen mit Aufrufkontext erfolgt, sodass der Mailserver das Clientmodul korrekt ansprechen kann.
 
+* *Unterstützung mehrerer Aufrufvarianten* +
+Es ist erforderlich, dass das Primärsystem die Aufrufvarianten SMTP-/POP3-Benutzername ohne Aufrufkontext und SMTP-/POP3-Benutzername mit Aufrufkontext unterstützt, unabhängig davon welche Schnittstelle zwischen Primärsystem und Mailserver verwendet wird (z. B. IMAP, POP3, SMTP). Die Aufrufvarianten müssen pro Protokoll, also getrennt für SMTP und POP3 ausgeführt werden können, um eine unterschiedliche Konfiguration der Aufrufparameter für das Senden und das Empfangen von KIM-Nachrichten zu ermöglichen.
+
 === Lastverteilung und Performance beim Einsatz von KIM 1.0
 
 Siehe https://github.com/gematik/api-kim/blob/master/docs/Lastverteilung%20und%20Performance%20beim%20Einsatz%20von%20KIM%201.0.pdf[Lastverteilung und Performance beim Einsatz von KIM 1.0]
-
-* *Unterstützung mehrerer Aufrufvarianten* +
-Es ist erforderlich, dass das Primärsystem die Aufrufvarianten SMTP-/POP3-Benutzername ohne Aufrufkontext und SMTP-/POP3-Benutzername mit Aufrufkontext unterstützt, unabhängig davon welche Schnittstelle zwischen Primärsystem und Mailserver verwendet wird (z. B. IMAP, POP3, SMTP). Die Aufrufvarianten müssen pro Protokoll, also getrennt für SMTP und POP3 ausgeführt werden können, um eine unterschiedliche Konfiguration der Aufrufparameter für das Senden und das Empfangen von KIM-Nachrichten zu ermöglichen.
 
 == Umgang mit Multikonnektor-Umgebungen
 Um in einer Umgebung mit mehreren Konnektoren mit dem für das Schlüsselmaterial (SMC-B) notwendigen Konnektor zu kommunizieren, muss dieser eindeutig adressierbar sein. Aus diesem Grund wird zusätzlich im SMTP/POP3-Benutzername ein weiterer Parameter vom Clientsystem an das Clientmodul übergeben. Das folgende Bild zeigt beispielhaft in einer Multikonnektor-Umgebung, wie das Clientmodul mit Hilfe des optionalen Parameters mit dem Konnektor (A) kommuniziert.
