@@ -377,7 +377,7 @@ paths:
             schema:
               type: object
               properties:
-                OTP:
+                otp:
                   type: string
                   format: binary
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
