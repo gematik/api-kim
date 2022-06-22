@@ -437,15 +437,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        404:
-          description: Email Account nicht vorhanden.
+        403:
+          description: Invalides OTP (schließt Ablauf der Gültigkeit mit ein).
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        408:
-          description: Request Timeout
-          # Gültigkeitsdauer des One Time Passworts ist abgelaufen
+        404:
+          description: Email Account nicht vorhanden.
           content:
             application/json:
               schema:
