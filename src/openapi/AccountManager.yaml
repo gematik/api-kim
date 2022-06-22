@@ -421,7 +421,7 @@ paths:
           type: string
           format: password        
       - in: header
-        name: OTP
+        name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
         required: true
         schema:
