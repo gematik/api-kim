@@ -380,7 +380,7 @@ paths:
               properties:
                 OTP:
                   type: string
-                  format: binary
+                  format: password
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
              
              
