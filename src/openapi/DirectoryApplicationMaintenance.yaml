@@ -878,7 +878,7 @@ components:
           scopes:
             VZD:I_Directory_Application_Maintenance: I_RESTful_Directory_Application_Maintenance Client Scope
               Als Clients dieser Schnittstelle sind nur Systeme der FAchanwendungen zulässig.
-              Das AccessToken enthält im "sub" claim den Identifier des Clients, der auf die Einträge zugreift. Dieser Identifier wird im Log abgelegt, welcher die Zugriffe über diese Schnittstelle protokolliert.
+              Das AccessToken enthält im sub claim den Identifier des Clients, der auf die Einträge zugreift. Dieser Identifier wird im Log abgelegt, welcher die Zugriffe über diese Schnittstelle protokolliert.
 
 security:
   - OAuth2:
