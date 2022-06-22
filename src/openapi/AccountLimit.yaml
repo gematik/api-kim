@@ -79,12 +79,12 @@ components:
           example: 734003200
           description: Setzt die maximale Größe einer KIM-Mail in Bytes
         quota:
-          type: "integer"     
+          type: integer  
           format: int64
           example: 160000000000
           description: Gibt das maximale Speichervolumen für einen Nutzer-Account an
         remainQuota:
-          type: "integer"     
+          type: integer     
           format: int64
           example: 112000000000
           description: Gibt das verbleibende Speichervolumen für einen Nutzer-Account an
