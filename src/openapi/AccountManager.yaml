@@ -260,6 +260,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         500:
           description: Internal Server Error          
           content:
@@ -377,7 +383,7 @@ paths:
             schema:
               type: object
               properties:
-                OTP:
+                otp:
                   type: string
                   format: binary
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
@@ -385,6 +391,12 @@ paths:
              
         401:
           description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
           content:
             application/json:
               schema:
@@ -421,7 +433,7 @@ paths:
           type: string
           format: password        
       - in: header
-        name: OTP
+        name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
         required: true
         schema:
