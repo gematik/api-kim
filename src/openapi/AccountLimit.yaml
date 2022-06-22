@@ -75,6 +75,7 @@ components:
         maxMailSize:
           type: integer
           format: int64
+          minimum: 524288000
           example: 734003200
           description: Setzt die maximale Größe einer KIM-Mail in Bytes
         quota:
