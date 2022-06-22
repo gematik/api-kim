@@ -322,6 +322,7 @@ paths:
                     example: registered
                   deregDate:
                     type: integer   
+                    format: int64
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
@@ -385,7 +386,7 @@ paths:
               properties:
                 otp:
                   type: string
-                  format: binary
+                  format: password
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
              
              
@@ -692,6 +693,7 @@ components:
           example: registered
         deregDate:
           type: integer   
+          format: int64
           example: 1616588543
           readOnly: true
           description: Bestätigtes Kündigungsdatum (Unix Timestamp)
