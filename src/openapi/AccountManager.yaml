@@ -316,6 +316,7 @@ paths:
                     example: registered
                   deregDate:
                     type: integer   
+                    format: int64
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
@@ -680,6 +681,7 @@ components:
           example: registered
         deregDate:
           type: integer   
+          format: int64
           example: 1616588543
           readOnly: true
           description: Bestätigtes Kündigungsdatum (Unix Timestamp)
