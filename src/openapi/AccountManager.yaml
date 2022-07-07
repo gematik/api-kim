@@ -530,6 +530,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        502:
+          description: CMP-Service nicht erreichbar bzw. liefert Fehler          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 ##--
 ##------
   /account/{username}/outofoffice:
