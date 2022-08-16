@@ -339,3 +339,5 @@ Im folgenden Beispiel ist ein Auszug einer möglichen Clientmodul-Konfigurations
 -----------------
 
 Weitere Informationen bzw. die entsprechenden Anforderungen sind in *[gemSpec_CM_KOMLE#3.3.2.2]* und *[gemSpec_CM_KOMLE#3.4.2.2]* beschrieben.
+
+Um die Erreichbarkeit von Diensten in der Telematik Infrastruktur zu ermöglichen, bei denen kein bestimmter Konnektor verwendet werden muss, ist es notwendig eine "default" Route in Richtung Telematik Infrastruktur zu konfigurieren. Das Clientmodule kann für diesen Fall unterschiedlich gewichtete Routen vorhalten um ein möglichst ausfallsicheres Routing zu ermöglichen.
