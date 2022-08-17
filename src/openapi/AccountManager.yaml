@@ -320,6 +320,12 @@ paths:
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
                       # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen
           content:
@@ -382,7 +388,12 @@ paths:
                   format: binary
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
              
-             
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'             
         401:
           description: Authentifizierung fehlgeschlagen.
           content:
@@ -431,6 +442,12 @@ paths:
       responses:
         204:
           description: Änderung der TelematikID erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'        
         401:
           description: Authentifizierung fehlgeschlagen.
           content:
