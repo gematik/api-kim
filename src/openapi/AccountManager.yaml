@@ -3,7 +3,9 @@ info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 2.2.0
+  version: 2.2.1
+  ### 2.2.1
+  # - added status Code 502 for createCert operation in case the account manager acts as a proxy
   ### 2.2.0 
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
