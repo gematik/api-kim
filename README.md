@@ -107,7 +107,7 @@ Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation r
 **Produkttypen**  
 [- Clientsystem](docs/KIM_API.adoc)  
 [- Fachdienst](docs/Fachdienst.adoc) <br>
-[- Verzeichnisdienst](docs/Basisdienste.adoc)    
+[- Verzeichnisdienst](docs/Verzeichnisdienst.adoc)    
 
 **Leitfaden für Primärsystemhersteller**  
 [- Primärsystem](docs/Primaersystem.adoc)  
