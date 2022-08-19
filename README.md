@@ -74,7 +74,6 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     │   │    ├── AccountLimit.yaml
     │   │    ├── AccountManager.yaml 
     │   │    ├── AttachmentServices.yaml
-    │   │    └── DirectoryApplicationMaintenance.yaml
     │   └──── schema
     │        └── Attachment_schema.json
     ├── README.md
