@@ -3,7 +3,11 @@ info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 2.2.0
+  version: 2.2.1
+  ### 2.2.1
+  # - added /account/{username}/revokeDeregistration
+  #   to allow customers to revoke the deregistration process
+  # - changed description for externalDoc to Github
   ### 2.2.0 
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
@@ -39,7 +43,7 @@ info:
   # - initial Version of I_AccountManager_Service
   
 externalDocs:
-  description: Gitlab Dokumentation
+  description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
 - url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/
@@ -60,7 +64,7 @@ paths:
     post:
       tags:
       - Email-Account
-      summary: Registiriert einen neuen Email Account.
+      summary: Registriert einen neuen Email Account.
             #  In allen Fehlerfällen wird der Account nicht erzeugt.
       operationId: registerAccount
       parameters:
@@ -343,7 +347,57 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'                
+                $ref: '#/components/schemas/Error'     
+##--
+##------
+  /account/{username}/revokeDeregistration:
+    get:
+      tags:
+      - Email-Account 
+      summary: Deregistrierung des Accounts zurücknehmen 
+      operationId: revokeDeregistration
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      responses:
+        204:
+          description: Deregistrierung erolgreich zurückgenommen
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'   
 ##--
 ##------
   /account/{username}/OTP:
