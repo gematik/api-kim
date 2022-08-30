@@ -92,14 +92,15 @@ Weitere Informationen zu den Versionen finden Sie hier: [KIM](https://fachportal
 ## Referenzierte Dokumente
 Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation referenzierten Dokumente der gematik zur Telematikinfrastruktur. Deren zu diesem Dokument jeweils gültige Versionsnummer entnehmen Sie bitte der aktuellen, auf der Internetseite der gematik veröffentlichten Dokumentenlandkarte, in der die vorliegende Version aufgeführt wird.
 
-[Quelle]              | Herausgeber: Titel
---------              | -------- 
-**[gemSysL_KOMLE]**   | gematik: Systemspezifisches Konzept Kommunikation Leistungserbringer (KOM-LE) 
-**[gemSMIME_KOMLE]**  | gematik: S/MIME-Profil Kommunikation Leistungserbringer (KOM-LE)  
-**[gemSpec_CM]**      | gematik: Spezifikation KOM-LE-Clientmodul
-**[gemSpec_FD]**      | gematik: Spezifikation Fachdienst KOM-LE
-**[gemSpec_VZD]**     | gematik: Spezifikation Verzeichnisdienst
-**[gemSpec_OM]**      | gematik: Übergreifende Spezifikation Operations und Maintenance
+[Quelle]                    | Herausgeber: Titel
+--------                    | -------- 
+**[gemSysL_KOMLE]**         | gematik: Systemspezifisches Konzept Kommunikation Leistungserbringer (KOM-LE) 
+**[gemSMIME_KOMLE]**        | gematik: S/MIME-Profil Kommunikation Leistungserbringer (KOM-LE)  
+**[gemSpec_CM]**            | gematik: Spezifikation KOM-LE-Clientmodul
+**[gemSpec_FD]**            | gematik: Spezifikation Fachdienst KOM-LE
+**[gemSpec_VZD]**           | gematik: Spezifikation Verzeichnisdienst
+**[gemSpec_OM]**            | gematik: Übergreifende Spezifikation Operations und Maintenance
+**[gemProdT_CM_KOMLE_PTV]** | gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
 
 ## Weiterführende Seiten
 
