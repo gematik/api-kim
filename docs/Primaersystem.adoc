@@ -270,7 +270,7 @@ Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärs
 Wenn das Clientmodul in das Primärsystem integriert wird, richten sich die Anforderungen des Clientmoduls an das Primärsystem.
 Durch die optionale Integration entfallen alle Anforderungen an die Schnittstelle zwischen Primärsystem und Clientmodul, da diese nicht mehr existiert.
 
-Die zu erfüllenden Anforderungen für die Integration des Clientmoduls in das Primärsystem können dem Produkttypsteckbrief für das Primärsystem mit integrieten Clientmodul *[gemProdT_PS_KIM]* entnommen werden.
+Die bei der Integration in das Primärsystem entfallen folgende Festlegungen beim Clientmodul sind in Kapitel 4 des Produktsteckbriefes für das Clientmodul aufgeführt. *[gemProdT_CM_KOMLE_PTV]*.
 
 == Zentraler Anti-Viren-Service (AV-Service)
 Im folgenden Kapitel werden Lösungen beschrieben, wie ein zentraler Anti-Viren-Service (AV-Service) zusammen mit KIM genutzt werden kann.
