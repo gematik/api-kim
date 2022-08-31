@@ -8,6 +8,7 @@ info:
   # - added /account/{username}/revokeDeregistration
   #   to allow customers to revoke the deregistration process
   # - changed description for externalDoc to Github
+  # - added status Code 502 for createCert operation in case the account manager acts as a proxy
   ### 2.2.0 
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
@@ -323,7 +324,13 @@ paths:
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
-                      # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
+                      # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen
           content:
@@ -337,7 +344,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -347,7 +354,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'     
+                $ref: '#/components/schemas/Error'
 ##--
 ##------
   /account/{username}/revokeDeregistration:
@@ -435,8 +442,13 @@ paths:
                   type: string
                   format: binary
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
-             
-             
+
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen.
           content:
@@ -485,6 +497,12 @@ paths:
       responses:
         204:
           description: Änderung der TelematikID erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen.
           content:
@@ -580,6 +598,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         500:
           description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: CMP-Service nicht erreichbar bzw. liefert Fehler
           content:
             application/json:
               schema:

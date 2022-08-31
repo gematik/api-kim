@@ -3,7 +3,9 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 2.2.0
+  version: 2.2.1
+  ### 2.2.1
+  # - added response code for wrong input parameters
   ### 2.2.0 
   # - updated url to https://kas.hrst1.kim.telematik/attachments/v2.2/
   # - deleted operation read_MaxMailSize
@@ -73,6 +75,12 @@ paths:
             schema:
              type: string
              format: binary
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         403:
           description: Recipient nicht in der Empfängerliste der KIM-Mail enthalten
           content:
@@ -149,8 +157,7 @@ paths:
                     # Enthält den Freigabelink
                     # Über den Freigabelink kann der Anhang vom KAS abgerufen werden. Der Freigabelink enthält die - in Operation read_Attachment nötige - attachmentID.
           400:
-            description: Bad request 
-                     # Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+            description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
             content:
               application/json:
                 schema:
