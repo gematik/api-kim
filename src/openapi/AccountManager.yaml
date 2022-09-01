@@ -10,6 +10,10 @@ info:
   # - changed description for externalDoc to Github
   # - added status Code 502 for operation createCert in case the account manager acts as a proxy
   # - added status Code 403 for operation setTID in case the token is not valid
+  # - added format int64 for deregDate property
+  # - changed otp property to lowercase and added password as format
+  # - added response code 404 for getOTP in case e-mail account does not exist
+  # - added response code 404 for deregisterAccount in case e-mail account does not exist
   ### 2.2.0 
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
@@ -266,6 +270,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         500:
           description: Internal Server Error          
           content:
@@ -321,7 +331,8 @@ paths:
                     readOnly: true
                     example: registered
                   deregDate:
-                    type: integer   
+                    type: integer
+                    format: int64
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
@@ -439,9 +450,9 @@ paths:
             schema:
               type: object
               properties:
-                OTP:
+                otp:
                   type: string
-                  format: binary
+                  format: password
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
 
         400:
@@ -452,6 +463,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
           content:
             application/json:
               schema:
@@ -488,7 +505,7 @@ paths:
           type: string
           format: password        
       - in: header
-        name: OTP
+        name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
         required: true
         schema:
@@ -763,7 +780,8 @@ components:
           readOnly: true
           example: registered
         deregDate:
-          type: integer   
+          type: integer
+          format: int64
           example: 1616588543
           readOnly: true
           description: Bestätigtes Kündigungsdatum (Unix Timestamp)
