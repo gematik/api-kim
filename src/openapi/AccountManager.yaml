@@ -8,7 +8,8 @@ info:
   # - added /account/{username}/revokeDeregistration
   #   to allow customers to revoke the deregistration process
   # - changed description for externalDoc to Github
-  # - added status Code 502 for createCert operation in case the account manager acts as a proxy
+  # - added status Code 502 for operation createCert in case the account manager acts as a proxy
+  # - added status Code 403 for operation setTID in case the token is not valid
   ### 2.2.0 
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
@@ -509,6 +510,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        403:
+          description: Invalides OTP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         404:
           description: Email Account nicht vorhanden.
           content:
@@ -517,7 +524,6 @@ paths:
                 $ref: '#/components/schemas/Error'
         408:
           description: Request Timeout
-          # Gültigkeitsdauer des One Time Passworts ist abgelaufen
           content:
             application/json:
               schema:
