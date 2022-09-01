@@ -6,6 +6,7 @@ info:
   version: 2.2.1
   ### 2.2.1
   # - added response code for wrong input parameters
+  # - added response type object for operation add_Attachment
   ### 2.2.0 
   # - updated url to https://kas.hrst1.kim.telematik/attachments/v2.2/
   # - deleted operation read_MaxMailSize
@@ -151,6 +152,7 @@ paths:
             content:
              application/json:
               schema:
+               type: object
                properties:
                  sharedLink:
                    type: string
