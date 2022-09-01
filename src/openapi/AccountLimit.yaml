@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: I_AccountLimit_Service
   description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
-  version: 1.0.0
+  version: 1.0.1
+  ### 1.0.1
+  # - removed quotation marks and added minimum value for maxMailSize
   ### 1.0.0
   # - initial Version of I_AccountLimit_Service
 
@@ -75,15 +77,16 @@ components:
         maxMailSize:
           type: integer
           format: int64
+          minimum: 524288000
           example: 734003200
           description: Setzt die maximale Größe einer KIM-Mail in Bytes
         quota:
-          type: "integer"     
+          type: integer
           format: int64
           example: 160000000000
           description: Gibt das maximale Speichervolumen für einen Nutzer-Account an
         remainQuota:
-          type: "integer"     
+          type: integer
           format: int64
           example: 112000000000
           description: Gibt das verbleibende Speichervolumen für einen Nutzer-Account an
