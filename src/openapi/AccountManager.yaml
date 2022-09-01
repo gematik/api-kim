@@ -3,8 +3,8 @@ info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 2.2.1
-  ### 2.2.1
+  version: 2.3.0
+  ### 2.3.0
   # - added /account/{username}/revokeDeregistration
   #   to allow customers to revoke the deregistration process
   # - changed description for externalDoc to Github
