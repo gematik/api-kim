@@ -4,6 +4,7 @@ info:
   description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
   version: 1.0.1
   ### 1.0.1
+  # - changed version number in server url
   # - removed quotation marks and added minimum value for maxMailSize
   ### 1.0.0
   # - initial Version of I_AccountLimit_Service
@@ -12,7 +13,7 @@ externalDocs:
   description: GitHub - Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0/
+- url: https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0.1/
 tags:
 - name: AccountLimit
 
