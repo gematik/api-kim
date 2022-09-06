@@ -3,8 +3,9 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 2.2.1
-  ### 2.2.1
+  version: 2.3.0
+  ### 2.3.0
+  # - changed server url to new api version
   # - added response code for wrong input parameters
   # - added response type object for operation add_Attachment
   ### 2.2.0 
@@ -36,7 +37,7 @@ externalDocs:
   description: GitHub - Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://kas.hrst1.kim.telematik/attachments/v2.2/
+- url: https://kas.hrst1.kim.telematik/attachments/v2.3/
 tags:
 - name: Attachments
 
