@@ -5,6 +5,7 @@ info:
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
   version: 2.3.0
   ### 2.3.0
+  # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
   #   to allow customers to revoke the deregistration process
   # - changed description for externalDoc to Github
@@ -52,7 +53,7 @@ externalDocs:
   description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/
+- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/
   # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
 tags:
 - name: Email-Account 
