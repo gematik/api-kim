@@ -386,7 +386,7 @@ keine Parameter
 *Beispielabfrage:*
 [source, bash]
 -----------------
-curl -X 'DELETE' \
+curl -X 'POST' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
@@ -403,11 +403,11 @@ Code: 204
 |Status |Bedeutung
 
 |204 |No Content +
-[small]#Account erfolgreich deregistriert.#
-|400 |Bad Request +
-[small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext.#
+[small]#Deregistrierung erfolgreich zurückgenommen.#
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
+|404 | Unauthorized +
+[small]#Mail Account nicht vorhanden.#
 |500
 |Internal Server Error  
 |502
