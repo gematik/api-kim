@@ -226,7 +226,7 @@ Body:
 
 === I_AccountManager_Service
 
-Über die Schnittstelle `I_AccountManager_Service` stellt der Account Manager des KIM-Fachdientes dem Administrationsmodul die logischen Operationen `registerAccount()`, `deregisterAccount()`, `setAccount()`, `getAccount()`, `createCert()`, `getOTP()`, `setTID()`, `getOutOfOffice()` und `updateOutOfOffice()` zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben. 
+Über die Schnittstelle `I_AccountManager_Service` stellt der Account Manager des KIM-Fachdientes dem Administrationsmodul die logischen Operationen `registerAccount()`, `deregisterAccount()`, `revokeDeregistration()`, `setAccount()`, `getAccount()`, `createCert()`, `getOTP()`, `setTID()`, `getOutOfOffice()` und `updateOutOfOffice()` zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben. 
 
 image:I_AccountManager.png[width=45%] 
 
