@@ -25,16 +25,16 @@ Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:htt
 
 === Umgang mit großen Anhängen
 
-E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf den KOMLE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit den Link auf die E-Mail-Daten und versendet sie als KIM-Mail. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Mail, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben. 
+E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf dem KOMLE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit dem Link auf die E-Mail-Daten und versendet sie als KIM-Mail. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Mail, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben. 
 
 ==== I_Attachment_Service
 
-Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten Anhängen zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben. 
+Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben. 
 
 image:I_KAS.png[width=45%] 
 
 ===== add_Attachment() +
-Mit Hilfe der Opertion `add_Attachment()` wird ein verschlüsselter Anhang unter einem neu erzeugten Freigabe-Link auf dem KAS für einen begrenzten Empfängerkreis abgelegt. Hierfür werden in der Operation zusammen mit dem Anhang die berechtigten Empfänger, die Message-ID der dazugehörenden KIM-Nachricht und das Ablaufdatum des Anhanges übergeben.
+Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Daten unter einem neu erzeugten Freigabe-Link auf dem KAS für einen begrenzten Empfängerkreis abgelegt. Hierfür werden in der Operation zusammen mit den E-Mail-Daten die berechtigten Empfänger, die Message-ID der dazugehörenden KIM-Nachricht und das Ablaufdatum der abgelegten E-Mail-Daten übergeben.
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"] 
@@ -58,8 +58,8 @@ attachment: "{…file content…}"
 ----
 [normal]#`messageID` - Message-ID der zugehörigen KIM E-Mail# +
 [normal]#`recipients` - E-Mail Adressen der Empfänger# +
-[normal]#`expires` - Ablaufdatum des Anhanges# +
-[normal]#`attachment` - Anhang der auf dem KAS abgelegt werden soll# 
+[normal]#`expires` - Ablaufdatum der E-Mail-Daten# +
+[normal]#`attachment` - verschlüsselte E-Mail-Daten die auf dem KAS abgelegt werden sollen# 
 |===
 
 *Beispielabfrage:*
@@ -91,7 +91,7 @@ Body:
 |Status |Bedeutung
 
 |201 | Created +
-[small]#Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink hinzugefügt.#
+[small]#Die E-Mail-Daten wurden erfolgreich unter dem angegebenen Freigabelink hinzugefügt.#
 |400  | Bad Request  +
 [small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext#
 |401 | Unauthorized +
@@ -105,13 +105,13 @@ Body:
 |=== 
 
 ===== read_Attachment()
-Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten Anhang zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden. 
+Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden. 
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"] 
 |===
 |URI        |\https://kas.hersteller.kim.telematik/attachments/v2.2/attachment/{attachmentId} +
-[normal]#`attachmentId` - Freigabelink, unter dem der Anhang gespeichert wurde#
+[normal]#`attachmentId` - Freigabelink, unter dem die E-Mail-Daten gespeichert wurden#
 |Method     |GET
 |Header |
 [source, bash]
@@ -150,11 +150,11 @@ Body:
 |Status |Bedeutung
 
 |200 | OK +
-[small]#Anhang wurde erfolgreich heruntergeladen.#
+[small]#E-Mail-Daten wurden erfolgreich heruntergeladen.#
 |404 | Not Found +
-[small]#Anhang unter dem angegebenen Link nicht gefunden.#
+[small]#E-Mail-Daten wurden unter dem angegebenen Link nicht gefunden.#
 |429 | Too many Requests +
-[small]#Anhang zu oft heruntergeladen.#
+[small]#E-Mail-Daten zu oft heruntergeladen.#
 |500 
 |Internal Server Error
 |===
@@ -166,7 +166,7 @@ Body:
 image:I_AccountLimit.png[width=45%] 
 
 ===== getLimits()
-Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für Anhänge (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden. 
+Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für E-Mail-Daten (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden. 
 
 Der Parameter `maxMailSize` gibt die maximal mögliche Größe einer KIM-E-Mail inklusive aller Anhänge (Base64-kodiert), die der KAS akzeptiert, zurück. Mit diesem Wert prüft das Clientmodul die Einhaltung der maximalen Mailgröße (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails. Dieser Wert wird auf dem Fachdienst definiert. 
 
