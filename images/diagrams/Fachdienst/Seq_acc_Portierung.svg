@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="625px" preserveAspectRatio="none" style="width:1038px;height:625px;background:#FFFFFF;" version="1.1" viewBox="0 0 1038 625" width="1038px" zoomAndPan="magnify"><defs/><g><rect fill="#F5F5F5" height="606.9063" style="stroke:#181818;stroke-width:0.5;" width="245" x="221" y="6"/><text fill="#000000" font-family="sans-serif" font-size="18" font-weight="bold" lengthAdjust="spacing" textLength="121" x="283" y="22.708">Clientmodul</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="5" x="283" y="39.02"> </text><rect fill="#F5F5F5" height="606.9063" style="stroke:#181818;stroke-width:0.5;" width="222" x="498" y="6"/><text fill="#000000" font-family="sans-serif" font-size="18" font-weight="bold" lengthAdjust="spacing" textLength="112" x="553" y="22.708">Fachdienst</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="5" x="553" y="39.02"> </text><rect fill="#F5F5F5" height="606.9063" style="stroke:#181818;stroke-width:0.5;" width="222" x="752" y="6"/><text fill="#000000" font-family="sans-serif" font-size="18" font-weight="bold" lengthAdjust="spacing" textLength="95" x="815.5" y="22.708">Directory</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="5" x="815.5" y="39.02"> </text><rect fill="#DCDCDC" height="476.8359" style="stroke:#000000;stroke-width:1.0;" width="10" x="338.5" y="124.0703"/><rect fill="#DCDCDC" height="33.7891" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="157.8594"/><rect fill="#DCDCDC" height="384.4688" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="225.4375"/><rect fill="#DCDCDC" height="120.1563" style="stroke:#000000;stroke-width:1.0;" width="10" x="858" y="259.2266"/><rect fill="#DCDCDC" height="120.1563" style="stroke:#000000;stroke-width:1.0;" width="10" x="858" y="413.1719"/><line style="stroke:#000000;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="102" x2="102" y1="88.2813" y2="618.9063"/><line style="stroke:#000000;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="343" x2="343" y1="88.2813" y2="618.9063"/><line style="stroke:#000000;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="609" x2="609" y1="88.2813" y2="618.9063"/><line style="stroke:#000000;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="863" x2="863" y1="88.2813" y2="618.9063"/><text fill="#000000" font-family="Aapex" font-size="20" lengthAdjust="spacing" textLength="189" x="5" y="83.5645">Leistungserbringer</text><ellipse cx="102.5" cy="13.5" fill="#DCDCDC" rx="8" ry="8" style="stroke:#000000;stroke-width:0.5;"/><path d="M102.5,21.5 L102.5,48.5 M89.5,29.5 L115.5,29.5 M102.5,48.5 L89.5,63.5 M102.5,48.5 L115.5,63.5 " fill="none" style="stroke:#000000;stroke-width:0.5;"/><rect fill="#EFEFFF" height="37.2813" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="237" x="225" y="50"/><text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="223" x="232" y="75.5645">Administrationsmodul</text><rect fill="#EFEFFF" height="37.2813" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="214" x="502" y="50"/><text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="176" x="521" y="75.5645">Account-Manager</text><rect fill="#EFEFFF" height="37.2813" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="214" x="756" y="50"/><text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="43" x="841.5" y="75.5645">VZD</text><rect fill="#DCDCDC" height="476.8359" style="stroke:#000000;stroke-width:1.0;" width="10" x="338.5" y="124.0703"/><rect fill="#DCDCDC" height="33.7891" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="157.8594"/><rect fill="#DCDCDC" height="384.4688" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="225.4375"/><rect fill="#DCDCDC" height="120.1563" style="stroke:#000000;stroke-width:1.0;" width="10" x="858" y="259.2266"/><rect fill="#DCDCDC" height="120.1563" style="stroke:#000000;stroke-width:1.0;" width="10" x="858" y="413.1719"/><polygon fill="#000000" points="326.5,120.0703,336.5,124.0703,326.5,128.0703,330.5,124.0703" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="102.5" x2="332.5" y1="124.0703" y2="124.0703"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="196" x="109.5" y="118.061">Portierung durchführen</text><polygon fill="#000000" points="592,153.8594,602,157.8594,592,161.8594,596,157.8594" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="348.5" x2="598" y1="157.8594" y2="157.8594"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="60" x="355.5" y="151.8501">getOTP</text><polygon fill="#000000" points="359.5,187.6484,349.5,191.6484,359.5,195.6484,355.5,191.6484" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="353.5" x2="608" y1="191.6484" y2="191.6484"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="33" x="569" y="185.6392">OTP</text><polygon fill="#000000" points="592,221.4375,602,225.4375,592,229.4375,596,225.4375" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="348.5" x2="598" y1="225.4375" y2="225.4375"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="54" x="355.5" y="219.4282">setTID</text><polygon fill="#000000" points="846,255.2266,856,259.2266,846,263.2266,850,259.2266" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="614" x2="852" y1="259.2266" y2="259.2266"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="193" x="621" y="253.2173">Mail-Adresse entfernen</text><line style="stroke:#000000;stroke-width:1.0;" x1="868" x2="910" y1="332.5938" y2="332.5938"/><line style="stroke:#000000;stroke-width:1.0;" x1="910" x2="910" y1="332.5938" y2="345.5938"/><line style="stroke:#000000;stroke-width:1.0;" x1="869" x2="910" y1="345.5938" y2="345.5938"/><polygon fill="#000000" points="879,341.5938,869,345.5938,879,349.5938,875,345.5938" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="134" x="875" y="287.0063">Mail-Adresse für</text><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="146" x="875" y="306.7954">alte Telematik-ID</text><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="83" x="880" y="326.5845">entfernen</text><polygon fill="#000000" points="625,375.3828,615,379.3828,625,383.3828,621,379.3828" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="619" x2="862" y1="379.3828" y2="379.3828"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="805" y="373.3735">status</text><polygon fill="#000000" points="846,409.1719,856,413.1719,846,417.1719,850,413.1719" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="614" x2="852" y1="413.1719" y2="413.1719"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="204" x="621" y="407.1626">Mail-Adresse hinzufügen</text><line style="stroke:#000000;stroke-width:1.0;" x1="868" x2="910" y1="486.5391" y2="486.5391"/><line style="stroke:#000000;stroke-width:1.0;" x1="910" x2="910" y1="486.5391" y2="499.5391"/><line style="stroke:#000000;stroke-width:1.0;" x1="869" x2="910" y1="499.5391" y2="499.5391"/><polygon fill="#000000" points="879,495.5391,869,499.5391,879,503.5391,875,499.5391" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="134" x="875" y="440.9517">Mail-Adresse für</text><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="156" x="875" y="460.7407">neue Telematik-ID</text><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="94" x="880" y="480.5298">hinzufügen</text><polygon fill="#000000" points="625,529.3281,615,533.3281,625,537.3281,621,533.3281" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="619" x2="862" y1="533.3281" y2="533.3281"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="805" y="527.3188">status</text><polygon fill="#000000" points="359.5,563.1172,349.5,567.1172,359.5,571.1172,355.5,567.1172" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="353.5" x2="603" y1="567.1172" y2="567.1172"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="546" y="561.1079">status</text><polygon fill="#000000" points="113.5,596.9063,103.5,600.9063,113.5,604.9063,109.5,600.9063" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="107.5" x2="342.5" y1="600.9063" y2="600.9063"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="285.5" y="594.897">status</text><!--MD5=[37c7fecd1451f62bae49618afa31d5d9]
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant A as "Administrationsmodul"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      end box
+      box <size:18>Directory\n #WhiteSmoke
+      participant VZD as "VZD"
+      end box
+
+L->A: Portierung durchführen
+ activate A
+ A->AM: getOTP
+ activate AM
+ AM- ->A: OTP
+ deactivate AM
+
+ A -> AM: setTID
+ activate AM
+ AM->VZD: Mail-Adresse entfernen
+ activate VZD
+ VZD -> VZD: Mail-Adresse für \nalte Telematik-ID\n entfernen
+ VZD - -> AM: status
+ deactivate VZD
+
+ AM->VZD: Mail-Adresse hinzufügen
+ activate VZD
+ VZD -> VZD: Mail-Adresse für \nneue Telematik-ID\n hinzufügen
+ VZD - -> AM: status
+ deactivate VZD
+
+ AM- ->A: status
+ A- ->L: status
+ deactivate A
+@enduml
+
+PlantUML version 1.2022.5(Sat Apr 30 10:55:52 UTC 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
