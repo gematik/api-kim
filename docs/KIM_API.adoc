@@ -25,7 +25,7 @@ Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:htt
 
 === Umgang mit großen Anhängen
 
-E-Mails mit einer Gesamtgröße bis zu 25 MB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 25 MB Grenze, werden alle Anhänge durch das Clientmodul aus der Mail entnommen und auf den KOMLE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ergänzt die Mail um die Links auf die Anhänge und versendet sie als KIM-Mail. Das KIM-Clientmodul des Empfängers erkennt die Links der entfernten Anhänge in der KIM-Mail, lädt die Anhänge vom KAS des Absenders und setzt sie wieder in die Mail ein. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben. 
+E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf den KOMLE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit den Link auf die E-Mail-Daten und versendet sie als KIM-Mail. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Mail, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben. 
 
 ==== I_Attachment_Service
 
