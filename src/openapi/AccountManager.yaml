@@ -371,7 +371,7 @@ paths:
 ##--
 ##------
   /account/{username}/revokeDeregistration:
-    get:
+    put:
       tags:
       - Email-Account 
       summary: Deregistrierung des Accounts zurücknehmen 
