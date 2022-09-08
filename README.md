@@ -29,7 +29,9 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM
 <!---
 ![kim overview](images/kim_overview.png)
 -->
-<img src="images/kim_overview.png" alt="drawing" align="center" width="90%"/>
+<p align="center">
+<img src="images/kim_overview.png" alt="drawing" style="width:85%"/>
+</p>
 
 [**Clientsystem**](docs/KIM_API.adoc)
 
