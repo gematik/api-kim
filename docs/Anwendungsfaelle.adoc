@@ -25,11 +25,15 @@ TIP: Auf die Angaben der zu übergebenden Parameter bei den hier beschriebenen O
 IMPORTANT:  Bei den hier dargestellten Sequenzdiagrammen handelt es sich um erfolgreich durchgelaufene Anwendungsfälle. Auf die Beschreibung bei einer fehlerhaften Ausführung der Anwendungsfälle wird an dieser Stelle verzichtet. 
 
 == Kontoverwaltung
-Über des Administrationsmodul kann ein KIM-Teilnehmer am Account Manager des gewählten Fachdienstes seine Registrierung durchführen, seinen Account verwalten oder Abwesenheitsnotizen einstellen. Die durch das Administrationsmodul am Account Manager im Rahmen des jeweiligen Anwendungsfalles aufgerufenen Operationen sind in der folgenden Abbildung dargestellt.
+Über das Administrationsmodul kann ein KIM-Teilnehmer am Account Manager des gewählten Fachdienstes seine Registrierung durchführen, seinen Account verwalten oder Abwesenheitsnotizen einstellen. Die durch das Administrationsmodul am Account Manager im Rahmen des jeweiligen Anwendungsfalles aufgerufenen Operationen sind in der folgenden Abbildung dargestellt.
 
-image::acmgr_overview.png[Account Manager Overview, width=70%, align="center"]
+++++
+<p align="center">
+  <img width="80%" src=../images/acmgr_overview.png>
+</p>
+++++
 
-IMPORTANT:  Alle Operationen die vom Administrationsmodul am Account Manager über die REST-Schnittstelle `I_AccountManager_Service` aufgerufen werden, benötigen eine Authentifizierung über ein JSON Web Tokens.
+IMPORTANT:  Alle Operationen die vom Administrationsmodul am Account Manager über die REST-Schnittstelle `I_AccountManager_Service` aufgerufen werden, benötigen eine Authentifizierung über ein JSON Web Token.
 
 === Registrierung durchführen
 Zukünftige KIM-Teilnehmer registrieren sich im ersten Schritt am Account Manager über das Frontend (GUI) des Administrationsmoduls (optional ist dies auch über das Primärsystem möglich - das Clientsystem mit dem Administrationsmodul ist in diesem Fall Bestandteil des Primärsystems). Bei Aufruf der Operation `registerAccount()` baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
@@ -38,7 +42,11 @@ Informationen mit den für die Registrierung benötigten Parametern erhält der 
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-image::Seq_acc_register.png[Account Manager Overview, width=90%, align="center"]
+++++
+<p align="center">
+  <img width="90%" src=../images/Seq_acc_register.png>
+</p>
+++++
 
 === Deregistrierung durchführen
 KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine Deregistrierung an ihrem Fachdienst veranlassen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `deregisterAccount()` zum Account Manager auf. 
