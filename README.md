@@ -10,7 +10,7 @@ Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie fo
 
 -   die Aufhebung der Größenbeschränkung von Nachrichten
 
--   die Optionale Integration des Clientmoduls in das Primärsystem
+-   die optionale Integration des Clientmoduls in das Primärsystem
 
 -   ein Administrationsmodul für die Konfiguration des Nutzer-Accounts
 
@@ -48,14 +48,14 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM
     Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers bietet der Account Manager ab der KIM Version 1.5 zwei Webservices (`I_AccountManager_Service` und `I_AccountLimit_Service`) an. 
 
 -   **KOM-LE Attachment Service:**  
-    Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
+    Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
 
 [**Verzeichnisdienst**](docs/Verzeichnisdienst.adoc)
 
 <!--- -   **Verzeichnisdienst:**  
 --->
 
--    Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um eine neue Datenstruktur (`komLeData`) ergänzt. 
+-    Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um eine neue Datenstruktur `komLeData` ergänzt. 
 -   Der Verzeichnisdienst wird um die REST-Schnittstelle `I_Directory_Application_Maintenance` erweitert. 
 
 ## Ordnerstruktur
@@ -73,9 +73,12 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     │   ├──── openapi
     │   │    ├── AccountLimit.yaml
     │   │    ├── AccountManager.yaml 
-    │   │    ├── AttachmentServices.yaml
+    │   │    └── AttachmentServices.yaml
+    │   ├──── plantuml
+    │   │    └── Fachdienst	
     │   └──── schema
     │        └── Attachment_schema.json
+    ├── LICENSE	
     ├── README.md
     └── ReleaseNotes.md
 
