@@ -25,13 +25,9 @@ TIP: Auf die Angaben der zu übergebenden Parameter bei den hier beschriebenen O
 IMPORTANT:  Bei den hier dargestellten Sequenzdiagrammen handelt es sich um erfolgreich durchgelaufene Anwendungsfälle. Auf die Beschreibung bei einer fehlerhaften Ausführung der Anwendungsfälle wird an dieser Stelle verzichtet. 
 
 == Kontoverwaltung
-Über des Administrationsmodul kann ein KIM-Teilnehmer am Account Manager des gewählten Fachdienstes seine Registrierung durchführen, seinen Account verwalten oder Abwesenheitsnotizen einstellen. Die durch das Administrationsmodul am Account Manager im Rahmen des jeweiligen Anwendungsfalles aufgerufenen Operationen sind in der folgenden Abbildung dargestellt. 
+Über des Administrationsmodul kann ein KIM-Teilnehmer am Account Manager des gewählten Fachdienstes seine Registrierung durchführen, seinen Account verwalten oder Abwesenheitsnotizen einstellen. Die durch das Administrationsmodul am Account Manager im Rahmen des jeweiligen Anwendungsfalles aufgerufenen Operationen sind in der folgenden Abbildung dargestellt.
 
-++++
-<p align="center">
-  <img width="70%" src=../images/acmgr_overview.png>
-</p>
-++++
+image::acmgr_overview.png[Account Manager Overview, width=70%, align="center"]
 
 IMPORTANT:  Alle Operationen die vom Administrationsmodul am Account Manager über die REST-Schnittstelle `I_AccountManager_Service` aufgerufen werden, benötigen eine Authentifizierung über ein JSON Web Tokens.
 
@@ -42,11 +38,7 @@ Informationen mit den für die Registrierung benötigten Parametern erhält der 
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-++++
-<p align="center">
-  <img width="90%" src=../images/Seq_acc_register.png>
-</p>
-++++
+image::Seq_acc_register.png[Account Manager Overview, width=90%, align="center"]
 
 === Deregistrierung durchführen
 KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine Deregistrierung an ihrem Fachdienst veranlassen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `deregisterAccount()` zum Account Manager auf. 
@@ -60,6 +52,9 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
   <img width="75%" src=../images/Seq_acc_deregister.png>
 </p>
 ++++
+
+=== Deregistrierung zurücknehmen
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine ausgelöste Deregistrierung innerhalb von 30 Tagen zurücknehmen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `revokeDeregistration()` zum Account Manager auf. Nach einem erfolgreichen Aufruf der Operation steht dem Anwender der Account wieder in vollem Umfang zur Verfügung.
 
 === Account Daten abrufen und ändern
 Ein KIM-Teilnehmer kann über das Administrationsmodul Nutzerdaten von seinem Account abrufen oder ändern (z. B. sein Passwort ändern). Zum Abrufen von Nutzerdaten wird die Operation `getAccount()` am Account Manager aufgerufen. Für das Ändern von Nutzerdaten erfolgt dies über die Operation `setAccount()` am Account Manager. Für beide Operationen baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
@@ -108,7 +103,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 ++++
 
 == KIM-Nachrichten
-Das Senden bzw. Empfangen von KIM-Mails wird durch die Schnittstelle `I_Message_Service` am Mail Server ermöglicht. Für den Umgang mit KIM-E-Mails, die inklusive Anhang größer 25 MB sind, bietet der KIM-Fachdienst einen KOMLE-Attachment Service (KAS) an. Auf diesen werden über den Aufruf der Schnittstelle `I_Attatchment_Service` die Anhänge aus einer KIM-E-Mail verschlüsselt ausgelagert, aus der zu versendenden KIM-E-Mail entfernt und später auf Empfängerseite, nach dem Herunterladen vom KAS des Absenders, wieder entschlüsselt in die KIM-Mail integriert. Das dem Nutzer zu Verfügung stehende Speichervolumen für das Hochladen der Anhänge auf dem KAS wird über die Schnittstelle `I_AccountLimit_Service` am Account Manager abgefragt. Somit sind alle drei Teilkomponenten des Fachdienstes an den Anwendungsfällen "Mail senden" und "Mail empfangen" beteiligt. Die durch das Clientmodul am Fachdienst im Rahmen des jeweiligen Anwendungsfalles aufgerufenen Operationen sind in der folgenden Abbildung dargestellt.
+Das Senden bzw. Empfangen von KIM-Mails wird durch die Schnittstelle `I_Message_Service` am Mail Server ermöglicht. Für den Umgang mit Client-Mails, die größer 15 MB sind, bietet der KIM-Fachdienst einen KOMLE-Attachment Service (KAS) an. Auf diesen werden über den Aufruf der Schnittstelle `I_Attatchment_Service` die großen Client-E-Mails verschlüsselt ausgelagert und später auf Empfängerseite, nach dem Herunterladen vom KAS des Absenders, wieder entschlüsselt in die Client-Mail integriert. Das dem Nutzer zu Verfügung stehende Speichervolumen für das Hochladen der verschlüsselten Client-Mails wird über die Schnittstelle `I_AccountLimit_Service` am Account Manager abgefragt. Somit sind alle drei Teilkomponenten des Fachdienstes an den Anwendungsfällen "Mail senden" und "Mail empfangen" beteiligt. Die durch das Clientmodul am Fachdienst im Rahmen des jeweiligen Anwendungsfalles aufgerufenen Operationen sind in der folgenden Abbildung dargestellt.
 
 ++++
 <p align="center">
@@ -117,9 +112,9 @@ Das Senden bzw. Empfangen von KIM-Mails wird durch die Schnittstelle `I_Message_
 ++++
 
 === KIM-Mail senden
-Will der KIM-Teilnehmer eine E-Mail versenden, wird im ersten Schritt die erstellte KIM-Nachricht vom Primärsystem/Mail-Client an das Clientmodul übergeben. Das Clientmodul überprüft zunächst die Größe der übergebenen Nachricht. Ist die Nachricht kleiner als 25 MB behandelt das Clientmodul die Nachricht wie in KIM 1.0 beschrieben. 
+Will der KIM-Teilnehmer eine E-Mail versenden, wird im ersten Schritt die erstellte KIM-Nachricht vom Primärsystem/Mail-Client an das Clientmodul übergeben. Das Clientmodul überprüft zunächst die Größe der übergebenen Nachricht. Ist die Nachricht kleiner als 15 MB behandelt das Clientmodul die Nachricht wie in KIM 1.0 beschrieben.
 
-Übersteigt die Größe der Nachricht die 25 MB, dann wird zunächst das Header-Element `X-KOM-LE-Version: 1.5` in den E-Mail-Header hinzugefügt. Anschließend prüft das Clientmodul die maximal zulässige Mailgröße für den Nutzer-Account. Danach erzeugt das Clientmodul für jeden Anhang einen symmetrischen Schlüssel, sowie einen Hashwert. Mit Hilfe der symmetrischen Schlüssel werden die jeweiligen Anhänge verschlüsselt. Anschließend wird die Operation `add_Attachment()` am KAS seines Anbieters aufgerufen, um alle verschlüsselten Anhänge hochzuladen. Danach entfernt das Clientmodul alle Anhänge aus der KIM-Nachricht und ersetzt diese durch die vom KAS übergebenen Freigabelinks. Ebenfalls integriert das Clientmodul die dazugehörigen symmetrischen Schlüssel und Hashwerte in die KIM-Nachricht. Anschließend wird die Nachricht signiert und mit dem asymmetrischen Schlüssel des Empfängers verschlüsselt und an den Fachdienst versendet. +
+Übersteigt die Größe der Nachricht die 15 MB, dann wird zunächst das Header-Element `X-KOM-LE-Version: 1.5` in den E-Mail-Header hinzugefügt. Anschließend prüft das Clientmodul die maximal zulässige Mailgröße für den Nutzer-Account. Danach erzeugt das Clientmodul für die Client-Mail einen symmetrischen Schlüssel, sowie einen Hashwert. Mit Hilfe der symmetrischen Schlüssel wird die Client-Mail verschlüsselt. Anschließend wird die Operation `add_Attachment()` am KAS seines Anbieters aufgerufen, um die verschlüsselte Client-Mail hochzuladen. Danach befüllt das Clientmodul die KIM-Attachement Datenstruktur mit dem durch vom KAS übergebenen Freigabelink. Ebenfalls integriert das Clientmodul die dazugehörigen symmetrischen Schlüssel und Hashwerte in die KOM-LE-Nachricht. Anschließend wird die Nachricht signiert und mit dem asymmetrischen Schlüssel des Empfängers verschlüsselt und an den Fachdienst versendet. +
 
 Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
@@ -132,7 +127,7 @@ Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 === KIM-Mail empfangen
 Will ein KIM-Teilnehmer eine KIM-E-Mail abrufen, überprüft das Clientmodul im ersten Schritt ob beim Mailserver eine neue Nachricht im Postfach vorliegt. Ist dies der Fall, werden die zur Abholung selektierten Nachrichten vom Mailserver an das Clientmodul übergeben. Anschließend wird die Nachricht mit dem asymmetrischen Schlüssel des Empfängers entschlüsselt und die Signatur der Nachricht geprüft. Weiterhin prüft das Clientmodul, um welche KIM-Version es sich bei der Nachricht handelt. Bei einer KIM 1.0 Nachricht wird diese vom Clientmodul entsprechend den Vorgaben aus KIM 1.0 bearbeitet. 
 
-Handelt es sich um eine  KIM 1.5 Nachricht, ruft das Clientmodul zunächst die Operation `read_Attachment()` beim KAS auf, um alle Anhänge über die in der KIM-Mail enthaltenen Freigabelinks herunterzuladen. Anschließend werden die Anhänge mit den in der KIM-Nachricht enthaltenen symmetrischen Schlüsseln entschlüsselt, für jeden Anhang der Hashwert berechnet und mit dem in der KIM-Nachricht enthaltenen Hashwert verglichen. Im letzten Schritt werden durch das Clientmodul die heruntergeladenen Anhänge in die ursprüngliche Nachricht eingefügt und an das Primärsystem oder den E-Mail Client übermittelt. +
+Handelt es sich um eine  KIM 1.5 Nachricht, ruft das Clientmodul zunächst die Operation `read_Attachment()` beim KAS auf, um die verschlüsselte Client-Mail über den in der KOMLE-Mail enthaltenen Freigabelink herunterzuladen. Anschließend wird die Client-Mail mit dem in der KOMLE-Mail enthaltenen symmetrischen Schlüsseln entschlüsselt, der Hashwert berechnet und mit dem in der KOMLE-Mail enthaltenen Hashwert verglichen. Im letzten Schritt wird die Client-Mail durch das Clientmodul an das Primärsystem oder den E-Mail Client des Leistungserbringers übermittelt. +
 
 Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar:
 

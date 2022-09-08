@@ -1,0 +1,65 @@
+/'
+# KIM 1.5
+# Account Manager
+# Sequence Diagram
+# Name: Operation Account registrieren
+'/
+
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant A as "Administrationsmodul"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      end box
+      box <size:18>Directory\n #WhiteSmoke
+      participant VZD as "VZD"
+      end box
+
+L->A: Registrierung aufrufen
+ activate A
+ A->AM: registerAccount
+ activate AM
+ AM -> VZD: KIM Fachdaten eintragen
+ activate VZD
+ VZD --> AM: status
+ deactivate VZD
+ AM --> A: status
+ deactivate AM
+
+ opt PKCS#12 != true
+  A->AM: createCert
+  activate AM
+  AM --> A: PKCS#12
+  deactivate AM
+  end
+ A-->L: status
+ deactivate A
+@enduml

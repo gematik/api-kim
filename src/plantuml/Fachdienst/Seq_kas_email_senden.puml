@@ -1,0 +1,80 @@
+/'
+# KIM 1.5
+# Account Manager
+# Sequence Diagram
+# Name: Operation Account registrieren
+'/
+
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 20
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+ParticipantPadding 20
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Primärsystem\n #WhiteSmoke
+            participant P as "PVS/KIS/Mailclient"
+      end box
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant KM as "KIM-Dienst"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      participant K as "KAS"
+      participant MS as "Mailserver"
+      end box
+
+L->P: Email mit großen\n Anhängen erzeugen
+ activate P
+ P->KM: E-Mail weiterleiten
+ activate KM
+ KM->KM: Prüfen der E-Mailgröße
+ KM->KM: Prüfen der KIM-Version\n des Empfängers
+ opt Mailgröße>=15 MB
+ KM->AM: getLimits
+ activate AM
+ AM-->KM: Limits
+ deactivate AM
+ KM->KM: Erzeugung eines symmetrischen\n Schlüssels für die Mail
+ KM->KM: Bildung des Hashwertes
+ KM->KM: Verschlüsselung der Mail \nmit dem symmetrischen Schlüssel
+ KM->K: addAttachment
+ activate K
+ K->K: Berechtigung prüfen
+ K->K: Dateigröße prüfen
+ K->K: Freigabelink erzeugen
+ K->K: E-Mail ablegen
+ K-->KM: Freigabelink
+ deactivate K
+ KM->KM: KIM-Attachment-Datenstruktur \nim Body der KOM-LE-Mail einfügen
+ end
+ KM->KM: KOM-LE-Mail signieren \nund asymmetrisch verschlüsseln
+ KM->MS++: send Message
+ MS-->KM--: status
+ KM-->P:status
+ deactivate KM
+ P-->L:status
+ deactivate P
+@enduml

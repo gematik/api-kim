@@ -48,7 +48,7 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM
     Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers bietet der Account Manager ab der KIM Version 1.5 zwei Webservices (`I_AccountManager_Service` und `I_AccountLimit_Service`) an. 
 
 -   **KOM-LE Attachment Service:**  
-    Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Anhänge ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
+    Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
 
 [**Verzeichnisdienst**](docs/Verzeichnisdienst.adoc)
 
@@ -74,7 +74,6 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
     │   │    ├── AccountLimit.yaml
     │   │    ├── AccountManager.yaml 
     │   │    ├── AttachmentServices.yaml
-    │   │    └── DirectoryApplicationMaintenance.yaml
     │   └──── schema
     │        └── Attachment_schema.json
     ├── README.md
@@ -83,23 +82,23 @@ Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
 ## Ausbaustufen
 Mit der Einführung von KIM unterstützt die gematik das Gesundheitswesen durch einen sektorenübergreifenden, sicheren E-Maildienst. In mehreren Versionen wird der Funktionsumfang von KIM kontinuierlich erweitert. Aktuell existieren die folgenden Versionen mit ihren dazugehörigen aktuellen Releases.
 
-&nbsp;                | KIM 1.0   | KIM 1.5 
---------              | --------        | --------
-Release               | [R3.1.3-11](https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Releases/Konzepte_und_Spezifikationen/OPB3.1_R3.1.3_Hotfix11_Spezifikationen_20220209.zip)        | [KIM 1.5.2](https://fachportal.gematik.de/downloadcenter/releases/release-402-und-produkttyp-und-anwendungsreleases-1#c5189)
+| &nbsp;  | KIM 1.0   | KIM 1.5| 
+|---------| --------        | --------|
+ | Release | [R3.1.3-11](https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Releases/Konzepte_und_Spezifikationen/OPB3.1_R3.1.3_Hotfix11_Spezifikationen_20220209.zip)        | [KIM 1.5.2](https://fachportal.gematik.de/downloadcenter/releases/release-402-und-produkttyp-und-anwendungsreleases-1#c5189)|
 
 Weitere Informationen zu den Versionen finden Sie hier: [KIM](https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen)
 
 ## Referenzierte Dokumente
 Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation referenzierten Dokumente der gematik zur Telematikinfrastruktur. Deren zu diesem Dokument jeweils gültige Versionsnummer entnehmen Sie bitte der aktuellen, auf der Internetseite der gematik veröffentlichten Dokumentenlandkarte, in der die vorliegende Version aufgeführt wird.
 
-[Quelle]              | Herausgeber: Titel
---------              | -------- 
-**[gemSysL_KOMLE]**   | gematik: Systemspezifisches Konzept Kommunikation Leistungserbringer (KOM-LE) 
-**[gemSMIME_KOMLE]**  | gematik: S/MIME-Profil Kommunikation Leistungserbringer (KOM-LE)  
-**[gemSpec_CM]**      | gematik: Spezifikation KOM-LE-Clientmodul
-**[gemSpec_FD]**      | gematik: Spezifikation Fachdienst KOM-LE
-**[gemSpec_VZD]**     | gematik: Spezifikation Verzeichnisdienst
-**[gemSpec_OM]**      | gematik: Übergreifende Spezifikation Operations und Maintenance
+| [Quelle]             | Herausgeber: Titel|
+|----------------------| --------| 
+ | **[gemSysL_KOMLE]**  | gematik: Systemspezifisches Konzept Kommunikation Leistungserbringer (KOM-LE)| 
+ | **[gemSMIME_KOMLE]** | gematik: S/MIME-Profil Kommunikation Leistungserbringer (KOM-LE)  |
+ | **[gemSpec_CM]**     | gematik: Spezifikation KOM-LE-Clientmodul|
+ | **[gemSpec_FD]**     | gematik: Spezifikation Fachdienst KOM-LE|
+ | **[gemSpec_VZD]**    | gematik: Spezifikation Verzeichnisdienst|
+ | **[gemSpec_OM]**     | gematik: Übergreifende Spezifikation Operations und Maintenance|
 
 ## Weiterführende Seiten
 

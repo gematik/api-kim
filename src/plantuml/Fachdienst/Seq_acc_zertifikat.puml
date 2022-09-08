@@ -1,0 +1,50 @@
+/'
+# KIM 1.5
+# Account Manager
+# Sequence Diagram
+# Name: Operation Account registrieren
+'/
+
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant A as "Administrationsmodul"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      end box
+
+
+ activate A
+ A->A: Prüfung Ablauf\n TLS Zertifikat
+ A->AM: createCert
+ activate AM
+ AM --> A: PKCS#12
+ deactivate AM
+ deactivate A
+@enduml
