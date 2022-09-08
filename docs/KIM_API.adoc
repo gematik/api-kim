@@ -362,6 +362,59 @@ Code: 204
 |===
 
 
+==== revokeDeregistration()
+Mittels der Operation `revokeDeregistration()` wird die Deregistrierung eines KIM-Teilnehmers am KIM-Fachdienst zurückgenommen. Der zugehörige Nutzeraccount wird wieder vollständig aktiviert.
+
+*Beispiel einer HTTP Nachricht*
+[cols="h,a"] 
+|===
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username} +
+[normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
+|Method     |POST
+|Header |
+[source, bash]
+----
+ HTTP-Version: "HTTP/1.1"
+ accept: "*/*"
+ password: "password"
+ Authorization: "Bearer eyJhbGciOiJIUzI1NiIXVCJ9TJV...r7E20RMHrHDcEfxjoYZgeFONFh7HgQ"
+----
+|Body    |
+keine Parameter
+|===
+
+*Beispielabfrage:*
+[source, bash]
+-----------------
+curl -X 'DELETE' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik' \
+  -H 'accept: */*' \
+  -H 'password: password'
+----------------- 
+
+*Beispielantwort:*
+[source, ruby]
+-----------------
+Code: 204
+-----------------
+
+*HTTP-Status Codes:* + 
+|===
+|Status |Bedeutung
+
+|204 |No Content +
+[small]#Account erfolgreich deregistriert.#
+|400 |Bad Request +
+[small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext.#
+|401 | Unauthorized +
+[small]#Authentifizierung fehlgeschlagen.#
+|500
+|Internal Server Error  
+|502
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|===
+
+
 ==== setAccount()
 Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM-Teilnehmers.
 
