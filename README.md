@@ -1,6 +1,6 @@
 # KIM (Kommunikation im Medizinwesen) - API-Dokumentation
 
-<img src="images/gematik_logo.svg" alt="gematik_logo" width="35%"/>
+<img src="images/gematik_logo.svg" alt="gematik_logo" width="50%"/>
 
 ## Allgemeines
 
