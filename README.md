@@ -1,7 +1,8 @@
 # KIM - Dokumentation
 
 <img src="images/gematik_logo.svg" alt="gematik_logo" width="50%"/>
-image:https://shields.io/badge/AttachmentService v2.30-blue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml"]
+
+image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml"]
 
 ## Allgemeines
 
