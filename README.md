@@ -4,6 +4,7 @@
 image:https://shields.io/badge/AttachmentService v2.30-blue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml"]
 
 ## Allgemeines
+<a href="https://fachportal.gematik.de/fachportal-import/files/gemSpec_VZD_V1.14.0.pdf" rel="some text">![Foo](https://img.shields.io/badge/Ichderjens-v1.5-blue)</a>
 
 Die folgende Dokumentation beschreibt die systemspezifische Lösung von KIM 1.5 und baut auf dem Konzept von KIM 1.0 "Kommunikation Leistungserbringer" gemäß **[gemSysL_KOMLE]** auf. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5 verwenden.
 
