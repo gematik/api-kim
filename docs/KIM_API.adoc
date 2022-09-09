@@ -15,7 +15,7 @@ Mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitge
 == Änderungen im Clientmodul ab KIM 1.5
 === Optionale Integration in das Clientsystem
 
-Die bei der optionalen Integration in das Clientsystem zu beachtenden geänderten Anforderungen sind in *[gemSpec_CM_KOMLE#2]* aufgelistet. Ein seperates Clientmodul ist in diesem Fall nicht mehr notwendig.
+Beginnend mit der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu integrieren. Ein seperates Clientmodul ist in diesem Fall nicht mehr notwendig.
 
 === Umgang mit E-Mail-Kategorien
 
