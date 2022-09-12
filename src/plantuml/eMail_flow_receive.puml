@@ -1,0 +1,30 @@
+@startuml
+
+state "received KOM-LE Mail" as rkm
+rkm : do / check signature
+rkm: do / decrypt mail
+rkm : exit / finished decrypting
+
+state "decrypted KOM-LE Mail" as dkm
+dkm: do / extract KIM-Attachment data structure
+dkm: do / download mail from KAS
+dkm: exit / download successful
+
+state "KAS downloaded Client-Mail" as kdcm
+kdcm: do / check signature of downloaded mail
+kdcm: do / encrypt downloaded mail
+kdcm: do / check integrity of encrypted downloaded mail
+kdcm: do / post process checked mail (i.e. add additional KIM-header fields)
+kdcm: exit / post processing successful
+
+state "Client-Mail" as cm
+cm: do / transfer mail to Client-System
+cm: exit / successful transfer of Client-Mail to Client-System
+
+[*] -r-> rkm
+rkm -r-> dkm
+dkm -r-> kdcm
+kdcm -r-> cm
+cm -r-> [*]
+
+@enduml

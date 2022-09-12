@@ -1,0 +1,40 @@
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: KIM 1.5 Testnachricht
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+X-KIM-DecryptionResult: 00
+X-KIM-IntegrityCheckResult: 01
+Return-Path: <user.test15@gematik.kim.telematik-test>
+Received: from 10.65.0.11 (EHLO 192.168.169.20:64500) ([10.65.0.11])
+          by mailserver.gematik.kim.telematik-test (JAMES SMTP Server ) with ESMTPA ID 54965859
+          for <user.test15@gematik.kim.telematik-test>;
+          Fri, 09 Sep 2022 15:50:05 +0200 (CEST)
+Content-Type: multipart/mixed; boundary="------------v0Sp8vvZ1qGfAWh1MYiwrJ0W"
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Text der Testnachricht
+
+
+---------------------------------------------
+Die Nachricht wurde entschlÃ¼sselt.
+Die Signatur wurde erfolgreich geprÃ¼ft.
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; name="1mb.test"
+Content-Disposition: attachment; filename="1mb.test"
+Content-Transfer-Encoding: base64
+
+fHx3d3cuZGFzaW50ZXJuZX[...]
+
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W--

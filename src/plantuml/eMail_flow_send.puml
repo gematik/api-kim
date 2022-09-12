@@ -1,0 +1,31 @@
+@startuml
+
+state "received Client-Mail" as cm
+cm : do / decode Base64
+cm : exit / finished decoding
+
+state "decoded Client-Mail" as dcm
+dcm: do / check mail integrity
+dcm: do / check mail size
+dcm: do / add KIM header
+dcm: exit / checks and header modification done
+
+state "checked and modified Client-Mail" as cmcm
+cmcm: do / create copy of client mail as base for KOM-LE Mail
+cmcm: do / sign and encrypt modified client mail
+cmcm: do / upload resulting binary to KAS
+cmcm: do / replace KOM-LE Mail body with KIM-Attachment structure
+cmcm: exit / modifications done
+
+state "created KOM-LE Mail" as ckm
+ckm: do / add X-KIM header
+ckm: do / sign and encrypt mail
+ckm: exit / successful delivery of KOM-LE Mail to Fachdienst
+
+[*] -r-> cm
+cm -r-> dcm
+dcm -r-> cmcm
+cmcm -r-> ckm
+ckm -r-> [*]
+
+@enduml

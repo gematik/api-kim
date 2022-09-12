@@ -1,0 +1,26 @@
+Return-Path: <user.test15@gematik.kim.telematik-test>
+Received: from 10.65.0.11 (EHLO 192.168.169.20:64500) ([10.65.0.11])
+          by mailserver.gematik.kim.telematik-test (JAMES SMTP Server ) with ESMTPA ID 54965859
+          for <user.test15@gematik.kim.telematik-test>;
+          Fri, 09 Sep 2022 15:50:05 +0200 (CEST)
+Subject: KOM-LE-Nachricht
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+X-KOM-LE-Version: 1.5
+X-KIM-CMVersion: KIM_CM_1.1.0-0
+X-KIM-PTVersion: 1.2.1
+X-KIM-KONVersion: <konnektor 2.0.0><Konnektor
+ PTV5><5.0.2><2.0.0><5.0.5><null>
+MIME-Version: 1.0
+Expires: Thu, 08 Dec 2022 15:48:35 +0200
+Content-Type: application/pkcs7-mime; smime-type=authenticated-enveloped-data;
+	name=smime.p7m
+Content-Disposition: attachment; filename=smime.p7m
+Content-Transfer-Encoding: base64
+
+MIAGCyqGSIb3DQEJEAEXoIAwg[...]
