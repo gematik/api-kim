@@ -1,5 +1,5 @@
 :imagesdir: images
-= KIM - Dokumentation image:gematik_logo.svg[width=75%]
+= KIM - Dokumentation image:gematik_logo.svg[width=70%]
 
 image:https://shields.io/badge/AccountManager-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml"]
 image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AttachmentService.yaml"]
