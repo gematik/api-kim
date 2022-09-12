@@ -25,13 +25,13 @@ Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:htt
 
 === Umgang mit großen Anhängen
 
-E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf dem KOMLE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit dem Link auf die E-Mail-Daten und versendet sie als KIM-Mail. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Mail, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben. 
+E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf dem KOMLE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit dem Link auf die E-Mail-Daten und versendet sie als KIM-Mail. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Mail, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben.
 
 ==== I_Attachment_Service
 
-Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben. 
+Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
-image:I_KAS.png[width=45%] 
+image:I_KAS.png[width=45%]
 
 ===== add_Attachment() +
 Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Daten unter einem neu erzeugten Freigabe-Link auf dem KAS für einen begrenzten Empfängerkreis abgelegt. Hierfür werden in der Operation zusammen mit den E-Mail-Daten die berechtigten Empfänger, die Message-ID der dazugehörenden KIM-Nachricht und das Ablaufdatum der abgelegten E-Mail-Daten übergeben.
@@ -39,7 +39,7 @@ Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Dat
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"] 
 |===
-|URI        |\https://kas.hrst1.kim.telematik/attachments/v2.2/attachment/
+|URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/
 |Method     |POST
 |Header |
 [source, bash]
@@ -66,7 +66,7 @@ attachment: "{…file content…}"
 [source, bash]
 -----------------
 curl -X 'POST' \
-'https://kas.hrst1.kim.telematik/attachments/v2.2/attachment/' \
+'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/' \
 -H 'accept: application/json' \
 -H 'Content-Type: multipart/form-data' \
 -F 'messageID=bde36ec8-9710-47bc-9ea3-bf0425078e33@example' \
@@ -81,7 +81,7 @@ curl -X 'POST' \
 Code: 201
 Body:
 {
-  "sharedLink":"https://kas.hrst1.kim.telematik/attachments/v2.2/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824"
+  "sharedLink":"https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824"
 }
 
 -----------------
@@ -105,16 +105,16 @@ Body:
 |=== 
 
 ===== read_Attachment()
-Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden. 
+Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://kas.hersteller.kim.telematik/attachments/v2.2/attachment/{attachmentId} +
+|URI        |\https://kas.hersteller.kim.telematik/attachments/v2.3/attachment/+{attachmentId}+ +
 [normal]#`attachmentId` - Freigabelink, unter dem die E-Mail-Daten gespeichert wurden#
 |Method     |GET
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "application/octet-stream"
@@ -129,7 +129,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'GET' \
-'https://kas.hrst1.kim.telematik/attachments/v2.2/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
+'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
 -H 'accept: application/octet-stream' \
 -H 'recipient: user1@example.kim.telematik'
 ----------------- 
@@ -226,9 +226,9 @@ Body:
 
 === I_AccountManager_Service
 
-Über die Schnittstelle `I_AccountManager_Service` stellt der Account Manager des KIM-Fachdientes dem Administrationsmodul die logischen Operationen `registerAccount()`, `deregisterAccount()`, `revokeDeregistration()`, `setAccount()`, `getAccount()`, `createCert()`, `getOTP()`, `setTID()`, `getOutOfOffice()` und `updateOutOfOffice()` zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben. 
+Über die Schnittstelle `I_AccountManager_Service` stellt der Account Manager des KIM-Fachdientes dem Administrationsmodul die logischen Operationen `registerAccount()`, `deregisterAccount()`, `revokeDeregistration()`, `setAccount()`, `getAccount()`, `createCert()`, `getOTP()`, `setTID()`, `getOutOfOffice()` und `updateOutOfOffice()` zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
-image:I_AccountManager.png[width=45%] 
+image:I_AccountManager.png[width=45%]
 
 ==== registerAccount() +
 Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teilnehmers am KIM-Fachdienst durchgeführt.
@@ -236,7 +236,7 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"] 
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account
 |Method     |POST
 |Header |
 [source, bash]
@@ -267,7 +267,7 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
 [source, bash]
 -----------------
 curl -X 'POST' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account' \
   -H 'accept: */*' \
   -H 'iniPassword: old_password' \
   -H 'Content-Type: application/json' \
@@ -313,13 +313,13 @@ Code: 204
 Mittels der Operation `deregisterAccount()` wird die Deregistrierung eines KIM-Teilnehmers am KIM-Fachdienst durchgeführt.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username} +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+ +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |DELETE
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "*/*"
@@ -334,7 +334,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'DELETE' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
 ----------------- 
@@ -366,13 +366,13 @@ Code: 204
 Mittels der Operation `revokeDeregistration()` wird die Deregistrierung eines KIM-Teilnehmers am KIM-Fachdienst zurückgenommen. Der zugehörige Nutzeraccount wird wieder vollständig aktiviert.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username} +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+ +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
-|Method     |POST
+|Method     |PUT
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "*/*"
@@ -387,7 +387,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'POST' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
 ----------------- 
@@ -419,13 +419,13 @@ Code: 204
 Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username} +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+ +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |PUT
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "*/*"
@@ -448,14 +448,14 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
 [normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
-[normal]#`dataTimeToLive` - Speicherdauer in Tagen von Mails und Anhängen auf dem Fachdienst# 
+[normal]#`dataTimeToLive` - Speicherdauer in Tagen von Mails und Anhängen auf dem Fachdienst#
 |===
 
 *Beispielabfrage:*
 [source, bash]
 -----------------
 curl -X 'PUT' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password' \
   -H 'Content-Type: application/json' \
@@ -501,13 +501,13 @@ Code: 204
 Die Operation `getAccount()` liefert Informationen zum Account eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username} +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+ +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |GET
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "application/json"
@@ -522,7 +522,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'GET' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: application/json' \
   -H 'password: password'
 ----------------- 
@@ -561,13 +561,13 @@ Body:
 Die Operation `createCert()` erzeugt und liefert ein TLS-Auth Zertifikat in einem PKCS#12 Container.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username}/cert +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+/cert +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |POST
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "application/json"
@@ -591,7 +591,7 @@ Die Operation `createCert()` erzeugt und liefert ein TLS-Auth Zertifikat in eine
 [source, bash]
 -----------------
 curl -X 'POST' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik/cert' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/cert' \
   -H 'accept: application/json' \
   -H 'password: password' \
   -H 'Content-Type: application/json' \
@@ -628,13 +628,13 @@ Body:
 Die Operation `getOTP()` erzeugt und liefert ein One Time Passwort.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username}/OTP +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+/OTP +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |GET
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "application/json"
@@ -649,7 +649,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'GET' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik/OTP' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/OTP' \
   -H 'accept: application/json' \
   -H 'password: password'
 ----------------- 
@@ -680,13 +680,13 @@ Body:
 Die Operation `setTIP()` entfernt die E-Mail Adresse vom bisherigen VZD Eintrag und trägt diese für den aktuellen VZD Eintrag (der den Authentisierungsdaten dieser Operation setTID entspricht) ein. Die Authentisierung erfolgt mit der neuen Smarcard des Nutzers.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username}/telematikID +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+/telematikID +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |GET
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "*/*"
@@ -702,7 +702,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'PUT' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik/telematikID' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/telematikID' \
   -H 'accept: */*' \
   -H 'password: password' \
   -H 'OTP: sufglwahföqwklfnwqkalfnesaöjfjdg...jsdnvbruifqwijkvwurizrtqoiwfhbfe8'
@@ -737,13 +737,13 @@ Code: 204
 Die Operation `getOutOfOffice()` liefert Informationen zu eingestellten Abwesendheitsnotizen eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username}/outofoffice +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+/outofoffice +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |GET
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "application/json"
@@ -758,7 +758,7 @@ keine Parameter
 [source, bash]
 -----------------
 curl -X 'GET' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik/outofoffice' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/outofoffice' \
   -H 'accept: application/json' \
   -H 'password: password'
 ----------------- 
@@ -797,13 +797,13 @@ Body:
 Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesendheitsnotiz eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
-|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/{username}/outofoffice +
+|URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/+{username}+/outofoffice +
 [normal]#`username` - Die E-Mail Adresse des KIM-Teilnehmers#
 |Method     |PUT
 |Header |
-[source, bash]
+[source,bash]
 ----
  HTTP-Version: "HTTP/1.1"
  accept: "*/*"
@@ -824,7 +824,7 @@ Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesendhei
 [normal]#`startDate` - Ab diesem Zeitpunkt wird die Abwesendheitsnotiz gesendet# +
 [normal]#`endDate` - Bis zu diesem Zeitpunkt wird die Abwesendheitsnotiz gesendet# +
 [normal]#`message` - Inhalt der Abwesendheitsnotiz# +
-[normal]#`active` - Aktivieren bzw. deaktiviert der Abwesendheitsnotiz# 
+[normal]#`active` - Aktivieren bzw. deaktiviert der Abwesendheitsnotiz#
 |===
 
 
@@ -832,7 +832,7 @@ Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesendhei
 [source, bash]
 -----------------
 curl -X 'PUT' \
-  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/account/user@example.kim.telematik/outofoffice' \
+  'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/outofoffice' \
   -H 'accept: */*' \
   -H 'password: password' \
   -H 'Content-Type: application/json' \
