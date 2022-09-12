@@ -31,7 +31,34 @@ Das KOM-LE Clientmodul empfängt eine BASE64 kodierte Nachricht von einem Client
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Send_Client-Mail.txt[]
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+To: "user.test15@gematik.kim.telematik-test"
+ <user.test15@gematik.kim.telematik-test>,
+ not_allowed_recipient@not.telematik-test
+From: "not allowed mail sender"
+	<notallowed@not.kim.telematik-test>
+Subject: KIM 1.5 Testnachricht
+Sender: user.test15@gematik.kim.telematik-test
+Content-Type: multipart/mixed; boundary="------------v0Sp8vvZ1qGfAWh1MYiwrJ0W"
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Text der Testnachricht
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; name="20mb.test"
+Content-Disposition: attachment; filename="20mb.test"
+Content-Transfer-Encoding: base64
+
+fHx3d3cuZGFzaW50ZXJuZXQubmV0f[...]
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W--
 ----
 ====
 
@@ -43,7 +70,33 @@ Das KOM-LE Clientmodul verarbeitet die Client-Mail und ergänzt die fehlende X-K
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Send_processed_Client-Mail.txt[]
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: KIM 1.5 Testnachricht
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Content-Type: multipart/mixed; boundary="------------v0Sp8vvZ1qGfAWh1MYiwrJ0W"
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Text der Testnachricht
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; name="1mb.test"
+Content-Disposition: attachment; filename="1mb.test"
+Content-Transfer-Encoding: base64
+
+fHx3d3cuZGFzaW50ZXJuZXQubmV[...]
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W--
 ----
 ====
 
@@ -55,7 +108,21 @@ Von der korrigierten(*_From_* Header) und um die Dienstkennung erweiterte Mail w
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Send_processed_after_kas_upload.txt[]
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: KIM 1.5 Testnachricht
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: x-kas
+
+{"link":"https://kas.gematik.kim.telematik-test/attachments/v2.3/attachment/a566f001-7fa6-4f87-a088-7def2d609c87","k":"AZtUCtV3M5mTC/XzfDDl25mZ4FwoOADyaIi3Fn8wH6w=","hash":"Wc148UGImi84VG3H/fF+3x6ouGMknls6hf2wn0qcqjU=","size":27262976}
 ----
 ====
 
@@ -67,7 +134,27 @@ Der Body der KOM-LE Nachricht wird ebenfalls signiert und verschlüsselt. Anschl
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Send_KOM-LE-Mail.txt[]
+Subject: KOM-LE-Nachricht
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+X-KOM-LE-Version: 1.5
+X-KIM-CMVersion: AKNET_1.1.0-0
+X-KIM-PTVersion: 1.2.1
+X-KIM-KONVersion: <secunet konnektor 2.0.0><Konnektor
+ PTV5><5.0.2><2.0.0><5.0.5><null>
+MIME-Version: 1.0
+Expires: Thu, 08 Dec 2022 15:48:35 +0200
+Content-Type: application/pkcs7-mime; smime-type=authenticated-enveloped-data;
+	name=smime.p7m
+Content-Disposition: attachment; filename=smime.p7m
+Content-Transfer-Encoding: base64
+
+MIAGCyqGSIb3DQEJEA[...]
 ----
 ====
 
@@ -82,7 +169,33 @@ Die folgenden Kapitel befassen sich mit der empfangenden Seite des KIM Clientmod
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Receive_KOM-LE-Mail.txt[]
+Return-Path: <user.test15@gematik.kim.telematik-test>
+Received: from 10.65.0.11 (EHLO 192.168.169.20:64500) ([10.65.0.11])
+          by mailserver.gematik.kim.telematik-test (JAMES SMTP Server ) with ESMTPA ID 54965859
+          for <user.test15@gematik.kim.telematik-test>;
+          Fri, 09 Sep 2022 15:50:05 +0200 (CEST)
+Subject: KOM-LE-Nachricht
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+X-KOM-LE-Version: 1.5
+X-KIM-CMVersion: KIM_CM_1.1.0-0
+X-KIM-PTVersion: 1.2.1
+X-KIM-KONVersion: <konnektor 2.0.0><Konnektor
+ PTV5><5.0.2><2.0.0><5.0.5><null>
+MIME-Version: 1.0
+Expires: Thu, 08 Dec 2022 15:48:35 +0200
+Content-Type: application/pkcs7-mime; smime-type=authenticated-enveloped-data;
+	name=smime.p7m
+Content-Disposition: attachment; filename=smime.p7m
+Content-Transfer-Encoding: base64
+
+MIAGCyqGSIb3DQEJEAEXoIAwg[...]
+
 ----
 ====
 
@@ -95,7 +208,21 @@ Nach der Entschlüsselung ist die KIM-Attachment Datenstruktur lesbar und die In
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Receive_decrypted_KOM-LE-Mail.txt[]
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: KIM 1.5 Testnachricht
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: x-kas
+
+{"link":"https://kas.gematik.kim.telematik-test/attachments/v2.3/attachment/a566f001-7fa6-4f87-a088-7def2d609c87","k":"AZtUCtV3M5mTC/XzfDDl25mZ4FwoOADyaIi3Fn8wH6w=","hash":"Wc148UGImi84VG3H/fF+3x6ouGMknls6hf2wn0qcqjU=","size":27262976}
 ----
 ====
 
@@ -107,7 +234,35 @@ Mit den Informationen aus der KIM-Attachment Datenstruktur wird die auf dem KAS 
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Receive_kas_downloaded.txt[]
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: KIM 1.5 Testnachricht
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Content-Type: multipart/mixed; boundary="------------v0Sp8vvZ1qGfAWh1MYiwrJ0W"
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Text der Testnachricht
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; name="1mb.test"
+Content-Disposition: attachment; filename="1mb.test"
+Content-Transfer-Encoding: base64
+
+fHx3d3cuZGFzaW50ZXJuZX[...]
+
+
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W--
 ----
 ====
 
@@ -119,7 +274,47 @@ Die Header Felder der vom KAS heruntergeladenen Client-Mail werden mit den Heade
 ====
 [source,txt, linenums]
 ----
-include::{maildir}/Receive_Client-Mail.txt[]
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: KIM 1.5 Testnachricht
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+X-KIM-DecryptionResult: 00
+X-KIM-IntegrityCheckResult: 01
+Return-Path: <user.test15@gematik.kim.telematik-test>
+Received: from 10.65.0.11 (EHLO 192.168.169.20:64500) ([10.65.0.11])
+          by mailserver.gematik.kim.telematik-test (JAMES SMTP Server ) with ESMTPA ID 54965859
+          for <user.test15@gematik.kim.telematik-test>;
+          Fri, 09 Sep 2022 15:50:05 +0200 (CEST)
+Content-Type: multipart/mixed; boundary="------------v0Sp8vvZ1qGfAWh1MYiwrJ0W"
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Text der Testnachricht
+
+
+---------------------------------------------
+Die Nachricht wurde entschlÃ¼sselt.
+Die Signatur wurde erfolgreich geprÃ¼ft.
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
+Content-Type: text/plain; charset=UTF-8; name="1mb.test"
+Content-Disposition: attachment; filename="1mb.test"
+Content-Transfer-Encoding: base64
+
+fHx3d3cuZGFzaW50ZXJuZX[...]
+
+
+--------------v0Sp8vvZ1qGfAWh1MYiwrJ0W--
+
 ----
 ====
 
