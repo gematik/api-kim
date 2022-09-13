@@ -67,8 +67,7 @@ KIM-API
 ├─ docs
 ├─ images
 ├─ samples
-|   ├── KAS
-│   │    └── Mails
+|   ├──── KAS
 │   └──── SMIME-Profil.zip
 ├─ src
 │   ├──── openapi
