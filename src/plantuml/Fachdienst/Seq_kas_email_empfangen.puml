@@ -54,14 +54,14 @@ L->P: Mail abrufen
  KM->KM: E-Mail entschlüsseln und\n Signatur prüfen
  KM->KM: Prüfen der KIM-Version
  opt KIM-Attachment-Datenstruktur vorhanden
- KM->KM: KAS-Informationen aus der \KIM-Attachment-Datenstruktur extrahieren
+ KM->KM: KAS-Informationen aus der\nKIM-Attachment-Datenstruktur\nextrahieren
  KM->K: readAttachement
  activate K
  K->K: Berechtigung prüfen
  K->K: verschlüsselte Client-Mail suchen
  K-->KM: verschlüsselte Client-Mail
  deactivate K
-  KM->KM: Client-Mail mit dem symmetrischen\n Schlüssels entschlüsseln
+  KM->KM: Client-Mail mit dem\nsymmetrischen Schlüssel\nentschlüsseln
   KM->KM: Bildung des Hashwertes
   KM->KM: Vergleich der Hashwerte
   KM->KM: Client-Mail aufbereiten
