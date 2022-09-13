@@ -2,13 +2,13 @@
 # KIM 1.5
 # Account Manager
 # Sequence Diagram
-# Name: Operation Account registrieren
+# Name: Operation kas mail empfangen
 '/
 
 @startuml
 skinparam sequenceMessageAlign direction
 skinparam minClassWidth 200
-skinparam BoxPadding 20
+skinparam BoxPadding 15
 skinparam sequenceReferenceHeaderBackgroundColor palegreen
 scale max 2048 width
 hide footbox
@@ -26,7 +26,6 @@ ParticipantFontSize 20
 ParticipantFontColor black
 ParticipantBorderColor Black
 ParticipantBackgroundColor MOTIVATION
-ParticipantPadding 20
 
 ActorBackgroundColor Gainsboro
 ActorFontColor black
