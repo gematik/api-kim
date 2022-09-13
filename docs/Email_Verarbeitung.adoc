@@ -34,7 +34,7 @@ Ablauf beim Versand einer E-Mail
 Das KOM-LE Clientmodul empfängt eine BASE64 kodierte Nachricht von einem Clientsystem(KIS, PVS, etc). Diese Mail verfügt über einen Anhang der eine Verarbeitung mit dem KIM-Attachment Service nötig macht und über den From Header wird versucht einen falschen Absender zu simulieren. Vom Clientsystem wurde keine X-KIM-Dienstkennung gesetzt.
 
 .Client Mail
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -73,7 +73,7 @@ fHx3d3cuZGFzaW50ZXJuZXQubmV0f[...]
 Das KOM-LE Clientmodul verarbeitet die Client-Mail und ergänzt die fehlende X-KIM-Dienstkennung. Es wird erkannt, dass die im *_From_* Header angegebene E-Mail Adresse nicht mit der Adresse des Senders aus dem *_SMTP FROM_* Kommando übereinstimmt und die Adresse im *_From_* Header entsprechend ersetzt.
 
 .Mail mit Header und Senderkorrektur
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -111,7 +111,7 @@ fHx3d3cuZGFzaW50ZXJuZXQubmV[...]
 Von der korrigierten(*_From_* Header) und um die Dienstkennung erweiterte Mail wird eine Kopie angelegt, die die Basis für die an den Fachdienst zu übermittelnde KOM-LE Nachricht bildet. Anschließen wir modifizierte Client-Mail signiert und verschlüsselt und das binäre Ergebnis und durch Aufruf der Methode addAttachment auf den KIM Attachment Service hochgeladen. Nach einem erfolgreichen Upload ersetzt das KOM-LE Modul den Body der KOM-LE Nachricht durch die KIM Attachment Datenstruktur.
 
 .KOM-LE Nachricht mit Attachment Datenstruktur
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -137,7 +137,7 @@ Content-Disposition: x-kas
 Der Body der KOM-LE Nachricht wird ebenfalls signiert und verschlüsselt und im Header Informationen zum verwendeten Clientmodul, der Produkltypversion und dem verwendeten Konnektor hinterlegt. Anschließend wird die Nachricht per SMTP an den Fachdienst übertragen.
 
 .signierte und verschlüsselte KOM-LE Nachricht
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -179,7 +179,7 @@ Ablauf beim Empfang einer E-Mail
 Über POP3 ruft das KIM Clientmodul eine KOM-LE Nachricht beim Fachdienst ab.
 
 .abgerufene KOM-LE Nachricht
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -218,7 +218,7 @@ Das KIM-Clientmodul entschlüsselt die KOM-LE Nachricht und führt die Integrit�
 Nach der Entschlüsselung ist die KIM-Attachment Datenstruktur lesbar und die Informationen können genutzt werden, um die auf dem KAS abgelegte Client Mail abzurufen.
 
 .entschlüsselte KOM-LE Mail
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -244,7 +244,7 @@ Content-Disposition: x-kas
 Mit den Informationen aus der KIM-Attachment Datenstruktur wird die auf dem KAS abgelegte Mail heruntergeladen, entschlüsselt und die Signatur geprüft.
 
 .vom KAS heruntergeladene entschlüsselte Nachricht
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
@@ -284,7 +284,7 @@ fHx3d3cuZGFzaW50ZXJuZX[...]
 Die Header Felder der vom KAS heruntergeladenen Client-Mail werden mit den Header Feldern der KOM-LE Nachricht abgeglichen. In der Client-Mail werden die Header Felder (Received, Return Path, X-KIM Check Results) befüllt und Fehlertexte im Body ergänzt. Anschließend wird die Client-Mail Base64 codiert an das via POP3 abfragende Clientsystem ausgeliefert.
 
 .Fertige Client Mail
-[%collapsible]
+[%collapsible%open]
 ====
 [source,txt, linenums]
 ----
