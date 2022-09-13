@@ -394,8 +394,20 @@ paths:
       responses:
         204:
           description: Deregistrierung erolgreich zurückgenommen
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Email Account wurde bisher nicht deregistriert
           content:
             application/json:
               schema:
