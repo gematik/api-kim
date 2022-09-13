@@ -2,6 +2,19 @@
 
 Notes: Since April 2021 KIM is no longer a part of a gematik document release. Starting with KIM v1.5.1 it will be develop in a separate branch (see also https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen). 
 
+## KIM v1.5.2-Hotfix - Release Notes
+New feature
+- added new operation to revoke deregistration to I_AccountManager_Service in v2.3.0
+- added new integrity checks to ensure correct setting of the from header in an e-mail
+- added an example for processing of an email that needs to be stored at the kas
+
+Changes
+- I_AccountManager_Service added some additional response codes
+- updated I_Attachment_Service to v2.3.0 based on some changes on response codes
+- updated I_AccountLimit_Servic to 1.1.0 based on setting a minimum value for maxMailSize
+- removed I_Directory_Application_Maintenance from this repo and replaced references to the github repository of the vzd
+- replaced sequence diagrams with plantuml based ones
+
 ## KIM v1.5.2 - Release Notes 
 
 New feature 
