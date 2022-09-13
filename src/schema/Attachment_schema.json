@@ -3,12 +3,10 @@
     "type": "object",
     "properties":
     {
-      "name":           { "type": "string" }, 
-      "link":           { "type": "string" }, 
+      "link":           { "type": "string" },
       "k":              { "type": "string" },  
       "hash":           { "type": "string" },  
-      "size":           { "type": "integer" }, 
-      "type":           { "type": "string" }   
+      "size":           { "type": "integer" }
      },
-     "required": ["name", "link", "password", "hash", "size", "type"]
+     "required": ["link", "k", "hash", "size"]
   }
