@@ -7,8 +7,8 @@ image:https://shields.io/badge/Release Notes-v1.5.2--1-red?style=plastic&logo=gi
 image:https://shields.io/badge/AccountManager-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml"]
 image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AttachmentService.yaml"]
 image:https://shields.io/badge/AccountLimit-v1.1.0-blue?style=plastic&logo=github&logoColor=lightblue"[link="https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountLimit.yaml"] +
-image:https://shields.io/badge/Release KIM-v1.0-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Releases/Konzepte_und_Spezifikationen/OPB3.1_R3.1.3_Hotfix11_Spezifikationen_20220209.zip"]
-image:https://shields.io/badge/Release KIM-v1.5-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/downloadcenter/releases/release-402-und-produkttyp-und-anwendungsreleases-1#c5189"]
+image:https://shields.io/badge/Spezifikation KIM-v1.0-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/fileadmin/Fachportal/Downloadcenter/Releases/Konzepte_und_Spezifikationen/OPB3.1_R3.1.3_Hotfix11_Spezifikationen_20220209.zip"]
+image:https://shields.io/badge/Spezifikation KIM-v1.5-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/downloadcenter/releases/release-402-und-produkttyp-und-anwendungsreleases-1#c5189"]
 
 == Allgemeines
 
@@ -67,9 +67,8 @@ KIM-API
 ├─ docs
 ├─ images
 ├─ samples
-│   ├──── Mails
 |   ├── KAS
-│   │    └── MultipleAttachments.zip
+│   │    └── Mails
 │   └──── SMIME-Profil.zip
 ├─ src
 │   ├──── openapi
