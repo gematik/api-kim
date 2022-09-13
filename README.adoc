@@ -67,7 +67,8 @@ KIM-API
 ├─ docs
 ├─ images
 ├─ samples
-│   ├──── KAS
+│   ├──── Mails
+|   ├── KAS
 │   │    └── MultipleAttachments.zip
 │   └──── SMIME-Profil.zip
 ├─ src
@@ -80,7 +81,7 @@ KIM-API
 │   └──── schema
 │        └── Attachment_schema.json
 ├── LICENSE 
-├── README.md
+├── README.adoc
 └── ReleaseNotes.md
 ----
 
