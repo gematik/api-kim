@@ -4,14 +4,15 @@ Notes: Since April 2021 KIM is no longer a part of a gematik document release. S
 
 ## KIM v1.5.2-Hotfix - Release Notes
 New feature
-- added new operation to revoke deregistration to I_AccountManager_Service in v2.3.0
+- added new operation to revoke deregistration to I_AccountManager_Service in v2.3.0 (see [I_AccountManager_Service](https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml) for more details)
 - added new integrity checks to ensure correct setting of the from header in an e-mail
-- added an example for processing of an email that needs to be stored at the kas
+- added an example for processing of an email that needs to be stored at the kas (see [E-Mail Verarbeitung](https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/docs/Email_Verarbeitung.adoc) for more details)
 
 Changes
+- change behavior for big attachments (see [Umgang mit großen Anhängen](https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/docs/KIM_API.adoc#umgang-mit-gro%C3%9Fen-anh%C3%A4ngen) for more details)
 - I_AccountManager_Service added some additional response codes
-- updated I_Attachment_Service to v2.3.0 based on some changes on response codes
-- updated I_AccountLimit_Servic to 1.1.0 based on setting a minimum value for maxMailSize
+- updated I_Attachment_Service to v2.3.0 based on some changes on response codes(see [I_Attachment_Service](https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AttachmentService.yaml) for more details)
+- updated I_AccountLimit_Servic to 1.1.0 based on setting a minimum value for maxMailSize(see [I_AccountLimit_Service](https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountLimit.yaml) for more details)
 - removed I_Directory_Application_Maintenance from this repo and replaced references to the github repository of the vzd
 - replaced sequence diagrams with plantuml based ones
 
