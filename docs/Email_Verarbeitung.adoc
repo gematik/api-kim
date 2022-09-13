@@ -23,6 +23,9 @@ Diese Seite gibt einen Überblick über den Prozess der E-Mail Verarbeitung durc
 == Versand einer E-Mail
 Der Versand einer Mail startet, wenn von einem Client-System über SMTP eine MIME-Mail an das KIM-Clientmodul übergeben wird.
 
+.Ablauf beim Versand einer E-Mail
+image:../images/diagrams/eMail_status_senden.svg[align="center", width="50%"]
+
 === Client-Mail empfangen
 Das KOM-LE Clientmodul empfängt eine BASE64 kodierte Nachricht von einem Clientsystem(KIS, PVS, etc). Diese Mail verfügt über einen Anhang der eine Verarbeitung mit dem KIM-Attachment Service nötig macht und über den From Header wird versucht einen falschen Absender zu simulieren. Vom Clientsystem wurde keine X-KIM-Dienstkennung gesetzt.
 
@@ -161,7 +164,10 @@ MIAGCyqGSIb3DQEJEA[...]
 == Empfang einer E-Mail
 Die folgenden Kapitel befassen sich mit der empfangenden Seite des KIM Clientmoduls, die nun die in den vorherigen Kapiteln zusammengestellte KOM-LE Mail vom Fachdienst abrufen und verarbeiten wird.
 
-=== Empfangene KOM-LE Mail
+.Ablauf beim Empfang einer E-Mail
+image:../images/diagrams/eMail_status_empfangen.svg[align="center", width ="40%"]
+
+=== KOM-LE Mail empfangen
 Über POP3 ruft das KIM Clientmodul eine KOM-LE Nachricht beim Fachdienst ab.
 
 .abgerufene KOM-LE Nachricht
@@ -199,7 +205,7 @@ MIAGCyqGSIb3DQEJEAEXoIAwg[...]
 ----
 ====
 
-=== Entschlüsselte und geprüfte KOM-LE Nachricht
+=== KOM-LE Mail prozessiert
 Das KIM-Clientmodul entschlüsselt die KOM-LE Nachricht und führt die Integritätsprüfungsschritte durch.
 Nach der Entschlüsselung ist die KIM-Attachment Datenstruktur lesbar und die Informationen können genutzt werden, um die auf dem KAS abgelegte Client Mail abzurufen.
 
@@ -226,7 +232,7 @@ Content-Disposition: x-kas
 ----
 ====
 
-=== Mail nach dem KAS Download
+=== Client-Mail heruntergeladen
 Mit den Informationen aus der KIM-Attachment Datenstruktur wird die auf dem KAS abgelegte Mail heruntergeladen, entschlüsselt und die Signatur geprüft.
 
 .vom KAS heruntergeladene entschlüsselte Nachricht
@@ -266,7 +272,7 @@ fHx3d3cuZGFzaW50ZXJuZX[...]
 ----
 ====
 
-=== Finale Client-Mail
+=== Client-Mail finalisiert
 Die Header Felder der vom KAS heruntergeladenen Client-Mail werden mit den Header Feldern der KOM-LE Nachricht abgeglichen. In der Client-Mail werden die Header Felder (Received, Return Path, X-KIM Check Results) befüllt und Fehlertexte im Body ergänzt. Anschließend wird die Client-Mail Base64 codiert an das via POP3 abfragende Clientsystem ausgeliefert.
 
 .Fertige Client Mail
