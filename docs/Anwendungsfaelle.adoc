@@ -95,7 +95,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.svg>
+  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.svg>
 </p>
 ++++
 
@@ -106,7 +106,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_abwesenheitsnotiz.svg>
+  <img width="60%" src=../images/diagrams/Fachdienst/Seq_acc_abwesenheitsnotiz.svg>
 </p>
 ++++
 
@@ -128,7 +128,7 @@ Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_kas_email_senden.svg>
+  <img width="80%" src=../images/diagrams/Fachdienst/Seq_kas_email_senden.svg>
 </p>
 ++++
 
@@ -141,7 +141,7 @@ Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_kas_email_empfangen.svg>
+  <img width="80%" src=../images/diagrams/Fachdienst/Seq_kas_email_empfangen.svg>
 </p>
 ++++
 
