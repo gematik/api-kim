@@ -1,0 +1,32 @@
+@startuml
+scale max 2048 width
+
+state "Client-Mail empfangen" as cm
+cm : do / decodiere Base64
+cm : exit / finished decoding
+
+state "Client-Mail prozessiert" as dcm
+dcm: do / Integritätsprüfung
+dcm: do / Mailgröße bestimmen
+dcm: do / KIM header hinzufügen
+dcm: exit / Verarbeitung der Client Mail abgeschlossen
+
+state "Client-Mail hochgeladen" as cmcm
+cmcm: do / erstelle Kopie der prozessierten Client-Mal als Basis für die KOM-LE Mail
+cmcm: do / signiere und verschlüssele die prozessierte Client-Mail
+cmcm: do / upload des verschlüsselten Binaries auf den KAS
+cmcm: do / ersetze den Mail body in der Basis für die KOM-LE Mail mit der KIM-Attachment Struktur
+cmcm: exit / initiale KOM-LE Mail erstellt
+
+state "KOM-LE Mail finalisiert" as ckm
+ckm: do / hinzufügen der Header mit Versionsinformationen(Konnektor, Clientmodul, Produkttyp)
+ckm: do / signiere und verschlüssle den Mail Body
+ckm: exit / finale KOM-LE Mail erstellt
+
+[*] -d-> cm
+cm -d-> dcm
+dcm -d-> cmcm
+cmcm -d-> ckm
+ckm -d-> [*] : Versand an den Fachdienst
+
+@enduml
