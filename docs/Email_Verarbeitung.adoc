@@ -23,8 +23,12 @@ Diese Seite gibt einen Überblick über den Prozess der E-Mail Verarbeitung durc
 == Versand einer E-Mail
 Der Versand einer Mail startet, wenn von einem Client-System über SMTP eine MIME-Mail an das KIM-Clientmodul übergeben wird.
 
-.Ablauf beim Versand einer E-Mail
-image:../images/diagrams/eMail_status_senden.svg[align="center", width="50%"]
+Ablauf beim Versand einer E-Mail
+++++
+<p align="center">
+  <img width="50%" src="../images/diagrams/eMail_status_senden.svg">
+</p>
+++++
 
 === Client-Mail empfangen
 Das KOM-LE Clientmodul empfängt eine BASE64 kodierte Nachricht von einem Clientsystem(KIS, PVS, etc). Diese Mail verfügt über einen Anhang der eine Verarbeitung mit dem KIM-Attachment Service nötig macht und über den From Header wird versucht einen falschen Absender zu simulieren. Vom Clientsystem wurde keine X-KIM-Dienstkennung gesetzt.
@@ -164,8 +168,12 @@ MIAGCyqGSIb3DQEJEA[...]
 == Empfang einer E-Mail
 Die folgenden Kapitel befassen sich mit der empfangenden Seite des KIM Clientmoduls, die nun die in den vorherigen Kapiteln zusammengestellte KOM-LE Mail vom Fachdienst abrufen und verarbeiten wird.
 
-.Ablauf beim Empfang einer E-Mail
-image:../images/diagrams/eMail_status_empfangen.svg[align="center", width ="40%"]
+Ablauf beim Empfang einer E-Mail
+++++
+<p align="center">
+  <img width="50%" src="../images/diagrams/eMail_status_empfangen.svg">
+</p>
+++++
 
 === KOM-LE Mail empfangen
 Über POP3 ruft das KIM Clientmodul eine KOM-LE Nachricht beim Fachdienst ab.
