@@ -44,7 +44,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_register.png>
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_register.svg>
 </p>
 ++++
 
@@ -57,7 +57,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_deregister.png>
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_deregister.svg>
 </p>
 ++++
 
@@ -71,7 +71,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_kontoverwaltung.png>
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_kontoverwaltung.svg>
 </p>
 ++++
 
@@ -84,7 +84,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_portierung.png
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_portierung.svg>
 </p>
 ++++
 
@@ -95,7 +95,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.png
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.svg>
 </p>
 ++++
 
@@ -106,7 +106,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_abwesenheitsnotiz.png
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_abwesenheitsnotiz.svg>
 </p>
 ++++
 
@@ -128,7 +128,7 @@ Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_email_senden.PNG>
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_email_senden.svg>
 </p>
 ++++
 
@@ -141,7 +141,7 @@ Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_email_empfangen.PNG>
+  <img width="75%" src=../images/diagrams/Fachdienst/Seq_email_empfangen.svg>
 </p>
 ++++
 
