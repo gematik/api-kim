@@ -247,9 +247,6 @@ Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den St
 Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der
 Patientenidentifikation benutzt.
 
-Das Clientmodul erzeugt bei der Prüfung der Nachrichtensignatur einen Signaturprüfungsbericht im PDF-Format. Der Bericht wird durch das
-Clientmodul als Anhang der Originalnachricht beigefügt.
-
 Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
 
 * *Umgang mit unbekannten Dienstkennungen* +
