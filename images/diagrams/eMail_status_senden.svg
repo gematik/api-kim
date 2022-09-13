@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="746px" preserveAspectRatio="none" style="width:663px;height:746px;background:#FFFFFF;" version="1.1" viewBox="0 0 663 746" width="663px" zoomAndPan="magnify"><defs/><g><g id="cm"><rect fill="#F1F1F1" height="68.8906" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="180" x="241.5" y="87"/><line style="stroke:#181818;stroke-width:0.5;" x1="241.5" x2="421.5" y1="113.2969" y2="113.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="153" x="255" y="104.9951">Client-Mail empfangen</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="158" x="246.5" y="131.292">do / decodiere Base64</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="160" x="246.5" y="147.5889">exit / finished decoding</text></g><g id="dcm"><rect fill="#F1F1F1" height="101.4844" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="356" x="153.5" y="217"/><line style="stroke:#181818;stroke-width:0.5;" x1="153.5" x2="509.5" y1="243.2969" y2="243.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="152" x="255.5" y="234.9951">Client-Mail prozessiert</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="154" x="158.5" y="261.292">do / Integritätsprüfung</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="180" x="158.5" y="277.5889">do / Mailgröße bestimmen</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="190" x="158.5" y="293.8857">do / KIM header hinzufügen</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="336" x="158.5" y="310.1826">exit / Verarbeitung der Client Mail abgeschlossen</text></g><g id="cmcm"><rect fill="#F1F1F1" height="117.7813" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="645" x="9" y="379"/><line style="stroke:#181818;stroke-width:0.5;" x1="9" x2="654" y1="405.2969" y2="405.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="165" x="249" y="396.9951">Client-Mail hochgeladen</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="521" x="14" y="423.292">do / erstelle Kopie der prozessierten Client-Mal als Basis für die KOM-LE Mail</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="406" x="14" y="439.5889">do / signiere und verschlüssele die prozessierte Client-Mail</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="367" x="14" y="455.8857">do / upload des verschlüsselten Binaries auf den KAS</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="625" x="14" y="472.1826">do / ersetze den Mail body in der Basis für die KOM-LE Mail mit der KIM-Attachment Struktur</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="218" x="14" y="488.4795">exit / initiale KOM-LE Mail erstellt</text></g><g id="ckm"><rect fill="#F1F1F1" height="85.1875" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="649" x="7" y="558"/><line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="656" y1="584.2969" y2="584.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="147" x="258" y="575.9951">KOM-LE Mail finalisiert</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="629" x="12" y="602.292">do / hinzufügen der Header mit Versionsinformationen(Konnektor, Clientmodul, Produkttyp)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="307" x="12" y="618.5889">do / signiere und verschlüssle den Mail Body</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="211" x="12" y="634.8857">exit / finale KOM-LE Mail erstellt</text></g><ellipse cx="331.5" cy="16" fill="#222222" rx="10" ry="10" style="stroke:none;stroke-width:1.0;"/><ellipse cx="331.5" cy="730" fill="none" rx="10" ry="10" style="stroke:#222222;stroke-width:1.0;"/><ellipse cx="332" cy="730.5" fill="#222222" rx="6" ry="6" style="stroke:none;stroke-width:1.0;"/><!--MD5=[4647d493726018b36df2c527242da3fc]
+link *start to cm--><g id="link_*start_cm"><path d="M331.5,26.18 C331.5,38.59 331.5,61.47 331.5,81.58 " fill="none" id="*start-to-cm" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="331.5,86.63,335.5,77.63,331.5,81.63,327.5,77.63,331.5,86.63" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[16a2b46eeb867afca46d77397d881b31]
+link cm to dcm--><g id="link_cm_dcm"><path d="M331.5,156.26 C331.5,172.75 331.5,193.01 331.5,211.64 " fill="none" id="cm-to-dcm" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="331.5,216.85,335.5,207.85,331.5,211.85,327.5,207.85,331.5,216.85" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[7dc7a55551317a968e81b893261137ea]
+link dcm to cmcm--><g id="link_dcm_cmcm"><path d="M331.5,318.14 C331.5,335.54 331.5,355.31 331.5,373.67 " fill="none" id="dcm-to-cmcm" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="331.5,378.81,335.5,369.81,331.5,373.81,327.5,369.81,331.5,378.81" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[6ea3575fe446b85aca5415713a31719b]
+link cmcm to ckm--><g id="link_cmcm_ckm"><path d="M331.5,497.4 C331.5,515.59 331.5,535.41 331.5,552.7 " fill="none" id="cmcm-to-ckm" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="331.5,557.98,335.5,548.98,331.5,552.98,327.5,548.98,331.5,557.98" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[d28bcf4841fb55ea8d6afb66d03142bd]
+link ckm to *end--><g id="link_ckm_*end"><path d="M331.5,643.25 C331.5,667.78 331.5,697.27 331.5,714.5 " fill="none" id="ckm-to-*end" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="331.5,719.84,335.5,710.84,331.5,714.84,327.5,710.84,331.5,719.84" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="174" x="332.5" y="686.0669">Versand an den Fachdienst</text></g><!--MD5=[adbe6e83abd2f973388ca7acd8d20182]
+@startuml
+scale max 2048 width
+
+state "Client-Mail empfangen" as cm
+cm : do / decodiere Base64
+cm : exit / finished decoding
+
+state "Client-Mail prozessiert" as dcm
+dcm: do / Integritätsprüfung
+dcm: do / Mailgröße bestimmen
+dcm: do / KIM header hinzufügen
+dcm: exit / Verarbeitung der Client Mail abgeschlossen
+
+state "Client-Mail hochgeladen" as cmcm
+cmcm: do / erstelle Kopie der prozessierten Client-Mal als Basis für die KOM-LE Mail
+cmcm: do / signiere und verschlüssele die prozessierte Client-Mail
+cmcm: do / upload des verschlüsselten Binaries auf den KAS
+cmcm: do / ersetze den Mail body in der Basis für die KOM-LE Mail mit der KIM-Attachment Struktur
+cmcm: exit / initiale KOM-LE Mail erstellt
+
+state "KOM-LE Mail finalisiert" as ckm
+ckm: do / hinzufügen der Header mit Versionsinformationen(Konnektor, Clientmodul, Produkttyp)
+ckm: do / signiere und verschlüssle den Mail Body
+ckm: exit / finale KOM-LE Mail erstellt
+
+[*] -d-> cm
+cm -d-> dcm
+dcm -d-> cmcm
+cmcm -d-> ckm
+ckm -d-> [*] : Versand an den Fachdienst
+
+@enduml
+
+PlantUML version 1.2022.5(Sat Apr 30 10:55:52 UTC 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
