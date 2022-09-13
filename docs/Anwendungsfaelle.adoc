@@ -57,7 +57,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_deregister.svg>
+  <img width="60%" src=../images/diagrams/Fachdienst/Seq_acc_deregister.svg>
 </p>
 ++++
 
@@ -71,7 +71,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="75%" src=../images/diagrams/Fachdienst/Seq_acc_kontoverwaltung.svg>
+  <img width="60%" src=../images/diagrams/Fachdienst/Seq_acc_kontoverwaltung.svg>
 </p>
 ++++
 
