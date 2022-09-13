@@ -13,7 +13,7 @@ endif::[]
 :toc-title: Inhaltsverzeichnis
 :numbered:
 
-image:gematik_logo.svg[width=50%]
+image:gematik_logo.svg[width=70%]
 
 toc::[]
 
@@ -23,7 +23,7 @@ Diese Seite gibt einen Überblick über den Prozess der E-Mail Verarbeitung durc
 == Versand einer E-Mail
 Der Versand einer Mail startet, wenn von einem Client-System über SMTP eine MIME-Mail an das KIM-Clientmodul übergeben wird.
 
-=== Empfangene Client-Mail
+=== Client-Mail empfangen
 Das KOM-LE Clientmodul empfängt eine BASE64 kodierte Nachricht von einem Clientsystem(KIS, PVS, etc). Diese Mail verfügt über einen Anhang der eine Verarbeitung mit dem KIM-Attachment Service nötig macht und über den From Header wird versucht einen falschen Absender zu simulieren. Vom Clientsystem wurde keine X-KIM-Dienstkennung gesetzt.
 
 .Client Mail
@@ -62,7 +62,7 @@ fHx3d3cuZGFzaW50ZXJuZXQubmV0f[...]
 ----
 ====
 
-=== Geprüfte / um Header ergänzte Client-Mail
+=== Client-Mail prozessiert
 Das KOM-LE Clientmodul verarbeitet die Client-Mail und ergänzt die fehlende X-KIM-Dienstkennung. Es wird erkannt, dass die im *_From_* Header angegebene E-Mail Adresse nicht mit der Adresse des Senders aus dem *_SMTP FROM_* Kommando übereinstimmt und die Adresse im *_From_* Header entsprechend ersetzt.
 
 .Mail mit Header und Senderkorrektur
@@ -100,7 +100,7 @@ fHx3d3cuZGFzaW50ZXJuZXQubmV[...]
 ----
 ====
 
-=== Mail nach dem KAS-Upload
+=== Client-Mail hochgeladen
 Von der korrigierten(*_From_* Header) und um die Dienstkennung erweiterte Mail wird eine Kopie angelegt, die die Basis für die an den Fachdienst zu übermittelnde KOM-LE Nachricht bildet. Anschließen wir modifizierte Client-Mail signiert und verschlüsselt und das binäre Ergebnis und durch Aufruf der Methode addAttachment auf den KIM Attachment Service hochgeladen. Nach einem erfolgreichen Upload ersetzt das KOM-LE Modul den Body der KOM-LE Nachricht durch die KIM Attachment Datenstruktur.
 
 .KOM-LE Nachricht mit Attachment Datenstruktur
@@ -126,8 +126,8 @@ Content-Disposition: x-kas
 ----
 ====
 
-=== Finale KOM-LE Mail
-Der Body der KOM-LE Nachricht wird ebenfalls signiert und verschlüsselt. Anschließend wird die Nachricht per SMTP an den Fachdienst übertragen.
+=== KOM-LE Mail finalisiert
+Der Body der KOM-LE Nachricht wird ebenfalls signiert und verschlüsselt und im Header Informationen zum verwendeten Clientmodul, der Produkltypversion und dem verwendeten Konnektor hinterlegt. Anschließend wird die Nachricht per SMTP an den Fachdienst übertragen.
 
 .signierte und verschlüsselte KOM-LE Nachricht
 [%collapsible]
