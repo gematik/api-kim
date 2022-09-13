@@ -95,7 +95,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 
 ++++
 <p align="center">
-  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.svg>
+  <img width="45%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.svg>
 </p>
 ++++
 
