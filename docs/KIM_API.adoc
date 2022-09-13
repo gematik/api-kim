@@ -4,7 +4,7 @@
 :toc-title: Inhaltsverzeichnis 
 :numbered:
 
-image:gematik_logo.svg[width=50%]
+image:gematik_logo.svg[width=70%]
 
 toc::[]
 
