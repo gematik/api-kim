@@ -42,7 +42,7 @@ Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM
 [**Fachdienst**](docs/Fachdienst.adoc)
 
 -   **Mail Server:**  
-    Der Mail Server stellt die Schnittstell `I_Message_Service` bereit und wird über die Protokolle SMTP und POP3 angesprochen. In der KIM Version 1.5 wurden am Mail Server keine Änderungen vorgenommen. 
+    Der Mail Server stellt die Schnittstelle `I_Message_Service` bereit und wird über die Protokolle SMTP und POP3 angesprochen. In der KIM Version 1.5 wurden am Mail Server keine Änderungen vorgenommen. 
 
 -   **Account Manager:**  
     Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers bietet der Account Manager ab der KIM Version 1.5 zwei Webservices (`I_AccountManager_Service` und `I_AccountLimit_Service`) an. 
