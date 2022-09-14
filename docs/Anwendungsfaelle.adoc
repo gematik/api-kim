@@ -51,7 +51,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 === Deregistrierung durchführen
 KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine Deregistrierung an ihrem Fachdienst veranlassen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `deregisterAccount()` zum Account Manager auf. 
 
-Nach einer erfolgreichen Deregistrierung ist der KIM-Account für eine definierte Zeit ausschließlich zur Abholung vorhandener E-Mails erreichbar. Danach werden alle zu diesem Mail-Account gehörenden Daten gelöscht. Der KIM-Teilnehmer kann zu einem späteren Zeitpunkt die erneute Verwendung dieser E-Mail-Adresse nur dann beantragen, wenn er unter Angabe seiner Telematik-ID eine Berechtigung nachweisen kann. 
+Nach einer erfolgreichen Deregistrierung ist der KIM-Account für eine definierte Zeit ausschließlich zur Abholung vorhandener E-Mails erreichbar. Nach Ablauf dieser Zeitspanne werden alle zu diesem Mail-Account gehörenden Daten gelöscht. Der KIM-Teilnehmer kann zu einem späteren Zeitpunkt die erneute Verwendung dieser E-Mail-Adresse nur dann beantragen, wenn er unter Angabe seiner Telematik-ID eine Berechtigung nachweisen kann. 
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
