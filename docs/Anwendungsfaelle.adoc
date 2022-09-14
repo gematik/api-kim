@@ -84,7 +84,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 === Portierung einer Telematik-ID
 Am Administrationsmoduls kann ein KIM-Teilnehmer eine Portierung seiner KIM-E-Mail-Adresse zu einer anderen Telematik-ID (neue Smartcard) durchführen. Dafür ruft das Administrationsmodul die Operationen `getOTP()` und `setTID()` mit einer TLS gesicherten Verbindung am Account Manager auf.  
 
-Im Anwendungsfall wird ein One-Time Password (OTP) vom Account Manager generiert (`getOTP()`), welches für die einmalige Authentisierung bei der Portierung, vom Administrationsmodule, verwendet werden muss. Über das ausgestellte One-Time-Passwort besteht die Möglichkeit des Nachweises über den Besitz der alten Smartcard (alte Telematik-ID). Das One-Time-Password ist eine Woche lange gültig. Nach der erfolgreichen Portierung wird durch den Account Manager der Eintrag mit der neuen Telematik-ID zur bisheriegen KIM-Mail-Adresse im Verzeichnisdienst angepasst (`setTID()`). 
+Im Anwendungsfall wird ein One-Time Password (OTP) vom Account Manager generiert (`getOTP()`), welches für die einmalige Authentisierung bei der Portierung vom Administrationsmodule verwendet werden muss. Über das ausgestellte One-Time-Passwort besteht die Möglichkeit des Nachweises über den Besitz der alten Smartcard (alte Telematik-ID). Das One-Time-Password ist eine Woche lange gültig. Nach der erfolgreichen Portierung wird durch den Account Manager der Eintrag mit der neuen Telematik-ID zur bisheriegen KIM-Mail-Adresse im Verzeichnisdienst angepasst (`setTID()`). 
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
