@@ -71,7 +71,7 @@ KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine a
 ++++
 
 === Account Daten abrufen und ändern
-Ein KIM-Teilnehmer kann über das Administrationsmodul Nutzerdaten von seinem Account abrufen oder ändern (z. B. sein Passwort ändern). Zum Abrufen von Nutzerdaten wird die Operation `getAccount()` am Account Manager aufgerufen. Für das Ändern von Nutzerdaten erfolgt dies über die Operation `setAccount()` am Account Manager. Für beide Operationen baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
+Ein KIM-Teilnehmer kann über das Administrationsmodul Nutzerdaten von seinem Account abrufen oder ändern (z. B. sein Passwort). Zum Abrufen von Nutzerdaten wird die Operation `getAccount()` am Account Manager aufgerufen. Für das Ändern von Nutzerdaten erfolgt dies über die Operation `setAccount()` am Account Manager. Für beide Operationen baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
