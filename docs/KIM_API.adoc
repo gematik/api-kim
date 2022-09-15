@@ -31,13 +31,20 @@ E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegung
 
 Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
-image:I_KAS.png[width=45%]
+//image:I_KAS.png[width=45%]
+
+++++
+<p align="center">
+  <img width="70%" src=../images/I_KAS.png>
+</p>
+++++
 
 ===== add_Attachment() +
 Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Daten unter einem neu erzeugten Freigabe-Link auf dem KAS für einen begrenzten Empfängerkreis abgelegt. Hierfür werden in der Operation zusammen mit den E-Mail-Daten die berechtigten Empfänger, die Message-ID der dazugehörenden KIM-Nachricht und das Ablaufdatum der abgelegten E-Mail-Daten übergeben.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+
+[cols="h,a",] 
 |===
 |URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/
 |Method     |POST
@@ -163,7 +170,13 @@ Body:
 ==== I_AccountLimit_Service
 Über die Schnittstelle `I_AccountLimit_Service` stellt der Account Manager dem Clientmodul die logische Operationen `getLimits()` zur Abfrage von technisch konfigurierbaren Parametern eines Nutzer-Accounts zur Verfügung.  
 
-image:I_AccountLimit.png[width=45%] 
+//image:I_AccountLimit.png[width=45%] 
+
+++++
+<p align="center">
+  <img width="60%" src=../images/I_AccountLimit.png>
+</p>
+++++
 
 ===== getLimits()
 Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für E-Mail-Daten (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden. 
@@ -228,7 +241,13 @@ Body:
 
 Über die Schnittstelle `I_AccountManager_Service` stellt der Account Manager des KIM-Fachdientes dem Administrationsmodul die logischen Operationen `registerAccount()`, `deregisterAccount()`, `revokeDeregistration()`, `setAccount()`, `getAccount()`, `createCert()`, `getOTP()`, `setTID()`, `getOutOfOffice()` und `updateOutOfOffice()` zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
-image:I_AccountManager.png[width=45%]
+//image:I_AccountManager.png[width=45%]
+
+++++
+<p align="center">
+  <img width="60%" src=../images/I_AccountManager.png>
+</p>
+++++
 
 ==== registerAccount() +
 Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teilnehmers am KIM-Fachdienst durchgeführt.
