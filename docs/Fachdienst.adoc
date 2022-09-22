@@ -13,7 +13,7 @@ Der Fachdienst besteht aus den drei Teilkomponenten Account Manager, Mail Server
 
 ++++
 <p align="left">
-  <img width="50%" src=../images/I_Fachdienst.png>
+  <img width="75%" src=../images/I_Fachdienst.png>
 </p>
 ++++
 
