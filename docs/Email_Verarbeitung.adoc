@@ -26,7 +26,7 @@ Der Versand einer Mail startet, wenn von einem Client-System über SMTP eine MIM
 Ablauf beim Versand einer E-Mail
 ++++
 <p align="center">
-  <img width="50%" src="../images/diagrams/eMail_status_senden.svg">
+  <img width="65%" src="../images/diagrams/eMail_status_senden.svg">
 </p>
 ++++
 
@@ -171,7 +171,7 @@ Die folgenden Kapitel befassen sich mit der empfangenden Seite des KIM Clientmod
 Ablauf beim Empfang einer E-Mail
 ++++
 <p align="center">
-  <img width="40%" src="../images/diagrams/eMail_status_empfangen.svg">
+  <img width="46%" src="../images/diagrams/eMail_status_empfangen.svg">
 </p>
 ++++
 
