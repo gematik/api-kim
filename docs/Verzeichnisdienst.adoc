@@ -23,6 +23,12 @@ Die Beschreibung der REST-Schnittstelle `I_Directory_Application_Maintenance` f�
 
 Im Folgenden sind die LDAP-Directory-Attribute der KIM-Fachdaten dargestellt: +
 
-image:KOMLE_Fachdaten.PNG[width=45%]
+//image:KOMLE_Fachdaten.PNG[width=45%]
+
+++++
+<p align="left">
+  <img width="60%" src=../images/KOMLE_Fachdaten.PNG>
+</p>
+++++
 
 TIP: Die Abfrage der KIM-Fachdaten sollte aus den strukturierten KIM-Fachdaten erfolgen (nicht aus der flachen Liste). Die flache Liste enthält die niedrigste KIM-Version aller KIM-Anbieter für diesen Verzeichniseintrag.  
