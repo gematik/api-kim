@@ -34,8 +34,8 @@ E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegung
 //image:I_KAS.png[width=45%]
 
 ++++
-<p align="center">
-  <img width="70%" src=../images/I_KAS.png>
+<p align="left">
+  <img width="60%" src=../images/I_KAS.png>
 </p>
 ++++
 
@@ -173,7 +173,7 @@ Body:
 //image:I_AccountLimit.png[width=45%] 
 
 ++++
-<p align="center">
+<p align="left">
   <img width="60%" src=../images/I_AccountLimit.png>
 </p>
 ++++
@@ -244,7 +244,7 @@ Body:
 //image:I_AccountManager.png[width=45%]
 
 ++++
-<p align="center">
+<p align="left">
   <img width="60%" src=../images/I_AccountManager.png>
 </p>
 ++++
