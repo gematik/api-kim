@@ -1,0 +1,31 @@
+@startuml
+scale max 2048 width
+
+state "KOM-LE Mail empfangen" as rkm
+rkm: do / Prüfung der Signatur
+rkm: do / Entschlüsselung des Mail Bodys
+rkm: exit / Entschlüsselung erfolgreich abgeschlossen
+
+state "KOM-LE Mail prozessiert" as dkm
+dkm: do / Auslesen der KIM-Attachment Struktur
+dkm: do / Binary vom KAS herunterladen
+dkm: exit / Download erfolgreich
+
+state "Client-Mail heruntergeladen" as kdcm
+kdcm: do / Prüfen der Signatur der heruntergeladenen Mail
+kdcm: do / Entschlüsselung der heruntergeladenen mail
+kdcm: do / Integritätsprüfung
+kdcm: do / Nachverarbeitung (z.B. hinzufügen der KIM-header Felder)
+kdcm: exit / Nachverarbeitung abgeschlossen
+
+state "Client-Mail finalisiert" as cm
+cm: do / Übermittlung der Client-Mail an das Client-System
+cm: exit / Übermittlung erfolgreich abgeschlossen
+
+[*] -d-> rkm : POP3 Abruf vom Fachdienst
+rkm -d-> dkm
+dkm -d-> kdcm
+kdcm -d-> cm
+cm -d-> [*]
+
+@enduml

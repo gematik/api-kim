@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="416px" preserveAspectRatio="none" style="width:980px;height:416px;background:#FFFFFF;" version="1.1" viewBox="0 0 980 416" width="980px" zoomAndPan="magnify"><defs/><g><rect fill="#F5F5F5" height="397.7266" style="stroke:#181818;stroke-width:0.5;" width="245" x="221" y="6"/><text fill="#000000" font-family="sans-serif" font-size="18" font-weight="bold" lengthAdjust="spacing" textLength="121" x="283" y="22.708">Clientmodul</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="5" x="283" y="39.02"> </text><rect fill="#F5F5F5" height="397.7266" style="stroke:#181818;stroke-width:0.5;" width="222" x="498" y="6"/><text fill="#000000" font-family="sans-serif" font-size="18" font-weight="bold" lengthAdjust="spacing" textLength="112" x="553" y="22.708">Fachdienst</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="5" x="553" y="39.02"> </text><rect fill="#F5F5F5" height="397.7266" style="stroke:#181818;stroke-width:0.5;" width="222" x="752" y="6"/><text fill="#000000" font-family="sans-serif" font-size="18" font-weight="bold" lengthAdjust="spacing" textLength="95" x="815.5" y="22.708">Directory</text><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="5" x="815.5" y="39.02"> </text><rect fill="#DCDCDC" height="267.6563" style="stroke:#000000;stroke-width:1.0;" width="10" x="338.5" y="124.0703"/><rect fill="#DCDCDC" height="101.3672" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="157.8594"/><rect fill="#DCDCDC" height="33.7891" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="317.1484"/><rect fill="#DCDCDC" height="33.7891" style="stroke:#000000;stroke-width:1.0;" width="10" x="858" y="191.6484"/><rect height="84.7109" style="stroke:#000000;stroke-width:1.5;fill:none;" width="511" x="215" y="274.2266"/><line style="stroke:#000000;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="102" x2="102" y1="88.2813" y2="409.7266"/><line style="stroke:#000000;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="343" x2="343" y1="88.2813" y2="409.7266"/><line style="stroke:#000000;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="609" x2="609" y1="88.2813" y2="409.7266"/><line style="stroke:#000000;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="863" x2="863" y1="88.2813" y2="409.7266"/><text fill="#000000" font-family="Aapex" font-size="20" lengthAdjust="spacing" textLength="189" x="5" y="83.5645">Leistungserbringer</text><ellipse cx="102.5" cy="13.5" fill="#DCDCDC" rx="8" ry="8" style="stroke:#000000;stroke-width:0.5;"/><path d="M102.5,21.5 L102.5,48.5 M89.5,29.5 L115.5,29.5 M102.5,48.5 L89.5,63.5 M102.5,48.5 L115.5,63.5 " fill="none" style="stroke:#000000;stroke-width:0.5;"/><rect fill="#EFEFFF" height="37.2813" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="237" x="225" y="50"/><text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="223" x="232" y="75.5645">Administrationsmodul</text><rect fill="#EFEFFF" height="37.2813" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="214" x="502" y="50"/><text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="176" x="521" y="75.5645">Account-Manager</text><rect fill="#EFEFFF" height="37.2813" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="214" x="756" y="50"/><text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="43" x="841.5" y="75.5645">VZD</text><rect fill="#DCDCDC" height="267.6563" style="stroke:#000000;stroke-width:1.0;" width="10" x="338.5" y="124.0703"/><rect fill="#DCDCDC" height="101.3672" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="157.8594"/><rect fill="#DCDCDC" height="33.7891" style="stroke:#000000;stroke-width:1.0;" width="10" x="604" y="317.1484"/><rect fill="#DCDCDC" height="33.7891" style="stroke:#000000;stroke-width:1.0;" width="10" x="858" y="191.6484"/><polygon fill="#000000" points="326.5,120.0703,336.5,124.0703,326.5,128.0703,330.5,124.0703" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="102.5" x2="332.5" y1="124.0703" y2="124.0703"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="190" x="109.5" y="118.061">Registrierung aufrufen</text><polygon fill="#000000" points="592,153.8594,602,157.8594,592,161.8594,596,157.8594" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="348.5" x2="598" y1="157.8594" y2="157.8594"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="130" x="355.5" y="151.8501">registerAccount</text><polygon fill="#000000" points="846,187.6484,856,191.6484,846,195.6484,850,191.6484" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="614" x2="852" y1="191.6484" y2="191.6484"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="211" x="621" y="185.6392">KIM Fachdaten eintragen</text><polygon fill="#000000" points="625,221.4375,615,225.4375,625,229.4375,621,225.4375" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="619" x2="862" y1="225.4375" y2="225.4375"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="805" y="219.4282">status</text><polygon fill="#000000" points="359.5,255.2266,349.5,259.2266,359.5,263.2266,355.5,259.2266" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="353.5" x2="608" y1="259.2266" y2="259.2266"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="551" y="253.2173">status</text><path d="M215,274.2266 L285,274.2266 L285,281.3594 L275,291.3594 L215,291.3594 L215,274.2266 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="84.7109" style="stroke:#000000;stroke-width:1.5;" width="511" x="215" y="274.2266"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="25" x="230" y="287.2935">opt</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="117" x="300" y="286.437">[PKCS#12 != true]</text><polygon fill="#000000" points="592,313.1484,602,317.1484,592,321.1484,596,317.1484" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="348.5" x2="598" y1="317.1484" y2="317.1484"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="88" x="355.5" y="311.1392">createCert</text><polygon fill="#000000" points="359.5,346.9375,349.5,350.9375,359.5,354.9375,355.5,350.9375" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="353.5" x2="608" y1="350.9375" y2="350.9375"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="81" x="521" y="344.9282">PKCS#12</text><polygon fill="#000000" points="113.5,387.7266,103.5,391.7266,113.5,395.7266,109.5,391.7266" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="107.5" x2="342.5" y1="391.7266" y2="391.7266"/><text fill="#000000" font-family="sans-serif" font-size="17" lengthAdjust="spacing" textLength="51" x="285.5" y="385.7173">status</text><!--MD5=[1e1ad2442c1817be183e4cf575a96c79]
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant A as "Administrationsmodul"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      end box
+      box <size:18>Directory\n #WhiteSmoke
+      participant VZD as "VZD"
+      end box
+
+L->A: Registrierung aufrufen
+ activate A
+ A->AM: registerAccount
+ activate AM
+ AM -> VZD: KIM Fachdaten eintragen
+ activate VZD
+ VZD - -> AM: status
+ deactivate VZD
+ AM - -> A: status
+ deactivate AM
+
+ opt PKCS#12 != true
+  A->AM: createCert
+  activate AM
+  AM - -> A: PKCS#12
+  deactivate AM
+  end
+ A- ->L: status
+ deactivate A
+@enduml
+
+PlantUML version 1.2022.5(Sat Apr 30 10:55:52 UTC 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

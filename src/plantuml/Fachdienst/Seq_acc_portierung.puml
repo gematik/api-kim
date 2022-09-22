@@ -1,0 +1,70 @@
+/'
+# KIM 1.5
+# Account Manager
+# Sequence Diagram
+# Name: Operation Account portieren
+'/
+
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant A as "Administrationsmodul"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      end box
+      box <size:18>Directory\n #WhiteSmoke
+      participant VZD as "VZD"
+      end box
+
+L->A: Portierung durchführen
+ activate A
+ A->AM: getOTP
+ activate AM
+ AM-->A: OTP
+ deactivate AM
+
+ A -> AM: setTID
+ activate AM
+ AM->VZD: Mail-Adresse entfernen
+ activate VZD
+ VZD -> VZD: Mail-Adresse für \nalte Telematik-ID\n entfernen
+ VZD --> AM: status
+ deactivate VZD
+
+ AM->VZD: Mail-Adresse hinzufügen
+ activate VZD
+ VZD -> VZD: Mail-Adresse für \nneue Telematik-ID\n hinzufügen
+ VZD --> AM: status
+ deactivate VZD
+
+ AM-->A: status
+ A-->L: status
+ deactivate A
+@enduml

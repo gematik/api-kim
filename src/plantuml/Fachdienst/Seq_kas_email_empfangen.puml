@@ -1,0 +1,72 @@
+/'
+# KIM 1.5
+# Account Manager
+# Sequence Diagram
+# Name: Operation kas mail empfangen
+'/
+
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Primärsystem\n #WhiteSmoke
+            participant P as "PVS/KIS/Mailclient"
+      end box
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant KM as "KIM-Dienst"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      participant K as "KAS"
+      participant MS as "Mailserver"
+      end box
+
+L->P: Mail abrufen
+ activate P
+ P->KM: Mail abrufen
+ activate KM
+ KM->MS++: receive Message
+ MS-->KM--: KOM-LE-Mail
+ KM->KM: E-Mail entschlüsseln und\n Signatur prüfen
+ KM->KM: Prüfen der KIM-Version
+ opt KIM-Attachment-Datenstruktur vorhanden
+ KM->KM: KAS-Informationen aus der\nKIM-Attachment-Datenstruktur\nextrahieren
+ KM->K: readAttachement
+ activate K
+ K->K: Berechtigung prüfen
+ K->K: verschlüsselte Client-Mail suchen
+ K-->KM: verschlüsselte Client-Mail
+ deactivate K
+  KM->KM: Client-Mail mit dem\nsymmetrischen Schlüssel\nentschlüsseln
+  KM->KM: Bildung des Hashwertes
+  KM->KM: Vergleich der Hashwerte
+  KM->KM: Client-Mail aufbereiten
+  KM-->P: Client-Mail
+  deactivate K
+  P-->L: Client-Mail
+  deactivate P
+@enduml

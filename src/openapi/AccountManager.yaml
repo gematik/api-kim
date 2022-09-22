@@ -3,7 +3,18 @@ info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 2.2.0
+  version: 2.3.0
+  ### 2.3.0
+  # - change server url to new api version
+  # - added /account/{username}/revokeDeregistration
+  #   to allow customers to revoke the deregistration process
+  # - changed description for externalDoc to Github
+  # - added status Code 502 for operation createCert in case the account manager acts as a proxy
+  # - added status Code 403 for operation setTID in case the token is not valid
+  # - added format int64 for deregDate property
+  # - changed otp property to lowercase and added password as format
+  # - added response code 404 for getOTP in case e-mail account does not exist
+  # - added response code 404 for deregisterAccount in case e-mail account does not exist
   ### 2.2.0 
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
@@ -39,10 +50,10 @@ info:
   # - initial Version of I_AccountManager_Service
   
 externalDocs:
-  description: Gitlab Dokumentation
+  description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2/
+- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/
   # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
 tags:
 - name: Email-Account 
@@ -60,7 +71,7 @@ paths:
     post:
       tags:
       - Email-Account
-      summary: Registiriert einen neuen Email Account.
+      summary: Registriert einen neuen Email Account.
             #  In allen Fehlerfällen wird der Account nicht erzeugt.
       operationId: registerAccount
       parameters:
@@ -260,6 +271,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         500:
           description: Internal Server Error          
           content:
@@ -315,13 +332,82 @@ paths:
                     readOnly: true
                     example: registered
                   deregDate:
-                    type: integer   
+                    type: integer
+                    format: int64
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
-                      # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
+                      # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /account/{username}/revokeDeregistration:
+    put:
+      tags:
+      - Email-Account 
+      summary: Deregistrierung des Accounts zurücknehmen 
+      operationId: revokeDeregistration
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email           
+      - in: header
+        name: password
+        description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password        
+      responses:
+        204:
+          description: Deregistrierung erolgreich zurückgenommen
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Email Account wurde bisher nicht deregistriert
           content:
             application/json:
               schema:
@@ -343,7 +429,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'                
+                $ref: '#/components/schemas/Error'   
 ##--
 ##------
   /account/{username}/OTP:
@@ -377,14 +463,25 @@ paths:
             schema:
               type: object
               properties:
-                OTP:
+                otp:
                   type: string
-                  format: binary
+                  format: password
                   description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
-             
-             
+
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
           content:
             application/json:
               schema:
@@ -421,7 +518,7 @@ paths:
           type: string
           format: password        
       - in: header
-        name: OTP
+        name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
         required: true
         schema:
@@ -431,8 +528,20 @@ paths:
       responses:
         204:
           description: Änderung der TelematikID erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         401:
           description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Invalides OTP
           content:
             application/json:
               schema:
@@ -445,7 +554,6 @@ paths:
                 $ref: '#/components/schemas/Error'
         408:
           description: Request Timeout
-          # Gültigkeitsdauer des One Time Passworts ist abgelaufen
           content:
             application/json:
               schema:
@@ -526,6 +634,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         500:
           description: Internal Server Error          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: CMP-Service nicht erreichbar bzw. liefert Fehler
           content:
             application/json:
               schema:
@@ -679,7 +793,8 @@ components:
           readOnly: true
           example: registered
         deregDate:
-          type: integer   
+          type: integer
+          format: int64
           example: 1616588543
           readOnly: true
           description: Bestätigtes Kündigungsdatum (Unix Timestamp)

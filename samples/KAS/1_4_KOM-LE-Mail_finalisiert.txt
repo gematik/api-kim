@@ -1,0 +1,21 @@
+Subject: KOM-LE-Nachricht
+Date: Fri, 9 Sep 2022 15:47:00 +0200
+From: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+To: "user.test15@gematik.kim.telematik-test"
+	<user.test15@gematik.kim.telematik-test>
+Message-ID: <c37a9fe5-a4b2-222d-35ba-6358fa26e48b@gematik.kim.telematik-test>
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+X-KOM-LE-Version: 1.5
+X-KIM-CMVersion: AKNET_1.1.0-0
+X-KIM-PTVersion: 1.2.1
+X-KIM-KONVersion: <secunet konnektor 2.0.0><Konnektor
+ PTV5><5.0.2><2.0.0><5.0.5><null>
+MIME-Version: 1.0
+Expires: Thu, 08 Dec 2022 15:48:35 +0200
+Content-Type: application/pkcs7-mime; smime-type=authenticated-enveloped-data;
+	name=smime.p7m
+Content-Disposition: attachment; filename=smime.p7m
+Content-Transfer-Encoding: base64
+
+MIAGCyqGSIb3DQEJEA[...]

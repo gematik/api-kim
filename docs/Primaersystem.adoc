@@ -14,7 +14,7 @@ endif::[]
 :toc-title: Inhaltsverzeichnis
 :numbered:
 
-image:gematik_logo.jpg[width=35%]
+image:gematik_logo.svg[width=70%]
 
 toc::[]
 
@@ -34,8 +34,8 @@ Für die Nutzung von KIM müssen die folgenden Punkte erfüllt sein:
 TIP: - die Basisdaten (z. B. Zertifikat) des KIM-Nutzers sind in dem Verzeichnisdienst eingetragen, +
      - der Nutzer hat sich bei einem KIM-Provider registriert, +
      - die Fachdaten (z. B. KIM-E-Mail-Adresse) für den Nutzer sind im Verzeichnisdienst hinterlegt, +
-    - der Nutzer verfügt über eine freigeschaltete SM-B (bzw. einen freigeschalteten HBA) +
-    - der Konnektor ist für den Online-Modus konfiguriert.
+     - der Nutzer verfügt über eine freigeschaltete SM-B (bzw. einen freigeschalteten HBA) +
+     - der Konnektor ist für den Online-Modus konfiguriert.
 
 * *Umkonfigurieren in den Online-Modus* +
 Es ist erforderlich, dass das Primärsystem den Anwender darüber informiert, wenn sich der Konnektor im Offline-Modus befindet.
@@ -46,7 +46,13 @@ Das Primärsystem nutzt die Schnittstellen des Konnektors sowie des KIM-Clientmo
 
 Das folgende Komponentendiagramm stellt die Abhängigkeitsbeziehungen zwischen den einzelnen Komponenten dar.
 
-image:Int_PS-KOMLE.png[width=50%]
+//image:Int_PS-KOMLE.png[width=50%]
+
+++++
+<p align="left">
+  <img width="70%" src=../images/Int_PS-KOMLE.png>
+</p>
+++++
 
 * *Verwendung des LDAP-Proxys im Konnektor* +
 Es ist erforderlich, dass das Primärsystem mit der LDAP-Schnittstelle des Konnektors kommuniziert, um Verzeichnisdienstabfragen durchzuführen.
@@ -57,7 +63,13 @@ Es ist erforderlich, dass das Primärsystem mit dem KIM-Clientmodul kommuniziert
 == Anwendungsfälle
 In der folgenden Abbildung sind die vom Primärsystem umzusetzenden KIM-Anwendungsfälle dargestellt.
 
-image:UC_PS-KOMLE.png[width=40%]
+//image:UC_PS-KOMLE.png[width=40%]
+
+++++
+<p align="left">
+  <img width="50%" src=../images/UC_PS-KOMLE.png>
+</p>
+++++
 
 === Nachrichten generieren und übernehmen
 Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
@@ -103,9 +115,9 @@ Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig an
 ===  Nachrichten versenden
 Der Versand von KIM–Nachrichten erfolgt über das Clientmodul, das die Nachricht für jeden Empfänger zuerst signiert und anschließend verschlüsselt. +
 
-TIP: In der KIM Version 1.0 darf die Gesamtgröße einer KIM-Nachricht inkl. Anhänge 25 MB nicht überschreiten.
+TIP: In der KIM Version 1.0 darf die Gesamtgröße einer KIM-Nachricht inkl. Anhänge 15 MiB nicht überschreiten.
 
-Die Einschränkung auf 25 MB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 25 MB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit größeren Anhängen zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der auf den KAS ausgelagerten Anhänge.
+Die Einschränkung auf 15 MiB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 15 MiB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit größeren Anhängen zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der auf den KAS ausgelagerten E-Mail-Daten.
 
 * *E-Mail-Versand als Funktion des Primärsystems* +
 Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus seinem E-Mail-Modul heraus versendet.
@@ -187,8 +199,7 @@ Wenn nur ein Teil des gewünschten Empfängerkreises adressiert werden konnte, d
 _„Die Nachricht wurde nur an einen Teil der gewünschten Adressaten versendet, denn es konnten nicht für alle Empfänger gültige Verschlüsselungszertifikate ermittelt werden.“_
 
 === Nachrichten empfangen
-Der Empfang von KIM-Nachrichten erfolgt über das Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern
-die dafür erforderliche Smartcard/HSM im System registriert und freigeschaltet ist.
+Der Empfang von KIM-Nachrichten erfolgt über das Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern die dafür erforderliche Smartcard/HSM im System registriert und freigeschaltet ist.
 
 * *Nutzerkreis der KIM-E-Mail-Adresse beim Nachrichtenempfang* +
 Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Zugriff auf empfangene KIM-Nachrichten nur durch autorisierte Personen erfolgt.
@@ -248,9 +259,6 @@ Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den St
 Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der
 Patientenidentifikation benutzt.
 
-Das Clientmodul erzeugt bei der Prüfung der Nachrichtensignatur einen Signaturprüfungsbericht im PDF-Format. Der Bericht wird durch das
-Clientmodul als Anhang der Originalnachricht beigefügt.
-
 Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
 
 * *Umgang mit unbekannten Dienstkennungen* +
@@ -263,7 +271,7 @@ Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärs
 
 ++++
 <p align="center">
-  <img width="70%" src=../images/CM_Integration.png>
+  <img width="90%" src=../images/CM_Integration.png>
 </p>
 ++++
 
@@ -288,7 +296,7 @@ In dieser Lösung wird ein Mailserver und ein AV-Scanner zwischen das Primärsys
 
 ++++
 <p align="center">
-  <img width="600" height="200" src=../images/KH_AV_Scanner.png>
+  <img width="70%" src=../images/KH_AV_Scanner.png>
 </p>
 ++++
 
@@ -306,7 +314,13 @@ Siehe https://github.com/gematik/api-kim/blob/master/docs/Lastverteilung%20und%2
 == Umgang mit Multikonnektor-Umgebungen
 Um in einer Umgebung mit mehreren Konnektoren mit dem für das Schlüsselmaterial (SMC-B) notwendigen Konnektor zu kommunizieren, muss dieser eindeutig adressierbar sein. Aus diesem Grund wird zusätzlich im SMTP/POP3-Benutzername ein weiterer Parameter vom Clientsystem an das Clientmodul übergeben. Das folgende Bild zeigt beispielhaft in einer Multikonnektor-Umgebung, wie das Clientmodul mit Hilfe des optionalen Parameters mit dem Konnektor (A) kommuniziert.
 
-image:Multikonnektoren.png[width=90%]
+//image:Multikonnektoren.png[width=90%]
+
+++++
+<p align="left">
+  <img width="100%" src=../images/Multikonnektoren.png>
+</p>
+++++
 
 Beispielhaft wird für das Senden einer KIM-Mail der SMTP-Benutzername um den optionalen Parameter `KonnektorId` erweitert. Mit diesem kann das Clientmodul den notwendigen Konnektor adressieren. Der Paramter wird im Aufrufkontext für SM-B optional hinter den Parameter `WorkplaceId` angehägt.
 
