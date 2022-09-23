@@ -1,0 +1,172 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+:imagesdir: ../images
+:toc: macro
+:toc-title: Inhaltsverzeichnis
+
+image:gematik_logo.svg[width=70%]
+
+toc::[]
+
+= FAQ-List
+BESCHREIBUNGSTEXT
+
+=== [FAQ] Auslesen der Reihenfolge der Felder der ASN.1 Struktur von CMS-Objekten
+
+Frage: Ist für das Auslesen der signerInfos die Reihenfolge der Felder der ASN.1 Struktur des CMS-Objekts des Senderzertifikats relevant?
+
+_Antwort: Nein. Gemäß [KOM-LE-A_2124] müssen Aussteller und Seriennummer für die Identifikation des Signaturzertifikats verwendet werden. Da die Reihenfolge der Felder der ASN.1 Struktur nicht definiert ist, wird dringend empfohlen das jeweilige Element über den ObjectIdentifier zu selektieren, anstatt z. B. einen binären Vergleich oder Hashwertvergleich der ASN.1 Struktur vorzunehmen.“_
+
+=== [FAQ] Case Sensitivity von Mailadressen
+
+Frage: Muss der KIM Fachdienst sowie das KIM Clientmodul Mailadressen Case Sensitive behandeln?
+
+_Antwort: Nein, eine Unterscheidung der Groß- und Kleinschreibung in den Mailadressen darf nicht berücksichtigt werden. Das KIM Clientmodul sowie der KIM Fachdienst dürfen die Mailadresse nicht nachträglich ändern. D.h. Max.Mustermann@test.domain sowie max.mustermann@test.domain sind die gleichen Mailadressen._
+
+=== [FAQ] Beispiel einer gematik S/MIME konformen KIM-Nachricht
+
+Frage: Wie sieht eine KIM konforme SMIME Nachricht aus?
+
+_Antwort: Das S/MIME-Profil einer KIM Nachricht ist in [gemSMIME] definiert. Unter dem folgenden Link hat die gematik entsprechende KIM Beispielnachrichten bereitgestellt:
+https://github.com/gematik/api-kim/raw/master/samples/SMIME-Profil.zip_
+
+=== [FAQ] [FAQ] Vorgabe für den zu verwendenden Zeichensatz einer KIM E-Mail Adresse
+
+Frage: Gibt es eine Vorgabe für den zu verwendenden Zeichenssatz einer Mailadresse?
+
+_Antwort: In der Mailadresse dürfen keine Umlaute sowie Steuerzeichen verwendet werden.
+Die Groß- und Kleinschreibung einer Mailadresse wird nicht beachtet._
+
+_Für den Localpart ist folgender Zeichensatz zu verwenden:_
+
+    * `(A-Z, a-z, 0-9)` sowie (Punkt, Bindestrich und Unterstrich),
+    * es wird nicht zwischen der Groß- und Kleinschreibung unterschieden,
+    * die maximale Länge des Localparts darf 64 Zeichen nicht überschreiten.
+
+_Für die Subdomain ist folgender Zeichensatz zu verwenden:_
+
+    * `(a-z, 0-9)` sowie (Punkt und Bindestrich),
+    * es wird nicht zwischen der Groß- und Kleinschreibung unterschieden,
+    * die Gesamtlänge des Domainparts darf maximal 189 Zeichen betragen,
+    * der Domainpart endet mit der Zeichenkette `".kim.telematik"` (Produktivumgebung).
+    
+=== [FAQ] Beachtung der Reihenfolge der header fields einer E-Mail
+
+Frage: Gibt es eine Vorgabe in welcher Reihenfolge die header fields einer E-Mail zu setzen sind?
+
+_Antwort: Nein, gemäß RFC [822] und [2045] ist die Reihenfolge der header fields einer E-Mail nicht festgelegt._
+
+=== [FAQ] Abweichung von den Standardwerten der Konfigurationsparameter
+
+Frage: Darf von den in [gemSpec_FD_KOMLE#KOM-LE_2184] geforderten Standardwerten abgewichen werden?
+
+_Antwort: Die aufgeführten Werte sind Empfehlungen der gematik. Die Parameter können mit selbst definierten Werten überschrieben werden._
+
+=== [FAQ] Setzen des orig-Date Header-Elements in einer KIM-Nachricht
+
+Frage: In welchem Format soll das date-time für das orig-date Header-Element in einer KIM-Nachricht gesetzt werden?
+
+_Antwort: In [RFC 5322] ist definiert, wie das date-time für das orig-date Header-Element einer E-Mail-Nachricht zu verwenden ist. Gemäß des RFC ist folgende Struktur zu verwenden: Wochentag, das numerische Datum, die ersten drei Buchstaben des Monats, das Jahr, die Uhrzeit und die Zeitzone._
+
+_Bei der Übernahme des Header-Elements orig-date aus der inneren Nachricht in das Header-Element orig-date der äußeren Nachricht ist dieses unverändert zu übernehmen. Beide Inhalte müssen, von der Formatierung her, identisch sein und dürfen nicht verändert werden._
+
+=== [FAQ] Beispiel einer KIM 1.5 E-Mail mit ausgelagerten Anhängen
+
+Frage: Kann die gematik ein Beispiel einer KIM 1.5 E-Mail mit mehreren ausgelagerten Anhängen bereitstellen?
+
+_Antwort: Unter dem folgenden Link stellt die gematik ein Beispiel einer KIM 1.5 E-Mail mit mehreren ausgelagerten Anhängen zur Verfügung:
+https://github.com/gematik/api-kim/blob/main/docs/Email_Verarbeitung.adoc_
+
+=== [FAQ] Generierung von Zustellbestätigungen (DSN)
+
+Frage: Welche Informationen muss eine Zustellbestätigung enthalten?
+
+_Antwort: Eine durch den Sender einer Nachricht angeforderte Zustellbestätigung muss die folgenden Informationen gemäß [KOM-LE-A_2147] enthalten:_
+
+* alle Empfänger der Original-Nachricht die dem Ziel-Mail-Server zugeordnet sind
+Die Empfänger der Original-Nachricht werden im Teil „message/delivery-status“ der DSN als „Final-Recipient“ eingefügt.
+
+* Empfangszeitpunkt der originalen Nachricht beim Ziel-Mail-Server (t2)
+Der Empfangszeitunkt (t2) wird im Header Feld [Arrival-Date] im Part Content-Type: message/delivery-status der DSN eingetragen.
+
+* Message-ID der äußeren Nachricht
+Die Message-ID der äußeren Nachricht, die der Message-ID der inneren Nachricht entspricht, wird im Header Feld [In-Reply-To] als Bestandteil des Headers der DSN aufgenommen.
+
+HINWEIS: Der Mail Server darf bei der Erzeugung der DSN ausschließlich die Option HDRS verwenden.
+
+[BILD!!!!!!]
+
+Der Versandzeitpunkt (t1) entspricht dem Feld [Date] im Header in der Original-Mail.
+
+Der Empfangszeitpunkt entspricht dem Feld Arrival Date (t2) in der DSN
+
+Der eigentliche Versand der DSN erfolgt zum Zeitpunkt t3 und ist ein Header Feld [Date] der gesamten DSN
+
+=== [FAQ] Häufige Fragen zum Account Manager
+
+Frage: Wie verhält sich der Account Manager wenn beim Aufruf der Operation updateOutOfOffice das Attribut “active” nicht vorhanden ist?
+
+_Antwort: Wenn im Aufruf der Operation updateOutOfOffice das Attribut “active” nicht vorhanden ist, wird es im Account Manager auf “false” gesetzt._
+
+Frage: Wie antwortet der Account Manager, wenn innerhalb der Gültigkeit eines OTP ein weiteres Mal getOTP aufgerufen wird?
+
+_Antwort: Der Account Manager generiert ein neues OTP - mit neuer Gültigkeitsdauer - und gibt es zurück. Alte OTPs werden damit ungültig._
+
+Frage: Müssen immer alle Parameter in der Operation updateOutOfOffice gesetzt sein?
+
+_Antwort:_
+
+   * Initialer Aufruf für den Account: Alle Parameter müssen gesetzt sein.
+   * Weitere Updates: 
+   
+   1) active=false: Es reicht, wenn der Parameter active auf false gesetzt wird. Die anderen Parameter sollen in der Datenbank erhalten bleiben, falls sie nicht angegeben werden. Angegebene Parameter werden vom Account Manager übernommen.
+   2) active=true: Alle Parameter müssen angegeben werden (startDate und endDate müssen sinnvolle Werte haben). Wenn z. B. die alte "message" erhalten bleiben soll, dann kann der Client zuerst den Eintrag lesen (getOutOfOffice), dem Nutzer diese zum editieren anbieten und dann die angepassten Werte wieder über die Operation updateOutOfOffice im Account Manager aktualisieren. 
+   
+Frage: Was gibt der Account Manager zurück, wenn die Operation getOutOfOffice aufgerufen wird, obwohl noch keine OutOfOffice message (mit updateOutOfOffice) eingerichtet wurde?
+
+_Antwort: Wenn noch keine OutOfOffice message (mit updateOutOfOffice) eingerichtet wurde, soll active=false ohne die anderen Werte zurückgegeben werden._
+
+Frage: Wird mit den Operationen registerAccount und setAccount das Feld “regStat” explizit zum Setzen des Status genutzt oder wird wie bei der Operation register generell "registered" eingetragen?
+
+_Antwort: Das Feld regStat ist readonly, kann also nicht durch den Client gesetzt werden. Hierbei handelt es sich um ein Textfeld, welches für die Information des KIM Anbieters an seinen Kunden vorgesehen ist. Es kann nur über den Aufruf der Operation getAccount gelesen werden. Für die Implementierung kann das Attribut bei der Operation registerAccount durch den KIM Server z. B. auf "registered" gesetzt werden._
+
+Frage: Wie wird der Parameter referenceID in den Operationen registerAccount und setAccount genutzt?
+
+_Antwort: Bei Aufruf der Operation registerAccount gibt es noch keinen username. Statt username wird die referenceID verwendet. Hierbei handelt es sich um einen temporärern username, welcher nur für das registrieren vorgesehen ist. Je nach Anbieter kann das die Vertragsnummer, ein temporäres Token oder schon der spätere username sein. Bei Aufruf der Operation registerAccount muss deshalb die referenceID immer gesetzt sein. Bei Aufruf der Operation "registerAccount" erfolgt die Authentifizierung über die referenceID und das iniPassword (z. B. referenceID=123456, iniPassword=abc$123). Weiterhin wird bei Aufruf der Operation "registerAccount" der Parameter username (z. B. username=K.Mueller@abc.telematik) übergeben, aber nicht zur Authentisierung genutzt. Der Server prüft ob gemäß dem Beispiel "K.Mueller@abc.telematik" noch frei ist und den Regeln entspricht. Bei der nächsten Operation wird zum Authentifizieren username=K.Mueller@abc.telematik und Passwort=abc$123 genutzt. Der Parameter referenceID wird nur bei Aufruf der Operation "registerAccount" genutzt._
+
+=== [FAQ] Umgang mit dem RCPT TO: Kommando ab KIM 1.5
+
+Frage: Wie muss sich das Clientmodul ab KIM 1.5 verhalten, wenn es ein RCPT TO:<recipient-address> Kommando von einem Clientsystem erhält.
+
+_Antwort: Ab KIM 1.5 muss das Clientmodul bei Erhalt des RCPT TO: Kommandos vom Clientsystem den Eingang des Kommandos mit einem OK bestätigen. Daraufhin empfängt das Clientmodul im DATA Kommando die KIM-Nachricht und kann dann die Prüfung auf die für den Versand notwendige KIM-Version auf der Empfängerseite durchführen. Nicht für den Empfang geeignete Empfänger müssen gemäß der Anforderung [A_19356] aus der Empfängerliste entfernt werden. Erst danach wird das RCPT TO Kommando an den Fachdienst übermittelt. Wird durch den Fachdienst nach dem Empfangen des RCPT TO Kommandos ein Fehler festgestellt, muss das Clientmodul den Absender via DSN über den Fehlerfall informieren._
+
+=== [FAQ] KIM 1.5.2: Ports für die Kommunikation zwischen Fachdiensten
+
+Frage: Bedeutet der Wegfall der Afo KOM-LE-A_2142 (in KIM 1.5.2), dass für die Kommunikation zwischen Fachdiensten zukünftig ein Service Lookup erfolgen soll und dieser das Standard Verfahren von SMTPS mittels MX-Lookup und Port 465 ersetzt? Oder gilt der Service Lookup nur für das Clientmodul?
+
+_Antwort: Zumindest die Auflösung per MX Lookup und damit Port 465 zwischen den Fachdienstbetreibern ist sicherzustellen und die Erreichbarkeit des Fachdienstes für diesen Port zu gewährleisten. Es bleibt allerdings dem jeweiligen Anbieter überlassen zusätzlich für diese Kommunikationswege DNS Service Lookup zu etablieren._
+
+
+=== [FAQ] Umgang mit dem RCPT TO: Kommando ab KIM 1.5
+
+Frage: Wieso gibt es in der Tabelle “Tab_Fehlertext_Entschl”  für das Header-Element `X-KIM-DecryptionResult` keine ID für ein Positiv-Ergebnis.
+
+_Antwort: Als ID kann hier `X-KIM-DecryptionResult = 00` mit dem folgenden Text im Vermerk verwendet werden: „Die Nachricht wurde entschlüsselt."_
+
+Frage: Können auch Herstellerspezifische Fehlercodes in den Header-Elementen X-KIM-DecryptionResult und X-KIM-IntegrityCheckResult verwendet werden?
+
+_Antwort: Es können auch weitere Fehlercodes (Herstellerspezifische) verwendet werden. Hierfür muss die ID mit einem Großen „X“ beginnen (z. B. `X-KIM-DecryptionResult = X99`)._
+
+Frage: Können auch mehrere Ergebnisse mit den Header-Elementen `X-KIM-DecryptionResult` und `X-KIM-IntegrityCheckResult` abgebildet werden?
+
+_Antwort: Gemäß RFC 5322 ist eine wiederholte Verwendung eines Header-Elements zulässig. Dies erfolgt sowohl als Vermerk als auch durch eine wiederholte Verwendung des Header-Elements._
+
+_Beispiel:_
+* `X-KIM-IntegrityCheckResult: 06`
+* `X-KIM-IntegrityCheckResult: 08`
