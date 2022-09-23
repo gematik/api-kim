@@ -34,6 +34,12 @@ _Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommu
 
 Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM 1.5. Die Änderungen bei Komponenten und Schnittstellen von KIM 1.0 zu KIM 1.5 sind in der Abbildung rot dargestellt. 
 
+++++
+<p align="left">
+  <img width="90%" src=/images/kim_overview.png>
+</p>
+++++
+
 link:docs/KIM_API.adoc[*Clientsystem*]
 
 * *Clientmodul:* +
