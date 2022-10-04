@@ -186,7 +186,7 @@ Es ist erforderlich, dass das Primärsystem die SMTP-Verbindung mit dem `QUIT`-K
 Es ist erforderlich, dass das Primärsystem das Header Element `X-KIM-Sendersystem` befüllt. Das Header Element muss der Notation <name des systems>;<version> entsprechen. Der Inhalt muss erkennen lassen, welches Sofware-System für die Erstellung der fachlichen Inhalte und in diesem Zusammenhang mit dem Umgang eventueller Rückmeldungen und deren Inhalten verantwortlich ist.
 
 * *Verwendung von Zustellbestätigungen* +
-Es ist erforderlich, dass das Primärsystem so konfigurierbar ist, dass es beim Versenden einer Nachricht eine Zustellbestätigung gemäß [RFC3461] anfordern kann. Die Übermittlung einer Zustellbestätigung erfolgt im Verlauf des SMTP Verbindungsaufbaus zum KIM Fachdienst und wird über das Kommando "NOTIFY" pro e-Mail angefordert.
+Es ist erforderlich, dass das Primärsystem so konfigurierbar ist, dass es beim Versenden einer Nachricht eine Zustellbestätigung gemäß [RFC3461] anfordern kann. Die Übermittlung zur Anforderung einer Zustellbestätigung erfolgt im Verlauf des SMTP Verbindungsaufbaus zum KIM Fachdienst und wird über das Kommando "NOTIFY" pro e-Mail angefordert.
 
 * *Informieren über gescheiterten Nachrichtenversand* +
 Wenn das Clientmodul für alle Empfänger der zu versendenden Nachricht keine Verschlüsselungszertifikate ermitteln kann, bricht es den Versand ab
