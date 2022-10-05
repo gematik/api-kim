@@ -64,7 +64,7 @@ _Antwort: Nein, gemäß RFC [822] und [2045] ist die Reihenfolge der header fiel
 
 === [FAQ] Abweichung von den Standardwerten der Konfigurationsparameter
 
-Frage: Darf von den in [gemSpec_FD_KOMLE#KOM-LE_2184] geforderten Standardwerten abgewichen werden?
+Frage: Darf von den in [gemSpec_CM_KOMLE#KOM-LE_2184] geforderten Standardwerten abgewichen werden?
 
 _Antwort: Die aufgeführten Werte sind Empfehlungen der gematik. Die Parameter können mit selbst definierten Werten überschrieben werden._
 
