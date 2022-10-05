@@ -80,8 +80,9 @@ _Bei der Übernahme des Header-Elements orig-date aus der inneren Nachricht in d
 
 Frage: Kann die gematik ein Beispiel einer KIM 1.5 E-Mail mit mehreren ausgelagerten Anhängen bereitstellen?
 
-_Antwort: Unter dem folgenden Link stellt die gematik ein Beispiel einer KIM 1.5 E-Mail mit mehreren ausgelagerten Anhängen zur Verfügung:
+_Antwort: Unter dem folgenden Link stellt die gematik ein Beispiel zur Auslagerung einer KIM 1.5 E-Mail mit mehreren Anhängen zur Verfügung:
 https://github.com/gematik/api-kim/blob/main/docs/Email_Verarbeitung.adoc_
+Hinweis: Es wird in diesem Fall immer die komplette E-Mail, inklusive aller Anhänge, verschlüsselt und anschließend auf den KAS ausgelagert.
 
 === [FAQ] Generierung von Zustellbestätigungen (DSN)
 
