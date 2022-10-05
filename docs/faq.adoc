@@ -36,7 +36,7 @@ Frage: Wie sieht eine KIM konforme SMIME Nachricht aus?
 _Antwort: Das S/MIME-Profil einer KIM Nachricht ist in [gemSMIME] definiert. Unter dem folgenden Link hat die gematik entsprechende KIM Beispielnachrichten bereitgestellt:
 https://github.com/gematik/api-kim/raw/master/samples/SMIME-Profil.zip_
 
-=== [FAQ] [FAQ] Vorgabe für den zu verwendenden Zeichensatz einer KIM E-Mail Adresse
+=== [FAQ] Vorgabe für den zu verwendenden Zeichensatz einer KIM E-Mail Adresse
 
 Frage: Gibt es eine Vorgabe für den zu verwendenden Zeichenssatz einer Mailadresse?
 
