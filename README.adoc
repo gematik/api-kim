@@ -133,6 +133,8 @@ link:docs/Primaersystem.adoc[- Primärsystem]
 link:docs/Authentisierung.adoc[- Authentisierung] +
 link:docs/Versionierung.adoc[- Versionierung] +
 link:docs/Email_Verarbeitung.adoc[- Beispiel für große E-Mails]
+link:docs/faq.adoc[- Fragen und Antworten zur aktuellen Spezifikation]
+
 
 *Referenz-Implementierungen* +
 https://github.com/gematik/kim-attachment-service[- KIM-Attachment-Service] +
