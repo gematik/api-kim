@@ -133,7 +133,7 @@ link:docs/Primaersystem.adoc[- Primärsystem]
 link:docs/Authentisierung.adoc[- Authentisierung] +
 link:docs/Versionierung.adoc[- Versionierung] +
 link:docs/Email_Verarbeitung.adoc[- Beispiel für große E-Mails] +
-link:docs/faq.adoc[- Fragen und Antworten zur aktuellen Spezifikation]
+link:docs/faq.adoc[- Fragen und Antworten zur aktuellen Spezifikation &#91;FAQ&#93;]
 
 
 *Referenz-Implementierungen* +
