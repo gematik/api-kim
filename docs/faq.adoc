@@ -186,4 +186,4 @@ Der Fehlertext der Fehlernachricht ist durch den nachfolgenden Text zu ergänzen
 _**Basis-Consumer:** +
 Wird die Weiterverarbeitung abgerufener Nachrichten durch (automatisiert verarbeitende) Prüf-Backend Systeme erforderlich, kann die Weitergabe der entschlüsselten und geprüften Mail (analog früherer Festlegungen), als konfigurierbare Option im Basis-Consumer, vorgesehen werden._
 
-***** Dies wird im nächsten Release entsprechend der Anforderungslage ergänzt.
+*&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage ergänzt.
