@@ -187,3 +187,18 @@ _**Basis-Consumer:** +
 Wird die Weiterverarbeitung abgerufener Nachrichten durch (automatisiert verarbeitende) Prüf-Backend Systeme erforderlich, kann die Weitergabe der entschlüsselten und geprüften Mail (analog früherer Festlegungen), als konfigurierbare Option im Basis-Consumer, vorgesehen werden._
 
 *&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage ergänzt.
+
+
+=== [FAQ] Fehlendes Verschlüsselungszertifikat des Senders im VZD
+
+Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den Sender als auch für alle Empfänger verschlüsselt werden. Die jeweiligen Zertifikate mit den Schlüsseln, die bei Aufruf der Operation EncryptDocument dem Konnektor übergeben werden, werden durch das Clientmodule im VZD abgerufen. Wie soll sich das Clientmodul verhalten, wenn für den Sender der Nachricht kein Verschlüsselungszertifikat im Verzeichnisdienst vorliegt?
+
+_Antwort: Kann durch das Clientmodule für den Sender kein Verschlüsselungszertifikat im Verzeichnisdienst gefunden werden, ist der Mailclient mit dem Fehlercode 553 zu informieren und der Versand wird abgebrochen._
+
+
+=== [FAQ] Weiterleitung MAIL FROM- SIZE-Parameter an Fachdienst
+
+Frage: Wird durch das Clientmodule eine Mail verarbeitet, welche größer als 15 MiB ist, wird diese gemäß A_19357-02 erfolgen. Im Ergebnis dieser Verarbeitung wird sich die Mail Size verändern. Im Kontext der Forderung zur Unterstützung von ESMTP (RFC 1870) sowie der Anforderung KOM-LE-A_2018, muss das KIM Clientmodul sämtliche SMTP-Kommandos bis zu RCPT TO direkt an den KIM Fachdienst weiterleiten. Gemäß der Festlegung zu ESMTP kann MAIL FROM durch einen Mail-Client um den Parameter SIZE ergänzt werden, womit der Mail-Server über die Nachrichtengröße informiert werden soll. Der Mail-Client wird den Wert von SIZE auf den Wert der originalen Nachrichten setzen, welche ggf. > 500MiB sein kann. Der Mail-Server des Fachdienstes könnte MAIL FROM mit entsprechend großen SIZE-Wert ablehnen. Wie soll sich das Clientmodule im Fall einer Mail die vom Mail-Client übergeben wurde, welche größer als 15 MiB ist und deren Größe nach der Verarbeitung reduziert wird, verhalten?
+
+_Antwort: Da durch die Verarbeitung im Clientmodul die letztendlich an den Mail-Server des Fachdienstes zu sendende KOM-LE-S/MIME-Nachricht verändert wird, entspricht der Wert von SIZE aus MAIL FROM des Mail-Clients nicht mehr dem Wert der KOM-LE-S/MIME-Nachricht, die das Clientmodul an den Mail-Server sendet. Folglich darf, analog zum Umgang mit RCPT TO, das SMTP-Kommando MAIL FROM erst nach der Nachrichtenverarbeitung im Clientmodul an den Mail-Server des KIM Fachdienstes übermittelt werden. Wurde im MAIL FROM Kommando des Mail-Clients der Parameter SIZE angegeben, so muss das Clientmodul den Wert für SIZE gemäß der Größe der KOM-LE-S/MIME-Nachricht anpassen, bevor das Clientmodul MAIL FROM an den Mail-Server des Fachdienstes sendet. +
+Zusammengefasst bedeutet dies, dass das Clientmodul die SMTP-Kommandos MAIL FROM und RCPT TO erst nach Erhalt von DATA des Mail-Clients an den Mail-Server des Fachdienstes senden darf._
