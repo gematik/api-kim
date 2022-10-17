@@ -15,7 +15,7 @@ image:gematik_logo.svg[width=70%]
 toc::[]
 
 = FAQ-List
-BESCHREIBUNGSTEXT
+Die auf dieser Seite veröffentlichte FAQ-Liste soll KIM-Anbietern und Entwicklern von KIM Clientmodulen helfen die Implementierung von KIM interoperabel umzusetzen. Hier finden Sie häufig gestellte Fragen mit den dazugehörigen Antworten, um interessierte Anbieter bzw. Hersteller bei der Implementierung bestmöglich zu unterstützten.
 
 === [FAQ] Auslesen der Reihenfolge der Felder der ASN.1 Struktur von CMS-Objekten
 
