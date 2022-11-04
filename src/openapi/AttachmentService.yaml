@@ -3,7 +3,9 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 2.3.0
+  version: 2.3.1
+  ### 2.3.0
+  # - added delete_Maildata feature
   ### 2.3.0
   # - changed server url to new api version
   # - added response code for wrong input parameters
@@ -101,13 +103,63 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error'
-
         500:
           description: Internal Server Error          
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'                  
+                $ref: '#/components/schemas/Error'      
+                
+
+##--
+##------
+    delete:
+      tags:
+      - Attachments
+      summary: E-Mail-Daten von KAS löschen
+      description: Löschen von auf dem KAS abgelegten E-Mail-Daten, Uri entspricht sharedLink aus add_Attachment
+      operationId: delete_Maildata
+
+      security:
+        - basicAuth: []
+        # Die Authentifizierung erfolgt mit username/password von dem Mail Account, des Daten-Einstellers/Absenders
+
+      parameters:
+      - name: attachmentId
+        in: path
+        description: Link-Referenz auf den verschüsselten Anhang im Dienst
+        required: true
+        schema:
+          type: string
+
+      responses:
+          200:
+            description: OK - Daten wurden gelöscht
+          400:
+            description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          401:
+            description: Authentifizierung fehlgeschlagen.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          404:
+            description: Ressource unter dem angegebenen Link nicht gefunden
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+          500:
+            description: Internal Server Error          
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
 ##--
 ##------
   /attachment/:
@@ -190,7 +242,7 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error'
-        
+
 ##--
 ##------               
 components:
