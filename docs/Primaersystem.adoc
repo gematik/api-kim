@@ -356,3 +356,15 @@ Weitere Informationen bzw. die entsprechenden Anforderungen sind in *[gemSpec_CM
 
 Um die Erreichbarkeit von Diensten in der Telematik Infrastruktur zu ermöglichen, bei denen kein bestimmter Konnektor verwendet werden muss, ist es notwendig im Clientmodule eine "default" Route in Richtung der Telematik Infrastruktur zu konfigurieren. Das Clientmodule kann für diesen Fall unterschiedlich gewichtete Routen vorhalten, um ein möglichst ausfallsicheres Routing zu ermöglichen.
 Um ein Load-Balancing für den Netzwerk-Verkehr in das zentrale Netz der TI zu ermöglichen kann ein Network Load-Balancer zwischen Clientmodul und Konnektoren geschaltet werden.
+
+== Implementierungshinweise
+
+Aufgrund von vereinzelten Rückmeldungen zur schlechten Performance und Bedienbarkeit von Primärsystemen sollen hier einige allgemeine Implementierungshinweise gegeben werden.
+
+_Hinweis: Zeitlimits, die durch menschliche Wahrnehmungsfähigkeiten bestimmt werden, und die bei der Web -und Anwendugsprogrammierung beachtet werden sollten, werden unter link:https://www.nngroup.com/articles/response-times-3-important-limits/[Zeitlimits] beschrieben_.
+
+Die Benutzeroberfläche sollte immer auf Eingaben reagieren können und der Benutzer durch geeignete Hinweise zum Stand der Bearbeitung informiert werden. Für die Aufrechterhaltung der Reaktionsfähigkeit der Oberfläche hat jedes UI-Framework eigene Konzepte, üblicherweise wird das Rendern der UI in einem eigenen Thread ausgelagert. Dieser Thread darf nicht durch andere Operationen, wie z.B. Konnektor-Operationen, blockiert werden.
+
+Außerdem muss gewährleistet sein, dass der Benutzer während länger andauernder Operationen weiterarbeiten kann. Das kann durch Verwendung von asynchronen APIs und Auslagern der Arbeit in Hintergrundthreads erreicht werden. Nach Beendigung der Arbeit wird der Benutzer geeignet informiert.
+
+_Hinweis: Informationen zu diesen Themen werden z.B. unter link:https://learn.microsoft.com/de-de/windows/uwp/debug-test-perf/keep-the-ui-thread-responsive[Aufrechterhalten der Reaktionsfähigkeit des UI-Threads] und link:https://learn.microsoft.com/de-de/windows/uwp/threading-async/[Threading und asynchrone Programmierung] gegeben_.
