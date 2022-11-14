@@ -4,7 +4,7 @@ info:
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
   version: 2.3.1
-  ### 2.3.0
+  ### 2.3.1
   # - added delete_Maildata feature
   ### 2.3.0
   # - changed server url to new api version
