@@ -202,3 +202,14 @@ Frage: Wird durch das Clientmodule eine Mail verarbeitet, welche größer als 15
 
 _Antwort: Da durch die Verarbeitung im Clientmodul die letztendlich an den Mail-Server des Fachdienstes zu sendende KOM-LE-S/MIME-Nachricht verändert wird, entspricht der Wert von SIZE aus MAIL FROM des Mail-Clients nicht mehr dem Wert der KOM-LE-S/MIME-Nachricht, die das Clientmodul an den Mail-Server sendet. Folglich darf, analog zum Umgang mit RCPT TO, das SMTP-Kommando MAIL FROM erst nach der Nachrichtenverarbeitung im Clientmodul an den Mail-Server des KIM Fachdienstes übermittelt werden. Wurde im MAIL FROM Kommando des Mail-Clients der Parameter SIZE angegeben, so muss das Clientmodul den Wert für SIZE gemäß der Größe der KOM-LE-S/MIME-Nachricht anpassen, bevor das Clientmodul MAIL FROM an den Mail-Server des Fachdienstes sendet. +
 Zusammengefasst bedeutet dies, dass das Clientmodul die SMTP-Kommandos MAIL FROM und RCPT TO erst nach Erhalt von DATA des Mail-Clients an den Mail-Server des Fachdienstes senden darf._
+
+
+=== [FAQ] E-Mail-Daten auf dem KAS löschen
+
+Frage: Übersteigt die zu versendende KIM Nachricht 15 MiB muss das Clientmodul die gesamte Client-Mail verschlüsselt auf einem Speicher des KOM-LE-Fachdienstes (KAS) ablegen. Die zu versendende KOM-LE-Mail enthält dann lediglich Metadaten zu den abgelegten Client-Mail-Daten. Wie soll sich das Clientmodul verhalten, wenn diese KOM-LE-Mail nicht versendet werden kann?
+
+_Antwort: Um zu verhindern das nicht benötigte E-Mail-Daten (also Daten die keiner gesendeten KOM-LE-Mail zugeordnet werden können) auf dem KAS gespeichert werden, wird eine weitere Operation am KAS bereitgestellt die das unmittelbare Löschen von solchen Client-Mail-Daten ermöglicht. Eine aktualisierte  https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml[*AttachementService.yaml*] Datei wurde durch die gematik bereitgestellt. Mit der Bereitstellung dieser Operation am KAS können jetzt Clientmodule das Löschen solcher E-Mail-Daten bereits umsetzen._
+
+
+
+Im nächsten KIM Release erfolgt dementsprechend eine Anpassung in der Spezifikation.
