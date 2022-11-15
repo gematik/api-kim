@@ -196,6 +196,12 @@ Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den
 _Antwort: Kann durch das Clientmodule für den Sender kein Verschlüsselungszertifikat im Verzeichnisdienst gefunden werden, ist der Mailclient mit dem Fehlercode 553 zu informieren und der Versand wird abgebrochen._
 
 
+=== [FAQ] Fehlendes Verschlüsselungszertifikat eines Empfängers im VZD
+
+Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den Sender als auch für *alle* Empfänger verschlüsselt werden. Die jeweiligen Zertifikate mit den Schlüsseln, die bei Aufruf der Operation EncryptDocument dem Konnektor übergeben werden, werden durch das Clientmodule im VZD abgerufen. Wie soll sich das Clientmodul verhalten, wenn für einen von mehreren Empfängern der Nachricht kein Verschlüsselungszertifikat im Verzeichnisdienst vorliegt?
+
+_Antwort: Die Anforderung *KOM-LE-A_2176 - Prüfen auf gültiges ENC-Zertifikat für den Empfänger im RCPT-Kommando* beschreibt das geforderte Verhalten. Da die Nachricht nur an Empfänger, die ein gültiges ENC-Zertifikat besitzen weitergeleitet werden darf, MUSS das Clientmodul im Negativfall das RCPT-Kommando mit dem Empfänger ohne Verschlüsselungszertifikat verwerfen. Die bisherige Formulierung `...und dem Clientsystem den Antwortcode „550“ senden` wird aus der Anforderung entfernt. Damit wird der Versand der E-Mail für die verbleibenden Empfänger mit exitierenden Verschlüsselungszertifikat ermöglicht._
+
 === [FAQ] Weiterleitung MAIL FROM- SIZE-Parameter an Fachdienst
 
 Frage: Wird durch das Clientmodule eine Mail verarbeitet, welche größer als 15 MiB ist, wird diese gemäß A_19357-02 erfolgen. Im Ergebnis dieser Verarbeitung wird sich die Mail Size verändern. Im Kontext der Forderung zur Unterstützung von ESMTP (RFC 1870) sowie der Anforderung KOM-LE-A_2018, muss das KIM Clientmodul sämtliche SMTP-Kommandos bis zu RCPT TO direkt an den KIM Fachdienst weiterleiten. Gemäß der Festlegung zu ESMTP kann MAIL FROM durch einen Mail-Client um den Parameter SIZE ergänzt werden, womit der Mail-Server über die Nachrichtengröße informiert werden soll. Der Mail-Client wird den Wert von SIZE auf den Wert der originalen Nachrichten setzen, welche ggf. > 500MiB sein kann. Der Mail-Server des Fachdienstes könnte MAIL FROM mit entsprechend großen SIZE-Wert ablehnen. Wie soll sich das Clientmodule im Fall einer Mail die vom Mail-Client übergeben wurde, welche größer als 15 MiB ist und deren Größe nach der Verarbeitung reduziert wird, verhalten?
