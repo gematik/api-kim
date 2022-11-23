@@ -220,5 +220,14 @@ Frage: Übersteigt die zu versendende KIM Nachricht 15 MiB muss das Clientmodul 
 _Antwort: Um zu verhindern das nicht benötigte E-Mail-Daten (also Daten die keiner gesendeten KOM-LE-Mail zugeordnet werden können) auf dem KAS gespeichert werden, wird eine weitere Operation am KAS bereitgestellt die das unmittelbare Löschen von solchen Client-Mail-Daten ermöglicht. Eine aktualisierte  https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml[*AttachementService.yaml*] Datei wurde durch die gematik bereitgestellt. Mit der Bereitstellung dieser Operation am KAS können jetzt Clientmodule das Löschen solcher E-Mail-Daten bereits umsetzen._
 
 
-
 Im nächsten KIM Release erfolgt dementsprechend eine Anpassung in der Spezifikation.
+
+
+=== [FAQ] Operationen der Schnittstelle I_Directory_Application_Maintenance
+
+Frage: Die Anforderung KOM-LE-A_2159-01 beschreibt die Verwendung der Schnittstelle `I_Directory_Application_Maintenance` bei der beabsichtigten Änderung von Verzeichnisdiensteinträgen durch den KOM-LE-Fachdienst. In der Tabelle `Tab_Interface_TIP Schnittstellen zur TI-Plattform des Fachdienstes KOM-LE` werden die an dieser Schnittstelle aufzurufenden Operationen aufgeführt. Ist es erlaubt die durch den Verzeichnisdienst an dieser Schnittstelle ebenfalls bereitgestellte Operation `get_Directory_FA-Attributes` für die Überprüfung der vorhandenen Einträge zu nutzen? 
+
+_Antwort: Ja, die Nutzung der Operation `get_Directory_FA-Attributes` an der Schnittstelle `I_Directory_Application_Maintenance` ist zusätzlich zu den bereits in der Tabelle `Tab_Interface_TIP Schnittstellen zur TI-Plattform des Fachdienstes KOM-LE` gelisteten Operationen erlaubt._
+
+*&#9733;* Die Anpassung der Spezifikation an dieser Stelle erfolgt mit dem nächsten Release.
+
