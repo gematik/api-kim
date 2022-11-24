@@ -179,14 +179,14 @@ _Beispiel:_
 Frage: Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** erlaubt die Zustellung einer E-Mail trotz fehlgeschlagener Integritätsprüfung. In welcher Form soll dann die Zustellung erfolgen?
 
 _Antwort: +
-Die entschlüsselte originale Nachricht wird im Fall einer fehlgeschlagenen Integritätsprüfung als message/rfc822 MimePart in die Fehlernachricht eingebettet. +
-Der Fehlertext der Fehlernachricht ist durch den nachfolgenden Text zu ergänzen: +
-„`Die entschlüsselte Nachricht wurde in diese Fehlernachricht eingebettet und kann, abhängig vom verwendeten E-Mail-Client, in eigener Verantwortung eingesehen bzw. verarbeitet werden.`“_ +
+Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** sieht die Weiterleitung der originale Nachricht in der jetzigen Version nur als Alternative vor. Dieses Verhalten soll geändert werden. Wird bei der Integritätsprüfung ein Fehler festgestellt, muss die entschlüsselte originale Nachricht dem Empfänger zugestellt werden. Die entschlüsselte originale Nachricht wird in diesem Fall als message/rfc822 MimePart in die Fehlernachricht eingebettet. +
+Der Mail-Body der entschlüsselten originalen Nachricht wird mit dem folgenden Inhalt als text/plain MIME-Einheit ersetzen und an den Empfänger weitergeleitet: +
+„`Beim Empfang dieser KIM-Nachricht wurde eine Sicherheitsverletzung erkannt. Dies kann eine technisches Ursache haben oder auf eine missbräuchliche Nutzung des KIM-Dienstes hinweisen. Zu Ihrem Schutz wurde der Inhalt dieser Nachricht durch diesen Text ausgetauscht. Bitte kontaktieren Sie den Absender und/oder Ihren Administrator. Die entschlüsselte Nachricht wurde in diese Fehlernachricht eingebettet und kann, abhängig vom verwendeten E-Mail-Client, in eigener Verantwortung eingesehen bzw. verarbeitet werden.`“_ +
 
 _**Basis-Consumer:** +
 Wird die Weiterverarbeitung abgerufener Nachrichten durch (automatisiert verarbeitende) Prüf-Backend Systeme erforderlich, kann die Weitergabe der entschlüsselten und geprüften Mail (analog früherer Festlegungen), als konfigurierbare Option im Basis-Consumer, vorgesehen werden._
 
-*&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage ergänzt.
+*&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage angepasst.
 
 
 === [FAQ] Fehlendes Verschlüsselungszertifikat des Senders im VZD
@@ -196,9 +196,38 @@ Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den
 _Antwort: Kann durch das Clientmodule für den Sender kein Verschlüsselungszertifikat im Verzeichnisdienst gefunden werden, ist der Mailclient mit dem Fehlercode 553 zu informieren und der Versand wird abgebrochen._
 
 
+=== [FAQ] Fehlendes Verschlüsselungszertifikat eines Empfängers im VZD
+
+Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den Sender als auch für *alle* Empfänger verschlüsselt werden. Die jeweiligen Zertifikate mit den Schlüsseln, die bei Aufruf der Operation EncryptDocument dem Konnektor übergeben werden, werden durch das Clientmodule im VZD abgerufen. Wie soll sich das Clientmodul verhalten, wenn für einen von mehreren Empfängern der Nachricht kein Verschlüsselungszertifikat im Verzeichnisdienst vorliegt?
+
+_Antwort: Die Anforderung *KOM-LE-A_2176 - Prüfen auf gültiges ENC-Zertifikat für den Empfänger im RCPT-Kommando* beschreibt das geforderte Verhalten. Da die Nachricht nur an Empfänger, die ein gültiges ENC-Zertifikat besitzen weitergeleitet werden darf, MUSS das Clientmodul im Negativfall das RCPT-Kommando mit dem Empfänger ohne Verschlüsselungszertifikat verwerfen. Die bisherige Formulierung `...und dem Clientsystem den Antwortcode „550“ senden` wird aus der Anforderung entfernt. Damit wird der Versand der E-Mail für die verbleibenden Empfänger mit exitierenden Verschlüsselungszertifikat ermöglicht._
+
+*&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage angepasst.
+
+
 === [FAQ] Weiterleitung MAIL FROM- SIZE-Parameter an Fachdienst
 
 Frage: Wird durch das Clientmodule eine Mail verarbeitet, welche größer als 15 MiB ist, wird diese gemäß A_19357-02 erfolgen. Im Ergebnis dieser Verarbeitung wird sich die Mail Size verändern. Im Kontext der Forderung zur Unterstützung von ESMTP (RFC 1870) sowie der Anforderung KOM-LE-A_2018, muss das KIM Clientmodul sämtliche SMTP-Kommandos bis zu RCPT TO direkt an den KIM Fachdienst weiterleiten. Gemäß der Festlegung zu ESMTP kann MAIL FROM durch einen Mail-Client um den Parameter SIZE ergänzt werden, womit der Mail-Server über die Nachrichtengröße informiert werden soll. Der Mail-Client wird den Wert von SIZE auf den Wert der originalen Nachrichten setzen, welche ggf. > 500MiB sein kann. Der Mail-Server des Fachdienstes könnte MAIL FROM mit entsprechend großen SIZE-Wert ablehnen. Wie soll sich das Clientmodule im Fall einer Mail die vom Mail-Client übergeben wurde, welche größer als 15 MiB ist und deren Größe nach der Verarbeitung reduziert wird, verhalten?
 
 _Antwort: Da durch die Verarbeitung im Clientmodul die letztendlich an den Mail-Server des Fachdienstes zu sendende KOM-LE-S/MIME-Nachricht verändert wird, entspricht der Wert von SIZE aus MAIL FROM des Mail-Clients nicht mehr dem Wert der KOM-LE-S/MIME-Nachricht, die das Clientmodul an den Mail-Server sendet. Folglich darf, analog zum Umgang mit RCPT TO, das SMTP-Kommando MAIL FROM erst nach der Nachrichtenverarbeitung im Clientmodul an den Mail-Server des KIM Fachdienstes übermittelt werden. Wurde im MAIL FROM Kommando des Mail-Clients der Parameter SIZE angegeben, so muss das Clientmodul den Wert für SIZE gemäß der Größe der KOM-LE-S/MIME-Nachricht anpassen, bevor das Clientmodul MAIL FROM an den Mail-Server des Fachdienstes sendet. +
 Zusammengefasst bedeutet dies, dass das Clientmodul die SMTP-Kommandos MAIL FROM und RCPT TO erst nach Erhalt von DATA des Mail-Clients an den Mail-Server des Fachdienstes senden darf._
+
+
+=== [FAQ] E-Mail-Daten auf dem KAS löschen
+
+Frage: Übersteigt die zu versendende KIM Nachricht 15 MiB muss das Clientmodul die gesamte Client-Mail verschlüsselt auf einem Speicher des KOM-LE-Fachdienstes (KAS) ablegen. Die zu versendende KOM-LE-Mail enthält dann lediglich Metadaten zu den abgelegten Client-Mail-Daten. Wie soll sich das Clientmodul verhalten, wenn diese KOM-LE-Mail nicht versendet werden kann?
+
+_Antwort: Um zu verhindern das nicht benötigte E-Mail-Daten (also Daten die keiner gesendeten KOM-LE-Mail zugeordnet werden können) auf dem KAS gespeichert werden, wird eine weitere Operation am KAS bereitgestellt die das unmittelbare Löschen von solchen Client-Mail-Daten ermöglicht. Eine aktualisierte  https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml[*AttachementService.yaml*] Datei wurde durch die gematik bereitgestellt. Mit der Bereitstellung dieser Operation am KAS können jetzt Clientmodule das Löschen solcher E-Mail-Daten bereits umsetzen._
+
+
+Im nächsten KIM Release erfolgt dementsprechend eine Anpassung in der Spezifikation.
+
+
+=== [FAQ] Operationen der Schnittstelle I_Directory_Application_Maintenance
+
+Frage: Die Anforderung KOM-LE-A_2159-01 beschreibt die Verwendung der Schnittstelle `I_Directory_Application_Maintenance` bei der beabsichtigten Änderung von Verzeichnisdiensteinträgen durch den KOM-LE-Fachdienst. In der Tabelle `Tab_Interface_TIP Schnittstellen zur TI-Plattform des Fachdienstes KOM-LE` werden die an dieser Schnittstelle aufzurufenden Operationen aufgeführt. Ist es erlaubt die durch den Verzeichnisdienst an dieser Schnittstelle ebenfalls bereitgestellte Operation `get_Directory_FA-Attributes` für die Überprüfung der vorhandenen Einträge zu nutzen? 
+
+_Antwort: Ja, die Nutzung der Operation `get_Directory_FA-Attributes` an der Schnittstelle `I_Directory_Application_Maintenance` ist zusätzlich zu den bereits in der Tabelle `Tab_Interface_TIP Schnittstellen zur TI-Plattform des Fachdienstes KOM-LE` gelisteten Operationen erlaubt._
+
+*&#9733;* Die Anpassung der Spezifikation an dieser Stelle erfolgt mit dem nächsten Release.
+
