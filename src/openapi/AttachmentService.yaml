@@ -3,7 +3,11 @@ info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
                 hochgeladen und bereitgestellt werden. 
-  version: 2.3.1
+  version: 2.3.2
+  ### 2.3.2
+  # - added distinct definition for header element Content-Length in add_Attachment:
+  #   - Content-Length full request body
+  #   - Conent-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
   ### 2.3.1
   # - added delete_Maildata feature
   ### 2.3.0
@@ -173,6 +177,16 @@ paths:
       security:
         - basicAuth: []
         # Die Authentifizierung erfolgt mit username/password von dem Mail Account
+        
+      parameters:
+        - name: Content-Length
+          in: header
+          description: Gesamt-Größe/Länge des Request-Bodys
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 524299123
 
       requestBody:
         content:
@@ -197,6 +211,23 @@ paths:
                    type: string
                    format: binary
                    description: Der Anhang
+                   
+            encoding:
+              attachment:
+                contentType: application/octet-stream
+                headers:
+                  Content-Length:
+                    required: true
+                    description: Datenmenge in Bytes der auf dem KAS zu übertragenden Maildaten
+                    schema:
+                      type: integer
+                      format: int64
+                      example: 524288000
+                  Content-Disposition:
+                    required: true
+                    schema:
+                        type: string
+                        example: "Content-Disposition: form-data; name=attachment; filename=attachment.enc"
 
       responses:
           201:
