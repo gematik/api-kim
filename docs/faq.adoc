@@ -179,9 +179,11 @@ _Beispiel:_
 Frage: Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** erlaubt die Zustellung einer E-Mail trotz fehlgeschlagener Integritätsprüfung. In welcher Form soll dann die Zustellung erfolgen?
 
 _Antwort: +
-Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** sieht die Weiterleitung der originale Nachricht in der jetzigen Version nur als Alternative vor. Dieses Verhalten soll geändert werden. Wird bei der Integritätsprüfung ein Fehler festgestellt, muss die entschlüsselte originale Nachricht dem Empfänger zugestellt werden. Die entschlüsselte originale Nachricht wird in diesem Fall als message/rfc822 MimePart in die Fehlernachricht eingebettet. +
-Der Mail-Body der entschlüsselten originalen Nachricht wird mit dem folgenden Inhalt als text/plain MIME-Einheit ersetzen und an den Empfänger weitergeleitet: +
+Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** sieht die Weiterleitung der originale Nachricht in der jetzigen Version nur als Alternative vor. Dieses Verhalten soll geändert werden. Wird bei der Integritätsprüfung ein Fehler festgestellt, muss die entschlüsselte originale Nachricht dem Empfänger als Teil einer Fehlernachricht zugestellt werden. Die entschlüsselte originale Nachricht wird als message/rfc822 MimePart in die vom Clientmodul erzeugte Fehlernachricht eingebettet und an das anfragende Clientsystem weitergegeben. +
+Die vom Clientmodul erzeugte Fehlernachricht MUSS den nachfolgenden Fehlertext als text/plain MIME-Einheit enthalten, der den Nutzer über Fehler bei der Integritätsprüfung informieren soll: +
 „`Beim Empfang dieser KIM-Nachricht wurde eine Sicherheitsverletzung erkannt. Dies kann eine technisches Ursache haben oder auf eine missbräuchliche Nutzung des KIM-Dienstes hinweisen. Zu Ihrem Schutz wurde der Inhalt dieser Nachricht durch diesen Text ausgetauscht. Bitte kontaktieren Sie den Absender und/oder Ihren Administrator. Die entschlüsselte Nachricht wurde in diese Fehlernachricht eingebettet und kann, abhängig vom verwendeten E-Mail-Client, in eigener Verantwortung eingesehen bzw. verarbeitet werden.`“_ +
+
+_Das bisher spezifizierte Alternativverhalten des Clientmoduls entfällt und gilt, siehe nachfolgend, ausschließlich für den Basis-Consumer._
 
 _**Basis-Consumer:** +
 Wird die Weiterverarbeitung abgerufener Nachrichten durch (automatisiert verarbeitende) Prüf-Backend Systeme erforderlich, kann die Weitergabe der entschlüsselten und geprüften Mail (analog früherer Festlegungen), als konfigurierbare Option im Basis-Consumer, vorgesehen werden._
