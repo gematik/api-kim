@@ -190,6 +190,72 @@ Wird die Weiterverarbeitung abgerufener Nachrichten durch (automatisiert verarbe
 
 *&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage angepasst.
 
+.Beispiel Client Mail mit Fehlernachricht und der entschlüsselten originale Nachricht als message/rfc822 MimePart
+[%collapsible%open]
+====
+[source,txt, linenums]
+----
+Message-Id: <GWIIM4RF2IU4.DGM72EEHOQZJ1@laptop-praxis>
+Date: Thu, 06 Oct 2022 11:27:22 +0200
+From: test.sender@gematik.kim.telematik-test
+To: test.recipient@gematik.kim.telematik-test,
+header.manipulation@akquinet.kim.telematik-test
+X-KIM-DecryptionResult: 00
+X-KIM-IntegrityCheckResult: 08
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-OFpV2ubYz0H2K3gUzzSfLg=="
+
+
+--=-OFpV2ubYz0H2K3gUzzSfLg==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Beim Empfang dieser KIM-Nachricht wurde eine Sicherheitsverletzung erkannt. =
+Dies kann eine technisches Ursache haben oder auf eine missbr=C3=A4uchliche =
+Nutzung des KIM-Dienstes hinweisen. Zu Ihrem Schutz wurde der Inhalt dieser =
+Nachricht durch diesen Text ausgetauscht. Bitte kontaktieren Sie den Absende=
+r und/oder Ihren Administrator.
+
+Die entschl=C3=BCsselte Nachricht wurde in diese Fehlernachricht eingebettet=
+und kann, abh=C3=A4ngig vom verwendeten E-Mail-Client, in eigener Verantwor=
+tung eingesehen bzw. verarbeitet werden.
+
+Erg=C3=A4nzende Informationen:
+Die Nachricht wurde entschl=C3=BCsselt.
+[Integrit=C3=A4tspr=C3=BCfung] [ID 08] Die Signatur der Nachricht wurde gepr=
+=C3=BCft. Die Pr=C3=BCfung hat ergeben, dass die Nachricht nach dem Verschl=C3=
+=BCsseln manipuliert wurde.
+M=C3=B6glicherweise wurde die verschl=C3=BCsselte Nachricht auch an einen ni=
+cht empfangsberechtigten Personenkreis versendet.
+
+--=-OFpV2ubYz0H2K3gUzzSfLg==
+Content-Type: message/rfc822
+
+Date: Thu, 06 Oct 2022 11:27:22 +0200
+Subject: Test E-Mail Subject
+Message-Id: <565NV2RF2IU4.LV85ZK8O5RTG2@laptop-praxis>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-NE1oNTy1NJSqrIN0U+kXSw=="
+From: test.sender@gematik.kim.telematik-test
+To: test.recipient@gematik.kim.telematik-test
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+
+--=-NE1oNTy1NJSqrIN0U+kXSw==
+Content-Type: text/plain; charset=utf-8
+
+Test E-Mail Body äüöüäöö~~~#++²³5567678$§/%&(()%%&$$ <html>END</html>
+--=-NE1oNTy1NJSqrIN0U+kXSw==
+Content-Type: image/png; name=att_0_test.png
+Content-Disposition: attachment; filename=att_0_test.png
+Content-Transfer-Encoding: base64
+
+AA==
+
+--=-NE1oNTy1NJSqrIN0U+kXSw==--
+
+--=-OFpV2ubYz0H2K3gUzzSfLg==--
+----
+====
 
 === [FAQ] Fehlendes Verschlüsselungszertifikat des Senders im VZD
 
