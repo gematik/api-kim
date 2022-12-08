@@ -299,3 +299,42 @@ _Antwort: Ja, die Nutzung der Operation `get_Directory_FA-Attributes` an der Sch
 
 *&#9733;* Die Anpassung der Spezifikation an dieser Stelle erfolgt mit dem nächsten Release.
 
+
+=== [FAQ] Geplante Änderungen bei der Sicherstellung der Absenderintegrität
+
+Frage: Die gematik hat eine Änderung zur Sicherstellung der Absenderintegrität angekündigt. Wie verhalten sich Anbieter die bereits auf Basis des Sicherheits-Hotfix ein Clientmodule zur Zulassung eingereicht haben?
+
+_Antwort: Für KIM 1.0 ist die Umsetzung des Hotfixes ausgesetzt.
+Für KIM 1.5 wird eine Umsetzung des Hotfixes (ohne A_23169) und mit FD-Header-Manipulationsprüfung bis Ende 03/2023 erwartet. Falls bis Ende 03/2023 noch keine KIM 1.5 Zulassung erreicht wurde, dann muss die FD-Header-Manipulationsprüfung im KIM 1.0 FD per Patch umgesetzt sein. Die im Folgenden aufgeführten, durch die gematik geplanten, Änderungen werden mit dem Release 1.5.3 veröffentlicht und können mit Bezug auf den hier veröffentlichten FAQ bereits vorab umgesetzt werden._
+
+
+**Änderung zur Sicherstellung der Absenderintegrität**
+
+1.	Streichung der Anforderung A_23169 – Sicherstellung der Absenderintegrität in der Spezifikation gemSpec_CM_KOMLE
+
+2.	Neue Anforderungen in der Spezifikation gemSpec_FD_KOMLE +
+
+
+**A_23421 – Überprüfung der Absenderadresse** +
+Der Fachdienst KOM-LE MUSS den bei der Authentisierung vom Clientmodule übermittelten Username (SMTP AUTH) mit der Adresse im MAIL FROM Kommando vergleichen. Sollte bei dem Vergleich ein Unterschied festgestellt werden (RFC 5322 „addr-spec“), MUSS der Fachdienst die Verarbeitung der KOM-LE-Mail ablehnen und das Clientmodule mit einem SMTP Fehler informieren.
+<=
+
+Hinweis: Gemäß KOM-LE-A_2161 entspricht der in der SMTP-Authentifizierung anzugebende Benutzername der E-Mail-Adresse des KOM-LE-Teilnehmers. +
+
+
+**A_23422 – Sicherstellung Absenderintegrität einer KOM-LE-Nachricht** +
+Der Fachdienst KOM-LE MUSS vor der Verarbeitung einer KOM-LE-Nachricht folgende Prüfregeln umsetzen:
+
+1.	Der Fachdienst KOM-LE MUSS die Verarbeitung eine KOM-LE-Nachricht mit einem SMTP-Fehler ablehnen, wenn eines der folgenden Merkmale der „originator“ Header-Elemente (RFC 5322) zutrifft, zu beachten ist die unter (2) formulierte Ausnahme:
+
+   *	Es sind mehr als genau eine Adresse im Header-Element „from“ angegeben
+   *	Es ist genau eine Adresse im Header-Element „from“ angegeben und diese stimmt nicht mit der Adresse aus dem SMTP- Protokollschritt „MAIL FROM“ überein (RFC 5322 „addr-spec“)
+   *	Ein „sender“-Header wurde angegeben und dessen Inhalt entspricht nicht der Adresse (RFC 5322 „addr-spec“) aus dem SMTP-Protokollschritt „MAIL FROM“
+   *	Es sind mehr als genau eine Adresse im Header-Element „reply-to“ angegeben
+   *	Es ist genau eine Adresse im Header-Element „reply-to“ angegeben und diese stimmt nicht mit der Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ überein (RFC 5322 „addr-spec“)
+
+2.	Der Fachdienst KOM-LE DARF die Verarbeitung einer empfangenen KOM-LE-Nachricht gemäß (1) NICHT ablehnen, wenn genau eine Adresse im SMTP-Protokoll „RCPT TO“ übermittelt wurde und diese Adresse der Absender Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ (RFC 5322 „addr-spec“) entspricht.
+<=
+
+Hinweis: Item (2) entspricht dem Anwendungsfall Versand/Weiterleitung „an sich selbst“.
+
