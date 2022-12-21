@@ -331,7 +331,7 @@ Der Fachdienst KOM-LE MUSS vor der Verarbeitung einer KOM-LE-Nachricht folgende 
    *	Es ist genau eine Adresse im Header-Element „from“ angegeben und diese stimmt nicht mit der Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ überein (RFC 5322 „addr-spec“)
    *	Es ist mehr als genau eine Adresse im Header-Element „from“ angegeben und die Adressen stimmen nicht mit der Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ übereinstimmen (RFC 5322 „addr-spec“)
    *	Ein „sender“-Header wurde angegeben und dessen Inhalt entspricht nicht der Adresse (RFC 5322 „addr-spec“) aus dem SMTP-Protokollschritt „MAIL FROM“
-   *	Es sind Adressdaten im Header-Element „reply-to“ angegeben und diese enden nicht absolut mit den global definierten KIM-Domainparts „.kim.telematik“ (PU) bzw. “.kim.telematik-test“ (RU/TU) (RFC 5322 „addr-spec“). Da heißt, es MUSS sichergestellt werden, dass die Angabe, an welche KIM-Adresse eine Antwort gerichtet werden soll, weiterhin möglich ist und dies nur für KIM-Adressen erlaubt ist.
+   *	Es sind Adressdaten im Header-Element „reply-to“ angegeben und diese enden nicht mit den definierten KIM-Domainparts „.kim.telematik“ (PU) bzw. “.kim.telematik-test“ (RU/TU) (RFC 5322 „addr-spec“). Da heißt, es MUSS sichergestellt werden, dass die Angabe, an welche KIM-Adresse eine Antwort gerichtet werden soll, weiterhin möglich ist und dass dies nur für KIM-Adressen erlaubt ist.
 
 2.	Der Fachdienst KOM-LE DARF die Verarbeitung einer empfangenen KOM-LE-Nachricht gemäß (1) NICHT ablehnen, wenn genau eine Adresse im SMTP-Protokoll „RCPT TO“ übermittelt wurde und diese Adresse der Absender Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ (RFC 5322 „addr-spec“) entspricht.
 <=
