@@ -278,26 +278,19 @@ Im folgenden Kapitel werden Lösungen beschrieben, wie ein zentraler Anti-Viren-
 TIP: Da KIM-Nachrichten Ende-zu-Ende verschlüsselt sind, kann ein AV-Service mit angebundenem AV-Programm erst nach der Entschlüsselung der Nachricht eingesetzt werden.
 
 === Integrierter AV-Service im Clientmodul
-Einige KIM Anbieter unterstützen die Einbindung eines zentralen AV-Service bzw. AV-Programm direkt in ihrem KIM-Clientmodul. Für eine solche Lösung sind keine zusätzlichen Änderungen am Primärsystem erforderlich. Bitte erfragen Sie bei Ihrem KIM-Anbieter, ob und in welcher Weise eine solche Lösung unterstützt wird.
+Einige KIM Anbieter unterstützen die Einbindung eines zentralen AV-Service direkt in ihrem KIM-Clientmodul. Für eine solche Lösung sind keine zusätzlichen Änderungen am Primärsystem erforderlich. Bitte erfragen Sie bei Ihrem KIM-Anbieter, ob und in welcher Weise eine solche Lösung unterstützt wird.
 
-=== Mailserver und AV-Scanner zwischen Primärsystem und Clientmodul
-In dieser Lösung wird ein Mailserver und ein AV-Scanner zwischen das Primärsystem/Clientsystem und dem KIM-Clientmodul geschaltet. Bei der Lösung wird der AV-Service über den Mailserver angesprochen. In der folgenden Abbildung ist eine mögliche Implementierungsvariante dargestellt: +
+=== Mailserver und AV-Scanner mit SMTP-KIM-Adapter
+In dieser Lösung wird ein eigener, in der Regel schon vorhandener, Mailserver mit angeschlossenem AV-Scanner mit Hilfe eines SMTP-KIM-Adapters an das KIM-Clientmodul angebunden. Bei der Lösung wird der AV-Service über den Mailserver angesprochen. In der folgenden Abbildung sind die beteiligten Komponenten dargestellt: +
 
-// image::KH_AV_Scanner.png[Scanner,600,200,float="right",align="center"]
-// image:KH_AV_Scanner.png[width=50%]
+image:SMTP-KIM-Adapter.svg[width=90%]
 
-++++
-<p align="center">
-  <img width="600" height="200" src=../images/KH_AV_Scanner.png>
-</p>
-++++
+Die KIM Postfächer werden zusätzlich auf dem eigenen Mailserver eingerichtet. Auf dem SMTP-KIM-Adapter müssen die passenden Aufrufkontexte für die Kommunikation mit dem Konnektor und den zu verwendenden Smartcards (SMC-Bs und HBA) konfiguriert werden. Der Vorteil dieser Lösung ist, dass nur ein Arbeitsplatz-Identifier pro konfigurierter Smartcard vergeben werden muss, was den Konfigurationsaufwand im Konnektor und in den PS/KIS Arbeitsplätzen deutlich senken kann. Die KIM Adressen der im Mailserver konfigurierten KIM-Postfächer können durch eine VZD-Abfrage automatisch konfiguriert werden.
 
-Der Mailserver ruft die KIM-Nachrichten vom KIM-Fachdienst per POP3 ab. Nach Entschlüsselung der Nachrichten im KIM-Clientmodul prüft der AV-Service die Nachrichten. Liegt kein Virenbefund vor, speichert der Mailserver die Nachrichten, bis das Primärsystem/Clientsystem die KIM-Nachrichten vom Mailserver abholt. Auch zu versendende KIM-Nachrichten lassen sich über diese Konstellation auf Viren prüfen, wobei der Versand per SMTP vom Primärsystem über den Mailserver und AV-Scanner über das Clientmodul erfolgt. Alternativ kann der Versand auch ohne Viren-Prüfung erfolgen (ohne Ansprache des AV-Service via SMTP direkt zum KIM-Clientmodul).
-
-Diese Lösung setzt voraus, dass im Primärsystem konfiguriert werden kann, wie der Benutzername an den Mailserver übergeben wird, unabhängig vom verwendeten Protokoll zwischen Primärsystem und Mailserver, da marktübliche Mailserver den in KIM verwendeten SMTP/POP3-Benutzernamen (mail-adresse#Aufrufkontext) nicht unterstützen. Der Mailserver muss so konfiguriert werden, dass ein Mapping der Benutzernamen, die im Primärsystem konfiguriert sind, auf die Benutzernamen mit Aufrufkontext erfolgt, sodass der Mailserver das Clientmodul korrekt ansprechen kann.
+In Senderichtung ist der SMTP-KIM-Adapter nur ein weiterer Proxy, ähnlich wie das KIM Clientmodul. In Empfangsrichtung wird der SMTP-KIM-Adapter so konfiguriert, dass er regelmäßig (z. B. jede Minute) per POP3 die KIM Nachrichten von allen konfigurierten KIM-Adressen über das KIM Clientmodul vom KIM Mailserver abholt und per SMTP an den KKH Mailserver weiterleitet. Vom KKH Mailserver werden die Nachrichten an einen angeschlossenen AV-Scanner weitergeleitet.
 
 * *Unterstützung mehrerer Aufrufvarianten* +
-Es ist erforderlich, dass das Primärsystem die Aufrufvarianten SMTP-/POP3-Benutzername ohne Aufrufkontext und SMTP-/POP3-Benutzername mit Aufrufkontext unterstützt, unabhängig davon welche Schnittstelle zwischen Primärsystem und Mailserver verwendet wird (z. B. IMAP, POP3, SMTP). Die Aufrufvarianten müssen pro Protokoll, also getrennt für SMTP und POP3 ausgeführt werden können, um eine unterschiedliche Konfiguration der Aufrufparameter für das Senden und das Empfangen von KIM-Nachrichten zu ermöglichen.
+Es ist erforderlich, dass das Primärsystem bzw. das KIS die Aufrufvarianten SMTP-/POP3-Benutzername ohne Aufrufkontext und SMTP-/POP3-Benutzername mit Aufrufkontext unterstützt.
 
 === Lastverteilung und Performance beim Einsatz von KIM 1.0
 
