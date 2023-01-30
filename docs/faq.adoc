@@ -1,1 +1,355 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+:imagesdir: ../images
+:toc: macro
+:toc-title: Inhaltsverzeichnis
+
+image:gematik_logo.svg[width=70%]
+
+toc::[]
+
+= FAQ-List
+Die auf dieser Seite veröffentlichte FAQ-Liste soll KIM-Anbietern und Entwicklern von KIM Clientmodulen helfen die Implementierung von KIM interoperabel umzusetzen. Hier finden Sie häufig gestellte Fragen mit den dazugehörigen Antworten, um interessierte Anbieter bzw. Hersteller bei der Implementierung bestmöglich zu unterstützten.
+
+=== [FAQ] Auslesen der Reihenfolge der Felder der ASN.1 Struktur von CMS-Objekten
+
+Frage: Ist für das Auslesen der signerInfos die Reihenfolge der Felder der ASN.1 Struktur des CMS-Objekts des Senderzertifikats relevant?
+
+_Antwort: Nein. Gemäß [KOM-LE-A_2124] müssen Aussteller und Seriennummer für die Identifikation des Signaturzertifikats verwendet werden. Da die Reihenfolge der Felder der ASN.1 Struktur nicht definiert ist, wird dringend empfohlen das jeweilige Element über den ObjectIdentifier zu selektieren, anstatt z. B. einen binären Vergleich oder Hashwertvergleich der ASN.1 Struktur vorzunehmen.“_
+
+=== [FAQ] Case Sensitivity von Mailadressen
+
+Frage: Muss der KIM Fachdienst sowie das KIM Clientmodul Mailadressen Case Sensitive behandeln?
+
+_Antwort: Nein, eine Unterscheidung der Groß- und Kleinschreibung in den Mailadressen darf nicht berücksichtigt werden. Das KIM Clientmodul sowie der KIM Fachdienst dürfen die Mailadresse nicht nachträglich ändern. D.h. Max.Mustermann@test.domain sowie max.mustermann@test.domain sind die gleichen Mailadressen._
+
+=== [FAQ] Beispiel einer gematik S/MIME konformen KIM-Nachricht
+
+Frage: Wie sieht eine KIM konforme SMIME Nachricht aus?
+
+_Antwort: Das S/MIME-Profil einer KIM Nachricht ist in [gemSMIME] definiert. Unter dem folgenden Link hat die gematik entsprechende KIM Beispielnachrichten bereitgestellt:
+https://github.com/gematik/api-kim/raw/master/samples/SMIME-Profil.zip_
+
+=== [FAQ] Vorgabe für den zu verwendenden Zeichensatz einer KIM E-Mail Adresse
+
+Frage: Gibt es eine Vorgabe für den zu verwendenden Zeichenssatz einer Mailadresse?
+
+_Antwort: In der Mailadresse dürfen keine Umlaute sowie Steuerzeichen verwendet werden.
+Die Groß- und Kleinschreibung einer Mailadresse wird nicht beachtet._
+
+_Für den Localpart ist folgender Zeichensatz zu verwenden:_
+
+    * `(A-Z, a-z, 0-9)` sowie (Punkt, Bindestrich und Unterstrich),
+    * es wird nicht zwischen der Groß- und Kleinschreibung unterschieden,
+    * die maximale Länge des Localparts darf 64 Zeichen nicht überschreiten.
+
+_Für die Subdomain ist folgender Zeichensatz zu verwenden:_
+
+    * `(a-z, 0-9)` sowie (Punkt und Bindestrich),
+    * es wird nicht zwischen der Groß- und Kleinschreibung unterschieden,
+    * die Gesamtlänge des Domainparts darf maximal 189 Zeichen betragen,
+    * der Domainpart endet mit der Zeichenkette `".kim.telematik"` (Produktivumgebung).
+    
+=== [FAQ] Beachtung der Reihenfolge der header fields einer E-Mail
+
+Frage: Gibt es eine Vorgabe in welcher Reihenfolge die header fields einer E-Mail zu setzen sind?
+
+_Antwort: Nein, gemäß RFC [822] und [2045] ist die Reihenfolge der header fields einer E-Mail nicht festgelegt._
+
+=== [FAQ] Abweichung von den Standardwerten der Konfigurationsparameter
+
+Frage: Darf von den in [gemSpec_CM_KOMLE#KOM-LE_2184] geforderten Standardwerten abgewichen werden?
+
+_Antwort: Die aufgeführten Werte sind Empfehlungen der gematik. Die Parameter können mit selbst definierten Werten überschrieben werden._
+
+=== [FAQ] Setzen des orig-Date Header-Elements in einer KIM-Nachricht
+
+Frage: In welchem Format soll das date-time für das orig-date Header-Element in einer KIM-Nachricht gesetzt werden?
+
+_Antwort: In [RFC 5322] ist definiert, wie das date-time für das orig-date Header-Element einer E-Mail-Nachricht zu verwenden ist. Gemäß des RFC ist folgende Struktur zu verwenden: Wochentag, das numerische Datum, die ersten drei Buchstaben des Monats, das Jahr, die Uhrzeit und die Zeitzone._
+
+_Bei der Übernahme des Header-Elements orig-date aus der inneren Nachricht in das Header-Element orig-date der äußeren Nachricht ist dieses unverändert zu übernehmen. Beide Inhalte müssen, von der Formatierung her, identisch sein und dürfen nicht verändert werden._
+
+=== [FAQ] Beispiel einer KIM 1.5 E-Mail mit ausgelagerten Anhängen
+
+Frage: Kann die gematik ein Beispiel einer KIM 1.5 E-Mail mit mehreren ausgelagerten Anhängen bereitstellen?
+
+_Antwort: Unter dem folgenden Link stellt die gematik ein Beispiel zur Auslagerung einer KIM 1.5 E-Mail mit mehreren Anhängen zur Verfügung:
+https://github.com/gematik/api-kim/blob/main/docs/Email_Verarbeitung.adoc_
+Hinweis: Es wird in diesem Fall immer die komplette E-Mail, inklusive aller Anhänge, verschlüsselt und anschließend auf den KAS ausgelagert.
+
+=== [FAQ] Generierung von Zustellbestätigungen (DSN)
+
+Frage: Welche Informationen muss eine Zustellbestätigung enthalten?
+
+_Antwort: Eine durch den Sender einer Nachricht angeforderte Zustellbestätigung muss die folgenden Informationen gemäß [KOM-LE-A_2147] enthalten:_
+
+* alle Empfänger der Original-Nachricht die dem Ziel-Mail-Server zugeordnet sind
+Die Empfänger der Original-Nachricht werden im Teil „message/delivery-status“ der DSN als „Final-Recipient“ eingefügt.
+
+* Empfangszeitpunkt der originalen Nachricht beim Ziel-Mail-Server (t2)
+Der Empfangszeitunkt (t2) wird im Header Feld [Arrival-Date] im Part Content-Type: message/delivery-status der DSN eingetragen.
+
+* Message-ID der äußeren Nachricht
+Die Message-ID der äußeren Nachricht, die der Message-ID der inneren Nachricht entspricht, wird im Header Feld [In-Reply-To] als Bestandteil des Headers der DSN aufgenommen.
+
+HINWEIS: Der Mail Server darf bei der Erzeugung der DSN ausschließlich die Option HDRS verwenden.
+
+[BILD!!!!!!]
+
+Der Versandzeitpunkt (t1) entspricht dem Feld [Date] im Header in der Original-Mail.
+
+Der Empfangszeitpunkt entspricht dem Feld Arrival Date (t2) in der DSN
+
+Der eigentliche Versand der DSN erfolgt zum Zeitpunkt t3 und ist ein Header Feld [Date] der gesamten DSN
+
+=== [FAQ] Häufige Fragen zum Account Manager
+
+Frage: Wie verhält sich der Account Manager wenn beim Aufruf der Operation updateOutOfOffice das Attribut “active” nicht vorhanden ist?
+
+_Antwort: Wenn im Aufruf der Operation updateOutOfOffice das Attribut “active” nicht vorhanden ist, wird es im Account Manager auf “false” gesetzt._
+
+Frage: Wie antwortet der Account Manager, wenn innerhalb der Gültigkeit eines OTP ein weiteres Mal getOTP aufgerufen wird?
+
+_Antwort: Der Account Manager generiert ein neues OTP - mit neuer Gültigkeitsdauer - und gibt es zurück. Alte OTPs werden damit ungültig._
+
+Frage: Müssen immer alle Parameter in der Operation updateOutOfOffice gesetzt sein?
+
+_Antwort:_
+
+   * Initialer Aufruf für den Account: Alle Parameter müssen gesetzt sein.
+   * Weitere Updates: 
+   
+   1) active=false: Es reicht, wenn der Parameter active auf false gesetzt wird. Die anderen Parameter sollen in der Datenbank erhalten bleiben, falls sie nicht angegeben werden. Angegebene Parameter werden vom Account Manager übernommen.
+   2) active=true: Alle Parameter müssen angegeben werden (startDate und endDate müssen sinnvolle Werte haben). Wenn z. B. die alte "message" erhalten bleiben soll, dann kann der Client zuerst den Eintrag lesen (getOutOfOffice), dem Nutzer diese zum editieren anbieten und dann die angepassten Werte wieder über die Operation updateOutOfOffice im Account Manager aktualisieren. 
+   
+Frage: Was gibt der Account Manager zurück, wenn die Operation getOutOfOffice aufgerufen wird, obwohl noch keine OutOfOffice message (mit updateOutOfOffice) eingerichtet wurde?
+
+_Antwort: Wenn noch keine OutOfOffice message (mit updateOutOfOffice) eingerichtet wurde, soll active=false ohne die anderen Werte zurückgegeben werden._
+
+Frage: Wird mit den Operationen registerAccount und setAccount das Feld “regStat” explizit zum Setzen des Status genutzt oder wird wie bei der Operation register generell "registered" eingetragen?
+
+_Antwort: Das Feld regStat ist readonly, kann also nicht durch den Client gesetzt werden. Hierbei handelt es sich um ein Textfeld, welches für die Information des KIM Anbieters an seinen Kunden vorgesehen ist. Es kann nur über den Aufruf der Operation getAccount gelesen werden. Für die Implementierung kann das Attribut bei der Operation registerAccount durch den KIM Server z. B. auf "registered" gesetzt werden._
+
+Frage: Wie wird der Parameter referenceID in den Operationen registerAccount und setAccount genutzt?
+
+_Antwort: Bei Aufruf der Operation registerAccount gibt es noch keinen username. Statt username wird die referenceID verwendet. Hierbei handelt es sich um einen temporärern username, welcher nur für das registrieren vorgesehen ist. Je nach Anbieter kann das die Vertragsnummer, ein temporäres Token oder schon der spätere username sein. Bei Aufruf der Operation registerAccount muss deshalb die referenceID immer gesetzt sein. Bei Aufruf der Operation "registerAccount" erfolgt die Authentifizierung über die referenceID und das iniPassword (z. B. referenceID=123456, iniPassword=abc$123). Weiterhin wird bei Aufruf der Operation "registerAccount" der Parameter username (z. B. username=K.Mueller@abc.telematik) übergeben, aber nicht zur Authentisierung genutzt. Der Server prüft ob gemäß dem Beispiel "K.Mueller@abc.telematik" noch frei ist und den Regeln entspricht. Bei der nächsten Operation wird zum Authentifizieren username=K.Mueller@abc.telematik und Passwort=abc$123 genutzt. Der Parameter referenceID wird nur bei Aufruf der Operation "registerAccount" genutzt._
+
+=== [FAQ] Umgang mit dem RCPT TO: Kommando ab KIM 1.5
+
+Frage: Wie muss sich das Clientmodul ab KIM 1.5 verhalten, wenn es ein RCPT TO:<recipient-address> Kommando von einem Clientsystem erhält.
+
+_Antwort: Ab KIM 1.5 muss das Clientmodul bei Erhalt des RCPT TO: Kommandos mit einem OK bestätigen. Daraufhin empfängt das Clientmodul im DATA Kommando die KIM-Nachricht und kann dann die Prüfung auf die für den Versand notwendige KIM-Version auf der Empfängerseite durchführen. Nicht für den Empfang geeignete Empfänger(KIM-Version oder fehlende/ungültige Zertifikate) müssen aus der Empfängerliste entfernt werden. Erst danach wird das RCPT TO Kommando an den Fachdienst übermittelt. Wird durch den Fachdienst nach dem Empfangen des RCPT TO Kommandos ein Fehler festgestellt, muss das Clientmodul den Absender via DSN über den Fehlerfall informieren.
+Hinweis: Das Clientmodul muss gemäß A_23174 sichstellen, dass nur diese Empfängeradressen in der KOM-LE Nachricht verbleiben.(to, cc, bcc)_
+
+=== [FAQ] KIM 1.5.2: Ports für die Kommunikation zwischen Fachdiensten
+
+Frage: Bedeutet der Wegfall der Afo KOM-LE-A_2142 (in KIM 1.5.2), dass für die Kommunikation zwischen Fachdiensten zukünftig ein Service Lookup erfolgen soll und dieser das Standard Verfahren von SMTPS mittels MX-Lookup und Port 465 ersetzt? Oder gilt der Service Lookup nur für das Clientmodul?
+
+_Antwort: Zumindest die Auflösung per MX Lookup und damit Port 465 zwischen den Fachdienstbetreibern ist sicherzustellen und die Erreichbarkeit des Fachdienstes für diesen Port zu gewährleisten. Es bleibt allerdings dem jeweiligen Anbieter überlassen zusätzlich für diese Kommunikationswege DNS Service Lookup zu etablieren._
+
+
+=== [FAQ] Umgang mit den Fehlercodes ab KIM 1.5
+
+Frage: Wieso gibt es in der Tabelle “Tab_Fehlertext_Entschl”  für das Header-Element `X-KIM-DecryptionResult` keine ID für ein Positiv-Ergebnis.
+
+_Antwort: Als ID kann hier `X-KIM-DecryptionResult = 00` mit dem folgenden Text im Vermerk verwendet werden: „Die Nachricht wurde entschlüsselt."_
+
+Frage: Können auch Herstellerspezifische Fehlercodes in den Header-Elementen X-KIM-DecryptionResult und X-KIM-IntegrityCheckResult verwendet werden?
+
+_Antwort: Es können auch weitere Fehlercodes (Herstellerspezifische) verwendet werden. Hierfür muss die ID mit einem Großen „X“ beginnen (z. B. `X-KIM-DecryptionResult = X99`)._
+
+Frage: Können auch mehrere Ergebnisse mit den Header-Elementen `X-KIM-DecryptionResult` und `X-KIM-IntegrityCheckResult` abgebildet werden?
+
+_Antwort: Gemäß RFC 5322 ist eine wiederholte Verwendung eines Header-Elements zulässig. Dies erfolgt sowohl als Vermerk als auch durch eine wiederholte Verwendung des Header-Elements._
+
+_Beispiel:_
+* `X-KIM-IntegrityCheckResult: 06`
+* `X-KIM-IntegrityCheckResult: 08`
+
+
+=== [FAQ] Zustellung einer E-Mail trotz fehlgeschlagener Integritätsprüfung
+
+Frage: Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** erlaubt die Zustellung einer E-Mail trotz fehlgeschlagener Integritätsprüfung. In welcher Form soll dann die Zustellung erfolgen?
+
+_Antwort: +
+Die Anforderung **"A_23165 - Verhalten bei fehlgeschlagener Integritätsprüfung"** sieht die Weiterleitung der originale Nachricht in der jetzigen Version nur als Alternative vor. Dieses Verhalten soll geändert werden. Wird bei der Integritätsprüfung ein Fehler festgestellt, muss die entschlüsselte originale Nachricht dem Empfänger als Teil einer Fehlernachricht zugestellt werden. Die entschlüsselte originale Nachricht wird als message/rfc822 MimePart in die vom Clientmodul erzeugte Fehlernachricht eingebettet und an das anfragende Clientsystem weitergegeben. +
+Die vom Clientmodul erzeugte Fehlernachricht MUSS den nachfolgenden Fehlertext als text/plain MIME-Einheit enthalten, der den Nutzer über Fehler bei der Integritätsprüfung informieren soll: +
+„`Beim Empfang dieser KIM-Nachricht wurde eine Sicherheitsverletzung erkannt. Dies kann eine technisches Ursache haben oder auf eine missbräuchliche Nutzung des KIM-Dienstes hinweisen. Zu Ihrem Schutz wurde der Inhalt dieser Nachricht durch diesen Text ausgetauscht. Bitte kontaktieren Sie den Absender und/oder Ihren Administrator. Die entschlüsselte Nachricht wurde in diese Fehlernachricht eingebettet und kann, abhängig vom verwendeten E-Mail-Client, in eigener Verantwortung eingesehen bzw. verarbeitet werden.`“_ +
+
+_Das bisher spezifizierte Alternativverhalten des Clientmoduls entfällt und gilt, siehe nachfolgend, ausschließlich für den Basis-Consumer._
+
+_**Basis-Consumer:** +
+Wird die Weiterverarbeitung abgerufener Nachrichten durch (automatisiert verarbeitende) Prüf-Backend Systeme erforderlich, kann die Weitergabe der entschlüsselten und geprüften Mail (analog früherer Festlegungen), als konfigurierbare Option im Basis-Consumer, vorgesehen werden._
+
+*&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage angepasst.
+
+.Beispiel Client Mail mit Fehlernachricht und der entschlüsselten originale Nachricht als message/rfc822 MimePart
+[%collapsible%open]
+====
+[source,txt, linenums]
+----
+Message-Id: <GWIIM4RF2IU4.DGM72EEHOQZJ1@laptop-praxis>
+Date: Thu, 06 Oct 2022 11:27:22 +0200
+From: test.sender@gematik.kim.telematik-test
+To: test.recipient@gematik.kim.telematik-test,
+header.manipulation@akquinet.kim.telematik-test
+X-KIM-DecryptionResult: 00
+X-KIM-IntegrityCheckResult: 08
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-OFpV2ubYz0H2K3gUzzSfLg=="
+
+
+--=-OFpV2ubYz0H2K3gUzzSfLg==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Beim Empfang dieser KIM-Nachricht wurde eine Sicherheitsverletzung erkannt. =
+Dies kann eine technisches Ursache haben oder auf eine missbr=C3=A4uchliche =
+Nutzung des KIM-Dienstes hinweisen. Zu Ihrem Schutz wurde der Inhalt dieser =
+Nachricht durch diesen Text ausgetauscht. Bitte kontaktieren Sie den Absende=
+r und/oder Ihren Administrator.
+
+Die entschl=C3=BCsselte Nachricht wurde in diese Fehlernachricht eingebettet=
+und kann, abh=C3=A4ngig vom verwendeten E-Mail-Client, in eigener Verantwor=
+tung eingesehen bzw. verarbeitet werden.
+
+Erg=C3=A4nzende Informationen:
+Die Nachricht wurde entschl=C3=BCsselt.
+[Integrit=C3=A4tspr=C3=BCfung] [ID 08] Die Signatur der Nachricht wurde gepr=
+=C3=BCft. Die Pr=C3=BCfung hat ergeben, dass die Nachricht nach dem Verschl=C3=
+=BCsseln manipuliert wurde.
+M=C3=B6glicherweise wurde die verschl=C3=BCsselte Nachricht auch an einen ni=
+cht empfangsberechtigten Personenkreis versendet.
+
+--=-OFpV2ubYz0H2K3gUzzSfLg==
+Content-Type: message/rfc822
+
+Date: Thu, 06 Oct 2022 11:27:22 +0200
+Subject: Test E-Mail Subject
+Message-Id: <565NV2RF2IU4.LV85ZK8O5RTG2@laptop-praxis>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-NE1oNTy1NJSqrIN0U+kXSw=="
+From: test.sender@gematik.kim.telematik-test
+To: test.recipient@gematik.kim.telematik-test
+X-KIM-Dienstkennung: KIM-Mail;Default;V1.0
+
+--=-NE1oNTy1NJSqrIN0U+kXSw==
+Content-Type: text/plain; charset=utf-8
+
+Test E-Mail Body äüöüäöö~~~#++²³5567678$§/%&(()%%&$$ <html>END</html>
+--=-NE1oNTy1NJSqrIN0U+kXSw==
+Content-Type: image/png; name=att_0_test.png
+Content-Disposition: attachment; filename=att_0_test.png
+Content-Transfer-Encoding: base64
+
+AA==
+
+--=-NE1oNTy1NJSqrIN0U+kXSw==--
+
+--=-OFpV2ubYz0H2K3gUzzSfLg==--
+----
+====
+
+=== [FAQ] Fehlendes Verschlüsselungszertifikat des Senders im VZD
+
+Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den Sender als auch für alle Empfänger verschlüsselt werden. Die jeweiligen Zertifikate mit den Schlüsseln, die bei Aufruf der Operation EncryptDocument dem Konnektor übergeben werden, werden durch das Clientmodule im VZD abgerufen. Wie soll sich das Clientmodul verhalten, wenn für den Sender der Nachricht kein Verschlüsselungszertifikat im Verzeichnisdienst vorliegt?
+
+_Antwort: Kann durch das Clientmodule für den Sender kein Verschlüsselungszertifikat im Verzeichnisdienst gefunden werden, ist der Mailclient mit dem Fehlercode 553 zu informieren und der Versand wird abgebrochen._
+
+
+=== [FAQ] Fehlendes Verschlüsselungszertifikat eines Empfängers im VZD
+
+Frage: Die durch das Clientmodul zu verarbeitende Nachricht muss sowohl für den Sender als auch für *alle* Empfänger verschlüsselt werden. Die jeweiligen Zertifikate mit den Schlüsseln, die bei Aufruf der Operation EncryptDocument dem Konnektor übergeben werden, werden durch das Clientmodule im VZD abgerufen. Wie soll sich das Clientmodul verhalten, wenn für einen von mehreren Empfängern der Nachricht kein Verschlüsselungszertifikat im Verzeichnisdienst vorliegt?
+
+_Antwort: Die Anforderung *KOM-LE-A_2176 - Prüfen auf gültiges ENC-Zertifikat für den Empfänger im RCPT-Kommando* beschreibt das geforderte Verhalten. Da die Nachricht nur an Empfänger, die ein gültiges ENC-Zertifikat besitzen weitergeleitet werden darf, MUSS das Clientmodul im Negativfall das RCPT-Kommando mit dem Empfänger ohne Verschlüsselungszertifikat verwerfen. Die bisherige Formulierung `...und dem Clientsystem den Antwortcode „550“ senden` wird aus der Anforderung entfernt. Damit wird der Versand der E-Mail für die verbleibenden Empfänger mit exitierenden Verschlüsselungszertifikat ermöglicht._
+
+*&#9733;* Dies wird im nächsten Release entsprechend der Anforderungslage angepasst.
+
+
+=== [FAQ] Weiterleitung MAIL FROM- SIZE-Parameter an Fachdienst
+
+Frage: Wird durch das Clientmodule eine Mail verarbeitet, welche größer als 15 MiB ist, wird diese gemäß A_19357-02 erfolgen. Im Ergebnis dieser Verarbeitung wird sich die Mail Size verändern. Im Kontext der Forderung zur Unterstützung von ESMTP (RFC 1870) sowie der Anforderung KOM-LE-A_2018, muss das KIM Clientmodul sämtliche SMTP-Kommandos bis zu RCPT TO direkt an den KIM Fachdienst weiterleiten. Gemäß der Festlegung zu ESMTP kann MAIL FROM durch einen Mail-Client um den Parameter SIZE ergänzt werden, womit der Mail-Server über die Nachrichtengröße informiert werden soll. Der Mail-Client wird den Wert von SIZE auf den Wert der originalen Nachrichten setzen, welche ggf. > 500MiB sein kann. Der Mail-Server des Fachdienstes könnte MAIL FROM mit entsprechend großen SIZE-Wert ablehnen. Wie soll sich das Clientmodule im Fall einer Mail die vom Mail-Client übergeben wurde, welche größer als 15 MiB ist und deren Größe nach der Verarbeitung reduziert wird, verhalten?
+
+_Antwort: Da durch die Verarbeitung im Clientmodul die letztendlich an den Mail-Server des Fachdienstes zu sendende KOM-LE-S/MIME-Nachricht verändert wird, entspricht der Wert von SIZE aus MAIL FROM des Mail-Clients nicht mehr dem Wert der KOM-LE-S/MIME-Nachricht, die das Clientmodul an den Mail-Server sendet. Folglich darf, analog zum Umgang mit RCPT TO, das SMTP-Kommando MAIL FROM erst nach der Nachrichtenverarbeitung im Clientmodul an den Mail-Server des KIM Fachdienstes übermittelt werden. Wurde im MAIL FROM Kommando des Mail-Clients der Parameter SIZE angegeben, so muss das Clientmodul den Wert für SIZE gemäß der Größe der KOM-LE-S/MIME-Nachricht anpassen, bevor das Clientmodul MAIL FROM an den Mail-Server des Fachdienstes sendet. +
+Zusammengefasst bedeutet dies, dass das Clientmodul die SMTP-Kommandos MAIL FROM und RCPT TO erst nach Erhalt von DATA des Mail-Clients an den Mail-Server des Fachdienstes senden darf._
+
+
+=== [FAQ] E-Mail-Daten auf dem KAS löschen
+
+Frage: Übersteigt die zu versendende KIM Nachricht 15 MiB muss das Clientmodul die gesamte Client-Mail verschlüsselt auf einem Speicher des KOM-LE-Fachdienstes (KAS) ablegen. Die zu versendende KOM-LE-Mail enthält dann lediglich Metadaten zu den abgelegten Client-Mail-Daten. Wie soll sich das Clientmodul verhalten, wenn diese KOM-LE-Mail nicht versendet werden kann?
+
+_Antwort: Um zu verhindern das nicht benötigte E-Mail-Daten (also Daten die keiner gesendeten KOM-LE-Mail zugeordnet werden können) auf dem KAS gespeichert werden, wird eine weitere Operation am KAS bereitgestellt die das unmittelbare Löschen von solchen Client-Mail-Daten ermöglicht. Eine aktualisierte  https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml[*AttachementService.yaml*] Datei wurde durch die gematik bereitgestellt. Mit der Bereitstellung dieser Operation am KAS können jetzt Clientmodule das Löschen solcher E-Mail-Daten bereits umsetzen._
+
+
+Im nächsten KIM Release erfolgt dementsprechend eine Anpassung in der Spezifikation.
+
+
+=== [FAQ] Operationen der Schnittstelle I_Directory_Application_Maintenance
+
+Frage: Die Anforderung KOM-LE-A_2159-01 beschreibt die Verwendung der Schnittstelle `I_Directory_Application_Maintenance` bei der beabsichtigten Änderung von Verzeichnisdiensteinträgen durch den KOM-LE-Fachdienst. In der Tabelle `Tab_Interface_TIP Schnittstellen zur TI-Plattform des Fachdienstes KOM-LE` werden die an dieser Schnittstelle aufzurufenden Operationen aufgeführt. Ist es erlaubt die durch den Verzeichnisdienst an dieser Schnittstelle ebenfalls bereitgestellte Operation `get_Directory_FA-Attributes` für die Überprüfung der vorhandenen Einträge zu nutzen? 
+
+_Antwort: Ja, die Nutzung der Operation `get_Directory_FA-Attributes` an der Schnittstelle `I_Directory_Application_Maintenance` ist zusätzlich zu den bereits in der Tabelle `Tab_Interface_TIP Schnittstellen zur TI-Plattform des Fachdienstes KOM-LE` gelisteten Operationen erlaubt._
+
+*&#9733;* Die Anpassung der Spezifikation an dieser Stelle erfolgt mit dem nächsten Release.
+
+
+=== [FAQ] Geplante Änderungen bei der Sicherstellung der Absenderintegrität
+
+Frage: Die gematik hat eine Änderung zur Sicherstellung der Absenderintegrität angekündigt. Wie verhalten sich Anbieter die bereits auf Basis des Sicherheits-Hotfix ein Clientmodule zur Zulassung eingereicht haben?
+
+_Antwort: Für KIM 1.0 ist die Umsetzung des Hotfixes ausgesetzt.
+Für KIM 1.5 wird eine Umsetzung des Hotfixes (ohne A_23169) und mit FD-Header-Manipulationsprüfung bis Ende 03/2023 erwartet. Falls bis Ende 03/2023 noch keine KIM 1.5 Zulassung erreicht wurde, dann muss die FD-Header-Manipulationsprüfung im KIM 1.0 FD per Patch umgesetzt sein. Die im Folgenden aufgeführten, durch die gematik geplanten, Änderungen werden mit dem Release 1.5.3 veröffentlicht und können mit Bezug auf den hier veröffentlichten FAQ bereits vorab umgesetzt werden._
+
+
+**Änderung zur Sicherstellung der Absenderintegrität**
+
+1.	Streichung der Anforderung A_23169 – Sicherstellung der Absenderintegrität in der Spezifikation gemSpec_CM_KOMLE
+
+2.	Neue Anforderungen in der Spezifikation gemSpec_FD_KOMLE +
+
+
+**A_23421 – Überprüfung der Absenderadresse** +
+Der Fachdienst KOM-LE MUSS den bei der Authentisierung vom Clientmodule übermittelten Username (SMTP AUTH) mit der Adresse im MAIL FROM Kommando vergleichen. Sollte bei dem Vergleich ein Unterschied festgestellt werden (RFC 5322 „addr-spec“), MUSS der Fachdienst die Verarbeitung der KOM-LE-Mail ablehnen und das Clientmodule mit einem SMTP Fehler informieren.
+<=
+
+Hinweis: Gemäß KOM-LE-A_2161 entspricht der in der SMTP-Authentifizierung anzugebende Benutzername der E-Mail-Adresse des KOM-LE-Teilnehmers. +
+
+
+**A_23422 – Sicherstellung Absenderintegrität einer KOM-LE-Nachricht** +
+Der Fachdienst KOM-LE MUSS vor der Verarbeitung einer KOM-LE-Nachricht folgende Prüfregeln umsetzen:
+
+1.	Der Fachdienst KOM-LE MUSS die Verarbeitung eine KOM-LE-Nachricht mit einem SMTP-Fehler ablehnen, wenn eines der folgenden Merkmale der „originator“ Header-Elemente (RFC 5322) zutrifft, zu beachten ist die unter (2) formulierte Ausnahme:
+
+   *	Es wurde keine Adresse Adresse im Header-Element „from“ angegeben
+   *	Es ist genau eine Adresse im Header-Element „from“ angegeben und diese stimmt nicht mit der Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ überein (RFC 5322 „addr-spec“)
+   *	Es ist mehr als genau eine Adresse im Header-Element „from“ angegeben und die Adressen stimmen nicht mit der Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ übereinstimmen (RFC 5322 „addr-spec“)
+   *	Ein „sender“-Header wurde angegeben und dessen Inhalt entspricht nicht der Adresse (RFC 5322 „addr-spec“) aus dem SMTP-Protokollschritt „MAIL FROM“
+   *	Es sind Adressdaten im Header-Element „reply-to“ angegeben und diese enden nicht mit den definierten KIM-Domainparts „.kim.telematik“ (PU) bzw. “.kim.telematik-test“ (RU/TU) (RFC 5322 „addr-spec“). Da heißt, es MUSS sichergestellt werden, dass die Angabe, an welche KIM-Adresse eine Antwort gerichtet werden soll, weiterhin möglich ist und dass dies nur für KIM-Adressen erlaubt ist.
+
+2.	Der Fachdienst KOM-LE DARF die Verarbeitung einer empfangenen KOM-LE-Nachricht gemäß (1) NICHT ablehnen, wenn genau eine Adresse im SMTP-Protokoll „RCPT TO“ übermittelt wurde und diese Adresse der Absender Adresse aus dem SMTP-Protokollschritt „MAIL FROM“ (RFC 5322 „addr-spec“) entspricht.
+<=
+
+Hinweis: Item (2) entspricht dem Anwendungsfall Versand/Weiterleitung „an sich selbst“.
+
+
+=== [FAQ] Übermittlung der Größe der auf dem KAS abgelegten Client-Mail
+
+Frage: Übersteigt die zu versendende KIM Nachricht 15 MiB muss das Clientmodul die gesamte Client-Mail verschlüsselt auf einem Speicher des KOM-LE-Fachdienstes (KAS) ablegen. Die versendete KOM-LE-Nachricht enthält dann lediglich Metadaten zu den abgelegten Client-Mail-Daten und unterscheidet sich in seiner Größe von der eigentlich zuzustellenden Client-Mail. Welche Möglichkeit besteht, die eigentliche Größe der Client-Mail in der KOM-LE-Nachricht bereits mitzuteilen?
+
+_Antwort: Um bereits zusammen mit der KOM-LE-Nachricht die Größe der originalen Client-Mail zu übermitteln wird ein zusätzlicher X-KIM Header in der äußeren KOM-LE-Nachricht vorgesehen. Dieser zusätzliche Header kann durch Empfangssysteme u.a. zur Lastverteilung genutzt werden. Die gematik wird dazu die folgende Anforderung in die gemSpec_CM_KOMLE aufnehmen. Mit der Veröffentlichung dieses [FAQ] kann dieses Header Element bereits verwendet werden._
+
+**Anpassung in gemSpec_CM_KOMLE**
+
+**A_23467 – Übermittlung der KAS-Datenmenge**
+Das KOM-LE-Clientmodul MUSS bei der Übertragung der KOM-LE Nachricht an den Fachdienst, die im Kontext KAS verarbeitet wurde, ein Mail-Header-Attribut X-KIM-KAS-SIZE mit dem Wert befüllen, der dem Attribut `size` in der KIM-Attachment-Datenstruktur entspricht.
+<=
+
+Hinweis: Im nächsten KIM Release erfolgt dazu eine Anpassung in der Spezifikation.
 
