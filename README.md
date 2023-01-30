@@ -115,6 +115,7 @@ Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation r
 **Diverses**  
 [- Authentisierung](docs/Authentisierung.adoc)  
 [- Versionierung](docs/Versionierung.adoc)  
+[- Fragen und Antworten zur aktuellen Spezifikation &#91;FAQ&#93;](docs/faq.adoc)
 
 **Referenz-Implementierungen**  
 [- KIM-Attachment-Service](https://github.com/gematik/kim-attachment-service) <br>
