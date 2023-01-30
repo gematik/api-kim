@@ -338,3 +338,18 @@ Der Fachdienst KOM-LE MUSS vor der Verarbeitung einer KOM-LE-Nachricht folgende 
 
 Hinweis: Item (2) entspricht dem Anwendungsfall Versand/Weiterleitung „an sich selbst“.
 
+
+=== [FAQ] Übermittlung der Größe der auf dem KAS abgelegten Client-Mail
+
+Frage: Übersteigt die zu versendende KIM Nachricht 15 MiB muss das Clientmodul die gesamte Client-Mail verschlüsselt auf einem Speicher des KOM-LE-Fachdienstes (KAS) ablegen. Die versendete KOM-LE-Nachricht enthält dann lediglich Metadaten zu den abgelegten Client-Mail-Daten und unterscheidet sich in seiner Größe von der eigentlich zuzustellenden Client-Mail. Welche Möglichkeit besteht, die eigentliche Größe der Client-Mail in der KOM-LE-Nachricht bereits mitzuteilen?
+
+_Antwort: Um bereits zusammen mit der KOM-LE-Nachricht die Größe der originalen Client-Mail zu übermitteln wird ein zusätzlicher X-KIM Header in der äußeren KOM-LE-Nachricht vorgesehen. Dieser zusätzliche Header kann durch Empfangssysteme u.a. zur Lastverteilung genutzt werden. Die gematik wird dazu die folgende Anforderung in die gemSpec_CM_KOMLE aufnehmen. Mit der Veröffentlichung dieses [FAQ] kann dieses Header Element bereits verwendet werden._
+
+**Anpassung in gemSpec_CM_KOMLE**
+
+**A_23467 – Übermittlung der KAS-Datenmenge**
+Das KOM-LE-Clientmodul MUSS bei der Übertragung der KOM-LE Nachricht an den Fachdienst, die im Kontext KAS verarbeitet wurde, ein Mail-Header-Attribut X-KIM-KAS-SIZE mit dem Wert befüllen, der dem Attribut `size` in der KIM-Attachment-Datenstruktur entspricht.
+<=
+
+Hinweis: Im nächsten KIM Release erfolgt dazu eine Anpassung in der Spezifikation.
+
