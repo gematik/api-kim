@@ -353,3 +353,13 @@ Das KOM-LE-Clientmodul MUSS bei der Übertragung der KOM-LE Nachricht an den Fac
 
 Hinweis: Im nächsten KIM Release erfolgt dazu eine Anpassung in der Spezifikation.
 
+
+=== [FAQ] TLS-Verbindungen zum KOM-LE Fachdienst 1.0 und 1.5 und zu Zentralen Diensten
+
+Frage: In gemSpec_Krypt_V2.24.0 haben sich die Anforderungen für TLS-Verbindungen (siehe Anforderungen GS-A_4384-01 und A_17124-01) geändert. Daraus ergibt sich ein Interoperabilitäts-Problem zwischen KIM 1.5 und KIM 1.0, insbesondere wenn die Implementierungen sehr eng umgesetzt werden. Wie kann die Interoperabilität bei einem zeitweiligen Parallelbetrieb von KIM 1.0 und KIM 1.5 Fachdiensten und Clientmodulen sichergestellt werden?
+
+_Antwort: Für die Sicherstellung der Interoperabilität von KIM 1.0 und KIM 1.5 Fachdiensten und Clientmodulen ist es notwendig, sowohl die in der für KIM 1.0 als auch KIM 1.5 geltenden Spezifikation existierenden Anforderungen zu den geforderten Ciphersuiten, bei der Implementierung des KIM 1.5 Fachdienstes, zu unterstützen. Diese Übergangsregelung muss solange sichergestellt werden bis die endgültige Migration zu KIM 1.5, sowohl der Fachdienste als auch Clientmodule bei den Nutzern, erfolgt ist._
+
+Frage: Durch die Änderung der Anforderung A_17124 zur Version A_17124-01 wurde die Verwendung von brainpoolP256r1 und brainpoolP384r1 ECC Kurven optional. Wie wird sichergestellt das die Kommunikation mit Zentralen Diensten, die die geänderten Anforderungen noch nicht unterstützen, weiterhin möglich ist?
+
+_Antwort: Auch in diesem Fall wird eine Übergangsregelung notwendig und die Unterstützung der durch die Änderung nur optional geforderten Kurven obligatorisch. Ist die Umstellung der Zentralen Dienste gemäß den geänderten Anforderungen erfolgt können die beiden Kurven, wie gefordert, dann optional unterstützt werden._
