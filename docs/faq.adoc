@@ -348,7 +348,7 @@ _Antwort: Um bereits zusammen mit der KOM-LE-Nachricht die Größe der originale
 **Anpassung in gemSpec_CM_KOMLE**
 
 **A_23467 – Übermittlung der KAS-Datenmenge**
-Das KOM-LE-Clientmodul MUSS bei der Übertragung der KOM-LE Nachricht an den Fachdienst, die im Kontext KAS verarbeitet wurde, ein Mail-Header-Attribut X-KIM-KAS-SIZE mit dem Wert befüllen, der dem Attribut `size` in der KIM-Attachment-Datenstruktur entspricht.
+Das KOM-LE-Clientmodul MUSS bei der Übertragung der KOM-LE Nachricht an den Fachdienst, die im Kontext KAS verarbeitet wurde, ein Mail-Header-Attribut X-KIM-KAS-Size mit dem Wert befüllen, der dem Attribut `size` in der KIM-Attachment-Datenstruktur entspricht.
 <=
 
 Hinweis: Im nächsten KIM Release erfolgt dazu eine Anpassung in der Spezifikation.
