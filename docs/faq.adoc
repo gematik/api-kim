@@ -363,3 +363,30 @@ _Antwort: Für die Sicherstellung der Interoperabilität von KIM 1.0 und KIM 1.5
 Frage: Durch die Änderung der Anforderung A_17124 zur Version A_17124-01 wurde die Verwendung von brainpoolP256r1 und brainpoolP384r1 ECC Kurven optional. Wie wird sichergestellt das die Kommunikation mit Zentralen Diensten, die die geänderten Anforderungen noch nicht unterstützen, weiterhin möglich ist?
 
 _Antwort: Auch in diesem Fall wird eine Übergangsregelung notwendig und die Unterstützung der durch die Änderung nur optional geforderten Kurven obligatorisch. Ist die Umstellung der Zentralen Dienste gemäß den geänderten Anforderungen erfolgt können die beiden Kurven, wie gefordert, dann optional unterstützt werden._
+
+
+=== [FAQ] Empfang von Großen Nachrichten mit KIM 1.5 ablehnen
+
+Frage: Ab der KIM Version 1.5 können Nutzer E-Mail Nachrichten versenden deren Größe 15 MiB überschreiten. Der Empfang so großer E-Mail Nachrichten kann auf der Empfängerseite, z. B. aufgrund einer eventuell eingeschränkten Bandbreite, zu betriebstechnischen Problemen führen. Gibt es die Möglichkeit auch bei Verwendung der KIM Version 1.5 den Empfang von Großen Nachrichten abzulehnen?
+
+_Antwort: Beim Wechsel der verwendeten Clientmodul-Version des Senders wird aktuell die neue Clientmodul-Version durch das Clientmodul in den Verzeichnisdiensteintrag eines Nutzers im LDAP-Directory Attribut: `komLeData`, mit der verwendeten KIM Version des Clientmodule befüllt. Für die Signalisierung der Bereitschaft zum Empfang Großer Nachrichten muss die eingetragene KIM Version mit der Erweiterung `+` (Wert: 1.5+) ergänzt werden. Erst mit der aktiven Ergänzung dieses Markers wird die Bereitschaft zum Empfang Großer Nachrichten bestätigt. Mit der Veröffentlichung dieses [FAQ] kann dies an den dafür notwendigen Komponenten umgesetzt werden. Die Anpassungen in den Spezifikationen und Schnittstellen werden im Folgenden beschrieben._
+
+**Anpassung in gemSpec_CM_KOMLE**
+
+**A_23505 – Bereitschaft zum Empfang Großer Nachrichten** +
+Das Clientmodul MUSS es dem Nutzer ermöglichen, die optionale Bereitschaft zum Empfang Großer Nachrichten über die Schnittstelle I_AccountManager_Service am Account Manager verwalten zu können. Die Bereitschaft zum Empfang Großer Nachrichten MUSS über die KIM Version, ergänzt durch ein `+`, eingetragen werden. Erkennt das Clientmodul die beabsichtigte Bereitschaft zum Empfang Großer Nachrichten, MUSS es den Nutzer hinsichtlich der sich daraus ergebenden Risiken beim Senden und Empfangen von großen Dateien informieren. Dass Clientmodul MUSS es dem Nutzer ermöglichen die erteilte Bereitschaft durch die Änderung des Eintrages zurückzusetzen. 
+<=
+
+_Hinweis: Wird durch das Clientmodule die KIM Version, auch für die Sender, in einem lokalen Cache hinterlegt ist eine Aktualisierung, jeweils nach einer Änderung, erforderlich._
+
+**A_19356-06 – Prüfen der Version des Empfängers** +
+Das KOM-LE-Clientmodul MUSS die vom Empfänger verwendete KOM-LE-Version prüfen. Das KOM-LE-Clientmodul MUSS dazu die KOM-LE-Version mittels des LDAP-Directory Attributs: `komLeData` aus dem Verzeichnisdienst [gemSpec_VZD#5] abfragen. Ist das LDAP-Directory Attribut: `komLeData` für den Empfänger undefiniert, dann muss ein KOM-LE-Clientmodul mit einer Version 1.0 angenommen werden.
+
+Wenn eine Client-Mail größer als 15 MiB an einen Empfänger mit KOM-LE-Version < 1.5 versendet werden soll oder die KOM-LE Version nicht mit einem `+` (Wert: 1.5+) erweitert wurde, MUSS das KOM-LE-Clientmodul diesen Empfänger aus der Mail entfernen. Wird die KIM Version der beabsichtigten Empfänger durch internes Caching bereitgestellt MUSS das Clientmodul, wenn die aktuelle KIM Version nicht die Bereitschaft zum Empfang Großer Nachrichten signalisiert, eine Anfrage am VZD durchführen um auf eine eventuelle Aktualisierung des Eintrages zu prüfen. Beim Entfernen eines Empfängers MUSS das KOM-LE-Clientmodul den Absender mit einer E-Mail über den Fehlerfall informieren. Aus dem Inhalt der Fehlernachricht müssen alle aus der Mail entfernten Empfänger hervorgehen. Die Fehlernachricht ist weder zu signieren noch zu verschlüsseln und entspricht der Delivery Status Notification gemäß [RFC3461-3464]. Kann die Mail für keinen der Empfänger versendet werden, wird das Senden der Nachricht abgebrochen. Dabei wird dem MTA das RSET-Kommando gesendet und das Clientsystem wird mit dem SMTP-Antwortcode "451" über den Fehlerfall informiert.
+<=
+
+**A_23512 – Auswertung der KIM Version bei Nachrichten mit KAS Content** +
+Das Clientmodul MUSS beim Empfang einer KOM-LE-Nachricht mit einer KIM-Attachment-Datenstruktur prüfen, ob für den Empfänger eine Freigabe zum Empfang Großer Nachrichten vorliegt. Ist dies nicht der Fall MUSS das Clientmodul die Weiterverarbeitung der Nachricht und damit dem Abruf der KAS-Daten unterbinden. Das Clientmodul MUSS in diesem Fall eine Fehlernachricht an den Empfänger erzeugen. Als Fehlernachricht MUSS eine multipart/mixed MIME-Nachricht an das Clientsystem übermittelt werden, welche die verschlüsselte KOM-LE-S/MIME-Nachricht als eine message/rfc822 MIME-Einheit beinhaltet. So kann, nach Anpassung der KIM-Version, die Nachricht an den Empfänger weitergeleitet und erneut abgerufen werden. Zusätzlich muss diese multipart/mixed MIME-Nachricht eine text/plain MIME-Einheit mit geeignetem Fehlertext enthalten. Die `orig-date`, `from`, `sender`, `reply-to`, `to` und `cc` Header-Elemente der neuen multipart/mixed Nachricht werden aus der empfangenen KOM-LE-S/MIME-Nachricht übernommen. Das `subject` Header-Element der neuen multipart/mixed Nachricht erhält den Wert „Die Nachricht entspricht nicht den festgelegten Account-Einstellungen“. Im Fehlertext der Nachricht muss der Empfänger darauf hingewiesen werden das eine Nachricht empfangen wurde deren Größe, gemäß der Account-Einstellung (KIM-Version), nicht verarbeitet werden darf. Es MUSS darauf hingewiesen werden, wie entsprechende Konfigurationen über den Account-Manager angepasst werden können und wie der Empfänger den Empfang, durch Weiterleitung der Fehlernachricht, wiederholen kann.
+<=
+
+Im nächsten KIM Release erfolgt dazu eine Anpassung in der Spezifikation.
