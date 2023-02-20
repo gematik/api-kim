@@ -185,7 +185,7 @@ paths:
                     description: MessageID der zugehörigen KIM-Mail
                 recipients:
                     type: array
-                    description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger
+                    description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger; Pro Form-Part wird genau eine Adresse spezifiziert und der Form-Part wird mehrfach angegeben (exploded=true)
                     items:
                       type: string
                       format: email
