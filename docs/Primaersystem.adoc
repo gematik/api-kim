@@ -305,7 +305,7 @@ In dieser Lösung wird ein Mailserver und ein AV-Scanner zwischen das Primärsys
 
 ++++
 <p align="center">
-  <img width="70%" src=../images/SMTP-KIM-Adapter.svg>
+  <img width="70%" src=../images/SMTP_KIM_Adapter.svg>
 </p>
 ++++
 
