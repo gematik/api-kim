@@ -281,7 +281,7 @@ Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärs
 Wenn das Clientmodul in das Primärsystem integriert wird, richten sich die Anforderungen des Clientmoduls an das Primärsystem.
 Durch die optionale Integration entfallen alle Anforderungen an die Schnittstelle zwischen Primärsystem und Clientmodul, da diese nicht mehr existiert.
 
-Die zu erfüllenden Anforderungen für die Integration des Clientmoduls in das Primärsystem können dem Produkttypsteckbrief für das Primärsystem mit integrieten Clientmodul *[gemProdT_PS_KIM]* entnommen werden.
+Die zu erfüllenden Anforderungen für die Integration des Clientmoduls in das Primärsystem können dem Produkttypsteckbrief für das Primärsystem mit integrieten Clientmodul *[gemProdT_KIM_iCM]* entnommen werden.
 
 == Fehlernachrichten
 
@@ -305,7 +305,7 @@ In dieser Lösung wird ein Mailserver und ein AV-Scanner zwischen das Primärsys
 
 ++++
 <p align="center">
-  <img width="70%" src=../images/KH_AV_Scanner.png>
+  <img width="70%" src=../images/SMTP-KIM-Adapter.svg>
 </p>
 ++++
 

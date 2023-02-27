@@ -32,7 +32,7 @@ _Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommu
 
 == Systemarchitektur
 
-Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM 1.5. Die Änderungen bei Komponenten und Schnittstellen von KIM 1.0 zu KIM 1.5 sind in der Abbildung rot dargestellt. 
+Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM 1.5. Die Änderungen bei Komponenten und Schnittstellen von KIM 1.0 zu KIM 1.5 sind in der Abbildung rot dargestellt.
 
 ++++
 <p align="left">
@@ -54,7 +54,7 @@ link:docs/Fachdienst.adoc[*Fachdienst*]
 Der Mail Server stellt die Schnittstelle `I_Message_Service` bereit und wird über die Protokolle SMTP und POP3 angesprochen. In der KIM Version 1.5 wurden am Mail Server keine Änderungen vorgenommen.
 
 * *Account Manager:* +
-Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers bietet der Account Manager ab der KIM Version 1.5 zwei Webservices (`I_AccountManager_Service` und `I_AccountLimit_Service`) an. 
+Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers bietet der Account Manager ab der KIM Version 1.5 zwei Webservices (`I_AccountManager_Service` und `I_AccountLimit_Service`) an.
 
 * *KOM-LE Attachment Service:* +
 Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
@@ -78,13 +78,13 @@ KIM-API
 ├─ src
 │   ├──── openapi
 │   │    ├── AccountLimit.yaml
-│   │    ├── AccountManager.yaml 
+│   │    ├── AccountManager.yaml
 │   │    └── AttachmentServices.yaml
 │   ├──── plantuml
-│   │    └── Fachdienst 
+│   │    └── Fachdienst
 │   └──── schema
 │        └── Attachment_schema.json
-├── LICENSE 
+├── LICENSE
 ├── README.adoc
 └── ReleaseNotes.md
 ----
@@ -114,19 +114,20 @@ Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation r
 |*[gemSpec_FD]* |gematik: Spezifikation Fachdienst KOM-LE
 |*[gemSpec_VZD]* |gematik: Spezifikation Verzeichnisdienst
 |*[gemSpec_OM]* |gematik: Übergreifende Spezifikation Operations und Maintenance
+|*[gemProdT_CM_KOMLE_PTV]* | gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
 |===
 
 == Weiterführende Seiten
 *Anwendungsfälle* +
-link:docs/Anwendungsfaelle.adoc[- Anwendungsfälle] 
+link:docs/Anwendungsfaelle.adoc[- Anwendungsfälle]
 
 *Produkttypen* +
 link:docs/KIM_API.adoc[- Clientsystem] +
 link:docs/Fachdienst.adoc[- Fachdienst] +
-link:docs/Verzeichnisdienst.adoc[- Verzeichnisdienst] 
+link:docs/Verzeichnisdienst.adoc[- Verzeichnisdienst]
 
 *Leitfaden für Primärsystemhersteller* +
-link:docs/Primaersystem.adoc[- Primärsystem] 
+link:docs/Primaersystem.adoc[- Primärsystem]
 
 *Diverses* +
 link:docs/Authentisierung.adoc[- Authentisierung] +
