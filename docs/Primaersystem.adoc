@@ -300,9 +300,6 @@ Einige KIM Anbieter unterstützen die Einbindung eines zentralen AV-Service bzw.
 === Mailserver und AV-Scanner zwischen Primärsystem und Clientmodul
 In dieser Lösung wird ein Mailserver und ein AV-Scanner zwischen das Primärsystem/Clientsystem und dem KIM-Clientmodul geschaltet. Bei der Lösung wird der AV-Service über den Mailserver angesprochen. In der folgenden Abbildung ist eine mögliche Implementierungsvariante dargestellt: +
 
-// image::KH_AV_Scanner.png[Scanner,600,200,float="right",align="center"]
-// image:KH_AV_Scanner.png[width=50%]
-
 ++++
 <p align="center">
   <img width="70%" src=../images/SMTP_KIM_Adapter.svg>
