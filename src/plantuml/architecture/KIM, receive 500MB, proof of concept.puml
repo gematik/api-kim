@@ -42,10 +42,9 @@ activate ms
 ms --> cm: POP3 OK Message list
 cm --> mc: POP3 OK Message list
 mc -> cm: POP3 RETR 1
-group #WhiteSmoke Mailclient must wait, keep alive required
+group #WhiteSmoke Mailclient and Mailserver must wait, keep alive required
     cm -> ms: POP3 RETR 1
     ms --> cm: POP3 OK Message 1
-    deactivate ms
     cm -> kon: decryptDocument (KIM-Mail)
     kon --> cm: decrypted KIM-Mail
     cm -> kon: verifyDocument (decrypted KIM-Mail)
@@ -60,5 +59,6 @@ group #WhiteSmoke Mailclient must wait, keep alive required
     cm --> mc: POP3 OK decrypted Message 1
 end
 deactivate cm
+deactivate ms
 
 @enduml
