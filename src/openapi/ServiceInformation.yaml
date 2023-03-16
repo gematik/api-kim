@@ -65,7 +65,7 @@ components:
                                   Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;<>,.?/~_+-=|\]
                                   Mindestlänge 8 Zeichen
                                   Maximallänge 64.
-          description: Gibt die Password Policy in Textform an, die der AccountManager verlangt.
+          description: Gibt die Password Policy, die der AccountManager verlangt, in Textform an.
 
 
     Error:
