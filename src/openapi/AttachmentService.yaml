@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: I_Attachment_Service
   description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
-                hochgeladen und bereitgestellt werden. 
+                hochgeladen und bereitgestellt werden.
   version: 2.3.2
   ### 2.3.2
   # - added distinct definition for header element Content-Length in add_Attachment:
@@ -14,30 +14,30 @@ info:
   # - changed server url to new api version
   # - added response code for wrong input parameters
   # - added response type object for operation add_Attachment
-  ### 2.2.0 
+  ### 2.2.0
   # - updated url to https://kas.hrst1.kim.telematik/attachments/v2.2/
   # - deleted operation read_MaxMailSize
-  # - changed operation add_Attachment: 
+  # - changed operation add_Attachment:
   #   renamed "Shared-Link" to "sharedLink"
   #   added parameters: expires, recipients, messageID
-  #   added error code 507 
-  # - changed operation read_Attachment: 
+  #   added error code 507
+  # - changed operation read_Attachment:
   #   added parameter recipient
-  #   added error code 429 
-  ### 2.0.0 
-  # - added client authentication for operation add_Attachment 
+  #   added error code 429
+  ### 2.0.0
+  # - added client authentication for operation add_Attachment
   # - changed URI for operations add_attachment and read_attachment
   # - added error message strings
   # - added HTTP error code 500
-  ### 1.1.0 
+  ### 1.1.0
   # - changed data type in operation read_maxMailSize
   # - changed error code 405 to 400 in operation add_Attachment
-  # - changed MIME type multipart/form-data to application/octect-stream in operation add_Attachment() and read_Attachment() 
+  # - changed MIME type multipart/form-data to application/octect-stream in operation add_Attachment() and read_Attachment()
   ### 1.0.1
   # - added errorcode 413 in operation add_Attachment
-  # - extended URI to interface releases 
+  # - extended URI to interface releases
   ### 1.0.0
-  # - initial Version of I_Attachment_Service   
+  # - initial Version of I_Attachment_Service
 
 externalDocs:
   description: GitHub - Dokumentation
@@ -57,7 +57,7 @@ paths:
       summary: Einen Anhang herunterladen
       description: gibt den unter einem Freigabelink verschlüsselten Anhang zurück
       operationId: read_Attachment
-      
+
       parameters:
       - name: attachmentId
         in: path
@@ -73,11 +73,11 @@ paths:
           type: string
           format: email
 
-      
+
       responses:
         200:
           description: OK
-             # Anhang wurde erfolgreich heruntergeladen 
+             # Anhang wurde erfolgreich heruntergeladen
           content:
            application/octet-stream:
             schema:
@@ -94,13 +94,13 @@ paths:
           content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
         404:
           description: Ressource unter dem angegebenen Link nicht gefunden
           content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
         429:
           description: Anhang zu oft heruntergeladen.
           content:
@@ -108,12 +108,12 @@ paths:
                 schema:
                   $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'      
-                
+                $ref: '#/components/schemas/Error'
+
 
 ##--
 ##------
@@ -144,21 +144,21 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
           401:
             description: Authentifizierung fehlgeschlagen.
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
           404:
             description: Ressource unter dem angegebenen Link nicht gefunden
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
           500:
-            description: Internal Server Error          
+            description: Internal Server Error
             content:
               application/json:
                 schema:
@@ -177,7 +177,7 @@ paths:
       security:
         - basicAuth: []
         # Die Authentifizierung erfolgt mit username/password von dem Mail Account
-        
+
       parameters:
         - name: Content-Length
           in: header
@@ -205,13 +205,13 @@ paths:
                       format: email
                 expires:
                     type: string
-                    description: Zeitpunkt zu dem der Anhang geloescht werden muss 
+                    description: Zeitpunkt zu dem der Anhang geloescht werden muss
                                 # (RFC822 date-time)
                 attachment:
                    type: string
                    format: binary
                    description: Der Anhang
-                   
+
             encoding:
               attachment:
                 contentType: application/octet-stream
@@ -232,7 +232,7 @@ paths:
       responses:
           201:
             description: Created
-                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink erzeugt. 
+                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink erzeugt.
             content:
              application/json:
               schema:
@@ -247,22 +247,22 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
           401:
             description: Authentifizierung fehlgeschlagen.
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
           413:
             description: Payload Too Large
-            # Die maximal zulässige Dokumentengröße wurde überschritten 
+            # Die maximal zulässige Dokumentengröße wurde überschritten
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error'        
+                  $ref: '#/components/schemas/Error'
           500:
-            description: Internal Server Error          
+            description: Internal Server Error
             content:
               application/json:
                 schema:
@@ -275,18 +275,18 @@ paths:
                   $ref: '#/components/schemas/Error'
 
 ##--
-##------               
+##------
 components:
 
   schemas:
-  
+
     Error:
       type: object
       properties:
         message:
           type: string
-  
-  securitySchemes: 
-    basicAuth: 
+
+  securitySchemes:
+    basicAuth:
       type: http
       scheme: basic
