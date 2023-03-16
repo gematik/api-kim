@@ -55,7 +55,7 @@ components:
           type: string
           example:
             passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,64}$
-          description: Gibt die Password Policy alsregulären Ausdruck an, die der AccountManager verlangt.
+          description: Gibt die Password Policy, die der AccountManager verlangt, als regulären Ausdruck an.
         passwordPolicyDisplay:
           type: string
           example:
