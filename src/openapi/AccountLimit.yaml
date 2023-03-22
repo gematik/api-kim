@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: I_AccountLimit_Service
   description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
-  version: 1.1.1
+  version: 1.1.2
+  ### 1.1.2
+  # - added object property AccountLimit.kasMailSizeThreshold
   ### 1.1.1
   # - changed minimum value for maxMailSize
   # - changed descriptions
@@ -84,6 +86,14 @@ components:
           minimum: 734003200
           example: 734003200
           description: Setzt die maximale Größe einer KIM-Mail in Bytes
+        kasMailSizeThreshold:
+          type: integer
+          format: int64
+          readOnly: true
+          minimum: 1048576
+          maximum: 15728640
+          default: 15728640
+          description: Schwellwert der im KIM-Clientmodul empfangenen Datenmenge, ab dem die Daten über den definierten KAS-Prozess verarbeitet werden.
         quota:
           type: integer
           format: int64
