@@ -10,6 +10,7 @@ info:
   # - parameter password in createCert is optional (description changed)
   # - descriptions changed
   # - read only parameter in setAccount removed
+  # - new parameter appTags in registerAccount and setAccount
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
@@ -119,6 +120,12 @@ paths:
                     type: string
                     maxLength: 4
                     example: 1.5
+                  appTags:
+                    type: array
+                    items:
+                      type: string
+                    description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
+                                zugeordnet werden.
         required: true
 
       responses:
@@ -810,6 +817,12 @@ components:
           example: 1.5+
           description: Der KIM Teilnehmer kann seine KIM Version ändern. Der Wertebereich der unterstützten
                       KIM Versionen soll vom Clientmodul vorgegeben werden.
+        appTags:
+          type: array
+          items:
+            type: string
+          description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
+                      zugeordnet werden.
         dataTimeToLive:
           type: integer
           maxLength: 3
