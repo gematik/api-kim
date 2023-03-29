@@ -126,6 +126,8 @@ paths:
                       type: string
                     description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
                                 zugeordnet werden.
+                                Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
+                                wird der Form-Part mehrfach angegeben (exploded=true).
         required: true
 
       responses:
@@ -363,6 +365,12 @@ paths:
                     example: 734003200
                     readOnly: true
                     description: Gibt die maximale Größe einer KIM-Mail in Bytes an
+                  appTags:
+                    type: array
+                    items:
+                      type: string
+                    description: Gibt die Liste aller Anwendungskennzeichen, die der Mail-Adresse
+                                zugeordnet sind, zurück.
                   dataTimeToLive:
                     type: integer
                     maxLength: 3
@@ -823,6 +831,10 @@ components:
             type: string
           description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
                       zugeordnet werden.
+                      Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
+                      wird der Form-Part mehrfach angegeben (exploded=true). Wenn kein Anwendungskennzeichen angegeben
+                      ist, dann werden bereits bestehende Anwendungskennzeichen gelöscht.
+
         dataTimeToLive:
           type: integer
           maxLength: 3
