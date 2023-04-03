@@ -5,6 +5,7 @@ info:
   version: 1.0.0
   ### 1.0.0
   # - initial Version of I_ServiceInformation
+  # - added traceId to Error object
 
 externalDocs:
   description: GitHub - Dokumentation
@@ -71,5 +72,9 @@ components:
     Error:
       type: object
       properties:
+        traceId:
+          type: string
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
         message:
           type: string

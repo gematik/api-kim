@@ -11,6 +11,7 @@ info:
   # - descriptions changed
   # - read only parameter in setAccount removed
   # - new parameter appTags in registerAccount and setAccount
+  # - added traceId to Error object
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
@@ -808,6 +809,10 @@ components:
     Error:
       type: object
       properties:
+        traceId:
+          type: string
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
         message:
           type: string
 

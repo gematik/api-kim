@@ -6,6 +6,7 @@ info:
   ### 1.1.1
   # - changed minimum value for maxMailSize
   # - changed descriptions
+  # - added traceId to Error object
   ### 1.1
   # - changed version number in server url
   # - removed quotation marks and added minimum value for maxMailSize
@@ -98,6 +99,10 @@ components:
     Error:
       type: object
       properties:
+        traceId:
+          type: string
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
         message:
           type: string
 
