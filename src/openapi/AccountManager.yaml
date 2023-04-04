@@ -811,6 +811,7 @@ components:
       properties:
         traceId:
           type: string
+          maxLength: 255
           example: 19aaf69260f63694
           description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
         message:
