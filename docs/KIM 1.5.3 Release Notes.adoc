@@ -11,7 +11,7 @@ image:gematik_logo.svg[width=70%]
 - Anforderungen zum Einbringen der Anwendungskennung am Clientmodule sind erstellt (A_23737)
 - Anforderungen zur Einbringung der Anwendungskennung durch den KIM Fachdienst in den VZD sind erstellt (A_23718, A_23722)
 - Anforderungen für die Einbringung der Anwendungskennzeichen für den Verzeichnisdienst sind erstellt.
-- Anforderungen für das Reporting der neuen X-KIM-Header wurden erstellt (neu CM A_23737, FD A_23746, A_23748). Für das Betriebsdatenreporting wurde ein Report erstellt.
+- Anforderungen für das Reporting der neuen X-KIM-Header wurden erstellt (neu Clientmodul: A_23737, Fachdienst: A_23746, A_23748). Für das Betriebsdatenreporting wurde ein Report erstellt.
 - Am neuen Interface I_ServiceInformation wurde eine Passwort Policy in der Operation getServiceInformation beschrieben und kann dort abgefragt werden (A_23753, A_23754).
 - A_23541 wurde erstellt. Wenn im Benutzernamen die IP-Adresse und der Port angegeben sind, dann hat dies Vorrang vor DNS-SD.
 - Neue Anforderung erstellt A_23554 - "Weiterleitung MAIL FROM - SIZE-Parameter".
