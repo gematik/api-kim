@@ -3,31 +3,32 @@
 image:gematik_logo.svg[width=70%]
 
 
-== KIM 1.5.3 release notes
+== KIM 1.5.3 Release Notes
 
+=== Neu
+
+- Das Feature Anwendungskennzeichen wurde in der gemSpec_CM_KOMLE und in der gemSpec_FD_KOMLE spezifiziert. Das Clientmodul ermöglicht die Administration über den Administrationsmodul und der Account Manager realisiert die Eintragung in den VZD.
+- Anforderungen zum Einbringen der Anwendungskennung am Clientmodule sind erstellt (A_23737)
+- Anforderungen zur Einbringung der Anwendungskennung durch den KIM Fachdienst in den VZD sind erstellt (A_23718, A_23722)
+- Anforderungen für die Einbringung der Anwendungskennzeichen für den Verzeichnisdienst sind erstellt.
 - Am neuen Interface I_ServiceInformation wurde eine Passwort Policy in der Operation getServiceInformation beschrieben und kann dort abgefragt werden (A_23753, A_23754).
+- A_23541 wurde erstellt. Wenn im Benutzernamen die IP-Adresse und der Port angegeben sind, dann hat dies Vorrang vor DNS-SD.
+
+=== Geändert
 - Anforderungen zum cachen wurden präzisiert, Konfigurationsparameter wurden erweitert (A_22348, A_22416-01, A_22340-01, KOM-LE-A_2026-01, KOM-LE-A_2061-01).
 - AttachmentServices.yaml wurde erweitert, Tabelle 4: Operationen vom KAS wurde ergänzt (A_19375-05 - KAS – Implementierung der Schnittstelle).
 - Bezüglich des Header "Expires" wurde der Text der Anforderung mit dem Hinweis auf RFC4021 ergänzt (A_22417-01).
 - Das JWT zur Authentisierung am Account Manager verwendet nun die Attribute iat und exp anstatt nbf. Die Gültigkeitsdauer wurde auf 6 Stunden festgelegt (KOM-LE-A_2187-05).
 - Das Prüfverfahren "Produkttest" wurde für KOM-LE-A_2304 entfernt
 - Die Anforderungen A_20189-02 und A_21389 wurden von der Clientmodul- in die Fachdienst-Spezifikation verschoben.
-- Die Protokollierung von Performance Daten im Clientmodul wurde entfernt (geändert: KOM-LE-A_2079-01, gelöscht: KOM-LE-A_2084, KOM-LE-A_2088, KOM-LE-A_2089).
 - Es wurde ein Hinweistext unter die Anforderung A_21387-03 platziert, dass eine Aktualisierung bei Verwendung eines HBA erst bei einem Mailabruf erfolgen kann, da der POP3 Benutzername die benötigte userID bereitstellt.
 - Die KIM-Version 1.5 kann jetzt um ein optionales "+" erweitert sein. Verweise auf die gematik Dokumente und OpenAPI Definitionen wurden aktualisiert.
 - Passwortschutz der PKCS#12 Datei ist nun optional (A_19468-03)
 - Prüfverfahren "Produkttest" wurde für KOM-LE-A_2091-01 zugewiesen
 - Prüfverfahren wurde für GS-A_4864 auf Herstellererklärung geändert
-- Das Feature Anwendungskennzeichen wurde in der gemSpec_CM_KOMLE und in der gemSpec_FD_KOMLE spezifiziert. Das Clientmodul ermöglicht die Administration über den Administrationsmodul und der Account Manager realisiert die Eintragung in den VZD.
-- Anforderungen zum Einbringen der Anwendungskennung am Clientmodule sind erstellt (A_23737)
-- Anforderungen zur Einbringung der Anwendungskennung durch den KIM Fachdienst in den VZD sind erstellt (A_23718, A_23722)
-- Anforderungen für die Einbringung der Anwendungskennzeichen für den Verzeichnisdienst sind erstellt,
-- GS-A_5136 "Performance – KOM-LE-Clientmodul – Bearbeitungszeit unter Last" wurde gestrichen.
 - GS-A_5138-02 "Performance – KOM-LE-Fachdienst – TLS-Verbindungsaufbau unter Last" wurde geändert.
 - A_20127-01 "Performance - KOM-LE-Fachdienst – Spitzenlastvorgaben für den KAS" wurde geändert.
-- A_20130 "Performance - KOM-LE-Fachdienst - TLS Kanal KAS" wurde gelöscht.
 - Anforderungen für die neuen X-KIM-Header für die Bereitstellung der ProfessionOID als Bestandteil wurden erstellt (neu CM A_23737, FD A_23746, A_23748). Für das Betriebsdatenreporting wurde ein Report erstellt.
-- A_23541 wurde erstellt. Wenn im Benutzernamen die IP-Adresse und der Port angegeben sind, dann hat dies Vorrang vor DNS-SD.
 - KOM-LE-A_2187-05 geändert; Abhängigkeit für createCert vom VZD-Eintrag wurde entfernt. Der Aufbau des Json-Web-Token wurde geändert.
 - Die Anforderung "KOM-LE-A_2187-05 - Authentifizierung des KOM-LE-Teilnehmers über AUT-Zertifikat am AccountManager" wurde geändert, so dass die Aufruf getAccount keinen Abgleich mit dem VZD benötigt.
 - Eine Bildungsregel zur Ermittlung der HTTP Endpunkte wurde festgelegt (siehe Anforderung "A_19523 - Service-Discovery Administrationsmodul").
@@ -35,8 +36,8 @@ image:gematik_logo.svg[width=70%]
 - Die Anforderung "KOM-LE-A_2179-02 - Vermerk in der Nachricht bei erfolgreicher Entschlüsselung" wurde überarbeitet, der separate Fehlertext wurde entfernt, X-KIM-DecryptionResult (ID 00) wird gesetzt.
 - Anpassung der AttachementService.yaml Operation addAttachment (required true für Content-Length und Content-Disposition; A_22427-01)
 - Anforderung A_19385-03 wurde bzgl. Karenzzeit erweitert,
-- Anforderung A_19370-05 bzgl. dem unterschiedlichen Verhalten bei Fehlern angepasst
-- Anpassung der AttachmentService.yaml ist erfolgt, neues Header-Element X-KIM-KAS-SIZE wurde definiert: A_23467 - Übermittlung der KAS-Datenmenge
+- Anforderung A_19370-05 bzgl. dem unterschiedlichen Verhalten bei Fehlern angepasst.
+- Anpassung der AttachmentService.yaml ist erfolgt, neues Header-Element X-KIM-KAS-Size wurde definiert: A_23467 - Übermittlung der KAS-Datenmenge
 - Die neue Variante 1.5+ wurde in die Spezifikationen aufgenommen und als weitere mögliche Option genannt.
 - Die Anforderung KOM-LE-A_2136 wurde auf Herstellererklärung geändert
 - Die Schnittstelle I_AccountManager_Service wurde überarbeitet. Nicht schreibbare Attribute wurden aus setAccount entfernt.
@@ -119,3 +120,9 @@ image:gematik_logo.svg[width=70%]
 - Tab_Konfig_Parameter Konfigurationsparameter Fachdienst KOM-LE wurde erweitert: "Löschfrist von Nachrichten nach der endgültigen Deregistrierung"; KOM-LE-A_2139-03 Konfiguration Fachdienst (neuer Index)
 - Nachweis der Anforderungen KOM-LE-A_2184 wurde auf Herstellererklärung geändert.
 - Nachweis der Anforderungen A_19454 und A_19455 wurde auf Herstellererklärung geändert.
+
+=== Gelöscht
+
+- Die Protokollierung von Performance Daten im Clientmodul wurde entfernt (geändert: KOM-LE-A_2079-01, gelöscht: KOM-LE-A_2084, KOM-LE-A_2088, KOM-LE-A_2089).
+- GS-A_5136 "Performance – KOM-LE-Clientmodul – Bearbeitungszeit unter Last" wurde gestrichen.
+- A_20130 "Performance - KOM-LE-Fachdienst - TLS Kanal KAS" wurde gelöscht.
