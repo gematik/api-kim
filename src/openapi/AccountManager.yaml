@@ -11,6 +11,7 @@ info:
   # - descriptions changed
   # - read only parameter in setAccount removed
   # - new parameter appTags in registerAccount and setAccount
+  # - changed servers -url
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
