@@ -1,0 +1,74 @@
+@startuml "KIM Anwendungsfall 500MB senden"
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 1
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontName Impact
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+
+actor u as "User"
+participant mc as "Mail-Client"
+participant cm as "Clientmodul"
+participant kon as "Konnektor"
+participant kas as "KAS"
+participant ms as "Mailserver"
+participant vzd as "VZD"
+
+u -> mc: compose E-Mail\n(with big attachment 500MB)
+activate mc
+u -> mc: E-Mail senden
+mc -> cm: SMTP (MAIL from, RCPT to, DATA)
+activate cm
+cm -> ms: SMTP (MAIL from, RCPT to, DATA)
+activate ms
+ms --> cm: SMTP START
+group #WhiteSmoke Mailserver must wait, keep alive required
+    cm --> mc: SMTP START
+    mc -> cm: send E-Mail data
+    mc -> cm: send "." + CRLF
+    mc -> cm: SMTP QUIT
+    deactivate mc
+    cm -> vzd: LDAP query mail=to
+    vzd --> cm: LDAP entry with komLeData
+    cm -> cm: to-address has KIM-version "1.5+"
+    cm -> cm: create symmetric key
+    cm -> cm: encrypt E-Mail data
+    cm -> kas: http upload encrypted E-Mail data
+    activate kas
+    kas --> cm: http response with KAS download url
+    deactivate kas
+    cm -> cm: create new E-Mail with\nKIM attachment data structure
+    cm -> kon: signDocument(new E-Mail)
+    activate kon
+    kon --> cm: new E-Mail with signature
+    cm -> kon: encryptDocument(new E-Mail with signature)
+    kon --> cm: encrypted KIM-Mail
+    deactivate kon
+    cm -> ms: send KIM-Mail
+end
+cm -> ms: send "." + CRLF
+cm -> ms: SMTP QUIT
+deactivate cm
+deactivate ms
+
+@enduml

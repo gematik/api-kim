@@ -1,0 +1,64 @@
+@startuml "KIM Anwendungsfall 500MB senden"
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 1
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontName Impact
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+
+actor u as "User"
+participant mc as "Mail-Client"
+participant cm as "Clientmodul"
+participant kon as "Konnektor"
+participant kas as "KAS"
+participant ms as "Mailserver"
+participant vzd as "VZD"
+
+activate mc
+mc -> cm: POP3 (STAT, LIST)
+activate cm
+cm -> ms: POP3 (STAT, LIST)
+activate ms
+ms --> cm: POP3 OK Message list
+cm --> mc: POP3 OK Message list
+mc -> cm: POP3 RETR 1
+group #WhiteSmoke Mailclient and Mailserver must wait, keep alive required
+    cm -> ms: POP3 RETR 1
+    ms --> cm: POP3 OK Message 1
+    cm -> kon: decryptDocument (KIM-Mail)
+    kon --> cm: decrypted KIM-Mail
+    cm -> kon: verifyDocument (decrypted KIM-Mail)
+    kon --> cm: verificationStatus
+    cm -> cm: process KIM-Mail\nextract KAS download url\nextract symmetric key
+    cm -> kas: HTTP download from url
+    activate kas
+    kas --> cm: encrypted E-Mail data
+    deactivate kas
+    cm -> cm: decrypt encrypted E-Mail data\nwith symmetric key
+    cm -> cm: create hash and\nverify with KAS hash value
+    cm --> mc: POP3 OK decrypted Message 1
+end
+deactivate cm
+deactivate ms
+
+@enduml
