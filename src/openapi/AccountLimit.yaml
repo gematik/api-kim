@@ -6,6 +6,7 @@ info:
   ### 1.1.2
   # - changed servers -url
   # - added object property AccountLimit.kasMailSizeThreshold
+  # - added traceId to Error object
   ### 1.1.1
   # - changed minimum value for maxMailSize
   # - changed descriptions
@@ -114,6 +115,11 @@ components:
       properties:
         message:
           type: string
+        traceId:
+          type: string
+          maxLength: 255
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
 
   securitySchemes:
     basicAuth:
