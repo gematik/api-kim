@@ -60,8 +60,10 @@ externalDocs:
   description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/
-  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
+- url: /AccountMgmt/v2.3/
+  # Die URL muss wie folgt gebildet werden:
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
 tags:
 - name: Email-Account
 - name: Certificate
