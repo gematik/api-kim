@@ -8,6 +8,7 @@ info:
   # - added distinct definition for header element Content-Length in add_Attachment:
   #   - Content-Length full request body
   #   - Conent-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
+  # - added traceId to Error object
   # - changed servers -url
   ### 2.3.1
   # - added delete_Maildata feature
@@ -289,6 +290,11 @@ components:
       properties:
         message:
           type: string
+        traceId:
+          type: string
+          maxLength: 255
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
 
   securitySchemes:
     basicAuth:
