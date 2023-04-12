@@ -8,6 +8,7 @@ info:
   # - added distinct definition for header element Content-Length in add_Attachment:
   #   - Content-Length full request body
   #   - Conent-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
+  # - changed servers -url
   ### 2.3.1
   # - added delete_Maildata feature
   ### 2.3.0
