@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: I_AccountLimit_Service
   description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
-  version: 1.1.1
+  version: 1.1.2
+  ### 1.1.2
+  # - changed servers -url
   ### 1.1.1
   # - changed minimum value for maxMailSize
   # - changed descriptions
