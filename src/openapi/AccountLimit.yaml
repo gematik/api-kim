@@ -2,7 +2,10 @@ openapi: 3.0.3
 info:
   title: I_AccountLimit_Service
   description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
-  version: 1.1
+  version: 1.1.1
+  ### 1.1.1
+  # - changed minimum value for maxMailSize
+  # - changed descriptions
   ### 1.1
   # - changed version number in server url
   # - removed quotation marks and added minimum value for maxMailSize
@@ -24,17 +27,17 @@ paths:
     get:
       tags:
       - AccountLimit
-      summary: Limits eines Accounts abgefragen
+      summary: Limits eines Accounts abfragen
       description: Gibt die Limits eines Accounts zurück
       operationId: getLimits
-      
+
       security:
         - basicAuth: []
 
       responses:
         200:
           description: OK
-             # Rückgabe der Metadaten eines Nutzer-Accounts 
+             # Rückgabe der Metadaten eines Nutzer-Accounts
           content:
             application/json:
               schema:
@@ -50,35 +53,35 @@ paths:
           content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error' 
+                  $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'                  
+                $ref: '#/components/schemas/Error'
 
 ##--
-##------               
+##------
 components:
 
   schemas:
-  
+
     AccountLimit:
       type: object
       properties:
-        dataTimeToLive: 
+        dataTimeToLive:
           type: integer
           maxLength: 3
           minimum: 10
           maximum: 365
           default: 90
           example: 90
-          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen
+          description: Speicherdauer von Mails auf dem Mailserver und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
         maxMailSize:
           type: integer
           format: int64
-          minimum: 524288000
+          minimum: 734003200
           example: 734003200
           description: Setzt die maximale Größe einer KIM-Mail in Bytes
         quota:
@@ -97,8 +100,8 @@ components:
       properties:
         message:
           type: string
-  
-  securitySchemes: 
-    basicAuth: 
+
+  securitySchemes:
+    basicAuth:
       type: http
       scheme: basic
