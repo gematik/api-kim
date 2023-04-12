@@ -74,7 +74,7 @@ components:
           type: integer
           maxLength: 3
           minimum: 10
-          maximum: 365
+          maximum: 90
           default: 90
           example: 90
           description: Speicherdauer von Mails auf dem Mailserver und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
