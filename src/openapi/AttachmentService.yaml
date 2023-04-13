@@ -205,6 +205,9 @@ paths:
                 recipients:
                     type: array
                     description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger; Pro Form-Part wird genau eine Adresse spezifiziert und der Form-Part wird mehrfach angegeben (exploded=true)
+                                # curl Beispiel:
+                                # -F 'recipients=user1@example.kim.telematik' \
+                                # -F 'recipients=user2@example.kim.telematik' \
                     items:
                       type: string
                       format: email
