@@ -1,5 +1,3 @@
-= KIM API
-
 :imagesdir: ../images
 
 image:gematik_logo.svg[width=70%]
