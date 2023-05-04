@@ -46,7 +46,7 @@ image:gematik_logo.svg[width=70%]
 - Operation add_attachement (AttachmentService.yaml) wurde bei der Description ergänzt: Pro Form-Part wird genau eine Adresse spezifiziert und der Form-Part wird mehrfach angegeben (exploded=true)
 - KOM-LE-A_2176-01 - Prüfen auf gültiges ENC-Zertifikat für den Empfänger im RCPT-Kommando" wurde geändert. Kein Abbruch wenn ein Empfänger ohne Zertifikat vorhanden.
 - Anforderung KOM-LE-A_2167-05 "Sperrung des Accounts" wurde präzisiert.
-- Anforderung A_19359-07 wurde verständlicher formuliert und ein Hinweis zum Content-Transfer-Encoding: base64 ergänzt.
+- Anforderung A_19356-07 wurde verständlicher formuliert und ein Hinweis zum Content-Transfer-Encoding: base64 ergänzt.
 - Die Anforderung KOM-LE-A_2135-01 wurde auf Herstellererklärung geändert
 - A_19524-02 - Anforderung Verwaltung Resource Records Typs für Service Discovery, KIM" wurde präzisiert, feste Vorgabe für die Ports zw. den FD
 - A_19378-02 - KAS - prüfen der Größe der verschlüsselten E-Mail-Daten" mit Hinweis auf Quota erweitert
