@@ -14,7 +14,7 @@ image:gematik_logo.svg[width=70%]
 - Am neuen Interface I_ServiceInformation wurde eine Passwort Policy in der Operation getServiceInformation beschrieben und kann dort abgefragt werden (A_23753, A_23754).
 - A_23541 wurde erstellt. Wenn im Benutzernamen die IP-Adresse und der Port angegeben sind, dann hat dies Vorrang vor DNS-SD.
 - Neue Anforderung erstellt A_23554 - "Weiterleitung MAIL FROM - SIZE-Parameter".
-- Anforderung "A_23468 - Übermittlung der KAS-Datenmenge" wurde erstellt
+- Anforderung "A_23467 - Übermittlung der KAS-Datenmenge" wurde erstellt
 - Neues Kapitel (6. Fehlernachrichten) in Primärsystem Leitfaden zu KIM auf gitHub
 - Ein neues Headerelement X-KIM-Support wurde in Github für Primärsysteme definiert.
 
