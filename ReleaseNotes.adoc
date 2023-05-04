@@ -7,7 +7,7 @@ image:gematik_logo.svg[width=70%]
 
 === Neu
 - Das Feature Anwendungskennzeichen wurde in der gemSpec_CM_KOMLE und in der gemSpec_FD_KOMLE spezifiziert. Das Clientmodul ermöglicht die Administration über den Administrationsmodul und der Account Manager realisiert die Eintragung in den VZD.
-- Anforderungen zum Einbringen der Anwendungskennung am Clientmodule sind erstellt (A_23737)
+- Anforderungen zum Einbringen der Anwendungskennung am Clientmodule sind erstellt (A_23713)
 - Anforderungen zur Einbringung der Anwendungskennung durch den KIM Fachdienst in den VZD sind erstellt (A_23718, A_23722)
 - Anforderungen für die Einbringung der Anwendungskennzeichen für den Verzeichnisdienst sind erstellt.
 - Anforderungen für das Reporting der neuen X-KIM-Header wurden erstellt (neu Clientmodul: A_23737, Fachdienst: A_23746, A_23748). Für das Betriebsdatenreporting wurde ein Report erstellt.
