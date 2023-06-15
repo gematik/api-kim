@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: I_ServiceInformation
   description:  Über diese Schnittstelle werden Informationen über den KIM Fachdienst abgefragt
-  version: 1.0.0
+  version: 1.0.1
+  ### 1.0.1
+  # - added kimServiceVersion and jwtExpirations to the ServiceInformation object
   ### 1.0.0
   # - initial Version of I_ServiceInformation
   # - added traceId to Error object
@@ -53,28 +55,30 @@ components:
     ServiceInformation:
       type: object
       properties:
+        kimServiceVersion:
+          type: string
+          description: Gibt die Version des KIM Fachdienstes an.
         passwordPolicyRegEx:
           type: string
-          example:
-            passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,64}$
           description: Gibt die Password Policy, die der AccountManager verlangt, als regulären Ausdruck an.
         passwordPolicyDisplay:
           type: string
-          example:
-            passwordPolicyDisplay: Mindestens eine Zahl [0-9]
-                                  Mindestens ein Kleinbuchstabe [a-z]
-                                  Mindestens ein Großbuchstabe [A-Z]
-                                  Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;<>,.?/~_+-=|\]
-                                  Mindestlänge 8 Zeichen
-                                  Maximallänge 64.
           description: Gibt die Password Policy, die der AccountManager verlangt, in Textform an.
         jwtExpiration:
           type: integer
-          minimum: 0
+          minimum: 300
           maximum: 21600
-          example: 300
-          description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.          
-
+          description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.
+      example:
+        kimServiceVersion: 1.5.3
+        passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,64}$
+        passwordPolicyDisplay: Mindestens eine Zahl [0-9]
+                              Mindestens ein Kleinbuchstabe [a-z]
+                              Mindestens ein Großbuchstabe [A-Z]
+                              Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;<>,.?/~_+-=|\]
+                              Mindestlänge 8 Zeichen
+                              Maximallänge 64.
+        jwtExpiration: 300
 
     Error:
       type: object
