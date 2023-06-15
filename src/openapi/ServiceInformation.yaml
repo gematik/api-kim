@@ -68,6 +68,12 @@ components:
                                   Mindestlänge 8 Zeichen
                                   Maximallänge 64.
           description: Gibt die Password Policy, die der AccountManager verlangt, in Textform an.
+        jwtExpiration:
+          type: integer
+          minimum: 0
+          maximum: 21600
+          example: 300
+          description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.          
 
 
     Error:
