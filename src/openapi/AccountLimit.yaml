@@ -95,7 +95,7 @@ components:
           type: integer
           format: int64
           readOnly: true
-          minimum: 1048576
+          minimum: 0
           maximum: 15728640
           default: 15728640
           description: Schwellwert der im KIM-Clientmodul empfangenen Datenmenge, ab dem die Daten über den definierten KAS-Prozess verarbeitet werden.
