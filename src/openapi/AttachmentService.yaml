@@ -7,7 +7,7 @@ info:
   ### 2.3.2
   # - added distinct definition for header element Content-Length in add_Attachment:
   #   - Content-Length full request body
-  #   - Conent-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
+  #   - Content-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
   # - added traceId to Error object
   # - changed servers -url
   ### 2.3.1
@@ -34,7 +34,7 @@ info:
   ### 1.1.0
   # - changed data type in operation read_maxMailSize
   # - changed error code 405 to 400 in operation add_Attachment
-  # - changed MIME type multipart/form-data to application/octect-stream in operation add_Attachment() and read_Attachment()
+  # - changed MIME type multipart/form-data to application/octet-stream in operation add_Attachment() and read_Attachment()
   ### 1.0.1
   # - added errorcode 413 in operation add_Attachment
   # - extended URI to interface releases
@@ -66,7 +66,7 @@ paths:
       parameters:
       - name: attachmentId
         in: path
-        description: Link-Referenz auf den verschüsselten Anhang im Dienst
+        description: Link-Referenz auf den verschlüsselten Anhang im Dienst
         required: true
         schema:
           type: string
@@ -136,7 +136,7 @@ paths:
       parameters:
       - name: attachmentId
         in: path
-        description: Link-Referenz auf den verschüsselten Anhang im Dienst
+        description: Link-Referenz auf den verschlüsselten Anhang im Dienst
         required: true
         schema:
           type: string

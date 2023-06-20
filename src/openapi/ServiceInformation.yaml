@@ -61,13 +61,12 @@ paths:
       responses:
         200:
           description: OK
-             # Rückgabe der Anwendungskennzeichen als FHIR CodeSystem
+             # Rückgabe der Anwendungskennzeichen als FHIR CodeSystem (ServiceIdentifierCS)
              # Siehe https://simplifier.net/app-transport-framework/service-identifier-cs/~json
           content:
             application/json:
               schema:
-                type: string
-                format: binary
+                {}
         500:
           description: Internal Server Error
           content:

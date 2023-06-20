@@ -74,7 +74,7 @@ tags:
 
 security:
   - bearerAuth: []
-    # Die Authentisierung erfolgt für alle Operatiponen über ein JWT
+    # Die Authentisierung erfolgt für alle Operationen über ein JWT
 
 paths:
 ##--
@@ -260,7 +260,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         502:
-          description: VZD nicht erreichbar bzw. liefert Feler
+          description: VZD nicht erreichbar bzw. liefert Fehler
           content:
             application/json:
               schema:
