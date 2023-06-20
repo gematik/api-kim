@@ -3,6 +3,8 @@ info:
   title: I_ServiceInformation
   description:  Über diese Schnittstelle werden Informationen über den KIM Fachdienst abgefragt
   version: 1.0.1
+  ### 2.0.2
+  # - added operation GET /appTags
   ### 1.0.1
   # - added kimServiceVersion and jwtExpirations to the ServiceInformation object
   ### 1.0.0
@@ -45,6 +47,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /appTags:
+    get:
+      tags:
+       - appTags
+      summary: Abfrage der Anwendungskennzeichen
+      description: Es wird die Liste der Anwendungskennzeichen abgefragt.
+        Die Anwendungskennzeichen werden als FHIR Codesystem in der
+        Response übergeben
+      operationId: getAppTags
+
+      responses:
+        200:
+          description: OK
+             # Rückgabe der Anwendungskennzeichen als FHIR CodeSystem
+             # Siehe https://simplifier.net/app-transport-framework/service-identifier-cs/~json
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 
 ##--
 ##------
