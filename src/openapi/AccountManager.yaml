@@ -4,7 +4,7 @@ info:
   description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
   version: 2.3.1
-  ### 2.3.1
+### 2.3.1
   # KIM 1.5.3 changes
   # - values for regStat defined (registered and deregistered)
   # - parameter password in createCert is optional (description changed)
@@ -13,6 +13,7 @@ info:
   # - new parameter appTags in registerAccount and setAccount
   # - added traceId to Error object
   # - changed servers -url
+  # - added "noVzdMailEntry" flag for POST /account and PUT /account/{username}
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
@@ -132,6 +133,11 @@ paths:
                                 zugeordnet werden.
                                 Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
                                 wird der Form-Part mehrfach angegeben (exploded=true).
+                  noVzdMailEntry:
+                    type: boolean
+                    description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und komLeData
+                                Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
+                                Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
         required: true
 
       responses:
@@ -853,6 +859,11 @@ components:
           example: 90
           description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
                       Der KIM Teilnehmer kann den Wert ändern.
+        noVzdMailEntry:
+          type: boolean
+          description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und komLeData
+                      Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
+                      Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
 
     CertificateParameters:
       type: object
