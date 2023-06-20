@@ -66,7 +66,9 @@ paths:
           content:
             application/json:
               schema:
-                {}
+                externalDocs:
+                  description: Rückgabe der Anwendungskennzeichen als FHIR CodeSystem (ServiceIdentifierCS)
+                  url: https://simplifier.net/app-transport-framework/service-identifier-cs/~json
         500:
           description: Internal Server Error
           content:
