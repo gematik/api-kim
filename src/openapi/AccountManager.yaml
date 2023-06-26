@@ -104,7 +104,6 @@ paths:
                   referenceID:
                     type: string
                     maxLength: 256
-                    #writeOnly: true
                     description: Der KIM Anbieter legt die referenceID fest und teilt sie dem KIM Teilnehmer mit.
                                 Es kann z.B. eine Vertragsnummer oder einen Registrierungscode enthalten sein.
                                 Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
