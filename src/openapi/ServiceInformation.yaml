@@ -2,8 +2,8 @@ openapi: 3.0.3
 info:
   title: I_ServiceInformation
   description:  Über diese Schnittstelle werden Informationen über den KIM Fachdienst abgefragt
-  version: 1.0.1
-  ### 2.0.2
+  version: 1.0.2
+  ### 1.0.2
   # - added operation GET /appTags
   ### 1.0.1
   # - added kimServiceVersion and jwtExpirations to the ServiceInformation object
