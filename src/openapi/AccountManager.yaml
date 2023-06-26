@@ -667,7 +667,7 @@ paths:
                 file:
                   type: string
                   format: binary
-                  description: Base64-encoded PKCS#12 Container. Wenn im Request ein Passwort übergeben wurde,
+                  description: Base64-encoded PKCS#12 Container. Wenn im Request ein Passwort in certPassword übergeben wurde,
                               dann ist der Container mit dem Passwort geschützt.
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
