@@ -134,7 +134,7 @@ paths:
                                 wird der Form-Part mehrfach angegeben (exploded=true).
                   noVzdMailEntry:
                     type: boolean
-                    description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und komLeData
+                    description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
                                 Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
                                 Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
         required: true
@@ -860,7 +860,7 @@ components:
                       Der KIM Teilnehmer kann den Wert ändern.
         noVzdMailEntry:
           type: boolean
-          description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und komLeData
+          description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
                       Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
                       Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
 
