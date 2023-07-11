@@ -382,7 +382,6 @@ paths:
                                 zugeordnet sind, zurück.
                   dataTimeToLive:
                     type: integer
-                    nullable: true
                     maxLength: 3
                     minimum: 10
                     maximum: 90
