@@ -102,7 +102,7 @@ components:
           description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.
       example:
         kimServiceVersion: 1.5.3
-        passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,.?/~_+\-=|\\]).{8,64}$
+        passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,?/~_+\-=|\\]).{8,64}$
         passwordPolicyDisplay: Mindestens eine Zahl [0-9]
                               Mindestens ein Kleinbuchstabe [a-z]
                               Mindestens ein Großbuchstabe [A-Z]
