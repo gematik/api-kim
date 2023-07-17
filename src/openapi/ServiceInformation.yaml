@@ -106,7 +106,7 @@ components:
         passwordPolicyDisplay: Mindestens eine Zahl [0-9]
                               Mindestens ein Kleinbuchstabe [a-z]
                               Mindestens ein Großbuchstabe [A-Z]
-                              Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;'<>,.?/~_+-=|\]
+                              Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;'<>,?/~_+-=|\]
                               Mindestlänge 8 Zeichen
                               Maximallänge 64.
         jwtExpiration: 300
