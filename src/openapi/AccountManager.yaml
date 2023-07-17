@@ -63,7 +63,7 @@ externalDocs:
   description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: /AccountMgmt/v2.3/
+- url: /AccountMgmt/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
@@ -79,7 +79,7 @@ security:
 paths:
 ##--
 ##------
-  /account:
+  /v2.3/account:
     post:
       tags:
       - Email-Account
@@ -188,7 +188,116 @@ paths:
                 $ref: '#/components/schemas/Error'
 ##--
 ##------
-  /account/{username}:
+  /v2.4/account:
+    post:
+      tags:
+      - Email-Account
+      summary: Registriert einen neuen Email Account.
+            #  In allen Fehlerfällen wird der Account nicht erzeugt.
+      operationId: registerAccountv2.4
+      parameters:
+        - in: header
+          name: iniPassword
+          description: Initiales Passwort für den Email-Account. Das initiale Password muss base64 encoded gesendet werden.
+          required: true
+          schema:
+             type: string
+             format: password
+      requestBody:
+        description: Registriert neuen Account
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  referenceID:
+                    type: string
+                    maxLength: 256
+                    description: Der KIM Anbieter legt die referenceID fest und teilt sie dem KIM Teilnehmer mit.
+                                Es kann z.B. eine Vertragsnummer oder einen Registrierungscode enthalten sein.
+                                Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                                Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der
+                                Interoperabilität mit allen KIM Fachdiensten - unterstützen. Durch die "setAccount"
+                                Operation ist dieser Wert nicht änderbar.
+                  username:
+                    type: string
+                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden.
+                                Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    format: email
+                  password:
+                    type: string
+                    format: password
+                    description: Der KIM Teilnehmer gibt hier das Passwort an, das nach der initialen Registrierung
+                                für diesen Mail-Account gilt.
+                  kimVersion:
+                    type: string
+                    maxLength: 4
+                    example: 1.5
+                  appTags:
+                    type: array
+                    items:
+                      type: string
+                    description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
+                                zugeordnet werden.
+                                Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
+                                wird der Form-Part mehrfach angegeben (exploded=true).
+                  noVzdMailEntry:
+                    type: boolean
+                    description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
+                                Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
+                                Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
+        required: true
+
+      responses:
+        204:
+          description: Account erfolgreich registriert.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen
+                    # Die Authentifizierung über referenceID/iniPassword und Signatur des Operation ist fehlgeschlagen.
+                    # Dieser Fehler tritt auch auf, wenn die referenceID nicht zum AUT-Zertifikat (cert) der Signatur passt oder nicht angegeben wurde.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Konflikt mit bereits bestehenden Account mit identischer e-mail (e-mail Adresse bereits vergeben).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        420:
+          description: Username oder Passwort entsprechen nicht den Regeln.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        422:
+          description: kimVersion nicht unterstützt bzw. unbekannt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /v2.3/account/{username}:
     put:
       tags:
       - Email-Account
@@ -421,7 +530,240 @@ paths:
                 $ref: '#/components/schemas/Error'
 ##--
 ##------
-  /account/{username}/revokeDeregistration:
+  /v2.4/account/{username}:
+    put:
+      tags:
+      - Email-Account
+      summary: Account ändern.
+              Die Werte von nicht angegebenen schreibbaren Parametern werden nicht verändert.
+              # referenceID & username (im Body) können über dieser Operation nicht geändert werden
+      operationId: setAccountv2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Account'
+             # Bei Passwortwechsel ist das "alte" Passwort Im Header dieser Operation enthalten.
+             # Das neue Passwort ist "password" Parameter im Body der Operation enthalten.
+
+      responses:
+        204:
+          description: Änderung des Accounts erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        420:
+          description: Neues Passwort entspricht nicht den Regeln.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        422:
+          description: kimVersion nicht unterstützt bzw. unbekannt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Email-Account
+      summary: Deregistriert einen Mailaccount
+      operationId: deregisterAccountv2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+
+      responses:
+        204:
+          description: Account erfolgreich deregistriert
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+      - Email-Account
+      summary: Anzeige des Accounts
+      operationId: getAccountv2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+      responses:
+        200:
+          description: Anzeige des Accounts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch
+                                die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    format: email
+                  kimVersion:
+                    type: string
+                    maxLength: 4
+                    example: 1.5
+                  regStat:
+                    type: string
+                    maxLength: 512
+                    readOnly: true
+                    example: registered
+                    description: Der Registrierungsstatus des Accounts. Gültige Werte sind registered und deregistered.
+                  deregDate:
+                    type: integer
+                    format: int64
+                    example: 1616588543
+                    readOnly: true
+                    description: Bestätigtes Kündigungsdatum (Unix Timestamp)
+                  maxMailSize:
+                    type: integer
+                    format: int64
+                    minimum: 734003200
+                    example: 734003200
+                    readOnly: true
+                    description: Gibt die maximale Größe einer KIM-Mail in Bytes an
+                  appTags:
+                    type: array
+                    items:
+                      type: string
+                    description: Gibt die Liste aller Anwendungskennzeichen, die der Mail-Adresse
+                                zugeordnet sind, zurück.
+                  dataTimeToLive:
+                    type: integer
+                    maxLength: 3
+                    minimum: 10
+                    maximum: 90
+                    default: 90
+                    example: 90
+                    description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
+
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /v2.3/account/{username}/revokeDeregistration:
     put:
       tags:
       - Email-Account
@@ -483,7 +825,69 @@ paths:
                 $ref: '#/components/schemas/Error'
 ##--
 ##------
-  /account/{username}/OTP:
+  /v2.4/account/{username}/revokeDeregistration:
+    put:
+      tags:
+      - Email-Account
+      summary: Deregistrierung des Accounts zurücknehmen
+      operationId: revokeDeregistrationv2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+      responses:
+        204:
+          description: Deregistrierung erfolgreich zurückgenommen
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Email Account wurde bisher nicht deregistriert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /v2.3/account/{username}/OTP:
     get:
       tags:
       - Porting
@@ -549,7 +953,73 @@ paths:
 
 ##--
 ##------
-  /account/{username}/telematikID:
+  /v2.4/account/{username}/OTP:
+    get:
+      tags:
+      - Porting
+      summary: Die Operation wird verwendet für die Portierung der e-mail Adresse zu einer neuen telematikID.
+              Dafür wird ein One Time Password ausgestellt.
+      operationId: getOTPv2.4
+      description: Diese Operation erzeugt für den KIM Account/e-Mail Adresse ein One Time Password (OTP),
+                  mit dem die e-Mail Adresse zu einer telematikID (Karte) portiert werden kann.
+                  Die Authentisierung erfolgt mit der bisherigen Karte.
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+
+      responses:
+        200:
+          description: OTP erfolgreich erzeugt.
+          content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                otp:
+                  type: string
+                  format: password
+                  description: One Time Password für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
+
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+##--
+##------
+  /v2.3/account/{username}/telematikID:
     put:
       tags:
       - Porting
@@ -629,7 +1099,87 @@ paths:
 
 ##--
 ##------
-  /account/{username}/cert:
+  /v2.4/account/{username}/telematikID:
+    put:
+      tags:
+      - Porting
+      summary: Portierung der e-mail Adresse zu einer neuen telematikID
+      operationId: setTIDv2.4
+      description: Diese Operation entfernt die e-mail Adresse vom bisherigen VZD Eintrag und trägt die e-mail Adresse
+                  in den neuen VZD Eintrag ein (der den Authentisierungsdaten dieser Operation setTID
+                  entspricht). Die Authentisierung erfolgt mit der neuen Karte.
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+      - in: header
+        name: otp
+        description: One Time Passwort (OTP) (von getOTP zurückgegeben)
+        required: true
+        schema:
+          type: string
+          format: password
+
+      responses:
+        204:
+          description: Änderung der TelematikID erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Invalides OTP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        408:
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: VZD nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+##--
+##------
+  /v2.3/account/{username}/cert:
     post:
       tags:
       - Certificate
@@ -703,7 +1253,81 @@ paths:
                 $ref: '#/components/schemas/Error'
 ##--
 ##------
-  /account/{username}/outofoffice:
+  /v2.4/account/{username}/cert:
+    post:
+      tags:
+      - Certificate
+      summary: Create TLS AUT certificate
+      operationId: createCertv2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/CertificateParameters'
+
+      responses:
+        200:
+          description: Zertifikat wird zurückgegeben.
+          content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Base64-encoded PKCS#12 Container. Wenn im Request ein Passwort in certPassword übergeben wurde,
+                              dann ist der Container mit dem Passwort geschützt.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+                      # z.B. kein CommonName oder kein CertPassword angegeben
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+                      # z.B. user not registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        502:
+          description: CMP-Service nicht erreichbar bzw. liefert Fehler
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /v2.3/account/{username}/outofoffice:
     get:
       tags:
       - Out of Office Notification
@@ -773,6 +1397,114 @@ paths:
       - in: header
         name: password
         description: Passwort für den Email-Account
+        required: true
+        schema:
+          type: string
+          format: password
+      requestBody:
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/OutOfOfficeNotification'
+      responses:
+        204:
+          description: Änderung der Abwesenheitsnotiz erfolgreich.
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+##--
+##------
+  /v2.4/account/{username}/outofoffice:
+    get:
+      tags:
+      - Out of Office Notification
+      summary: Read the Out of Office Notification
+      operationId: getOutOfOfficev2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        required: true
+        schema:
+          type: string
+          format: password
+
+      responses:
+        200:
+          description: Lesen der Abwesenheitsnotiz erfolgreich.
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/OutOfOfficeNotification'
+        400:
+          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Authentifizierung fehlgeschlagen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Email Account nicht vorhanden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+      - Out of Office Notification
+      summary: Update the Out of Office Notification
+      operationId: updateOutOfOfficev2.4
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          type: string
+          format: email
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
         required: true
         schema:
           type: string
