@@ -198,7 +198,7 @@ paths:
       parameters:
         - in: header
           name: iniPassword
-          description: Initiales Passwort für den Email-Account. Das initiale Password muss base64 encoded gesendet werden.
+          description: Initiales Passwort für den Email-Account. Das Passwort ist base64 encoded.
           required: true
           schema:
              type: string
