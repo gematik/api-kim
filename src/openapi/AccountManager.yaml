@@ -548,7 +548,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -621,7 +621,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -675,7 +675,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -841,7 +841,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -973,7 +973,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -1118,7 +1118,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -1269,7 +1269,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -1451,7 +1451,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -1504,7 +1504,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account. Das Password muss base64 encoded gesendet werden.
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
