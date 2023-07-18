@@ -14,6 +14,7 @@ info:
   # - added traceId to Error object
   # - changed servers -url
   # - added "noVzdMailEntry" flag for POST /account and PUT /account/{username}
+  # - changed type for password format to byte
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
@@ -63,7 +64,7 @@ externalDocs:
   description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: /AccountMgmt/v2.3/
+- url: /AccountMgmt/v2.4/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
@@ -89,11 +90,11 @@ paths:
       parameters:
         - in: header
           name: iniPassword
-          description: Initiales Passwort für den Email-Account
+          description: Initiales Passwort für den Email-Account. Das Passwort ist base64 encoded.
           required: true
           schema:
              type: string
-             format: password
+             format: byte
       requestBody:
         description: Registriert neuen Account
         content:
@@ -206,11 +207,11 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
-          format: password
+          format: byte
       requestBody:
         content:
           application/json:
@@ -279,7 +280,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -333,7 +334,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -437,11 +438,11 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
-          format: password
+          format: byte
       responses:
         204:
           description: Deregistrierung erfolgreich zurückgenommen
@@ -503,11 +504,11 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
-          format: password
+          format: byte
 
       responses:
         200:
@@ -568,11 +569,11 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
-          format: password
+          format: byte
       - in: header
         name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
@@ -626,7 +627,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
 ##--
 ##------
   /account/{username}/cert:
@@ -645,11 +645,11 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
-          format: password
+          format: byte
       requestBody:
         content:
           application/json:
@@ -719,11 +719,11 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
-          format: password
+          format: byte
 
       responses:
         200:
@@ -772,7 +772,7 @@ paths:
           format: email
       - in: header
         name: password
-        description: Passwort für den Email-Account
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
           type: string
@@ -830,7 +830,7 @@ components:
       properties:
         password:
           type: string
-          format: password
+          format: byte
           writeOnly: true
           description: Der KIM Teilnehmer kann sein Passwort ändern.
         kimVersion:
