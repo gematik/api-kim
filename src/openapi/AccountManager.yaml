@@ -422,7 +422,7 @@ paths:
                 $ref: '#/components/schemas/Error'
 ##--
 ##------
-  account/{username}/revokeDeregistration:
+  /account/{username}/revokeDeregistration:
     put:
       tags:
       - Email-Account
@@ -550,7 +550,7 @@ paths:
 
 ##--
 ##------
-  account/{username}/telematikID:
+  /account/{username}/telematikID:
     put:
       tags:
       - Porting
