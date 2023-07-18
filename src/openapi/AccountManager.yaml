@@ -194,14 +194,14 @@ paths:
       - Email-Account
       summary: Registriert einen neuen Email Account.
             #  In allen Fehlerfällen wird der Account nicht erzeugt.
-      operationId: registerAccountv2.4
+      operationId: registerAccountv24
       parameters:
         - in: header
           name: iniPassword
           description: Initiales Passwort für den Email-Account. Das Passwort ist base64 encoded.
           required: true
           schema:
-             type: string
+             type: byte
              format: password
       requestBody:
         description: Registriert neuen Account
@@ -537,7 +537,7 @@ paths:
       summary: Account ändern.
               Die Werte von nicht angegebenen schreibbaren Parametern werden nicht verändert.
               # referenceID & username (im Body) können über dieser Operation nicht geändert werden
-      operationId: setAccountv2.4
+      operationId: setAccountv24
       parameters:
       - name: username
         in: path
@@ -551,7 +551,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
       requestBody:
         content:
@@ -830,7 +830,7 @@ paths:
       tags:
       - Email-Account
       summary: Deregistrierung des Accounts zurücknehmen
-      operationId: revokeDeregistrationv2.4
+      operationId: revokeDeregistrationv24
       parameters:
       - name: username
         in: path
@@ -844,7 +844,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
       responses:
         204:
@@ -959,7 +959,7 @@ paths:
       - Porting
       summary: Die Operation wird verwendet für die Portierung der e-mail Adresse zu einer neuen telematikID.
               Dafür wird ein One Time Password ausgestellt.
-      operationId: getOTPv2.4
+      operationId: getOTPv24
       description: Diese Operation erzeugt für den KIM Account/e-Mail Adresse ein One Time Password (OTP),
                   mit dem die e-Mail Adresse zu einer telematikID (Karte) portiert werden kann.
                   Die Authentisierung erfolgt mit der bisherigen Karte.
@@ -976,7 +976,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
 
       responses:
@@ -1104,7 +1104,7 @@ paths:
       tags:
       - Porting
       summary: Portierung der e-mail Adresse zu einer neuen telematikID
-      operationId: setTIDv2.4
+      operationId: setTIDv24
       description: Diese Operation entfernt die e-mail Adresse vom bisherigen VZD Eintrag und trägt die e-mail Adresse
                   in den neuen VZD Eintrag ein (der den Authentisierungsdaten dieser Operation setTID
                   entspricht). Die Authentisierung erfolgt mit der neuen Karte.
@@ -1121,7 +1121,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
       - in: header
         name: otp
@@ -1258,7 +1258,7 @@ paths:
       tags:
       - Certificate
       summary: Create TLS AUT certificate
-      operationId: createCertv2.4
+      operationId: createCertv24
       parameters:
       - name: username
         in: path
@@ -1272,7 +1272,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
       requestBody:
         content:
@@ -1440,7 +1440,7 @@ paths:
       tags:
       - Out of Office Notification
       summary: Read the Out of Office Notification
-      operationId: getOutOfOfficev2.4
+      operationId: getOutOfOfficev24
       parameters:
       - name: username
         in: path
@@ -1454,7 +1454,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
 
       responses:
@@ -1561,7 +1561,7 @@ components:
       type: object
       properties:
         password:
-          type: string
+          type: byte
           format: password
           writeOnly: true
           description: Der KIM Teilnehmer kann sein Passwort ändern.
