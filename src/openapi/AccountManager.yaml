@@ -14,7 +14,7 @@ info:
   # - added traceId to Error object
   # - changed servers -url
   # - added "noVzdMailEntry" flag for POST /account and PUT /account/{username}
-  # - new type 'byte' for password format
+  # - changed type for password format to byte
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
