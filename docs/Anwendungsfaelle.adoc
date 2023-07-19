@@ -110,7 +110,11 @@ KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Anwend
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
-ffo
+++++
+<p align="center">
+  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_anwendungskennzeichen.svg>
+</p>
+++++
 
 == Abwesenheitnotizen
 KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Abwesenheitsnotizen für einen definierten Zeitraum konfigurieren oder einsehen. Für das konfigurieren einer Abwesenheitsnotiz ruft das Administrationsmodul `updateOutOfOffice()` am Account Manager auf. Für das Abfragen von konfigurierten Abwesenheitsnotizen wird die Operation `getOutOfOffice()` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
