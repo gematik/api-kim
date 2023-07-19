@@ -24,6 +24,8 @@ Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie fo
 
 * das Einrichten von Abwesendheitsnotizen
 
+* das Einrichten von Anwendungskennzeichen
+
 * die Unterstützung syntaktischer Nachrichtenkategorien
 
 * die Unterstützung von Multikonnektor-Umgebungen
