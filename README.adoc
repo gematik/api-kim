@@ -63,7 +63,7 @@ Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert
 
 link:docs/Verzeichnisdienst.adoc[*Verzeichnisdienst*]
 
-* Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um eine neue Datenstruktur `komLeData` ergänzt.
+* Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um die zusätzlichen Datenstrukturen `komLeData` und `kimData`ergänzt.
 * Der Verzeichnisdienst wird um die REST-Schnittstelle `I_Directory_Application_Maintenance` erweitert.
 
 == Ordnerstruktur
