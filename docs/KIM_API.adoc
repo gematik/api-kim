@@ -199,10 +199,6 @@ curl -X 'DELETE' \
 [source, ruby]
 -----------------
 Code: 200
-Body:
-{
-  
-}
 -----------------
 
 *HTTP-Status Codes:* 
