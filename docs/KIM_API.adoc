@@ -29,7 +29,7 @@ E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegung
 
 ==== I_Attachment_Service
 
-Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
+Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten sowie die Operation `delete_Maildata` für das Löschen der E-Mail-Daten, unmittelbar nach dem Hochladen, zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
 //image:I_KAS.png[width=45%]
 
