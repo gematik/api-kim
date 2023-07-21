@@ -175,7 +175,7 @@ Mit Hilfe der Opertion `delete_Maildata()` kann ein Clientmodul die auf dem KAS 
 |===
 |URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/+{attachmentId}+ +
 [normal]#`attachmentId` - Freigabelink, unter dem die E-Mail-Daten gespeichert wurden#
-|Method     |POST
+|Method     |DELETE
 |Header |
 [source, bash]
 ----
@@ -190,7 +190,7 @@ keine Parameter
 *Beispielabfrage:*
 [source, bash]
 -----------------
-curl -X 'POST' \
+curl -X 'DELETE' \
 'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
 -H 'accept: application/octet-stream' \
 -H 'recipient: user1@example.kim.telematik'
