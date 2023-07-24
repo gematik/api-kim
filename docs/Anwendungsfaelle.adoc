@@ -62,7 +62,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 ++++
 
 === Deregistrierung zurücknehmen
-KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine ausgelöste Deregistrierung innerhalb von 30 Tagen zurücknehmen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `revokeDeregistration()` zum Account Manager auf. Nach einem erfolgreichen Aufruf der Operation steht dem Anwender der Account wieder in vollem Umfang zur Verfügung.
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine ausgelöste Deregistrierung bis mindestens nach 30 Tagen zurücknehmen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `revokeDeregistration()` zum Account Manager auf. Nach einem erfolgreichen Aufruf der Operation steht dem Anwender der Account wieder in vollem Umfang zur Verfügung.
 
 ++++
 <p align="center">
