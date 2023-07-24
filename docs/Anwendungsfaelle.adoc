@@ -163,7 +163,7 @@ Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar
 ++++
 
 == KIM-Dienstkennung
-Der KIM-Teilnehmer kann eine zu versendende Nachricht mit einer Dienstkennung - z. B. "eAU;Lieferung;v1.0" - versehen. Wird durch den Mailclient keine Dienstkennung übergeben wird vom Clientmodul ein default-Dienstkennung eingetragen ("KIM-Mail;Default;V1.0").
+Der KIM-Teilnehmer kann eine zu versendende Nachricht mit einer Dienstkennung - z. B. "eAU;Lieferung;v1.0" - versehen. Wird durch den Mailclient in der für den Versand durch das Clientmodul übergebenen Mail keine Dienstkennung eingetragen, wird vom Clientmodul ein default-Dienstkennung nachträglich ergänzt ("KIM-Mail;Default;V1.0").
 Die Dienstkennung wird in den Nachrichten-Header eingetragen, und kann auf der Empfängerseite für eine automatisierte Bearbeitung verwendet werden. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet `X-KIM-Dienstkennung`. Die Dienstkennung der ursprünglichen Mail wird nach der Verschlüsselung in den Header der verschlüsselten Mail übernommen. Ein Empfänger kann auf Basis der Dienstkennung entscheiden, wie er mit den zur Abholung auf dem Mail-Server bereitstehenden Nachrichten verfahren möchte. 
 
 == KIM Anwendungskennzeichen
