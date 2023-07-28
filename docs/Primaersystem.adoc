@@ -77,8 +77,8 @@ Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signi
 
 * *Nachrichtengenerierung im Primärsystem* +
 Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-Mail (inkl. weiterer Anhänge) zu erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
-Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-editor.org/rfc/rfc5322.html:"RFC5322"). Dies gilt insbesondere für die Header-Elemente der Mail-Nachricht.
-Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4:"RFC5322 Kapitel 3.6.4" erzeugt werden.
+Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-editor.org/rfc/rfc5322.html[RFC5322]). Dies gilt insbesondere für die Header-Elemente der Mail-Nachricht.
+Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
 
 * *E-Mail-Kategorisierung im Primärsystem* +
 Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden.
