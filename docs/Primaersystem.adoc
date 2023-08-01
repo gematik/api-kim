@@ -114,7 +114,7 @@ Mittels der Suchkriterien kann das Primärsystem die KIM-E-Mail-Empfänger im Ve
 Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere
 Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
-* *Berücksichtigung des/der Anwendungskennzeichen des Empfängers* +
+* *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
 Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist es erforderlich den Nutzer darüber zu informieren und den Versand per Mail ist abzulehnen.
 
 ===  Nachrichten versenden
