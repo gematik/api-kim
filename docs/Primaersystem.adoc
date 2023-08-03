@@ -103,7 +103,7 @@ Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adress
 Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
 * *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
-Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist es erforderlich den Nutzer darüber zu informieren und den Versand per Mail ist abzulehnen.
+Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist es erforderlich den Nutzer darüber zu informieren und der Versand per Mail ist abzulehnen.
 
 === Nachrichten generieren und übernehmen
 Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
