@@ -49,8 +49,8 @@ Das folgende Komponentendiagramm stellt die Abhängigkeitsbeziehungen zwischen d
 //image:Int_PS-KOMLE.png[width=50%]
 
 ++++
-<p align="left">
-  <img width="70%" src=../images/Int_PS-KOMLE.png>
+<p align="center">
+  <img width="70%" src=../images/Int_PS-KIM.svg>
 </p>
 ++++
 
