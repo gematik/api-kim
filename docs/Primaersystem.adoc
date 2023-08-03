@@ -67,7 +67,7 @@ In der folgenden Abbildung sind die vom Primärsystem umzusetzenden KIM-Anwendun
 
 ++++
 <p align="left">
-  <img width="50%" src=../images/UC_PS-KOMLE.png>
+  <img width="50%" src=../images/UC_PS-KIM.svg>
 </p>
 ++++
 
