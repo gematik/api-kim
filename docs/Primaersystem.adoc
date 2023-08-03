@@ -71,18 +71,6 @@ In der folgenden Abbildung sind die vom Primärsystem umzusetzenden KIM-Anwendun
 </p>
 ++++
 
-=== Nachrichten generieren und übernehmen
-Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
-Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signierte Dokumente (qualifizierte) in Frage. Alle Anhänge können, abhängig vom verwendeten Schlüsselmaterial, separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt werden.
-
-* *Nachrichtengenerierung im Primärsystem* +
-Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-Mail (inkl. weiterer Anhänge) zu erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
-Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-editor.org/rfc/rfc5322.html[RFC5322]). Dies gilt insbesondere für die Header-Elemente der Mail-Nachricht.
-Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
-
-* *E-Mail-Kategorisierung im Primärsystem* +
-Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden.
-
 === Empfänger ermitteln
 Es können nur KIM-E-Mails an Empfänger versendet werden, die als Teilnehmer im Verzeichnisdienst aufgenommen und deren Verschlüsselungszertifikate sowie deren KIM-E-Mail-Adressen hinterlegt sind.
 
@@ -116,6 +104,18 @@ Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig an
 
 * *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
 Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist es erforderlich den Nutzer darüber zu informieren und den Versand per Mail ist abzulehnen.
+
+=== Nachrichten generieren und übernehmen
+Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
+Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signierte Dokumente (qualifizierte) in Frage. Alle Anhänge können, abhängig vom verwendeten Schlüsselmaterial, separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt werden.
+
+* *Nachrichtengenerierung im Primärsystem* +
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-Mail (inkl. weiterer Anhänge) zu erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
+Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-editor.org/rfc/rfc5322.html[RFC5322]). Dies gilt insbesondere für die Header-Elemente der Mail-Nachricht.
+Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
+
+* *E-Mail-Kategorisierung im Primärsystem* +
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden.
 
 ===  Nachrichten versenden
 Der Versand von KIM–Nachrichten erfolgt über das Clientmodul, das die Nachricht für jeden Empfänger zuerst signiert und anschließend verschlüsselt. +
