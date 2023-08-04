@@ -283,7 +283,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
 
       responses:
@@ -337,7 +337,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
       responses:
         200:
@@ -775,7 +775,7 @@ paths:
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           format: password
       requestBody:
         content:
