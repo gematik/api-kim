@@ -115,7 +115,7 @@ Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-edito
 Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
 
 * *E-Mail-Kategorisierung im Primärsystem* +
-Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden.
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden und abhängig von der zu versendenden Nachricht in dem Attribut `X-KIM-Dienstkennung` als zusätzliches Header Element in die Nachricht eingetragen.
 
 ===  Nachrichten versenden
 Der Versand von KIM–Nachrichten erfolgt über das Clientmodul, das die Nachricht für jeden Empfänger zuerst signiert und anschließend verschlüsselt. +
