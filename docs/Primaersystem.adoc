@@ -122,7 +122,7 @@ Der Versand von KIM–Nachrichten erfolgt über das Clientmodul, das die Nachric
 
 TIP: In der KIM Version 1.0 darf die Gesamtgröße einer KIM-Nachricht inkl. Anhänge 15 MiB nicht überschreiten.
 
-Die Einschränkung auf 15 MiB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 15 MiB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit größeren Anhängen zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der auf den KAS ausgelagerten E-Mail-Daten.
+Die Einschränkung auf 15 MiB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 15 MiB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit  einer Gesamtgröße größerals 15 MiB zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der dann auf den KAS ausgelagerten E-Mail-Daten.
 
 * *E-Mail-Versand als Funktion des Primärsystems* +
 Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus seinem E-Mail-Modul heraus versendet.
