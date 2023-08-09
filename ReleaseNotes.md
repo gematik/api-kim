@@ -2,6 +2,13 @@
 
 Notes: Since April 2021 KIM is no longer a part of a gematik document release. Starting with KIM v1.5.1 it will be develop in a separate branch (see also https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen). 
 
+## KIM v1.5.2-3 - Release Notes
+New feature
+- preparedness for receiving messages bigger than 15 MiB by configuration in VZD
+- KIM version check for recipient before sending a message
+- transmission of the amount of data on KAS for a specific message
+- evaluation of the KIM version when receiving a message with KAS content
+
 ## KIM v1.5.2-1 - Release Notes
 New feature
 - added new operation to revoke deregistration to I_AccountManager_Service in v2.3.0 (see [I_AccountManager_Service](https://github.com/gematik/api-kim/blob/KIM-Hotfix-1.5.2/src/openapi/AccountManager.yaml) for more details)
