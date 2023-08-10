@@ -347,7 +347,7 @@ curl -X 'POST' \
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
-  ""appTags": "eAU"
+  "appTags": "eAU"
   }'
 ----------------- 
 
@@ -538,6 +538,7 @@ curl -X 'PUT' \
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
+  "appTags": "eAU",
   "dataTimeToLive": 90
 }'
 ----------------- 
