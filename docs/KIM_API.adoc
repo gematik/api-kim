@@ -330,11 +330,11 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
 [normal]#`referenceID` - Referenz eines KIM-Teilnehmers# +
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
-[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version + 
+[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
 [normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en#
 |===
 
-*Beispielabfrage:*
+*Beispielaufruf:*
 [source, bash]
 -----------------
 curl -X 'POST' \
@@ -513,6 +513,7 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
+  "appTags": "<Anwendungskennzeichen>"
   "dataTimeToLive": 90
 }
 ----
@@ -520,6 +521,7 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
 [normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
+[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en# +
 [normal]#`dataTimeToLive` - Speicherdauer in Tagen von Mails und Anhängen auf dem Fachdienst#
 |===
 
@@ -608,7 +610,10 @@ Body:
   "username": "user@example.kim.telematik",
   "kimVersion": "1.5",
   "regStat": "registered",
-  "deregDate": 1616588543
+  "deregDate": 1616588543,
+  "maxMailSize": 734003200,
+  "appTags": "eAU",
+  "dataTimeToLive": 90
 }
 -----------------
 
