@@ -117,8 +117,8 @@ Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation r
 |*[gemSpec_FD]* |gematik: Spezifikation Fachdienst KOM-LE
 |*[gemSpec_VZD]* |gematik: Spezifikation Verzeichnisdienst
 |*[gemSpec_OM]* |gematik: Übergreifende Spezifikation Operations und Maintenance
-|*[gemProdT_CM_KOMLE_PTV]* | gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
-|*[gemProdT_iCM_KIM]* | gematik: Produkttypsteckbrief Prüfvorschrift Integriertes Clientmodul KIM
+|*[gemProdT_CM_KOMLE_PTV]* |gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
+|*[gemProdT_iCM_KIM]* |gematik: Produkttypsteckbrief Prüfvorschrift Integriertes Clientmodul KIM
 |===
 
 == Weiterführende Seiten
