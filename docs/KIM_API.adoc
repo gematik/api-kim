@@ -10,7 +10,7 @@ toc::[]
 
 
 = Clientsystem
-Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel weiter beschrieben werden. Darüberhinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine weitere Schnittstelle durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
+Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel näher beschrieben werden. Darüberhinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine weitere Schnittstelle durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
 
 == Änderungen im Clientmodul ab KIM 1.5
 === Optionale Integration in das Clientsystem
