@@ -324,12 +324,14 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
+  "appTags": "<Anwendungskennzeichen>"
 }
 ----
 [normal]#`referenceID` - Referenz eines KIM-Teilnehmers# +
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
-[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# 
+[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version + 
+[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en#
 |===
 
 *Beispielabfrage:*
@@ -345,6 +347,7 @@ curl -X 'POST' \
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
+  ""appTags": "eAU"
   }'
 ----------------- 
 
