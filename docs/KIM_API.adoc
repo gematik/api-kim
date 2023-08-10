@@ -265,6 +265,7 @@ Body:
 {
   "dataTimeToLive": 90,
   "maxMailSize": 734003200,
+  "kasMailSizeThreshold": 15728640;
   "quota": 160000000000,
   "remainQuota": 112000000000
 }
