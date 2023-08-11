@@ -26,8 +26,8 @@ Im Folgenden sind die LDAP-Directory-Attribute der KIM-Fachdaten dargestellt: +
 //image:KOMLE_Fachdaten.PNG[width=45%]
 
 ++++
-<p align="left">
-  <img width="60%" src=../images/KOMLE_Fachdaten.PNG>
+<p align="center">
+  <img width="60%" src=../images/KOMLE_Fachdaten.svg>
 </p>
 ++++
 
