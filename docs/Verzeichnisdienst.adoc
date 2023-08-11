@@ -17,7 +17,7 @@ image:gematik_logo.svg[width=70%]
 toc::[]
 
 == Verzeichnisdienst
-Ab der KIM Version 1.5 können zur Abfrage der KIM-Fachdaten ausschließlich die Protokolle LDAPv3 und HTTP (REST) an der Schnittstelle `I_Directory_Application_Maintenance` am Verzeichnisdienst verwenden werden. Zu den Fachdaten gehören die KIM-Mail-Adressen, sowie die verwendete KOM-LE-Version der Clientmodule. Ausgehend von dieser Version entscheidet das Clientmodul des Senders, ob das Clientmodul des Empfängers kompatibel ist. Die neue Datenstruktur `komLeData` ist in *[gemSpec_VZD#5]* spezifiziert.
+Ab der KIM Version 1.5 können zur Abfrage der KIM-Fachdaten ausschließlich die Protokolle LDAPv3 und HTTP (REST) an der Schnittstelle `I_Directory_Application_Maintenance` am Verzeichnisdienst verwenden werden. Zu den Fachdaten gehören die KIM-Mail-Adressen, sowie die verwendete KOM-LE-Version der Clientmodule. Ausgehend von dieser Version entscheidet das Clientmodul des Senders, ob das Clientmodul des Empfängers kompatibel ist. Die neuen Datenstrukturen `komLeData` und `kimData` sind in *[gemSpec_VZD#5]* spezifiziert.
 
 Die Beschreibung der REST-Schnittstelle `I_Directory_Application_Maintenance` für KIM ist hier zu finden: link:https://github.com/gematik/api-vzd/blob/main/src/openapi/DirectoryApplicationMaintenance.yaml[DirectoryApplicationMaintenance.yaml] 
 
