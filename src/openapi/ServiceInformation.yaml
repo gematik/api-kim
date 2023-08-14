@@ -5,6 +5,7 @@ info:
   version: 1.0.2
   ### 1.0.2
   # - added operation GET /appTags
+  # - added regPolicy to ServiceInformation scheme
   ### 1.0.1
   # - added kimServiceVersion and jwtExpirations to the ServiceInformation object
   ### 1.0.0
