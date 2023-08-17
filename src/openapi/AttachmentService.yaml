@@ -236,6 +236,7 @@ paths:
                     schema:
                         type: string
                         example: "Content-Disposition: form-data; name=attachment; filename=attachment.enc"
+        required: true
 
       responses:
           201:
