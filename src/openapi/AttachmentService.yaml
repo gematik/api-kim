@@ -198,12 +198,15 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required: [messageID, attachment, recipient, expires]
               properties:
                 messageID:
                     type: string
+                    required: true
                     description: MessageID der zugehörigen KIM-Mail
                 recipients:
                     type: array
+                    required: true
                     description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger; Pro Form-Part wird genau eine Adresse spezifiziert und der Form-Part wird mehrfach angegeben (exploded=true)
                                 # curl Beispiel:
                                 # -F 'recipients=user1@example.kim.telematik' \
@@ -213,11 +216,13 @@ paths:
                       format: email
                 expires:
                     type: string
+                    required: true
                     description: Zeitpunkt zu dem der Anhang geloescht werden muss
                                 # (RFC5322 date-time)
                 attachment:
                    type: string
                    format: binary
+                   required: true
                    description: Der Anhang
 
             encoding:
@@ -236,7 +241,6 @@ paths:
                     schema:
                         type: string
                         example: "Content-Disposition: form-data; name=attachment; filename=attachment.enc"
-        required: true
 
       responses:
           201:
