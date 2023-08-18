@@ -198,7 +198,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
-              required: [messageID, attachment, recipient, expires]
+              required: [messageID, attachment, recipients, expires]
               properties:
                 messageID:
                     type: string
