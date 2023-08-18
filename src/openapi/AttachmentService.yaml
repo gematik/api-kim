@@ -202,11 +202,9 @@ paths:
               properties:
                 messageID:
                     type: string
-                    required: true
                     description: MessageID der zugehörigen KIM-Mail
                 recipients:
                     type: array
-                    required: true
                     description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger; Pro Form-Part wird genau eine Adresse spezifiziert und der Form-Part wird mehrfach angegeben (exploded=true)
                                 # curl Beispiel:
                                 # -F 'recipients=user1@example.kim.telematik' \
@@ -216,13 +214,11 @@ paths:
                       format: email
                 expires:
                     type: string
-                    required: true
                     description: Zeitpunkt zu dem der Anhang geloescht werden muss
                                 # (RFC5322 date-time)
                 attachment:
                    type: string
                    format: binary
-                   required: true
                    description: Der Anhang
 
             encoding:
