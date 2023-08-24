@@ -90,12 +90,6 @@ components:
         kimServiceVersion:
           type: string
           description: Gibt die Version des KIM Fachdienstes an.
-        regPolicy:
-          type: string
-          description: Gibt die bei der initialen Registrierung benötigten Credentials (referenceID + Passwort) an.
-           11: referenceID + Passwort
-           10: referenceID
-           01: Passwort
         passwordPolicyRegEx:
           type: string
           description: Gibt die Password Policy, die der AccountManager verlangt, als regulären Ausdruck an.
@@ -107,6 +101,12 @@ components:
           minimum: 300
           maximum: 21600
           description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.
+        referenceIdRequired:
+          type: boolean
+          description: Gibt an, ob bei der initialen Registrierung  die referenceID benötigt wird.
+        initialPasswordRequired:
+          type: boolean
+          description: Gibt an, ob bei der initialen Registrierung  das initiale Passwort benötigt wird.
       example:
         kimServiceVersion: 1.5.3
         regPolicy: 11
@@ -118,6 +118,8 @@ components:
                               Mindestlänge 8 Zeichen
                               Maximallänge 64.
         jwtExpiration: 300
+        referenceIdRequired: true
+        initialPasswordRequired: false
 
     Error:
       type: object
