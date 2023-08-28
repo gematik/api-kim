@@ -209,12 +209,16 @@ _„Die Nachricht wurde nur an einen Teil der gewünschten Adressaten versendet,
 === Nachrichten empfangen
 Der Empfang von KIM-Nachrichten erfolgt über das Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern die dafür erforderliche Smartcard/HSM im System registriert und freigeschaltet ist.
 
+==== Voraussetzungen
+
 * *Nutzerkreis der KIM-E-Mail-Adresse beim Nachrichtenempfang* +
 Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Zugriff auf empfangene KIM-Nachrichten nur durch autorisierte Personen erfolgt.
 
 * *Freischaltung der für KIM erforderlichen Smartcards* +
 Für den Empfang entschlüsselter Nachrichten ist es erforderlich, dass Smartcards/HSMs freigeschaltet vorliegen. Ohne diese Freischaltung können Nachrichten nicht entschlüsselt entgegengenommen werden. Es ist erforderlich, dass das Primärsystem den Status der Freischaltung
 der Smartcards sichtbar macht. Ebenfalls ist es erforderlich, dass der Benutzer darauf aufmerksam gemacht wird, dass er zum Empfang entschlüsselter Nachrichten diese Smartcards freischalten muss.
+
+==== Login
 
 Das Primärsystem übergibt dem Clientmodul in der POP3-Kommunikation alle zum Nachrichtenempfang erforderlichen Informationen.
 Auch für die Abholung von Nachrichten ist es erforderlich, dass Angaben über die Ansteuerung der Smartcards des Empfängers
@@ -247,10 +251,21 @@ erik.mustermann@hrst_domain.kim.telematik#hrst_domain.kim.telematik:995#1#KOM_LE
 
 TIP: Erfolgt die Einbindung von KIM in ein bestehendes Mail-Systeme, kann ein übergebener Delimiter ":" zwischen dem Serveranteil und dem Port (z. B. hrst_domain.kim.telematik:9959) des POP3-Benutzernamens zu Fehlern bei der Interpretation im Bestandsystem führen. Es werden daher weitere Delimiter im Benutzernamen unterstützt, sofern die Funktionalität gemäß der Bestandsanforderungen zu den Benutzernamen, in semantischer Abgrenzung, uneingeschränkt erhalten bleiben. Es gilt, dass die Bestandteile des POP3-Benutzernames in ihrem semantischen Bezug gemäß [RFC1123, RFC2822] einhalten müssen.
 
+==== Ablauf
+
 Die folgende POP3-Kommunikation erfolgt gemäß POP3-Protokoll über das Clientmodul.
 
 Das Clientmodul leitet die POP3-Anfragen des Primärsystems an den KIM-Fachdienst (MTA) weiter und entschlüsselt abgeholte Nachrichten,
 um sie in entschlüsselter und verifizierter Form an das Primärsystem weiterzugeben.
+
+Primärsysteme dürfen nur bisher unbekannte KIM-Nachrichten abrufen. Durch den folgenden Ablauf können die unbekannten KIM-Nachrichten abgefragt werden:
+
+* Das PS sendet POP3 LIST an das Clientsystem .Es werden alle Message-IDs und die Größe der Nachrichten abgefragt
+* Das PS prüft anhand der empfangenen Message-IDs ob die Nachricht im PS bekannt ist und ermittelt so die Message-IDs der unbekannten Nachrichten
+* Das PS sendet POP3 RETR <Message-ID> an das Clientsystem für alle unbekannten Message-IDs. Die Message-ID der empfangenen Nachricht wird lokal gespeichert, damit sie bei folgenden Nachrichtenabrufen nicht erneut abgefragt wird.
+* Das PS muss lokal gespeicherte Message-IDs, die nicht mehr zu Nachrichten auf dem Server gehören (POP3 LIST), löschen.
+
+TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten kann das PS anstatt POP3 RETR zunächst mit POP3 TOP <Message-ID> 0 nur die Header der Nachricht abfragen, um zu prüfen, welche Dienstkennung die Nachricht hat. Falls die Nachricht eine Dienstkennung hat, die an diesem Arbeitsplatz verarbeitet werden soll, kann die vollständige Nachricht mit POP3 RETR empfangen werden. Die Message-ID der Nachricht muss lokal gespeichert werden, um einen erneuten Abruf zu verhindern.
 
 Enthält eine KIM-Nachricht externe Anhänge die auf einem KAS abgelegt wurden, so werden diese in KOM-LE 1.5 vom Clientmodul automatisch heruntergeladen und für das Primärsystem in die KIM-E-Mail eingefügt.
 
@@ -268,6 +283,8 @@ Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel de
 Patientenidentifikation benutzt.
 
 Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
+
+Die KIM-Adresse kann an mehreren Primärsystem-Arbeitsplätzen genutzt werden. Daher kann es erforderlich sein, dass die Nachrichten nach dem Empfang nicht auf dem Server gelöscht werden, damit sie auch von anderen Arbeitsplätzen empfangen werden können. Nachrichten älter als 90 Tage werden auf dem Mail-Server automatisch gelöscht. Der Nutzer kann die Aufbewahrungszeit der Nachrichten über die Administrationsoberfläche des Clientmoduls anpassen.
 
 * *Umgang mit unbekannten Dienstkennungen* +
 Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhält.
