@@ -59,7 +59,7 @@ Der Mail Server stellt die Schnittstelle `I_Message_Service` bereit und wird üb
 Für die einfache Verwaltung des Accounts, das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers und für die Abfrage von Konfigurationsparametern des jeweiligen KIM Fachdienstes bietet der Account Manager ab der KIM Version 1.5 drei Webservices (`I_AccountManager_Service`, `I_AccountLimit_Service` und `I_ServiceInformation`) an.
 
 * *KIM Attachment Service:* +
-Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
+Der Fachdienst wird um die Komponente KIM Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
 
 link:docs/Verzeichnisdienst.adoc[*Verzeichnisdienst*]
 
