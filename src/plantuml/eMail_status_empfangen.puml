@@ -2,8 +2,8 @@
 scale max 2048 width
 
 state "KOM-LE Mail empfangen" as rkm
-rkm: do / Prüfung der Signatur
 rkm: do / Entschlüsselung des Mail Bodys
+rkm: do / Prüfung der Signatur
 rkm: exit / Entschlüsselung erfolgreich abgeschlossen
 
 state "KOM-LE Mail prozessiert" as dkm
