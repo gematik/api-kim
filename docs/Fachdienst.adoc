@@ -9,7 +9,7 @@ image:gematik_logo.svg[width=70%]
 toc::[]
 
 = Fachdienst
-Der Fachdienst besteht aus den drei Teilkomponenten Account Manager, Mail Server und dem KOM-LE-Attachment Service. Dieser stellt dem Clientmodul verschiedene Schnittstellen bereit, um die Kommunikations mit der jeweiligen Teilkomponente zu ermöglichen. In der folgenden Abbildung (links) sind alle Schnittstellen, die der Fachdienst anbietet, mit der jeweiligen Teilkomponente, dargestellt.
+Der Fachdienst besteht aus den drei Teilkomponenten Account Manager, Mail Server und dem KIM-Attachment Service. Dieser stellt dem Clientmodul verschiedene Schnittstellen bereit, um die Kommunikations mit der jeweiligen Teilkomponente zu ermöglichen. In der folgenden Abbildung (links) sind alle Schnittstellen, die der Fachdienst anbietet, mit der jeweiligen Teilkomponente, dargestellt.
 
 ++++
 <p align="left">
