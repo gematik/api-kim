@@ -167,7 +167,7 @@ Body:
 |===
 
 ===== delete_Maildata() +
-Mit Hilfe der Opertion `delete_Maildata()` kann ein Clientmodul die auf dem KAS abgelegten E-Mail Daten, im Falle des fehlerhaften Versands der dazugehörenden KOM-LE-Nachricht, wieder löschen.
+Mit Hilfe der Opertion `delete_Maildata()` kann ein Clientmodul die auf dem KAS abgelegten E-Mail Daten, im Falle des fehlerhaften Versands der dazugehörenden KIM-Nachricht, wieder löschen.
 
 *Beispiel einer HTTP Nachricht*
 
