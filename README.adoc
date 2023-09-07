@@ -89,7 +89,8 @@ KIM-API
 │        └── Attachment_schema.json
 ├── LICENSE
 ├── README.adoc
-└── ReleaseNotes.md
+├── ReleaseNotes.md
+└── SECURITY.adoc
 ----
 
 == Ausbaustufen
