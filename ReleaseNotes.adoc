@@ -17,6 +17,8 @@ image:gematik_logo.svg[width=70%]
 - Anforderung "A_23467 - Übermittlung der KAS-Datenmenge" wurde erstellt
 - Neues Kapitel (6. Fehlernachrichten) in Primärsystem Leitfaden zu KIM auf gitHub
 - Ein neues Headerelement X-KIM-Support wurde in Github für Primärsysteme definiert.
+- Robustes Verhalten, bei fehlerhafter Zertifikatsprüfung durch Konnektor (A_24063)
+- Für Basis Consumer: eingeschränkte Befüllung der mail Attribute im VZD-Eintrag (A_24039, noVzdMailEntry)
 
 === Geändert
 - Anforderungen zum cachen wurden präzisiert, Konfigurationsparameter wurden erweitert (A_22348, A_22416-01, A_22340-01, KOM-LE-A_2026-01, KOM-LE-A_2061-01).
@@ -58,6 +60,10 @@ image:gematik_logo.svg[width=70%]
 - Nachweis der Anforderungen A_19454 und A_19455 wurde auf Herstellererklärung geändert.
 - Die Schnittstelle I_AccountManager_Service wurde überarbeitet. Nicht schreibbare Attribute wurden aus setAccount entfernt.
 - Die Message-ID wurde in allen Beispielen ergänzt.
+- Die api-kim in GitHub wurde an KIM 1.5.3 angepasst (https://github.com/gematik/api-kim).
+- Teilweise Umbenennung von KOM-LE in KIM.
+- Optimierung des Verhaltens bei positiver Integritätsprüfung (KOM-LE-A_2050-06)
+- Optimierung des Verhaltens bei der initialen Registrierung des KOM-LE-Teilnehmers (A_19458-02)
 
 === Gelöscht
 - Die Protokollierung von Performance Daten im Clientmodul wurde entfernt (geändert: KOM-LE-A_2079-01, gelöscht: KOM-LE-A_2084, KOM-LE-A_2088, KOM-LE-A_2089).
