@@ -19,12 +19,15 @@ image:gematik_logo.svg[width=70%]
 - Ein neues Headerelement X-KIM-Support wurde in Github für Primärsysteme definiert.
 - Robustes Verhalten, bei fehlerhafter Zertifikatsprüfung durch Konnektor (A_24063)
 - Für Basis Consumer: eingeschränkte Befüllung der mail Attribute im VZD-Eintrag (A_24039, noVzdMailEntry)
+- Der Account Manager wertet das neue Attribut noVzdMailEntry in den Operationen setAccount und registerAccount aus (A_24038).
+- Eine neue Mailserver-Anforderung zur Prüfung der Größe einer KIM-Nachricht wurde definiert (A_24022).
+- Die Schnittstelle I_ServiceInformation hat eine neue Operation getAppTags zum Download der Anwendungskennzeichen.
 
 === Geändert
 - Anforderungen zum cachen wurden präzisiert, Konfigurationsparameter wurden erweitert (A_22348, A_22416-01, A_22340-01, KOM-LE-A_2026-01, KOM-LE-A_2061-01).
 - AttachmentServices.yaml wurde erweitert, Tabelle 4: Operationen vom KAS wurde ergänzt (A_19375-05 - KAS – Implementierung der Schnittstelle).
 - Bezüglich des Header "Expires" wurde der Text der Anforderung mit dem Hinweis auf RFC4021 ergänzt (A_22417-01).
-- Das JWT zur Authentisierung am Account Manager verwendet nun die Attribute iat und exp anstatt nbf. Die Gültigkeitsdauer wurde auf 6 Stunden festgelegt (KOM-LE-A_2187-05).
+- Die Festlegungen zu setAccount und deregisterAccount wurden optimiert (KOM-LE-A_2187-05).
 - Das Prüfverfahren "Produkttest" wurde für KOM-LE-A_2304 entfernt.
 - Die Anforderungen A_20189-02 und A_21389 wurden von der Clientmodul- in die Fachdienst-Spezifikation verschoben.
 - Es wurde ein Hinweistext unter die Anforderung A_21387-03 platziert, dass eine Aktualisierung bei Verwendung eines HBA erst bei einem Mailabruf erfolgen kann, da der POP3 Benutzername die benötigte userID bereitstellt.
@@ -63,7 +66,9 @@ image:gematik_logo.svg[width=70%]
 - Die api-kim in GitHub wurde an KIM 1.5.3 angepasst (https://github.com/gematik/api-kim).
 - Teilweise Umbenennung von KOM-LE in KIM.
 - Optimierung des Verhaltens bei positiver Integritätsprüfung (KOM-LE-A_2050-06)
-- Optimierung des Verhaltens bei der initialen Registrierung des KOM-LE-Teilnehmers (A_19458-02)
+- Optimierung des Verhaltens bei der initialen Registrierung des KOM-LE-Teilnehmers (A_19458-02).
+- Der Zeichensatz für den Local part von KIM-Adressen wurde genauer festgelegt (A_21455-01).
+- Der KAS muss die http HEAD Methode unterstützen, damit Clientmodule die Grüße der KAS Daten vor dem Download abfragen können (A_24002).
 
 === Gelöscht
 - Die Protokollierung von Performance Daten im Clientmodul wurde entfernt (geändert: KOM-LE-A_2079-01, gelöscht: KOM-LE-A_2084, KOM-LE-A_2088, KOM-LE-A_2089).
