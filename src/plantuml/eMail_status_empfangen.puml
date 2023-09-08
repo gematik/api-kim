@@ -2,8 +2,8 @@
 scale max 2048 width
 
 state "KOM-LE Mail empfangen" as rkm
-rkm: do / Prüfung der Signatur
 rkm: do / Entschlüsselung des Mail Bodys
+rkm: do / Prüfung der Signatur
 rkm: exit / Entschlüsselung erfolgreich abgeschlossen
 
 state "KOM-LE Mail prozessiert" as dkm
@@ -12,8 +12,8 @@ dkm: do / Binary vom KAS herunterladen
 dkm: exit / Download erfolgreich
 
 state "Client-Mail heruntergeladen" as kdcm
+kdcm: do / Entschlüsselung der heruntergeladenen Mail-Daten
 kdcm: do / Prüfen der Signatur der heruntergeladenen Mail
-kdcm: do / Entschlüsselung der heruntergeladenen mail
 kdcm: do / Integritätsprüfung
 kdcm: do / Nachverarbeitung (z.B. hinzufügen der KIM-header Felder)
 kdcm: exit / Nachverarbeitung abgeschlossen
