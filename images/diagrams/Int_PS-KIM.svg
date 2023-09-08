@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="648px" preserveAspectRatio="none" style="width:1308px;height:648px;background:#FFFFFF;" version="1.1" viewBox="0 0 1308 648" width="1308px" zoomAndPan="magnify"><defs/><g><!--MD5=[0d7498908b8af28a023e22c06d650293]
+cluster SchnittstellenPS-KIM--><g id="cluster_SchnittstellenPS-KIM"><path d="M17,12 L343,12 A7.5,7.5 0 0 1 348,17 L362,56.5938 L1289,56.5938 A5,5 0 0 1 1294,61.5938 L1294,629 A5,5 0 0 1 1289,634 L17,634 A5,5 0 0 1 12,629 L12,17 A5,5 0 0 1 17,12 " style="stroke:#000000;stroke-width:3.0;fill:none;"/><line style="stroke:#000000;stroke-width:3.0;fill:none;" x1="12" x2="362" y1="56.5938" y2="56.5938"/><text fill="#000000" font-family="sans-serif" font-size="28" font-weight="bold" lengthAdjust="spacing" textLength="324" x="20" y="41.9902">SchnittstellenPS-KIM</text></g><!--MD5=[a98f9ced2840e84e5d2175dd9d7180ae]
+entity Primärsystem--><g id="elem_Primärsystem"><rect fill="#F1F1F1" height="92.5938" rx="5" ry="5" style="stroke:#181818;stroke-width:1.0;" width="266" x="44" y="296"/><rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1.0;" width="30" x="270" y="306"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="266" y="310"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="266" y="318"/><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="186" x="74" y="361.9902">Primärsystem</text></g><!--MD5=[3033edf6fb01ab3ffcf96c8d7c3f4b87]
+entity POP3-Proxy\n&#91;KIM-Clientmodul&#93;--><g id="elem_POP3-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;"><rect fill="#F1F1F1" height="125.1875" rx="5" ry="5" style="stroke:#181818;stroke-width:1.0;" width="322" x="462" y="475"/><rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1.0;" width="30" x="744" y="485"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="740" y="489"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="740" y="497"/><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="160" x="492" y="540.9902">POP3-Proxy</text><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="242" x="492" y="573.584">[KIM-Clientmodul]</text></g><!--MD5=[94ef789d7bc2b277b724ff8416ecd541]
+entity SMTP-Proxy\n&#91;KIM-Clientmodul&#93;--><g id="elem_SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;"><rect fill="#F1F1F1" height="125.1875" rx="5" ry="5" style="stroke:#181818;stroke-width:1.0;" width="322" x="462" y="279"/><rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1.0;" width="30" x="744" y="289"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="740" y="293"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="740" y="301"/><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="162" x="492" y="344.9902">SMTP-Proxy</text><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="242" x="492" y="377.584">[KIM-Clientmodul]</text></g><!--MD5=[4de7951fb4a65a02f315ea194e4e6193]
+entity LDAPv3-Proxy\n&#91;Konnektor&#93;--><g id="elem_LDAPv3-Proxy\n&amp;#91;Konnektor&amp;#93;"><rect fill="#F1F1F1" height="125.1875" rx="5" ry="5" style="stroke:#181818;stroke-width:1.0;" width="268" x="489" y="83"/><rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1.0;" width="30" x="717" y="93"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="713" y="97"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="713" y="105"/><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="188" x="519" y="148.9902">LDAPv3-Proxy</text><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="164" x="519" y="181.584">[Konnektor]</text></g><!--MD5=[ddc132224f75f2c183df7828a05782fb]
+entity Verzeichnisdienst--><g id="elem_Verzeichnisdienst"><rect fill="#F1F1F1" height="92.5938" rx="5" ry="5" style="stroke:#181818;stroke-width:1.0;" width="326" x="936" y="160"/><rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1.0;" width="30" x="1222" y="170"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="1218" y="174"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="1218" y="182"/><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="246" x="966" y="225.9902">Verzeichnisdienst</text></g><!--MD5=[a210c79b3bebea962b7d031b6603fa9e]
+entity KIM-Provider--><g id="elem_KIM-Provider"><rect fill="#F1F1F1" height="92.5938" rx="5" ry="5" style="stroke:#181818;stroke-width:1.0;" width="250" x="974" y="390"/><rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1.0;" width="30" x="1184" y="400"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="1180" y="404"/><rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1.0;" width="8" x="1180" y="412"/><text fill="#000000" font-family="sans-serif" font-size="28" lengthAdjust="spacing" textLength="170" x="1004" y="455.9902">KIM-Provider</text></g><!--MD5=[b3bc5ad4fd4aa586f5c1c875360828c3]
+link Primärsystem to POP3-Proxy\n&#91;KIM-Clientmodul&#93;--><g id="link_Primärsystem_POP3-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;"><path d="M283.18,388.2 C338.42,412.7 407.32,443.24 468.46,470.36 " fill="none" id="Primärsystem-to-POP3-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="478.2,474.68,464.992,460.0667,469.0595,470.6239,458.5023,474.6914,478.2,474.68" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="372" y="422.8516">use</text></g><!--MD5=[dba06192cdc4c89d20dc71a0fe8b2cae]
+link Primärsystem to SMTP-Proxy\n&#91;KIM-Clientmodul&#93;--><g id="link_Primärsystem_SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;"><path d="M310.42,342 C354.66,342 404.66,342 451.42,342 " fill="none" id="Primärsystem-to-SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="461.96,342,443.96,334,451.96,342,443.96,350,461.96,342" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="372" y="334.8516">use</text></g><!--MD5=[b4c65446bdc45c991d025836c3217551]
+link Primärsystem to LDAPv3-Proxy\n&#91;Konnektor&#93;--><g id="link_Primärsystem_LDAPv3-Proxy\n&amp;#91;Konnektor&amp;#93;"><path d="M283.18,295.8 C341.82,269.8 415.82,236.98 479.62,208.7 " fill="none" id="Primärsystem-to-LDAPv3-Proxy\n&amp;#91;Konnektor&amp;#93;" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="488.96,204.56,469.2623,204.5486,479.8195,208.6161,475.752,219.1733,488.96,204.56" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="372" y="236.8516">use</text></g><!--MD5=[e733451575e58811ee19799cd9c16cae]
+link LDAPv3-Proxy\n&#91;Konnektor&#93; to Verzeichnisdienst--><g id="link_LDAPv3-Proxy\n&amp;#91;Konnektor&amp;#93;_Verzeichnisdienst"><path d="M757.1,162.8 C809.22,169.42 869.78,177.12 925.24,184.16 " fill="none" id="LDAPv3-Proxy\n&amp;#91;Konnektor&amp;#93;-to-Verzeichnisdienst" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="935.52,185.48,918.6693,175.2793,925.5994,184.2221,916.6566,191.1522,935.52,185.48" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="846" y="168.8516">use</text></g><!--MD5=[6b2058e5609442b51d7deced9f3a22c4]
+link SMTP-Proxy\n&#91;KIM-Clientmodul&#93; to Verzeichnisdienst--><g id="link_SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;_Verzeichnisdienst"><path d="M784.14,296.14 C830.12,282.9 880.46,268.4 927.06,254.96 " fill="none" id="SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;-to-Verzeichnisdienst" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="936.94,252.12,917.4273,249.4264,927.3324,254.8936,921.8651,264.7987,936.94,252.12" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="846" y="262.8516">use</text></g><!--MD5=[1887a36fa965060309e83e405c5b7afb]
+link POP3-Proxy\n&#91;KIM-Clientmodul&#93; to KIM-Provider--><g id="link_POP3-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;_KIM-Provider"><path d="M784.14,503.6 C842.34,491.04 907.54,476.94 963.3,464.9 " fill="none" id="POP3-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;-to-KIM-Provider" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="973.6,462.66,954.3153,458.6476,963.8262,464.7748,957.699,474.2857,973.6,462.66" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="846" y="476.8516">use</text></g><!--MD5=[897aede69bddaaa99af34c93a2004482]
+link SMTP-Proxy\n&#91;KIM-Clientmodul&#93; to KIM-Provider--><g id="link_SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;_KIM-Provider"><path d="M784.14,373.7 C842.34,385.28 907.54,398.26 963.3,409.38 " fill="none" id="SMTP-Proxy\n&amp;#91;KIM-Clientmodul&amp;#93;-to-KIM-Provider" style="stroke:#FF6655;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FF6655" points="973.6,411.42,957.4994,400.0723,963.7909,409.4753,954.3879,415.7669,973.6,411.42" style="stroke:#FF6655;stroke-width:2.0;"/><text fill="#777777" font-family="Impact" font-size="16" lengthAdjust="spacing" textLength="28" x="846" y="380.8516">use</text></g><!--MD5=[d56aa12cd1110ba14702c9104cad1657]
+@startuml
+/'
+# KIM 1.5.x
+# Primaersystemleitfaden
+# KIM Schnittstellen
+'/
+
+
+skinparam actorStyle awesome
+left to right direction
+scale 6/3
+
+skinparam sequence {
+  ArrowColor black
+  ArrowFontSize 17
+  ActorBorderColor black
+  LifeLineBorderColor black
+  LifeLineBackgroundColor Gainsboro
+
+skinparam component {
+  FontSize 10
+  BackgroundColor<<Apache>> LightCoral
+  BorderColor<<Apache>> #FF6655
+  FontName Courier
+  BorderColor black
+  BackgroundColor gold
+  ArrowFontName Impact
+  ArrowFontSize 8
+  ArrowColor #FF6655
+  ArrowFontColor #777777
+}
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontName Impact
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 13
+ActorFontName Aapex
+}
+
+package SchnittstellenPS-KIM {
+[Primärsystem] ..> [POP3-Proxy\n&#91;KIM-Clientmodul&#93;] :use
+[Primärsystem] ..> [SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] :use
+[Primärsystem] ..> [LDAPv3-Proxy\n&#91;Konnektor&#93;] :use
+[LDAPv3-Proxy\n&#91;Konnektor&#93;] ..> [Verzeichnisdienst] :use
+[SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [Verzeichnisdienst] :use
+[POP3-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [KIM-Provider] :use
+[SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [KIM-Provider] :use
+}
+
+@enduml
+
+@startuml
+
+
+skinparam actorStyle awesome
+left to right direction
+scale 6/3
+
+skinparam sequence {
+  ArrowColor black
+  ArrowFontSize 17
+  ActorBorderColor black
+  LifeLineBorderColor black
+  LifeLineBackgroundColor Gainsboro
+
+skinparam component {
+  FontSize 10
+  BackgroundColor<<Apache>> LightCoral
+  BorderColor<<Apache>> #FF6655
+  FontName Courier
+  BorderColor black
+  BackgroundColor gold
+  ArrowFontName Impact
+  ArrowFontSize 8
+  ArrowColor #FF6655
+  ArrowFontColor #777777
+}
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontName Impact
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 13
+ActorFontName Aapex
+}
+
+package SchnittstellenPS-KIM {
+[Primärsystem] ..> [POP3-Proxy\n&#91;KIM-Clientmodul&#93;] :use
+[Primärsystem] ..> [SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] :use
+[Primärsystem] ..> [LDAPv3-Proxy\n&#91;Konnektor&#93;] :use
+[LDAPv3-Proxy\n&#91;Konnektor&#93;] ..> [Verzeichnisdienst] :use
+[SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [Verzeichnisdienst] :use
+[POP3-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [KIM-Provider] :use
+[SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [KIM-Provider] :use
+}
+
+@enduml
+
+PlantUML version 1.2022.5(Sat Apr 30 10:55:52 UTC 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
