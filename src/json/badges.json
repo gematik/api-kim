@@ -1,0 +1,45 @@
+{
+    "description": "Dynamic badges for api-kim",
+    "releaseNotesBadge": {
+        "version": "1.5.3",
+        "color": "red",
+        "style": "plastic",
+        "logo": "github"
+    },
+    "kimClientmodulSpec": {
+        "version": "1.5.3",
+        "color": "green",
+        "style": "plastic",
+        "logo": "github"
+    },
+    "kimFachdienstSpec": {
+        "version": "1.5.3",
+        "color": "green",
+        "style": "plastic",
+        "logo": "github"
+    },
+    "accountManager.yaml": {
+        "version": "2.3.1",
+        "color": "blue",
+        "style": "plastic",
+        "logo": "github"
+    },
+    "attachmentService.yaml": {
+        "version": "2.3.2",
+        "color": "blue",
+        "style": "plastic",
+        "logo": "github"
+    },
+    "accountLimit.yaml": {
+        "version": "1.1.2",
+        "color": "blue",
+        "style": "plastic",
+        "logo": "github"
+    },
+    "serviceInformation.yaml": {
+        "version": "1.0.2",
+        "color": "blue",
+        "style": "plastic",
+        "logo": "github"
+    }
+}

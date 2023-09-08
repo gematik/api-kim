@@ -3,7 +3,7 @@
 
 image:gematik_logo.svg[width=70%]
 
-image:https://shields.io/badge/Release Notes-v1.5.2--1-red?style=plastic&logo=github&logoColor=red[link="https://github.com/gematik/api-kim/blob/main/ReleaseNotes.md"] +
+image:https://shields.io/badge/Release Notes-v1.5.2--1-red?style=plastic&logo=github&logoColor=red[link="https://github.com/gematik/api-kim/blob/main/ReleaseNotes.adoc"] +
 image:https://shields.io/badge/AccountManager-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountManager.yaml"]
 image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml"]
 image:https://shields.io/badge/AccountLimit-v1.1.0-blue?style=plastic&logo=github&logoColor=lightblue"[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountLimit.yaml"] +

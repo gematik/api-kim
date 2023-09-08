@@ -1,0 +1,17 @@
+= Documentation for json files
+
+== badges.json
+
+This file is used to create dynamic badges for api-kim.
+
+Badges
+
+  - Release Notes version, color red, style plastic, logo github, logoColor red
+
+  - KIM Clientmodul Spezifikationen version, color green, style plastic, logo github, logoColor green
+  - KIM Fachdienst Spezifikationen version, color green, style plastic, logo github, logoColor green
+
+  - AccountManager.yaml version, color blue, style plastic, logo github, logoColor lightBlue
+  - AttachmentService.yaml version, color blue, style plastic, logo github, logoColor lightBlue
+  - AccountLimit.yaml version, color blue, style plastic, logo github, logoColor lightBlue
+  - ServiceInformation.yaml version, color blue, style plastic, logo github, logoColor lightBlue
