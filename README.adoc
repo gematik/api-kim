@@ -22,7 +22,7 @@ Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie fo
 
 * ein Administrationsmodul für die Konfiguration des Nutzer-Accounts
 
-* das Einrichten von Abwesendheitsnotizen
+* das Einrichten von Abwesenheitsnotizen
 
 * das Einrichten von Anwendungskennzeichen
 
