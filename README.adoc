@@ -3,13 +3,14 @@
 
 image:gematik_logo.svg[width=70%]
 
-image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.releaseNotes.version&prefix=%20&style=plastic&logo=github&logoColor=red&label=ReleaseNotes&labelColor=%24.badges.releaseNotes.color&color=red[link="ReleaseNotes.adoc"]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.releaseNotes.version&prefix=%20&style=plastic&logo=github&logoColor=red&label=ReleaseNotes&labelColor=%24.badges.releaseNotes.color&color=red[link="ReleaseNotes.adoc"] +
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.kimClientmodulSpec.version&style=plastic&logo=github&logoColor=green&label=Spezifikation%20KIM%20Clientmodul&color=green&[link=https://fachportal.gematik.de/Fanwendungen/kommunikation-im-medizinwesen]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.kimFachdienstSpec.version&style=plastic&logo=github&logoColor=green&label=Spezifikation%20KIM%20Fachdienst&color=green&[link=https://fachportal.gematik.de/Fanwendungen/kommunikation-im-medizinwesen] +
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.accountManagerYaml.version&style=plastic&logo=github&logoColor=blue&label=AccountManager&color=blue[link="src/openapi/AccountManager.yaml"]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.attachmentServiceYaml.version&style=plastic&logo=github&logoColor=blue&label=AttachmentService&color=blue[link="src/openapi/AccountManager.yaml"]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.accountLimitYaml.version&style=plastic&logo=github&logoColor=blue&label=AccountLimit&color=blue[link="src/openapi/AccountManager.yaml"]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.serviceInformationYaml.version&style=plastic&logo=github&logoColor=blue&label=ServiceInformation&color=blue[link="src/openapi/AccountManager.yaml"]
 
-image:https://shields.io/badge/AccountManager-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountManager.yaml"]
-image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml"]
-image:https://shields.io/badge/AccountLimit-v1.1.0-blue?style=plastic&logo=github&logoColor=lightblue"[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountLimit.yaml"] +
-image:https://shields.io/badge/Spezifikation KIM-v1.0-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/downloadcenter/releases/aktuelle-releases#c5917"]
-image:https://shields.io/badge/Spezifikation KIM-v1.5-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/downloadcenter/releases/aktuelle-releases#c5917"]
 
 == Allgemeines
 
