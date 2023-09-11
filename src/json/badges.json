@@ -10,16 +10,16 @@
         "kimFachdienstSpec": {
             "version": " v1.5.3"
         },
-        "accountManager.yaml": {
+        "accountManagerYaml": {
             "version": " v2.3.1"
         },
-        "attachmentService.yaml": {
+        "attachmentServiceYaml": {
             "version": " v2.3.2"
         },
-        "accountLimit.yaml": {
+        "accountLimitYaml": {
             "version": " v1.1.2"
         },
-        "serviceInformation.yaml": {
+        "serviceInformationYaml": {
             "version": " v1.0.2"
         }
     }
