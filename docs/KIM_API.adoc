@@ -1,7 +1,7 @@
 :imagesdir: ../images
 :toc: macro
 :toclevels: 5
-:toc-title: Inhaltsverzeichnis 
+:toc-title: Inhaltsverzeichnis
 :numbered:
 
 image:gematik_logo.svg[width=70%]
@@ -19,7 +19,7 @@ Ab der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu in
 
 === Umgang mit E-Mail-Kategorien
 
-Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werden die KIM-Mails mit einer KIM-Dienstkennung markiert (z. B. bei der eAU). Hierfür wird die Dienstkennung als Bestandteil in den äußeren Header (`X-KIM-Dienstkennung`) der KIM-Mail übernommen. Die Benennung der zu verwendenden Dienstkennungen erfolgt durch den Mail-Client. Wurde durch den Mail-Client keine Dienstkennung gesetzt, dann wird durch das Clientmodul eine Default-Dienstkennung eingetragen. Die Anpassungen sind in *[gemSpec_CM_KOMLE#3.6]* und *[gemSMIME_KOMLE#2.1.1.1]* spezifiziert. 
+Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werden die KIM-Mails mit einer KIM-Dienstkennung markiert (z. B. bei der eAU). Hierfür wird die Dienstkennung als Bestandteil in den äußeren Header (`X-KIM-Dienstkennung`) der KIM-Mail übernommen. Die Benennung der zu verwendenden Dienstkennungen erfolgt durch den Mail-Client. Wurde durch den Mail-Client keine Dienstkennung gesetzt, dann wird durch das Clientmodul eine Default-Dienstkennung eingetragen. Die Anpassungen sind in *[gemSpec_CM_KOMLE#3.6]* und *[gemSMIME_KOMLE#2.1.1.1]* spezifiziert.
 
 Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[Dienstkennungen]
 
@@ -44,7 +44,7 @@ Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Dat
 
 *Beispiel einer HTTP Nachricht*
 
-[cols="h,a",] 
+[cols="h,a",]
 |===
 |URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/
 |Method     |POST
@@ -58,7 +58,7 @@ Authorization: "Basic Z2VtYXRpazpraW0="
 |Body    |
 [source, bash]
 ----
-messageID: "bde36ec8-9710-47bc-9ea3-bf0425078e33@example"         
+messageID: "bde36ec8-9710-47bc-9ea3-bf0425078e33@example"
 recipients: "user1@example.kim.telematik", "user2@example.kim.telematik"
 expires: "Mon, 15 Aug 22 15:52:01 +0000"
 attachment: "{…file content…}"
@@ -66,7 +66,7 @@ attachment: "{…file content…}"
 [normal]#`messageID` - Message-ID der zugehörigen KIM E-Mail# +
 [normal]#`recipients` - E-Mail Adressen der Empfänger# +
 [normal]#`expires` - Ablaufdatum der E-Mail-Daten# +
-[normal]#`attachment` - verschlüsselte E-Mail-Daten die auf dem KAS abgelegt werden sollen# 
+[normal]#`attachment` - verschlüsselte E-Mail-Daten die auf dem KAS abgelegt werden sollen#
 |===
 
 *Beispielabfrage:*
@@ -93,7 +93,7 @@ Body:
 
 -----------------
 
-*HTTP-Status Codes:* 
+*HTTP-Status Codes:*
 |===
 |Status |Bedeutung
 
@@ -105,11 +105,11 @@ Body:
 [small]#Authentifizierung fehlgeschlagen.#
 |413 |Payload Too Large +
 [small]#Die maximal zulässige Dokumentengröße wurde überschritten.#
-|500 
-|Internal Server Error 
+|500
+|Internal Server Error
 |507 |Insufficient Storage +
 [small]#Nicht genügend Speicherplatz vorhanden.#
-|=== 
+|===
 
 ===== read_Attachment()
 Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden.
@@ -139,7 +139,7 @@ curl -X 'GET' \
 'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
 -H 'accept: application/octet-stream' \
 -H 'recipient: user1@example.kim.telematik'
------------------ 
+-----------------
 
 *Beispielantwort*
 [source, ruby]
@@ -162,15 +162,15 @@ Body:
 [small]#E-Mail-Daten wurden unter dem angegebenen Link nicht gefunden.#
 |429 | Too many Requests +
 [small]#E-Mail-Daten zu oft heruntergeladen.#
-|500 
+|500
 |Internal Server Error
 |===
 
 
 ==== I_AccountLimit_Service
-Über die Schnittstelle `I_AccountLimit_Service` stellt der Account Manager dem Clientmodul die logische Operationen `getLimits()` zur Abfrage von technisch konfigurierbaren Parametern eines Nutzer-Accounts zur Verfügung.  
+Über die Schnittstelle `I_AccountLimit_Service` stellt der Account Manager dem Clientmodul die logische Operationen `getLimits()` zur Abfrage von technisch konfigurierbaren Parametern eines Nutzer-Accounts zur Verfügung.
 
-//image:I_AccountLimit.png[width=45%] 
+//image:I_AccountLimit.png[width=45%]
 
 ++++
 <p align="left">
@@ -179,12 +179,12 @@ Body:
 ++++
 
 ===== getLimits()
-Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für E-Mail-Daten (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden. 
+Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für E-Mail-Daten (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden.
 
-Der Parameter `maxMailSize` gibt die maximal mögliche Größe einer KIM-E-Mail inklusive aller Anhänge (Base64-kodiert), die der KAS akzeptiert, zurück. Mit diesem Wert prüft das Clientmodul die Einhaltung der maximalen Mailgröße (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails. Dieser Wert wird auf dem Fachdienst definiert. 
+Der Parameter `maxMailSize` gibt die maximal mögliche Größe einer KIM-E-Mail inklusive aller Anhänge (Base64-kodiert), die der KAS akzeptiert, zurück. Mit diesem Wert prüft das Clientmodul die Einhaltung der maximalen Mailgröße (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails. Dieser Wert wird auf dem Fachdienst definiert.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
 |URI        |\https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0/limit +
 |Method     |GET
@@ -205,7 +205,7 @@ keine Parameter
 curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0/limit' \
   -H 'accept: application/json'
------------------ 
+-----------------
 
 *Beispielantwort*
 [source, ruby]
@@ -230,7 +230,7 @@ Body:
 [small]#Authentifizierung fehlgeschlagen.#
 |404 | Not Found +
 [small]#Mail Account nicht vorhanden content:.#
-|500 
+|500
 |Internal Server Error
 |===
 
@@ -253,7 +253,7 @@ Body:
 Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teilnehmers am KIM-Fachdienst durchgeführt.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
 |URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account
 |Method     |POST
@@ -279,7 +279,7 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
 [normal]#`referenceID` - Referenz eines KIM-Teilnehmers# +
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
-[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# 
+[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version#
 |===
 
 *Beispielabfrage:*
@@ -296,7 +296,7 @@ curl -X 'POST' \
   "password": "new_password",
   "kimVersion": "1.5"
   }'
------------------ 
+-----------------
 
 
 *Beispielantwort:*
@@ -305,7 +305,7 @@ curl -X 'POST' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -315,16 +315,16 @@ Code: 204
 [small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext.#
 |401 |Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
-|409 |Conflict + 
+|409 |Conflict +
 [small]#Konflikt mit einem bereits bestehenden Account mit identischer E-Mail-Adresse.#
 |420 |Policy Not Fulfilled +
 [small]#Username oder Passwort entsprechen nicht den Regeln.#
 |422 |Unprocessable Entity +
 [small]#Die KIM-Version wird nicht unterstützt bzw. ist unbekannt.#
-|500 
-|Internal Server Error  
+|500
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -356,7 +356,7 @@ curl -X 'DELETE' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -364,7 +364,7 @@ curl -X 'DELETE' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -375,9 +375,9 @@ Code: 204
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -409,7 +409,7 @@ curl -X 'POST' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -417,7 +417,7 @@ curl -X 'POST' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -428,9 +428,9 @@ Code: 204
 |404 | Unauthorized +
 [small]#Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -485,7 +485,7 @@ curl -X 'PUT' \
   "kimVersion": "1.5",
   "dataTimeToLive": 90
 }'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -493,7 +493,7 @@ curl -X 'PUT' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -510,9 +510,9 @@ Code: 204
 |422 |Unprocessable Entity +
 [small]#Die KIM-Version wird nicht unterstützt bzw. ist unbekannt.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -544,7 +544,7 @@ curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: application/json' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -559,7 +559,7 @@ Body:
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -570,9 +570,9 @@ Body:
 |404 | Not Found +
 [small]#E-Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -618,19 +618,19 @@ curl -X 'POST' \
   "commonName": "Praxis Mustermann",
   "certPassword": "password"
 }'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
 -----------------
 Code: 201
 Body:
-{  
+{
   "file": "…file content…"
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -639,7 +639,7 @@ Body:
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
 
 
@@ -671,19 +671,19 @@ curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/OTP' \
   -H 'accept: application/json' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
 -----------------
 Code: 200
-Body: 
+Body:
 {
   "OTP": "sufglwahföqwklfnwqkalfnesaöjfjdg...jsdnvbruifqwijkvwurizrtqoiwfhbfe8"
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -692,7 +692,7 @@ Body:
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
 
 ==== setTID()
@@ -725,7 +725,7 @@ curl -X 'PUT' \
   -H 'accept: */*' \
   -H 'password: password' \
   -H 'OTP: sufglwahföqwklfnwqkalfnesaöjfjdg...jsdnvbruifqwijkvwurizrtqoiwfhbfe8'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -733,7 +733,7 @@ curl -X 'PUT' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -745,15 +745,15 @@ Code: 204
 [small]#E-Mail Account nicht vorhanden.#
 |408 | Request Timeout +
 [small]#Gültigkeitsdauer des One Time Passworts ist abgelaufen.#
-|500 
-|Internal Server Error  
+|500
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
 ==== getOutOfOffice()
-Die Operation `getOutOfOffice()` liefert Informationen zu eingestellten Abwesendheitsnotizen eines KIM-Teilnehmers.
+Die Operation `getOutOfOffice()` liefert Informationen zu eingestellten Abwesenheitsnotizen eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"]
@@ -780,7 +780,7 @@ curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/outofoffice' \
   -H 'accept: application/json' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -795,7 +795,7 @@ Body:
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -808,12 +808,12 @@ Body:
 |404 | Not Found +
 [small]#E-Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
 
 
 ==== UpdateOutOfOffice()
-Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesendheitsnotiz eines KIM-Teilnehmers.
+Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesenheitsnotiz eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"]
@@ -840,10 +840,10 @@ Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesendhei
   "active": "true"
 }
 ----
-[normal]#`startDate` - Ab diesem Zeitpunkt wird die Abwesendheitsnotiz gesendet# +
-[normal]#`endDate` - Bis zu diesem Zeitpunkt wird die Abwesendheitsnotiz gesendet# +
-[normal]#`message` - Inhalt der Abwesendheitsnotiz# +
-[normal]#`active` - Aktivieren bzw. deaktiviert der Abwesendheitsnotiz#
+[normal]#`startDate` - Ab diesem Zeitpunkt wird die Abwesenheitsnotiz gesendet# +
+[normal]#`endDate` - Bis zu diesem Zeitpunkt wird die Abwesenheitsnotiz gesendet# +
+[normal]#`message` - Inhalt der Abwesenheitsnotiz# +
+[normal]#`active` - Aktivieren bzw. deaktiviert der Abwesenheitsnotiz#
 |===
 
 
@@ -861,7 +861,7 @@ curl -X 'PUT' \
   "message": "Sehr geehrte Damen und Herren...",
   "active": true
 }'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -869,7 +869,7 @@ curl -X 'PUT' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -882,5 +882,5 @@ Code: 204
 |404 | Not Found +
 [small]#E-Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
