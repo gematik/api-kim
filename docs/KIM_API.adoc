@@ -813,7 +813,7 @@ Code: 204
 
 
 ==== getOutOfOffice()
-Die Operation `getOutOfOffice()` liefert Informationen zu eingestellten Abwesenheitsnotizen eines KIM-Teilnehmers.
+Die Operation `getOutOfOffice()` liefert Informationen zu eingestellten Abwesendheitsnotizen eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"]
@@ -873,7 +873,7 @@ Body:
 
 
 ==== UpdateOutOfOffice()
-Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesenheitsnotiz eines KIM-Teilnehmers.
+Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesendheitsnotiz eines KIM-Teilnehmers.
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"]
@@ -900,10 +900,10 @@ Die Operation `UpdateOutOfOffice()` ermöglicht das Einstellen einer Abwesenheit
   "active": "true"
 }
 ----
-[normal]#`startDate` - Ab diesem Zeitpunkt wird die Abwesenheitsnotiz gesendet# +
-[normal]#`endDate` - Bis zu diesem Zeitpunkt wird die Abwesenheitsnotiz gesendet# +
-[normal]#`message` - Inhalt der Abwesenheitsnotiz# +
-[normal]#`active` - Aktivieren bzw. deaktiviert der Abwesenheitsnotiz#
+[normal]#`startDate` - Ab diesem Zeitpunkt wird die Abwesendheitsnotiz gesendet# +
+[normal]#`endDate` - Bis zu diesem Zeitpunkt wird die Abwesendheitsnotiz gesendet# +
+[normal]#`message` - Inhalt der Abwesendheitsnotiz# +
+[normal]#`active` - Aktivieren bzw. deaktiviert der Abwesendheitsnotiz#
 |===
 
 
