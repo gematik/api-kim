@@ -64,7 +64,7 @@ externalDocs:
   description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: /AccountMgmt/v2.4/
+- url: /AccountMgmt/v2.3.1/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
@@ -80,7 +80,7 @@ security:
 paths:
 ##--
 ##------
-  /account:
+  /account/registerAccount:
     post:
       tags:
       - Email-Account
@@ -88,58 +88,21 @@ paths:
             #  In allen Fehlerfällen wird der Account nicht erzeugt.
       operationId: registerAccount
       parameters:
-        - in: header
-          name: iniPassword
-          description: Initiales Passwort für den Email-Account. Das Passwort ist base64 encoded.
-          required: true
-          schema:
-             type: byte
-             format: password
+      - in: header
+        name: iniPassword
+        description: Initiales Passwort für den Email-Account. Das Passwort ist base64 encoded.
+        required: true
+        schema:
+          type: string
+          maxLength: 256
+          format: password
       requestBody:
         description: Registriert neuen Account
         content:
           application/json:
               schema:
-                type: object
-                properties:
-                  referenceID:
-                    type: string
-                    maxLength: 256
-                    description: Der KIM Anbieter legt die referenceID fest und teilt sie dem KIM Teilnehmer mit.
-                                Es kann z.B. eine Vertragsnummer oder einen Registrierungscode enthalten sein.
-                                Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
-                                Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der
-                                Interoperabilität mit allen KIM Fachdiensten - unterstützen. Durch die "setAccount"
-                                Operation ist dieser Wert nicht änderbar.
-                  username:
-                    type: string
-                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden.
-                                Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
-                    format: email
-                  password:
-                    type: string
-                    format: password
-                    description: Der KIM Teilnehmer gibt hier das Passwort an, das nach der initialen Registrierung
-                                für diesen Mail-Account gilt.
-                  kimVersion:
-                    type: string
-                    maxLength: 4
-                    example: 1.5
-                  appTags:
-                    type: array
-                    items:
-                      type: string
-                    description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
-                                zugeordnet werden.
-                                Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
-                                wird der Form-Part mehrfach angegeben (exploded=true).
-                  noVzdMailEntry:
-                    type: boolean
-                    description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
-                                Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
-                                Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
+                $ref: '#/components/schemas/Account'
         required: true
-
       responses:
         204:
           description: Account erfolgreich registriert.
@@ -200,26 +163,20 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
+          $ref: '#/components/schemas/Password'
       requestBody:
         content:
           application/json:
             schema:
-             $ref: '#/components/schemas/Account'
-             # Bei Passwortwechsel ist das "alte" Passwort Im Header dieser Operation enthalten.
-             # Das neue Passwort ist "password" Parameter im Body der Operation enthalten.
-
+              $ref: '#/components/schemas/Account'
       responses:
         204:
           description: Änderung des Accounts erfolgreich.
@@ -276,16 +233,13 @@ paths:
         description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
-
+          $ref: '#/components/schemas/Password'
       responses:
         204:
           description: Account erfolgreich deregistriert
@@ -327,18 +281,15 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
+          $ref: '#/components/schemas/Password'
       responses:
         200:
           description: Anzeige des Accounts.
@@ -368,28 +319,12 @@ paths:
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
-                  maxMailSize:
-                    type: integer
-                    format: int64
-                    minimum: 734003200
-                    example: 734003200
-                    readOnly: true
-                    description: Gibt die maximale Größe einer KIM-Mail in Bytes an
                   appTags:
                     type: array
                     items:
                       type: string
                     description: Gibt die Liste aller Anwendungskennzeichen, die der Mail-Adresse
                                 zugeordnet sind, zurück.
-                  dataTimeToLive:
-                    type: integer
-                    maxLength: 3
-                    minimum: 10
-                    maximum: 90
-                    default: 90
-                    example: 90
-                    description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
-
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
           content:
@@ -431,18 +366,15 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
+          $ref: '#/components/schemas/Password'
       responses:
         204:
           description: Deregistrierung erfolgreich zurückgenommen
@@ -497,19 +429,15 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
-
+          $ref: '#/components/schemas/Password'
       responses:
         200:
           description: OTP erfolgreich erzeugt.
@@ -519,10 +447,7 @@ paths:
               type: object
               properties:
                 otp:
-                  type: string
-                  format: password
-                  description: One Time Password für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
-
+                  $ref: '#/components/schemas/Password'
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
           content:
@@ -562,26 +487,21 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
+          $ref: '#/components/schemas/Password'
       - in: header
         name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
         required: true
         schema:
-          type: string
-          format: password
-
+          $ref: '#/components/schemas/Password'
       responses:
         204:
           description: Änderung der TelematikID erfolgreich.
@@ -638,18 +558,15 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
+          $ref: '#/components/schemas/Password'
       requestBody:
         content:
           application/json:
@@ -712,19 +629,15 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
-
+          $ref: '#/components/schemas/Password'
       responses:
         200:
           description: Lesen der Abwesenheitsnotiz erfolgreich.
@@ -765,18 +678,15 @@ paths:
       parameters:
       - name: username
         in: path
-        description: Username/E-Mail des Accounts
         required: true
         schema:
-          type: string
-          format: email
+          $ref: '#/components/schemas/Username'
       - in: header
         name: password
         description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
         required: true
         schema:
-          type: byte
-          format: password
+          $ref: '#/components/schemas/Password'
       requestBody:
         content:
           application/json:
@@ -813,6 +723,18 @@ paths:
 
 components:
   schemas:
+    Password:
+      type: string
+      minLength: 12
+      maxLength: 256
+      format: password
+      description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
+
+    Username:
+      type: string
+      maxLength: 256
+      format: email
+      description: Username/E-Mail des Accounts.
 
     Error:
       type: object
@@ -828,17 +750,40 @@ components:
     Account:
       type: object
       properties:
+        referenceId:
+          type: string
+          maxLength: 32
+          description: Der KIM Anbieter legt die referenceID fest und teilt sie dem KIM Teilnehmer mit.
+                      Es kann z.B. eine Vertragsnummer oder einen Registrierungscode enthalten sein.
+                      Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                      Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der
+                      Interoperabilität mit allen KIM Fachdiensten - unterstützen. Durch die "setAccount"
+                      Operation ist dieser Wert nicht änderbar.
+        username:
+          $ref: '#/components/schemas/Username'
+          
         password:
-          type: byte
-          format: password
-          writeOnly: true
-          description: Der KIM Teilnehmer kann sein Passwort ändern.
+          $ref: '#/components/schemas/Password'
+
         kimVersion:
           type: string
           maxLength: 4
           example: 1.5+
           description: Der KIM Teilnehmer kann seine KIM Version ändern. Der Wertebereich der unterstützten
                       KIM Versionen soll vom Clientmodul vorgegeben werden.
+                      
+        regStat:
+          type: string
+          maxLength: 16
+          example: registered
+          description: Der Registrierungsstatus des Accounts. Gültige Werte sind registered und deregistered.
+        
+        deregDate:
+          type: integer
+          format: int64
+          example: 1616588543
+          description: Bestätigtes Kündigungsdatum (Unix Timestamp)
+          
         appTags:
           type: array
           items:
@@ -849,16 +794,6 @@ components:
                       wird der Form-Part mehrfach angegeben (exploded=true). Wenn kein Anwendungskennzeichen angegeben
                       ist, dann werden bereits bestehende Anwendungskennzeichen gelöscht.
 
-        dataTimeToLive:
-          type: integer
-          nullable: true
-          maxLength: 3
-          minimum: 10
-          maximum: 90
-          default: 90
-          example: 90
-          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
-                      Der KIM Teilnehmer kann den Wert ändern.
         noVzdMailEntry:
           type: boolean
           description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
@@ -876,11 +811,10 @@ components:
                         genutzt. Für eine erfolgreiche Zertifikatsprüfung - durch den Client - muss im commonName der Server
                         Name des Clientmoduls stehen (so wie er konfiguriert ist, z.B. example.com, www.example.com)
         certPassword:
-          type: string
-          format: binary
           writeOnly: true
           description: base64 kodiertes Passwort für den PKCS#12 Container in dem das Zertifikat transportiert wird.
                       Wenn kein certPassword angegeben ist, dann wird der PKCS#12 Container nicht verschlüsselt.
+          $ref: '#/components/schemas/Password'
 
     OutOfOfficeNotification:
       type: object
