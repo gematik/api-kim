@@ -61,7 +61,7 @@ paths:
       - Attachments
       summary: Einen Anhang herunterladen
       description: gibt den unter einem Freigabelink verschlüsselten Anhang zurück
-      operationId: read_Attachment
+      operationId: readAttachment
 
       parameters:
       - name: attachmentId
@@ -127,7 +127,7 @@ paths:
       - Attachments
       summary: E-Mail-Daten von KAS löschen
       description: Löschen von auf dem KAS abgelegten E-Mail-Daten, Uri entspricht sharedLink aus add_Attachment
-      operationId: delete_Maildata
+      operationId: deleteMaildata
 
       security:
         - basicAuth: []
@@ -177,7 +177,7 @@ paths:
       - Attachments
       summary: Einen Anhang hinzufügen
       description: Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
-      operationId: add_Attachment
+      operationId: addAttachment
 
       security:
         - basicAuth: []
