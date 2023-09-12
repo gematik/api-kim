@@ -150,8 +150,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-##--
-##------
+
   /account/{username}:
     put:
       tags:
