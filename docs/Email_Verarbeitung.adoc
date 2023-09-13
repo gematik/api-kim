@@ -108,7 +108,7 @@ fHx3d3cuZGFzaW50ZXJuZXQubmV[...]
 ====
 
 === Client-Mail hochgeladen
-Von der korrigierten(*_From_* Header) und um die Dienstkennung erweiterte Mail wird eine Kopie angelegt, die die Basis für die an den Fachdienst zu übermittelnde KOM-LE Nachricht bildet. Anschließen wir modifizierte Client-Mail signiert und verschlüsselt und das binäre Ergebnis und durch Aufruf der Methode addAttachment auf den KIM Attachment Service hochgeladen. Nach einem erfolgreichen Upload ersetzt das KOM-LE Modul den Body der KOM-LE Nachricht durch die KIM Attachment Datenstruktur.
+Von der korrigierten (*_From_* Header) und um die Dienstkennung erweiterte Mail wird eine Kopie angelegt, die die Basis für die an den Fachdienst zu übermittelnde KOM-LE Nachricht bildet. Anschließen wir die modifizierte Client-Mail signiert und verschlüsselt und das binäre Ergebnis und durch Aufruf der Methode addAttachment auf den KIM Attachment Service hochgeladen. Nach einem erfolgreichen Upload ersetzt das KOM-LE Modul den Body der KOM-LE Nachricht durch die KIM Attachment Datenstruktur.
 
 .KOM-LE Nachricht mit Attachment Datenstruktur
 [%collapsible%open]

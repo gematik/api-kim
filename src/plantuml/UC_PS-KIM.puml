@@ -1,0 +1,51 @@
+@startuml
+/'
+# KIM 1.5.x
+# Primaersystemleitfaden
+# Use Case Diagram
+# Anwendungsfaelle
+'/
+
+
+skinparam actorStyle awesome
+left to right direction
+scale 6/3
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontName Impact
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 13
+ActorFontName Aapex
+}
+
+package Clientsystem {
+  actor "Leistungserbringer" as le
+}
+
+package Anwendungsfälle {
+  usecase "Empfänger ermitteln" as UC1 #AliceBlue
+  usecase "Nachricht generieren \nund übernehmen" as UC2 #AliceBlue
+  usecase "Nachricht versenden" as UC3 #AliceBlue
+  usecase "Nachricht empfangen" as UC4 #AliceBlue
+}
+
+le --> UC1
+le --> UC2
+le --> UC3
+le --> UC4
+
+@enduml

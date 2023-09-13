@@ -10,12 +10,12 @@ toc::[]
 
 
 = Clientsystem
-Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel weiter beschrieben werden. Darüberhinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine weitere Schnittstelle durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
+Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel näher beschrieben werden. Darüber hinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine Schnittstelle (`I_AccountManager_Service`) durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
 
 == Änderungen im Clientmodul ab KIM 1.5
 === Optionale Integration in das Clientsystem
 
-Ab der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu integrieren. Ein seperates Clientmodul ist in diesem Fall nicht mehr notwendig.
+Ab der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu integrieren. Ein seperates Clientmodul ist in diesem Fall nicht mehr notwendig. Zur Sicherstellung einer spezifikationskonformen Umsetzung der Intergration in das Clientsystem wird durch die gematik ein entsprechender Prokttypsteckbrief (gemProdT_iCM_KIM) bereitgestellt.
 
 === Umgang mit E-Mail-Kategorien
 
@@ -25,11 +25,11 @@ Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:htt
 
 === Umgang mit großen Anhängen
 
-E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf dem KOM-LE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit der KIM-Attachment Datenstruktur und versendet diese nach der weiteren Verarbeitung durch das Clientmodul als KOM-LE Nachricht an den Fachdienst. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Attachment Datenstruktur, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben.
+E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail, durch das Clientmodul des Senders verschlüsselt, auf dem KIM-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit der KIM-Attachment Datenstruktur (*[gemSpec_CM_KOMLE#Tabelle 2]*) und versendet diese nach der weiteren Verarbeitung durch das Clientmodul als KIM Nachricht an den Fachdienst. Das KIM-Clientmodul des Empfängers erkennt den `link` in der KIM-Attachment Datenstruktur, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben.
 
 ==== I_Attachment_Service
 
-Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
+Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten sowie die Operation `delete_Maildata` für das Löschen der E-Mail-Daten, unmittelbar nach dem Hochladen, zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
 //image:I_KAS.png[width=45%]
 
@@ -166,6 +166,56 @@ Body:
 |Internal Server Error
 |===
 
+===== delete_Maildata() +
+Mit Hilfe der Opertion `delete_Maildata()` kann ein Clientmodul die auf dem KAS abgelegten E-Mail Daten, im Falle des fehlerhaften Versands der dazugehörenden KIM-Nachricht, wieder löschen.
+
+*Beispiel einer HTTP Nachricht*
+
+[cols="h,a",] 
+|===
+|URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/+{attachmentId}+ +
+[normal]#`attachmentId` - Freigabelink, unter dem die E-Mail-Daten gespeichert wurden#
+|Method     |DELETE
+|Header |
+[source, bash]
+----
+HTTP-Version: "HTTP/1.1"
+Content-Type: "multipart/form-data"
+Authorization: "Basic Z2VtYXRpazpraW0="
+----
+|Body    |
+keine Parameter
+|===
+
+*Beispielabfrage:*
+[source, bash]
+-----------------
+curl -X 'DELETE' \
+'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
+-H 'accept: application/octet-stream' \
+----------------- 
+
+*Beispielantwort*
+[source, ruby]
+-----------------
+Code: 200
+-----------------
+
+*HTTP-Status Codes:* 
+|===
+|Status |Bedeutung
+
+|200 | OK +
+[small]#Daten wurden gelöscht#
+|400  | Bad Request  +
+[small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext#
+|401 | Unauthorized +
+[small]#Authentifizierung fehlgeschlagen.#
+|404 |no Ressource +
+[small]#Ressource unter dem angegebenen Link nicht gefunden#
+|500 
+|Internal Server Error 
+|=== 
 
 ==== I_AccountLimit_Service
 Über die Schnittstelle `I_AccountLimit_Service` stellt der Account Manager dem Clientmodul die logische Operationen `getLimits()` zur Abfrage von technisch konfigurierbaren Parametern eines Nutzer-Accounts zur Verfügung.  
@@ -215,6 +265,7 @@ Body:
 {
   "dataTimeToLive": 90,
   "maxMailSize": 734003200,
+  "kasMailSizeThreshold": 15728640;
   "quota": 160000000000,
   "remainQuota": 112000000000
 }
@@ -274,15 +325,17 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
+  "appTags": "<Anwendungskennzeichen>"
 }
 ----
 [normal]#`referenceID` - Referenz eines KIM-Teilnehmers# +
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
-[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# 
+[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
+[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en#
 |===
 
-*Beispielabfrage:*
+*Beispielaufruf:*
 [source, bash]
 -----------------
 curl -X 'POST' \
@@ -295,6 +348,7 @@ curl -X 'POST' \
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
+  "appTags": "eAU"
   }'
 ----------------- 
 
@@ -460,6 +514,7 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
+  "appTags": "<Anwendungskennzeichen>"
   "dataTimeToLive": 90
 }
 ----
@@ -467,6 +522,7 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
 [normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
+[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en# +
 [normal]#`dataTimeToLive` - Speicherdauer in Tagen von Mails und Anhängen auf dem Fachdienst#
 |===
 
@@ -483,6 +539,7 @@ curl -X 'PUT' \
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
+  "appTags": "eAU",
   "dataTimeToLive": 90
 }'
 ----------------- 
@@ -555,7 +612,10 @@ Body:
   "username": "user@example.kim.telematik",
   "kimVersion": "1.5",
   "regStat": "registered",
-  "deregDate": 1616588543
+  "deregDate": 1616588543,
+  "maxMailSize": 734003200,
+  "appTags": "eAU",
+  "dataTimeToLive": 90
 }
 -----------------
 

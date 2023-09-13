@@ -1,0 +1,58 @@
+/'
+# KIM 1.5
+# Account Manager
+# Sequence Diagram
+# Name: Operation Abwesenheitsnotiz
+'/
+
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam minClassWidth 200
+skinparam BoxPadding 15
+skinparam sequenceReferenceHeaderBackgroundColor palegreen
+scale max 2048 width
+hide footbox
+
+skinparam sequence {
+ArrowColor black
+ArrowFontSize 17
+ActorBorderColor black
+LifeLineBorderColor black
+LifeLineBackgroundColor Gainsboro
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 20
+ActorFontName Aapex
+}
+      actor L as "Leistungserbringer"
+      box <size:18>Clientmodul\n #WhiteSmoke
+      participant A as "Administrationsmodul"
+      end box
+      box <size:18>Fachdienst\n #WhiteSmoke
+      participant AM as "Account-Manager"
+      end box
+
+L->A: Anwendungskennzeichen \nkonfigurieren
+ activate A
+ A->AM: getAccount
+ activate AM
+ AM --> A: Konfiguration
+ deactivate AM
+
+ opt Anwendungskennzeichen bearbeiten
+  A->AM: setAccount
+  activate AM
+  AM --> A: status
+  deactivate AM
+  end
+ A-->L: status
+ deactivate A
+@enduml
