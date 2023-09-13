@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: I_ServiceInformation
+  description:  Über diese Schnittstelle werden Informationen über den KIM Fachdienst abgefragt
+  version: 1.0.2
+  ### 1.0.2
+  # - added operation GET /appTags
+  ### 1.0.1
+  # - added kimServiceVersion and jwtExpirations to the ServiceInformation object
+  ### 1.0.0
+  # - initial Version of I_ServiceInformation
+  # - added traceId to Error object
+
+externalDocs:
+  description: GitHub - Dokumentation
+  url: https://github.com/gematik/api-kim
+servers:
+- url: /ServiceInformation/v1.0/
+  # Die URL muss wie folgt gebildet werden:
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
+tags:
+- name: ServiceInformation
+
+paths:
+##--
+##------
+  /:
+    get:
+      tags:
+      - ServiceInformation
+      summary: Informationen über den KIM Fachdienst abfragen
+      description: Informationen über den KIM Fachdienst abfragen
+      operationId: getServiceInformation
+
+      responses:
+        200:
+          description: OK
+             # Rückgabe der Informationen über den KIM Fachdienst
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInformation'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /appTags:
+    get:
+      tags:
+       - appTags
+      summary: Abfrage der Anwendungskennzeichen
+      description: Es wird die Liste der Anwendungskennzeichen abgefragt.
+        Die Anwendungskennzeichen werden als FHIR Codesystem in der
+        Response übergeben
+      operationId: getAppTags
+
+      responses:
+        200:
+          description: OK
+             # Rückgabe der Anwendungskennzeichen als FHIR CodeSystem (ServiceIdentifierCS)
+             # Siehe https://simplifier.net/app-transport-framework/service-identifier-cs/~json
+          content:
+            application/json:
+              schema:
+                externalDocs:
+                  description: Rückgabe der Anwendungskennzeichen als FHIR CodeSystem (ServiceIdentifierCS)
+                  url: https://simplifier.net/app-transport-framework/service-identifier-cs/~json
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+##--
+##------
+components:
+
+  schemas:
+
+    ServiceInformation:
+      type: object
+      properties:
+        kimServiceVersion:
+          type: string
+          description: Gibt die Version des KIM Fachdienstes an.
+        passwordPolicyRegEx:
+          type: string
+          description: Gibt die Password Policy, die der AccountManager verlangt, als regulären Ausdruck an.
+        passwordPolicyDisplay:
+          type: string
+          description: Gibt die Password Policy, die der AccountManager verlangt, in Textform an.
+        jwtExpiration:
+          type: integer
+          minimum: 300
+          maximum: 21600
+          description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.
+      example:
+        kimServiceVersion: 1.5.3
+        passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,?/~_+\-=|\\]).{8,64}$
+        passwordPolicyDisplay: Mindestens eine Zahl [0-9]
+                              Mindestens ein Kleinbuchstabe [a-z]
+                              Mindestens ein Großbuchstabe [A-Z]
+                              Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;'<>,?/~_+-=|\]
+                              Mindestlänge 8 Zeichen
+                              Maximallänge 64.
+        jwtExpiration: 300
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        traceId:
+          type: string
+          maxLength: 255
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst

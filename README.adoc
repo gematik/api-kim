@@ -3,7 +3,6 @@
 
 image:gematik_logo.svg[width=70%]
 
-image:https://shields.io/badge/Release Notes-v1.5.2--3-red?style=plastic&logo=github&logoColor=red[link="https://github.com/gematik/api-kim/blob/main/ReleaseNotes.adoc"] +
 image:https://shields.io/badge/AccountManager-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountManager.yaml"]
 image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml"]
 image:https://shields.io/badge/AccountLimit-v1.1.0-blue?style=plastic&logo=github&logoColor=lightblue"[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountLimit.yaml"] +
@@ -12,7 +11,7 @@ image:https://shields.io/badge/Spezifikation KIM-v1.5-green?style=plastic&logo=g
 
 == Allgemeines
 
-Die folgende Dokumentation beschreibt die systemspezifische Lösung von KIM 1.5 und baut auf dem Konzept von KIM 1.0 "Kommunikation Leistungserbringer" gemäß *[gemSysL_KOMLE]* auf. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5 verwenden.
+Die folgende Dokumentation beschreibt KIM 1.5.3. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5.3 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5.3 verwenden.
 
 Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie folgt:
 

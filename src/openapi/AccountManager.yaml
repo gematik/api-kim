@@ -3,7 +3,17 @@ info:
   title: I_AccountManager_Service
   description:  Über diese Schnittstelle wird der KIM Account verwaltet.
   #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 2.3.0
+  version: 2.3.1
+### 2.3.1
+  # KIM 1.5.3 changes
+  # - values for regStat defined (registered and deregistered)
+  # - parameter password in createCert is optional (description changed)
+  # - descriptions changed
+  # - read only parameter in setAccount removed
+  # - new parameter appTags in registerAccount and setAccount
+  # - added traceId to Error object
+  # - changed servers -url
+  # - added "noVzdMailEntry" flag for POST /account and PUT /account/{username}
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
@@ -15,59 +25,61 @@ info:
   # - changed otp property to lowercase and added password as format
   # - added response code 404 for getOTP in case e-mail account does not exist
   # - added response code 404 for deregisterAccount in case e-mail account does not exist
-  ### 2.2.0 
+  ### 2.2.0
   # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
   # - changed /components/schemas/Account:
   #   added parameter dataTimeToLive & maxMailSize
   #   specified kimVersion with enum
   # - changed operation createCert:
   #   added error codes 400 & 404
-  ### 2.0.0 
+  ### 2.0.0
   # - included new operations for outOfOffice
   # - included new operations for porting an e-mail address to new telematikID
   # - removed operations: register_State, cm_version and pw_change
   # - added new operations setAccount and getAccount
-  # - renamed and updated operations for user account (e.g. registerAccount and   
+  # - renamed and updated operations for user account (e.g. registerAccount and
   #   deregisterAccount)
   # - added operation createCert to generate PKCS#12 files
   # - added HTTP error code 500
   # - changed authentication to JWT
-  ### 1.2.0 
-  # - added parameter "cert" to all operations. It includes the auth certificate to sign the operation. This is necessary to check the sign from the Server.  
+  ### 1.2.0
+  # - added parameter "cert" to all operations. It includes the auth certificate to sign the operation. This is necessary to check the sign from the Server.
   # - adjusted some tags
   # - more specified parameter "username" (email & maxlength)
   # - changed response code of the operation "register" from 200 - OK to 201 - created
   # - changed http method in operation "deregister" from PUT to DELETE
   # - changed http method in operation "cm_version" from GET to PUT
   # - changed response in operation "register_state" to JSON format
-  ### 1.1.2 
+  ### 1.1.2
   # - added parameter "referenceID" in operation "register"
-  ### 1.1.1 
+  ### 1.1.1
   # - extended URI to interface releases
-  ### 1.1.0 
+  ### 1.1.0
   # - added authentication with HBA/SMC-B
   ### 1.0.0
   # - initial Version of I_AccountManager_Service
-  
+
 externalDocs:
   description: Github Dokumentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/
-  # <hrst1> ist der Platzhalter für den Fachdienstbetreiber
+- url: /AccountMgmt/v2.3/
+  # Die URL muss wie folgt gebildet werden:
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
 tags:
-- name: Email-Account 
+- name: Email-Account
 - name: Certificate
 - name: Out of Office Notification
 
-security: 
+security:
   - bearerAuth: []
-    # Die Authentisierung erfolgt für alle Operatiponen über ein JWT
-    
+    # Die Authentisierung erfolgt für alle Operationen über ein JWT
+
 paths:
 ##--
 ##------
-  /account:  
+  /account:
     post:
       tags:
       - Email-Account
@@ -81,7 +93,7 @@ paths:
           required: true
           schema:
              type: string
-             format: password          
+             format: password
       requestBody:
         description: Registriert neuen Account
         content:
@@ -89,28 +101,44 @@ paths:
               schema:
                 type: object
                 properties:
-                  referenceID: 
+                  referenceID:
                     type: string
                     maxLength: 256
-                    writeOnly: true
-                    description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
-                             Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
-                             Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
-                             Die referenceID kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    description: Der KIM Anbieter legt die referenceID fest und teilt sie dem KIM Teilnehmer mit.
+                                Es kann z.B. eine Vertragsnummer oder einen Registrierungscode enthalten sein.
+                                Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
+                                Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der
+                                Interoperabilität mit allen KIM Fachdiensten - unterstützen. Durch die "setAccount"
+                                Operation ist dieser Wert nicht änderbar.
                   username:
                     type: string
-                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
-                    format: email 
+                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden.
+                                Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    format: email
                   password:
                     type: string
                     format: password
-                    writeOnly: true
+                    description: Der KIM Teilnehmer gibt hier das Passwort an, das nach der initialen Registrierung
+                                für diesen Mail-Account gilt.
                   kimVersion:
                     type: string
                     maxLength: 4
                     example: 1.5
+                  appTags:
+                    type: array
+                    items:
+                      type: string
+                    description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
+                                zugeordnet werden.
+                                Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
+                                wird der Form-Part mehrfach angegeben (exploded=true).
+                  noVzdMailEntry:
+                    type: boolean
+                    description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
+                                Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
+                                Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
         required: true
-    
+
       responses:
         204:
           description: Account erfolgreich registriert.
@@ -147,13 +175,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         502:
-          description: VZD nicht erreichbar bzw. liefert Fehler          
+          description: VZD nicht erreichbar bzw. liefert Fehler
           content:
             application/json:
               schema:
@@ -164,8 +192,9 @@ paths:
     put:
       tags:
       - Email-Account
-      summary: Account ändern
-             # referenceID & username (im Body) können über dieser Operation nicht geändert werden
+      summary: Account ändern.
+              Die Werte von nicht angegebenen schreibbaren Parametern werden nicht verändert.
+              # referenceID & username (im Body) können über dieser Operation nicht geändert werden
       operationId: setAccount
       parameters:
       - name: username
@@ -174,14 +203,14 @@ paths:
         required: true
         schema:
           type: string
-          format: email          
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password          
+          format: password
       requestBody:
         content:
           application/json:
@@ -189,7 +218,7 @@ paths:
              $ref: '#/components/schemas/Account'
              # Bei Passwortwechsel ist das "alte" Passwort Im Header dieser Operation enthalten.
              # Das neue Passwort ist "password" Parameter im Body der Operation enthalten.
-      
+
       responses:
         204:
           description: Änderung des Accounts erfolgreich.
@@ -222,15 +251,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'  
+                $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         502:
-          description: VZD nicht erreichbar bzw. liefert Feler  
+          description: VZD nicht erreichbar bzw. liefert Fehler
           content:
             application/json:
               schema:
@@ -247,15 +276,15 @@ paths:
         required: true
         schema:
           type: string
-          format: email 
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password  
-      
+          format: password
+
       responses:
         204:
           description: Account erfolgreich deregistriert
@@ -278,7 +307,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -301,14 +330,14 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
+          format: password
       responses:
         200:
           description: Anzeige des Accounts.
@@ -319,25 +348,47 @@ paths:
                 properties:
                   username:
                     type: string
-                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
-                    format: email 
+                    description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch
+                                die "setAccount" Operation ist dieser Wert nicht änderbar.
+                    format: email
                   kimVersion:
                     type: string
                     maxLength: 4
                     example: 1.5
                   regStat:
                     type: string
-                    description: Der Registrierungsstatus von dem Account. Der KIM Anbieter kann dieses Attribut zur Information des KIM Kunden über den Status des Accounts nutzen.
                     maxLength: 512
                     readOnly: true
                     example: registered
+                    description: Der Registrierungsstatus des Accounts. Gültige Werte sind registered und deregistered.
                   deregDate:
                     type: integer
                     format: int64
                     example: 1616588543
                     readOnly: true
                     description: Bestätigtes Kündigungsdatum (Unix Timestamp)
-                      # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind
+                  maxMailSize:
+                    type: integer
+                    format: int64
+                    minimum: 734003200
+                    example: 734003200
+                    readOnly: true
+                    description: Gibt die maximale Größe einer KIM-Mail in Bytes an
+                  appTags:
+                    type: array
+                    items:
+                      type: string
+                    description: Gibt die Liste aller Anwendungskennzeichen, die der Mail-Adresse
+                                zugeordnet sind, zurück.
+                  dataTimeToLive:
+                    type: integer
+                    maxLength: 3
+                    minimum: 10
+                    maximum: 90
+                    default: 90
+                    example: 90
+                    description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
+
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
           content:
@@ -373,8 +424,8 @@ paths:
   /account/{username}/revokeDeregistration:
     put:
       tags:
-      - Email-Account 
-      summary: Deregistrierung des Accounts zurücknehmen 
+      - Email-Account
+      summary: Deregistrierung des Accounts zurücknehmen
       operationId: revokeDeregistration
       parameters:
       - name: username
@@ -383,17 +434,17 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
+          format: password
       responses:
         204:
-          description: Deregistrierung erolgreich zurückgenommen
+          description: Deregistrierung erfolgreich zurückgenommen
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
           content:
@@ -419,7 +470,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -429,16 +480,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'   
+                $ref: '#/components/schemas/Error'
 ##--
 ##------
   /account/{username}/OTP:
     get:
       tags:
       - Porting
-      summary: Portierung der e-mail Adresse zu einer neuen telematikID
+      summary: Die Operation wird verwendet für die Portierung der e-mail Adresse zu einer neuen telematikID.
+              Dafür wird ein One Time Password ausgestellt.
       operationId: getOTP
-      description: Diese Operation erzeugt für den KIM Account/e-Mail Adresse ein One Time Passwort (OTP), mit dem die e-Mail Adresse zu einer telematikID (Karte) portiert werden kann. Die Authentisierung erfolgt mit der bisherigen Karte.
+      description: Diese Operation erzeugt für den KIM Account/e-Mail Adresse ein One Time Password (OTP),
+                  mit dem die e-Mail Adresse zu einer telematikID (Karte) portiert werden kann.
+                  Die Authentisierung erfolgt mit der bisherigen Karte.
       parameters:
       - name: username
         in: path
@@ -446,15 +500,15 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
-      
+          format: password
+
       responses:
         200:
           description: OTP erfolgreich erzeugt.
@@ -466,7 +520,7 @@ paths:
                 otp:
                   type: string
                   format: password
-                  description: One Time Passwort für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
+                  description: One Time Password für die Portierung der KIM Mail Adresse zu einer anderen telematikID.
 
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
@@ -487,7 +541,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -501,7 +555,9 @@ paths:
       - Porting
       summary: Portierung der e-mail Adresse zu einer neuen telematikID
       operationId: setTID
-      description: Diese Operation entfernt die e-mail Adresse vom bisherigen VZD Eintrag und trägt die für den aktuellen VZD Eintrag (der den Authentisierungsdaten dieser Operation setTID entspricht) ein. Die Authentisierung erfolgt mit der neuen Karte.
+      description: Diese Operation entfernt die e-mail Adresse vom bisherigen VZD Eintrag und trägt die e-mail Adresse
+                  in den neuen VZD Eintrag ein (der den Authentisierungsdaten dieser Operation setTID
+                  entspricht). Die Authentisierung erfolgt mit der neuen Karte.
       parameters:
       - name: username
         in: path
@@ -509,21 +565,21 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
+          format: password
       - in: header
         name: otp
         description: One Time Passwort (OTP) (von getOTP zurückgegeben)
         required: true
         schema:
           type: string
-          format: password        
+          format: password
 
       responses:
         204:
@@ -559,18 +615,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         502:
-          description: VZD nicht erreichbar bzw. liefert Fehler          
+          description: VZD nicht erreichbar bzw. liefert Fehler
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-                
+
 ##--
 ##------
   /account/{username}/cert:
@@ -586,20 +642,20 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
+          format: password
       requestBody:
         content:
           application/json:
             schema:
              $ref: '#/components/schemas/CertificateParameters'
-      
+
       responses:
         200:
           description: Zertifikat wird zurückgegeben.
@@ -611,7 +667,8 @@ paths:
                 file:
                   type: string
                   format: binary
-                  description: Base64-encoded PKCS#12 Container. Der Container ist mit dem Passwort aus dem Request geschützt.
+                  description: Base64-encoded PKCS#12 Container. Wenn im Request ein Passwort in certPassword übergeben wurde,
+                              dann ist der Container mit dem Passwort geschützt.
         400:
           description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
                       # z.B. kein CommonName oder kein CertPassword angegeben
@@ -633,7 +690,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -659,15 +716,15 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
-      
+          format: password
+
       responses:
         200:
           description: Lesen der Abwesenheitsnotiz erfolgreich.
@@ -694,7 +751,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -712,14 +769,14 @@ paths:
         required: true
         schema:
           type: string
-          format: email           
+          format: email
       - in: header
         name: password
         description: Passwort für den Email-Account
         required: true
         schema:
           type: string
-          format: password        
+          format: password
       requestBody:
         content:
           application/json:
@@ -747,7 +804,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: Internal Server Error          
+          description: Internal Server Error
           content:
             application/json:
               schema:
@@ -762,60 +819,51 @@ components:
       properties:
         message:
           type: string
+        traceId:
+          type: string
+          maxLength: 255
+          example: 19aaf69260f63694
+          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
 
     Account:
       type: object
       properties:
-        referenceID: 
-            type: string
-            maxLength: 256
-            writeOnly: true
-            description: Der KIM Anbieter kann den Inhalt dieses Parameters festlegen.
-                     Er kann z.B. eine Vertragsnummer oder einen Registrierungskode enthalten. Der KIM Anbieter muss seine KIM Teilnehmer über die Nutzung dieses Parameters informieren.
-                     Alle Administrationsmodule (bzw. Clientmodule) müssen diesen Parameter - wegen der Interoperabilität mit allen KIM Fachdiensten - unterstützen.
-                     Die referenceID kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
-        username:
-          type: string
-          description: Der username kann nur durch die "registerAccount" Operation gesetzt werden. Durch die "setAccount" Operation ist dieser Wert nicht änderbar.
-          format: email 
         password:
           type: string
           format: password
           writeOnly: true
+          description: Der KIM Teilnehmer kann sein Passwort ändern.
         kimVersion:
           type: string
           maxLength: 4
-          example: 1.5
-        regStat:
-          type: string
-          description: Der Registrierungsstatus von dem Account. Der KIM Anbieter kann dieses Attribut zur Information des KIM Kunden über den Status des Accounts nutzen.
-          maxLength: 512
-          readOnly: true
-          example: registered
-        deregDate:
+          example: 1.5+
+          description: Der KIM Teilnehmer kann seine KIM Version ändern. Der Wertebereich der unterstützten
+                      KIM Versionen soll vom Clientmodul vorgegeben werden.
+        appTags:
+          type: array
+          items:
+            type: string
+          description: Der Parameter appTags enthält alle Anwendungskennzeichen, die der Mail-Adresse
+                      zugeordnet werden.
+                      Pro Form-Part wird genau ein Anwendungskennzeichen angegeben. Bei mehreren Anwendungskennzeichen
+                      wird der Form-Part mehrfach angegeben (exploded=true). Wenn kein Anwendungskennzeichen angegeben
+                      ist, dann werden bereits bestehende Anwendungskennzeichen gelöscht.
+
+        dataTimeToLive:
           type: integer
-          format: int64
-          example: 1616588543
-          readOnly: true
-          description: Bestätigtes Kündigungsdatum (Unix Timestamp)
-            # Der KIM Anbieter kann über dieses Attribut angeben, bis wann die Mails noch abrufbar sind 
-        dataTimeToLive: 
-          type: integer
+          nullable: true
           maxLength: 3
           minimum: 10
-          maximum: 365
+          maximum: 90
           default: 90
           example: 90
-          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen
-        maxMailSize:
-          type: integer
-          format: int64
-          minimum: 524288000
-          example: 734003200
-          readOnly: true
-          description: Setzt die maximale Größe einer KIM-Mail in Bytes
-
-
+          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen.
+                      Der KIM Teilnehmer kann den Wert ändern.
+        noVzdMailEntry:
+          type: boolean
+          description: Wenn "noVzdMailEntry == true" dann werden durch den AccountManager die VZD "mail" und "komLeData"
+                      Attribute nicht befüllt oder im Fall von PUT werden vorhandene mail und komLeData Attribute gelöscht.
+                      Dieses neue Attribut soll client-seitig nur vom Basis Consumer unterstützt werden.
 
     CertificateParameters:
       type: object
@@ -824,38 +872,39 @@ components:
           type: string
           writeOnly: true
           description: Wird im Zertifikat als commonName aufgenommen
-                        Dieses Zertifikat wird auch als TLS Server Zertifikat für die Verbindung mit dem Client/Primärsystem genutzt. Für eine erfolgreiche Zertifikatsprüfung - durch den Client - muss im commonName der Server Name des Clientmoduls stehen (so wie er konfiguriert ist, z.B. example.com, www.example.com)
+                        Dieses Zertifikat wird auch als TLS Server Zertifikat für die Verbindung mit dem Client/Primärsystem
+                        genutzt. Für eine erfolgreiche Zertifikatsprüfung - durch den Client - muss im commonName der Server
+                        Name des Clientmoduls stehen (so wie er konfiguriert ist, z.B. example.com, www.example.com)
         certPassword:
           type: string
           format: binary
           writeOnly: true
-          description: bas64 kodiertes Passwort für den PKCS#12 Container in dem das Zertifikat transportiert wird
-          
-          
-          
+          description: base64 kodiertes Passwort für den PKCS#12 Container in dem das Zertifikat transportiert wird.
+                      Wenn kein certPassword angegeben ist, dann wird der PKCS#12 Container nicht verschlüsselt.
+
     OutOfOfficeNotification:
       type: object
       properties:
         startDate:
-          type: string 
+          type: string
           format: date-time
           example: 2021-07-20T17:32:28Z
           description: Ab diesem Zeitpunkt wird die Abwesenheitsnotiz versendet
         endDate:
-          type: string 
-          format: date-time  
+          type: string
+          format: date-time
           example: 2021-07-28T17:32:28Z
           description: Nach diesem Zeitpunkt wird die Abwesenheitsnotiz nicht mehr versendet
         message:
-          type: string 
+          type: string
           description: Inhalt der Abwesenheitsnotiz.
         active:
-          type: boolean 
+          type: boolean
           description: Aktiviert bzw. deaktiviert die Abwesenheitsnotiz.
 
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT   
+      bearerFormat: JWT
        # Das JWT wird in compact serialization (RFC 7515, Section 3.1) kodiert und im HTTP-Header Authorization nach dem Bearer-Schema übertragen.
