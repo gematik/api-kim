@@ -77,7 +77,7 @@ Es können nur KIM-E-Mails an Empfänger versendet werden, die als Teilnehmer im
 TIP: E-Mail-Nachrichten können nur für KIM-Teilnehmer verschlüsselt werden.
 
 * *Verwendung von KIM-E-Mail-Adressen* +
-Zum Versand einer E-Mail ist es erforderlich, dass das Primärsystem die Header-Felder `to`, `cc`, `bcc` gemäß *[RFC822]* mit KIM-E-Mail-Adressen aus dem Verzeichnisdienst befüllt. Die Empfänger-Adressen können dabei aus dem Verzeichnisdienst abgefragt werden.
+Zum Versand einer E-Mail ist es erforderlich, dass das Primärsystem die Header-Felder `to`, `cc` gemäß *[RFC822]* mit KIM-E-Mail-Adressen aus dem Verzeichnisdienst befüllt. Die Empfänger-Adressen können dabei aus dem Verzeichnisdienst abgefragt werden.
 
 Zur Abfrage der Empfänger-Adressen aus dem Verzeichnisdienst, agiert das Primärsystem als LDAP-Client gegenüber dem LDAP-Proxy des Konnektors.
 Falls die Verbindung zwischen Primärsystem und Konnektor über TLS abgesichert wird, ist LDAPS zu verwenden.
