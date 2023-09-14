@@ -225,7 +225,7 @@ Es ist erforderlich, dass das Primärsystem gemäß *[RFC2449]* dem Clientmodul 
 Es ist erforderlich, dass das Primärsystem empfangene Nachrichten entgegennehmen kann sowie eine Anzeige der Nachricht ermöglicht.
 
 * *E-Mail-Anhänge darstellen* +
-Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den Standardformaten `PDF`, `JPEG`, `GIF`, `TXT` und `DOC` anzeigen kann.
+Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den Standardformaten `PDF`, `JPEG`, `GIF` und `TXT` anzeigen kann.
 
 * *E-Mail-Anhänge verarbeiten* +
 Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der
