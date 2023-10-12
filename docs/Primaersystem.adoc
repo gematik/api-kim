@@ -188,7 +188,7 @@ Zeichensequenz „`<CRLF>`.`<CRLF>`“ wird das Ende der Nachricht markiert und 
 Es ist erforderlich, dass das Primärsystem die SMTP-Verbindung mit dem `QUIT`-Kommando beendet.
 
 * *Aufnahme des Sendersystems* +
-Es ist erforderlich, dass das Primärsystem das Header Element `X-KIM-Sendersystem` befüllt. Das Header Element muss der Notation <name des systems>;<version> entsprechen. Der Inhalt muss erkennen lassen, welches Sofware-System für die Erstellung der fachlichen Inhalte und in diesem Zusammenhang mit dem Umgang eventueller Rückmeldungen und deren Inhalten verantwortlich ist.
+Es ist erforderlich, dass das Primärsystem (z.B. PVS oder andere Sofware-System der Kassen) das Header Element `X-KIM-Sendersystem` befüllt. Das Header Element muss der Notation <name des systems>;<version> entsprechen. Der Inhalt muss erkennen lassen, welches Sofware-System für die Erstellung der fachlichen Inhalte und in diesem Zusammenhang mit dem Umgang eventueller Rückmeldungen und deren Inhalten verantwortlich ist.
 
 * *Aufnahme der Supportadresse* +
 Es ist erforderlich, dass das Primärsystem das Header Element `X-KIM-Support` befüllt. Das Header Element muss die Supportadresse des Herstellers des Primärsystems enthalten. Dadurch wird es möglich, dass Hersteller des Empfänger-Systems bei Fehlern Kontakt mit dem Hersteller des Sender-Systems aufnehmen können.
