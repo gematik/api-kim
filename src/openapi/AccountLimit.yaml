@@ -27,20 +27,78 @@ servers:
 tags:
 - name: AccountLimit
 
+security:
+  - bearerAuth: []
+    # Die Authentisierung erfolgt für alle Operationen über ein JWT
+    
 paths:
 ##--
 ##------
-  /limit:
+  /limit/{username}:
     get:
       tags:
       - AccountLimit
       summary: Limits eines Accounts abfragen
       description: Gibt die Limits eines Accounts zurück
       operationId: getLimits
-
-      security:
-        - basicAuth: []
-
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          $ref: '#/components/schemas/Username'
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
+        required: true
+        schema:
+          $ref: '#/components/schemas/Password'
+      responses:
+        200:
+          description: OK
+             # Rückgabe der Metadaten eines Nutzer-Accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountLimit'
+        401:
+          description: Authentifizierung fehlgeschlagen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Mail Account nicht vorhanden
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - AccountLimit
+      summary: Limits eines Accounts abfragen
+      description: Gibt die Limits eines Accounts zurück
+      operationId: setLimits
+      parameters:
+      - name: username
+        in: path
+        description: Username/E-Mail des Accounts
+        required: true
+        schema:
+          $ref: '#/components/schemas/Username'
+      - in: header
+        name: password
+        description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
+        required: true
+        schema:
+          $ref: '#/components/schemas/Password'
       responses:
         200:
           description: OK
@@ -71,8 +129,19 @@ paths:
 ##--
 ##------
 components:
-
   schemas:
+    Password:
+      type: string
+      minLength: 12
+      maxLength: 256
+      format: password
+      description: Passwort für den Email-Account. Das Passwort ist base64 encoded.
+
+    Username:
+      type: string
+      maxLength: 256
+      format: email
+      description: Username/E-Mail des Accounts.
 
     AccountLimit:
       type: object
@@ -102,11 +171,13 @@ components:
         quota:
           type: integer
           format: int64
+          readOnly: true
           example: 160000000000
           description: Gibt das maximale Speichervolumen für einen Nutzer-Account an
         remainQuota:
           type: integer
           format: int64
+          readOnly: true          
           example: 112000000000
           description: Gibt das verbleibende Speichervolumen für einen Nutzer-Account an
 
@@ -122,6 +193,8 @@ components:
           description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
 
   securitySchemes:
-    basicAuth:
+    bearerAuth:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+       # Das JWT wird in compact serialization (RFC 7515, Section 3.1) kodiert und im HTTP-Header Authorization nach dem Bearer-Schema übertragen.
