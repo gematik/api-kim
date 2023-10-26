@@ -888,13 +888,13 @@ components:
         startDate:
           type: string
           format: date-time
-          example: 2021-07-20T17:32:28Z
-          description: Ab diesem Zeitpunkt wird die Abwesenheitsnotiz versendet
+          example: 2021-07-20T17:32:28.000
+          description: Ab diesem Zeitpunkt wird die Abwesenheitsnotiz versendet, Format gemäß RFC3339
         endDate:
           type: string
           format: date-time
-          example: 2021-07-28T17:32:28Z
-          description: Nach diesem Zeitpunkt wird die Abwesenheitsnotiz nicht mehr versendet
+          example: 2021-07-28T17:32:28.000
+          description: Nach diesem Zeitpunkt wird die Abwesenheitsnotiz nicht mehr versendet, Format gemäß RFC3339
         message:
           type: string
           description: Inhalt der Abwesenheitsnotiz.
