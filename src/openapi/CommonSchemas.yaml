@@ -1,0 +1,64 @@
+components:
+  schemas:
+    Password:
+      type: string
+      minLength: 12
+      maxLength: 256
+      format: password
+      description: The password is transmitted base64 encoded.
+      writeOnly: true
+    
+    Username:
+      type: string
+      maxLength: 256
+      format: email
+      description: Username/email of the account.
+    
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        traceId:
+          type: string
+          maxLength: 255
+          example: 19aaf69260f63694
+          description: Unique character string for tracing the error in the KIM service
+  responses:
+    400:
+      description: Error in the input data, description of the error is in the error text
+      content:
+        application/json:
+          schema:
+            $ref: './i-common_schemas.yaml/components/schemas/Error'
+    401:
+    description: Authentification failed
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Error'
+    404:
+      description: Email account not available.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    500:
+      description: Internal Server Error
+      content:
+      application/json:
+      schema:
+      $ref: '#/components/schemas/Error'
+    502:
+      description: VZD cannot be reached or returns errors
+      content:
+        application/json:
+          schema:
+            $ref: './i-common_schemas.yaml/components/schemas/Error'
+
+  securitySchemes:
+    KIMBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+       # The JWT is encoded in compact serialization (RFC 7515, Section 3.1) and transmitted in the HTTP header Authorization according to the bearer schema.
