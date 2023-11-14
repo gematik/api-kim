@@ -240,36 +240,8 @@ paths:
           description: Display the account.
           content:
             application/json:
-              schema:
-                type: object
-                properties:
-                  username:
-                    type: string
-                    description: The username can only be set through the "registerAccount" operation. Through
-                                 The "setAccount" operation cannot change this value.
-                    format: email
-                  kimVersion:
-                    type: string
-                    maxLength: 4
-                    example: 1.5
-                  regStat:
-                    type: string
-                    maxLength: 512
-                    readOnly: true
-                    example: registered
-                    description: The registration status of the account. Valid values are registered and deregistered.
-                  deregDate:
-                    type: integer
-                    format: int64
-                    example: 1616588543
-                    readOnly: true
-                    description: Confirmed termination date (Unix timestamp)
-                  appTags:
-                    type: array
-                    items:
-                      type: string
-                    description: Returns the list of all application identifiers associated with the mail address
-                                 assigned.
+             schema:
+               $ref: '#/components/schemas/Account'
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
