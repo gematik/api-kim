@@ -45,13 +45,13 @@ paths:
         description: Username/email of the account
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         200:
           description: OK
@@ -61,15 +61,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountLimit'
         401:
-          $ref: './CommonSchemas.yaml#/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          description: Mail account not available
-          content:
-              application/json:
-                schema:
-                  $ref: './CommonSchemas.yaml/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
     put:
       tags:
       - AccountLimit
@@ -82,13 +78,13 @@ paths:
         description: Username/email of the account
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         200:
           description: OK
@@ -98,11 +94,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountLimit'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
 components:
   schemas:
@@ -111,7 +107,6 @@ components:
       properties:
         dataTimeToLive:
           type: integer
-          maxLength: 3
           minimum: 10
           maximum: 90
           default: 90
@@ -146,4 +141,4 @@ components:
 
   securitySchemes:
     KIMBearerAuth:
-      $ref: './CommonSchemas.yaml/components/schemas/KIMBearerAuth'
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'

@@ -47,7 +47,7 @@ externalDocs:
 servers:
 - url: /attachments/v2.3/
   # Die URL muss wie folgt gebildet werden:
-  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
 tags:
 - name: Attachments
@@ -76,7 +76,6 @@ paths:
           type: string
           format: email
 
-
       responses:
         200:
           description: OK
@@ -87,27 +86,27 @@ paths:
              type: string
              format: binary
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         403:
           description: Recipient not included in the KIM email recipient list.
           content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
           description: Resource not found at the specified link.
           content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         429:
           description: Downloaded attachment too many times.
           content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
     delete:
       tags:
@@ -132,17 +131,17 @@ paths:
           200:
             description: OK - data has been deleted.
           400:
-            $ref: './CommonSchemas.yaml/components/schemas/400'
+            $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
-            $ref: './CommonSchemas.yaml/components/schemas/401'
+            $ref: 'CommonSchemas.yaml#/components/responses/401'
           404:
             description: Resource not found at the specified link.
             content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+             application/json:
+               schema:
+                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
           500:
-            $ref: './CommonSchemas.yaml/components/schemas/500'
+            $ref: 'CommonSchemas.yaml#/components/responses/500'
 
   /attachment/:
     post:
@@ -153,7 +152,7 @@ paths:
       operationId: addAttachment
 
       security:
-        - basicAuth: []
+        - KIMBasicAuth: []
         # Authentication takes place with username/password from the mail account.
 
       parameters:
@@ -214,7 +213,7 @@ paths:
       responses:
           201:
             description: Created
-                       #  The attachment was successfully created under the shared link provided.
+            # The attachment was successfully created under the shared link provided.
             content:
              application/json:
               schema:
@@ -225,39 +224,26 @@ paths:
                     # Contains the release link.
                     # The attachment can be accessed from KAS via the release link. The release link contains the attachmentID - required in operation read_Attachment.
           400:
-            $ref: './CommonSchemas.yaml/components/schemas/400'
+            $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
-            $ref: './CommonSchemas.yaml/components/schemas/401'
+            $ref: 'CommonSchemas.yaml#/components/responses/401'
           413:
             description: Payload Too Large
             # The maximum permitted document size has been exceeded.
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error'
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
           500:
-            $ref: './CommonSchemas.yaml/components/schemas/500'
+            $ref: 'CommonSchemas.yaml#/components/responses/500'
           507:
             description: Not enough memory available.
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error'
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
 
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        traceId:
-          type: string
-          maxLength: 255
-          example: 19aaf69260f63694
-          description: Unique character string for tracing the error in the specialist service.
-
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
+    KIMBasicAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth'

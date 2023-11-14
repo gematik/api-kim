@@ -63,11 +63,13 @@ info:
 externalDocs:
   description: Github documentation
   url: https://github.com/gematik/api-kim
+  
 servers:
 - url: /AccountMgmt/v2.3.1/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
+
 tags:
 - name: Email-Account
 - name: Certificate
@@ -78,8 +80,6 @@ security:
     # Authentication is carried out for all operations via a JWT
 
 paths:
-##--
-##------
   /account/registerAccount:
     post:
       tags:
@@ -107,9 +107,9 @@ paths:
         204:
           description: Account registered successfully.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
           # Authentication via referenceID/iniPassword and signature of the operation failed.
           # This error also occurs if the referenceID does not match the signature's AUT certificate (cert) or was not specified.
         409:
@@ -117,23 +117,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         420:
           description: Username or password do not comply with the rules.
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
           description: KimVersion not supported or unknown.
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: '#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: '#/components/responses/502'
 
   /account/{username}:
     put:
@@ -148,13 +148,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         content:
           application/json:
@@ -164,27 +164,27 @@ paths:
         204:
           description: Account change successful.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         420:
           description: New password does not comply with the rules.
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
           description: KimVersion not supported or unknown.
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
           
     delete:
       tags:
@@ -197,26 +197,27 @@ paths:
         description: Username/E-Mail des Accounts
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         204:
           description: Account deregistered successfully.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
+          
     get:
       tags:
       - Email-Account
@@ -227,13 +228,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         200:
           description: Display the account.
@@ -270,15 +271,15 @@ paths:
                     description: Returns the list of all application identifiers associated with the mail address
                                  assigned.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
           
   /account/{username}/revokeDeregistration:
     put:
@@ -291,32 +292,32 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         204:
           description: Deregistration successfully canceled.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         403:
           description: Email account has not yet been deregistered.
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
           
   /account/{username}/accounts:
     get:
@@ -329,13 +330,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       - name: telematikId
         in: header
         description: Optional parameter, if specified, the accounts can be found with one VZD query; two VZD queries are necessary for the username.
@@ -353,15 +354,15 @@ paths:
                 items:
                   $ref: "#/components/schemas/Account"
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
           
   /account/{username}/OTP:
     get:
@@ -378,13 +379,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         200:
           description: OTP generated successfully.
@@ -394,15 +395,15 @@ paths:
               type: object
               properties:
                 otp:
-                  $ref: './CommonSchemas.yaml/components/schemas/Password'
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Password'
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
   /account/{username}/telematikID:
     put:
@@ -418,44 +419,44 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       - in: header
         name: otp
         description: One Time Password (OTP) (returned by getOTP)
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         204:
           description: Change of TelematikID successful.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         403:
           description: Invalid OTP
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         408:
           description: Request Timeout
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
           
   /account/{username}/cert:
     post:
@@ -468,13 +469,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         content:
           application/json:
@@ -500,15 +501,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: './CommonSchemas.yaml/components/schemas/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
           # CMP service cannot be reached or returns errors
           
   /account/{username}/outofoffice:
@@ -522,13 +523,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         200:
           description: Read the out-of-office message successfully.
@@ -537,13 +538,13 @@ paths:
             schema:
              $ref: '#/components/schemas/OutOfOfficeNotification'
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
     put:
       tags:
@@ -555,13 +556,13 @@ paths:
         in: path
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
       - in: header
         name: password
         description: Password for the email account. The password is base64 encoded.
         required: true
         schema:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         content:
           application/json:
@@ -571,13 +572,13 @@ paths:
         204:
           description: Change of out-of-office notice successful.
         400:
-          $ref: './CommonSchemas.yaml/components/schemas/400'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
-          $ref: './CommonSchemas.yaml/components/schemas/401'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          $ref: './CommonSchemas.yaml/components/schemas/404'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
 components:
   schemas:
@@ -594,10 +595,10 @@ components:
                        Interoperability with all KIM specialist services - support. Through the “setAccount”
                        Operation, this value cannot be changed.
         username:
-          $ref: './CommonSchemas.yaml/components/schemas/Username'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
           
         password:
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
 
         kimVersion:
           type: string
@@ -646,7 +647,7 @@ components:
         certPassword:
            # base64 encoded password for the PKCS#12 container in which the certificate is transported.
            # If no certPassword is specified, then the PKCS#12 container will not be encrypted.
-          $ref: './CommonSchemas.yaml/components/schemas/Password'
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
 
     OutOfOfficeNotification:
       type: object
@@ -670,4 +671,4 @@ components:
           
   securitySchemes:
     KIMBearerAuth:
-      $ref: './CommonSchemas.yaml/components/schemas/KIMBearerAuth'
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'

@@ -44,7 +44,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceInformation'
         500:
-          $ref: './CommonSchemas.yaml/components/schemas/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
   /appTags:
     get:
@@ -68,11 +68,7 @@ paths:
                   description: Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
                   url: https://simplifier.net/app-transport-framework/service-identifier-cs/~json
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: './CommonSchemas.yaml/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
 components:
   schemas:
@@ -115,4 +111,4 @@ components:
 
   securitySchemes:
     KIMBearerAuth:
-      $ref: './CommonSchemas.yaml/components/schemas/KIMBearerAuth'
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'
