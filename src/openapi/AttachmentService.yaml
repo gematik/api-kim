@@ -1,646 +1,249 @@
 openapi: 3.0.3
 info:
-  title: I_AccountManager_Service
-  description:  The KIM Account Manager is managed via this interface.
-  #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
-  version: 2.3.1
-### 2.3.1
-  # KIM 1.5.3 changes
-  # - values for regStat defined (registered and deregistered)
-  # - parameter password in createCert is optional (description changed)
-  # - descriptions changed
-  # - read only parameter in setAccount removed
-  # - new parameter appTags in registerAccount and setAccount
+  title: I_Attachment_Service
+  description:  Encrypted email attachments can be sent via this interface
+                uploaded and made available.
+  version: 2.3.2
+  ### 2.3.2
+  # - added distinct definition for header element Content-Length in add_Attachment:
+  #   - Content-Length full request body
+  #   - Content-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
   # - added traceId to Error object
   # - changed servers -url
-  # - added "noVzdMailEntry" flag for POST /account and PUT /account/{username}
-  # - changed type for password format to byte
+  ### 2.3.1
+  # - added delete_Maildata feature
   ### 2.3.0
-  # - change server url to new api version
-  # - added /account/{username}/revokeDeregistration
-  #   to allow customers to revoke the deregistration process
-  # - changed description for externalDoc to Github
-  # - added status Code 502 for operation createCert in case the account manager acts as a proxy
-  # - added status Code 403 for operation setTID in case the token is not valid
-  # - added format int64 for deregDate property
-  # - changed otp property to lowercase and added password as format
-  # - added response code 404 for getOTP in case e-mail account does not exist
-  # - added response code 404 for deregisterAccount in case e-mail account does not exist
+  # - changed server url to new api version
+  # - added response code for wrong input parameters
+  # - added response type object for operation add_Attachment
   ### 2.2.0
-  # - updated url to https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.2
-  # - changed /components/schemas/Account:
-  #   added parameter dataTimeToLive & maxMailSize
-  #   specified kimVersion with enum
-  # - changed operation createCert:
-  #   added error codes 400 & 404
+  # - updated url to https://kas.hrst1.kim.telematik/attachments/v2.2/
+  # - deleted operation read_MaxMailSize
+  # - changed operation add_Attachment:
+  #   renamed "Shared-Link" to "sharedLink"
+  #   added parameters: expires, recipients, messageID
+  #   added error code 507
+  # - changed operation read_Attachment:
+  #   added parameter recipient
+  #   added error code 429
   ### 2.0.0
-  # - included new operations for outOfOffice
-  # - included new operations for porting an e-mail address to new telematikID
-  # - removed operations: register_State, cm_version and pw_change
-  # - added new operations setAccount and getAccount
-  # - renamed and updated operations for user account (e.g. registerAccount and
-  #   deregisterAccount)
-  # - added operation createCert to generate PKCS#12 files
+  # - added client authentication for operation add_Attachment
+  # - changed URI for operations add_attachment and read_attachment
+  # - added error message strings
   # - added HTTP error code 500
-  # - changed authentication to JWT
-  ### 1.2.0
-  # - added parameter "cert" to all operations. It includes the auth certificate to sign the operation. This is necessary to check the sign from the Server.
-  # - adjusted some tags
-  # - more specified parameter "username" (email & maxlength)
-  # - changed response code of the operation "register" from 200 - OK to 201 - created
-  # - changed http method in operation "deregister" from PUT to DELETE
-  # - changed http method in operation "cm_version" from GET to PUT
-  # - changed response in operation "register_state" to JSON format
-  ### 1.1.2
-  # - added parameter "referenceID" in operation "register"
-  ### 1.1.1
-  # - extended URI to interface releases
   ### 1.1.0
-  # - added authentication with HBA/SMC-B
+  # - changed data type in operation read_maxMailSize
+  # - changed error code 405 to 400 in operation add_Attachment
+  # - changed MIME type multipart/form-data to application/octet-stream in operation add_Attachment() and read_Attachment()
+  ### 1.0.1
+  # - added errorcode 413 in operation add_Attachment
+  # - extended URI to interface releases
   ### 1.0.0
-  # - initial Version of I_AccountManager_Service
+  # - initial Version of I_Attachment_Service
 
 externalDocs:
-  description: Github documentation
+  description: GitHub - documentation
   url: https://github.com/gematik/api-kim
-  
 servers:
-- url: /AccountMgmt/v2.3.1/
+- url: /attachments/v2.3/
   # Die URL muss wie folgt gebildet werden:
-  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
-  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
-
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
+  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
 tags:
-- name: Email-Account
-- name: Certificate
-- name: Out of Office Notification
-
-security:
-  - KIMBearerAuth: []
-    # Authentication is carried out for all operations via a JWT
+- name: Attachments
 
 paths:
-  /account/registerAccount:
-    post:
+  /attachment/{attachmentId}:
+    get:
       tags:
-      - Email-Account
-      summary: Register a new email account.
-            #  In all error cases, the account is not created.
-      operationId: registerAccount
+      - Attachments
+      summary: Download an attachment
+      description: returns the attachment encrypted under a share link.
+      operationId: readAttachment
+
       parameters:
-      - in: header
-        name: iniPassword
-        description: Initial password for the email account. The password is base64 encoded.
+      - name: attachmentId
+        in: path
+        description: Link reference to the encrypted attachment in the service.
         required: true
         schema:
           type: string
-          maxLength: 256
-          format: password
-      requestBody:
-        description: Register new account
-        content:
-          application/json:
-              schema:
-                $ref: '#/components/schemas/Account'
+      - name: recipient
+        in: header
+        description: The recipient's passed email (KIM) address.
         required: true
-      responses:
-        204:
-          description: Account registered successfully.
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-          # Authentication via referenceID/iniPassword and signature of the operation failed.
-          # This error also occurs if the referenceID does not match the signature's AUT certificate (cert) or was not specified.
-        409:
-          description: Conflict with existing account with identical e-mail (e-mail address already taken).
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        420:
-          description: Username or password do not comply with the rules.
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        422:
-          description: KimVersion not supported or unknown.
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
+        schema:
+          type: string
+          format: email
 
-  /account/{username}:
-    put:
-      tags:
-      - Email-Account
-      summary: Change account values.
-              The values of unspecified writable parameters are not changed.
-              # referenceID & username (in the body) cannot be changed via this operation
-      operationId: setAccount
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Account'
       responses:
-        204:
-          description: Account change successful.
+        200:
+          description: OK
+             # Attachment was downloaded successfully
+          content:
+           application/octet-stream:
+            schema:
+             type: string
+             format: binary
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        420:
-          description: New password does not comply with the rules.
+        403:
+          description: Recipient not included in the KIM email recipient list.
           content:
             application/json:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        422:
-          description: KimVersion not supported or unknown.
+        404:
+          description: Resource not found at the specified link.
+          content:
+            application/json:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        429:
+          description: Downloaded attachment too many times.
           content:
             application/json:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
     delete:
       tags:
-      - Email-Account
-      summary: Deregisters a mail account.
-      operationId: deregisterAccount
+      - Attachments
+      summary: Delete email data from KAS
+      description: Deletion of email data stored on the KAS, Uri corresponds to sharedLink from add_Attachment.
+      operationId: deleteMaildata
+
+      security:
+        - basicAuth: []
+        # Authentication takes place with username/password from the mail account of the data creator/sender.
+
       parameters:
-      - name: username
+      - name: attachmentId
         in: path
-        description: Username/E-Mail des Accounts
+        description: Link reference to the encrypted attachment in the service.
         required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      responses:
-        204:
-          description: Account deregistered successfully.
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
-    get:
-      tags:
-      - Email-Account
-      summary: Display the account
-      operationId: getAccount
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      responses:
-        200:
-          description: Display the account.
-          content:
-            application/json:
-             schema:
-               $ref: '#/components/schemas/Account'
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
-  /account/{username}/revokeDeregistration:
-    put:
-      tags:
-      - Email-Account
-      summary: Cancel account unregister.
-      operationId: revokeDeregistration
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      responses:
-        204:
-          description: Deregistration successfully canceled.
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        403:
-          description: Email account has not yet been deregistered.
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
-  /account/{username}/accounts:
-    get:
-      tags:
-      - Email-Account
-      summary: List of all accounts of a telematics ID.
-      operationId: getAccounts
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      - name: telematikId
-        in: header
-        description: Optional parameter, if specified, the accounts can be found with one VZD query; two VZD queries are necessary for the username.
-        required: false
         schema:
           type: string
-          maxLength: 256
-      responses:
-        200:
-          description: List of all accounts of a telematics ID.
-          content: 
-            application/json: 
-              schema: 
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
-  /account/{username}/OTP:
-    get:
-      tags:
-      - Porting
-      summary: The operation is used to port the email address to a new telematikID.
-               A one-time password will be issued for this.
-      operationId: getOTP
-      description: This operation creates a One Time Password (OTP) for the KIM account/email address,
-                   with which the email address can be ported to a telematikID (card).
-                   Authentication takes place with the previous card.
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      responses:
-        200:
-          description: OTP generated successfully.
-          content:
-           application/json:
-            schema:
-              type: object
-              properties:
-                otp:
-                  $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
-  /account/{username}/telematikID:
-    put:
-      tags:
-      - Porting
-      summary: Porting the e-mail address to a new telematikID.
-      operationId: setTID
-      description: This operation removes the e-mail address from the previous VZD entry and carries the e-mail address
-                   into the new VZD entry (which corresponds to the authentication data of this operation setTID
-                   corresponds). Authentication takes place with the new card.
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      - in: header
-        name: otp
-        description: One Time Password (OTP) (returned by getOTP)
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
-        204:
-          description: Change of TelematikID successful.
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        403:
-          description: Invalid OTP
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        408:
-          description: Request Timeout
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
-  /account/{username}/cert:
+          200:
+            description: OK - data has been deleted.
+          400:
+            $ref: 'CommonSchemas.yaml#/components/responses/400'
+          401:
+            $ref: 'CommonSchemas.yaml#/components/responses/401'
+          404:
+            description: Resource not found at the specified link.
+            content:
+             application/json:
+               schema:
+                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          500:
+            $ref: 'CommonSchemas.yaml#/components/responses/500'
+
+  /attachment/:
     post:
       tags:
-      - Certificate
-      summary: Create TLS AUT certificate
-      operationId: createCert
+      - Attachments
+      summary: Add an attachment
+      description: An encrypted attachment is added under a newly created sharing link.
+      operationId: addAttachment
+
+      security:
+        - KIMBasicAuth: []
+        # Authentication takes place with username/password from the mail account.
+
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+        - name: Content-Length
+          in: header
+          description: Total size/length of the request body.
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 524299123
+
       requestBody:
         content:
-          application/json:
-            schema:
-             $ref: '#/components/schemas/CertificateParameters'
-
-      responses:
-        200:
-          description: Certificate is returned.
-          content:
-           application/json:
+          multipart/form-data:
             schema:
               type: object
+              required: [messageID, attachment, recipients, expires]
               properties:
-                file:
-                  type: string
-                  format: binary
-                  description: Base64 encoded PKCS#12 container. If a password was passed in certPassword in the request,
-                               then the container is protected with the password.
-        400:
-          description: Error in the input data, description of the error is in the error text
-                       # e.g. no CommonName or CertPassword specified
-          content:
-            application/json:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-          # CMP service cannot be reached or returns errors
-          
-  /account/{username}/outofoffice:
-    get:
-      tags:
-      - Out of Office Notification
-      summary: Read the Out of Office Notification
-      operationId: getOutOfOffice
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      responses:
-        200:
-          description: Read the out-of-office message successfully.
-          content:
-           application/json:
-            schema:
-             $ref: '#/components/schemas/OutOfOfficeNotification'
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
+                messageID:
+                    type: string
+                    description: MessageID of the associated KIM email.
+                recipients:
+                    type: array
+                    description: List of all recipients (KIM addresses) of the KIM email recipients; Exactly one address is specified per form part and the form part is specified multiple times (exploded=true).
+                                # curl e.g.
+                                # -F 'recipients=user1@example.kim.telematik' \
+                                # -F 'recipients=user2@example.kim.telematik' \
+                    items:
+                      type: string
+                      format: email
+                expires:
+                    type: string
+                    description: Time at which the attachment must be deleted.
+                                # (RFC5322 date-time)
+                attachment:
+                   type: string
+                   format: binary
+                   description: Der Anhang
 
-    put:
-      tags:
-      - Out of Office Notification
-      summary: Update the Out of Office Notification
-      operationId: updateOutOfOffice
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      requestBody:
-        content:
-          application/json:
-            schema:
-             $ref: '#/components/schemas/OutOfOfficeNotification'
+            encoding:
+              attachment:
+                contentType: application/octet-stream
+                headers:
+                  Content-Length:
+                    required: true
+                    description: Amount of data in bytes of the mail data to be transmitted on the KAS.
+                    schema:
+                      type: integer
+                      format: int64
+                      example: 524288000
+                  Content-Disposition:
+                    required: true
+                    schema:
+                        type: string
+                        example: "Content-Disposition: form-data; name=attachment; filename=attachment.enc"
+
       responses:
-        204:
-          description: Change of out-of-office notice successful.
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
+          201:
+            description: Created
+            # The attachment was successfully created under the shared link provided.
+            content:
+             application/json:
+              schema:
+               type: object
+               properties:
+                 sharedLink:
+                   type: string
+                    # Contains the release link.
+                    # The attachment can be accessed from KAS via the release link. The release link contains the attachmentID - required in operation read_Attachment.
+          400:
+            $ref: 'CommonSchemas.yaml#/components/responses/400'
+          401:
+            $ref: 'CommonSchemas.yaml#/components/responses/401'
+          413:
+            description: Payload Too Large
+            # The maximum permitted document size has been exceeded.
+            content:
+              application/json:
+                schema:
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          500:
+            $ref: 'CommonSchemas.yaml#/components/responses/500'
+          507:
+            description: Not enough memory available.
+            content:
+              application/json:
+                schema:
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
 
 components:
-  schemas:
-    Account:
-      type: object
-      properties:
-        referenceId:
-          type: string
-          maxLength: 32
-          description: The KIM provider determines the referenceID and communicates it to the KIM participant.
-                       For example, it can contain a contract number or a registration code.
-                       The KIM provider must inform its KIM participants about the use of this parameter.
-                       All administration modules (or client modules) must use this parameter - because of the
-                       Interoperability with all KIM specialist services - support. Through the “setAccount”
-                       Operation, this value cannot be changed.
-        username:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-          
-        password:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-
-        kimVersion:
-          type: string
-          maxLength: 4
-          example: 1.5+
-          description: The KIM participant can change his KIM version. The range of values supported
-                       KIM versions should be specified by the client module.
-                      
-        regStat:
-          type: string
-          maxLength: 16
-          example: registered
-          description: The registration status of the account. Valid values are registered and deregistered.
-        
-        deregDate:
-          type: integer
-          format: int64
-          example: 1616588543
-          description: Confirmed termination date (Unix timestamp)
-          
-        appTags:
-          type: array
-          items:
-            type: string
-          description: The appTags parameter contains all application tags associated with the email address
-                       be assigned.
-                       Exactly one application identifier is specified per form part. For multiple application indicators
-                       the form part is specified multiple times (exploded=true). If no application identifier is specified
-                       then existing application identifiers will be deleted.
-        noVzdMailEntry:
-          type: boolean
-          description: If "noVzdMailEntry == true" then the AccountManager will use the VZD "mail" and "komLeData"
-                       Attributes not filled or, in the case of PUT, existing mail and komLeData attributes are deleted.
-                       This new attribute should only be supported on the client side by the basic consumer.
-
-    CertificateParameters:
-      type: object
-      properties:
-        commonName:
-          type: string
-          writeOnly: true
-          description: Will be included in the certificate as commonName
-                       This certificate is also called a TLS server certificate for connecting to the client/primary system
-                       used. For a successful certificate check - by the client - the server must be in the common name
-                       Name of the client module (as configured, e.g. example.com, www.example.com).
-        certPassword:
-           # base64 encoded password for the PKCS#12 container in which the certificate is transported.
-           # If no certPassword is specified, then the PKCS#12 container will not be encrypted.
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-
-    OutOfOfficeNotification:
-      type: object
-      properties:
-        startDate:
-          type: string
-          format: date-time
-          example: 2021-07-20T17:32:28Z
-          description: From this point on, the absence notice will be sent.
-        endDate:
-          type: string
-          format: date-time
-          example: 2021-07-28T17:32:28Z
-          description: After this point, the out-of-office notice will no longer be sent.
-        message:
-          type: string
-          description: Contents of the out-of-office note.
-        active:
-          type: boolean
-          description: Aktiviert bzw. deaktiviert die Abwesenheitsnotiz.
-          
   securitySchemes:
-    KIMBearerAuth:
-      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'
+    KIMBasicAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth'
