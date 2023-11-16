@@ -1,5 +1,3 @@
-openapi: 3.0.3
-
 info:
   title: I_CommonSchemas
   version: 1.0.0
@@ -12,10 +10,10 @@ components:
       format: email
       description: Username/email of the account.
     Password:
-      type: byte
+      type: string
       minLength: 12
       maxLength: 256
-      format: password
+      format: byte
       description: The password is transmitted base64 encoded.
       writeOnly: true
     Error:
@@ -33,31 +31,31 @@ components:
     400:
       description: Error in the input data, description of the error is in the error text
       content:
-        application/json:
+        application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
     401:
       description: Authentification failed
       content:
-       application/json:
+       application/json; charset=utf-8:
         schema:
          $ref: '#/components/schemas/Error'
     404:
       description: Email account not available.
       content:
-        application/json:
+        application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
     500:
       description: Internal Server Error
       content:
-        application/json:
+        application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
     502:
       description: VZD cannot be reached or returns errors
       content:
-        application/json:
+        application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
 

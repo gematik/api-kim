@@ -57,7 +57,7 @@ paths:
           description: OK
              # Returning the metadata of a user account
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/AccountLimit'
         401:

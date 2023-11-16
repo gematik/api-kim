@@ -90,19 +90,19 @@ paths:
         403:
           description: Recipient not included in the KIM email recipient list.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
           description: Resource not found at the specified link.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         429:
           description: Downloaded attachment too many times.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
@@ -137,7 +137,7 @@ paths:
           404:
             description: Resource not found at the specified link.
             content:
-             application/json:
+             application/json; charset=utf-8:
                schema:
                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
           500:
@@ -215,7 +215,7 @@ paths:
             description: Created
             # The attachment was successfully created under the shared link provided.
             content:
-             application/json:
+             application/json; charset=utf-8:
               schema:
                type: object
                properties:
@@ -231,7 +231,7 @@ paths:
             description: Payload Too Large
             # The maximum permitted document size has been exceeded.
             content:
-              application/json:
+              application/json; charset=utf-8:
                 schema:
                   $ref: 'CommonSchemas.yaml#/components/schemas/Error'
           500:
@@ -239,7 +239,7 @@ paths:
           507:
             description: Not enough memory available.
             content:
-              application/json:
+              application/json; charset=utf-8:
                 schema:
                   $ref: 'CommonSchemas.yaml#/components/schemas/Error'
 

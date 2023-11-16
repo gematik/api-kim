@@ -40,7 +40,7 @@ paths:
           description: OK
              # Return the information via the KIM backend service
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/ServiceInformation'
         500:
@@ -62,7 +62,7 @@ paths:
              # Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
              # Please refer https://simplifier.net/app-transport-framework/service-identifier-cs/~json
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 externalDocs:
                   description: Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)

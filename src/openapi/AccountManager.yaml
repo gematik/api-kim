@@ -93,13 +93,13 @@ paths:
         description: Initial password for the email account. The password is base64 encoded.
         required: true
         schema:
-          type: byte
+          type: string
           maxLength: 256
-          format: password
+          format: byte
       requestBody:
         description: Register new account
         content:
-          application/json:
+          application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Account'
         required: true
@@ -115,19 +115,19 @@ paths:
         409:
           description: Conflict with existing account with identical e-mail (e-mail address already taken).
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         420:
           description: Username or password do not comply with the rules.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
           description: KimVersion not supported or unknown.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
@@ -157,7 +157,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         content:
-          application/json:
+          application/json; charset=utf-8:
             schema:
               $ref: '#/components/schemas/Account'
       responses:
@@ -172,13 +172,13 @@ paths:
         420:
           description: New password does not comply with the rules.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
           description: KimVersion not supported or unknown.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
@@ -239,7 +239,7 @@ paths:
         200:
           description: Display the account.
           content:
-            application/json:
+            application/json; charset=utf-8:
              schema:
                $ref: '#/components/schemas/Account'
         400:
@@ -281,7 +281,7 @@ paths:
         403:
           description: Email account has not yet been deregistered.
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
@@ -320,7 +320,7 @@ paths:
         200:
           description: List of all accounts of a telematics ID.
           content: 
-            application/json: 
+            application/json; charset=utf-8: 
               schema: 
                 type: array
                 items:
@@ -362,7 +362,7 @@ paths:
         200:
           description: OTP generated successfully.
           content:
-           application/json:
+           application/json; charset=utf-8:
             schema:
               type: object
               properties:
@@ -414,7 +414,7 @@ paths:
         403:
           description: Invalid OTP
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
@@ -422,7 +422,7 @@ paths:
         408:
           description: Request Timeout
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
@@ -450,7 +450,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         content:
-          application/json:
+          application/json; charset=utf-8:
             schema:
              $ref: '#/components/schemas/CertificateParameters'
 
@@ -458,7 +458,7 @@ paths:
         200:
           description: Certificate is returned.
           content:
-           application/json:
+           application/json; charset=utf-8:
             schema:
               type: object
               properties:
@@ -471,7 +471,7 @@ paths:
           description: Error in the input data, description of the error is in the error text
                        # e.g. no CommonName or CertPassword specified
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         401:
@@ -506,7 +506,7 @@ paths:
         200:
           description: Read the out-of-office message successfully.
           content:
-           application/json:
+           application/json; charset=utf-8:
             schema:
              $ref: '#/components/schemas/OutOfOfficeNotification'
         400:
@@ -537,7 +537,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         content:
-          application/json:
+          application/json; charset=utf-8:
             schema:
              $ref: '#/components/schemas/OutOfOfficeNotification'
       responses:
