@@ -6,18 +6,18 @@ info:
 
 components:
   schemas:
-    Password:
-      type: string
-      minLength: 12
-      maxLength: 256
-      format: password
-      description: The password is transmitted base64 encoded.
-      writeOnly: true
     Username:
       type: string
       maxLength: 256
       format: email
       description: Username/email of the account.
+    Password:
+      type: byte
+      minLength: 12
+      maxLength: 256
+      format: password
+      description: The password is transmitted base64 encoded.
+      writeOnly: true
     Error:
       type: object
       properties:

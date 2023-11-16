@@ -20,7 +20,7 @@ externalDocs:
   description: GitHub - documentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: /AccountLimit/v1.1/
+- url: /AccountLimit/v1.2/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.

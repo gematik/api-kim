@@ -65,7 +65,7 @@ externalDocs:
   url: https://github.com/gematik/api-kim
   
 servers:
-- url: /AccountMgmt/v2.3.1/
+- url: /AccountMgmt/v2.4/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
@@ -93,7 +93,7 @@ paths:
         description: Initial password for the email account. The password is base64 encoded.
         required: true
         schema:
-          type: string
+          type: byte
           maxLength: 256
           format: password
       requestBody:

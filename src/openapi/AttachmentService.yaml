@@ -116,7 +116,7 @@ paths:
       operationId: deleteMaildata
 
       security:
-        - basicAuth: []
+        - KIMBasicAuth: []
         # Authentication takes place with username/password from the mail account of the data creator/sender.
 
       parameters:
