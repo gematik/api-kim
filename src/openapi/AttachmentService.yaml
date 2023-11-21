@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   title: I_Attachment_Service
-  description:  Über diese Schnittstelle können verschlüsselte E-Mail-Anhänge <br>
-                hochgeladen und bereitgestellt werden.
+  description:  Encrypted email attachments can be sent via this interface
+                uploaded and made available.
   version: 2.3.2
   ### 2.3.2
   # - added distinct definition for header element Content-Length in add_Attachment:
@@ -42,151 +42,123 @@ info:
   # - initial Version of I_Attachment_Service
 
 externalDocs:
-  description: GitHub - Dokumentation
+  description: GitHub - documentation
   url: https://github.com/gematik/api-kim
 servers:
 - url: /attachments/v2.3/
   # Die URL muss wie folgt gebildet werden:
-  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
 tags:
 - name: Attachments
 
 paths:
-##--
-##------
   /attachment/{attachmentId}:
     get:
       tags:
       - Attachments
-      summary: Einen Anhang herunterladen
-      description: gibt den unter einem Freigabelink verschlüsselten Anhang zurück
+      summary: Download an attachment
+      description: returns the attachment encrypted under a share link.
       operationId: readAttachment
 
       parameters:
       - name: attachmentId
         in: path
-        description: Link-Referenz auf den verschlüsselten Anhang im Dienst
+        description: Link reference to the encrypted attachment in the service.
         required: true
         schema:
           type: string
       - name: recipient
         in: header
-        description: Die übergebene E-Mail-(KIM-)Adresse des Empfängers
+        description: The recipient's passed email (KIM) address.
         required: true
         schema:
           type: string
           format: email
 
-
       responses:
         200:
           description: OK
-             # Anhang wurde erfolgreich heruntergeladen
+             # Attachment was downloaded successfully
           content:
            application/octet-stream:
             schema:
              type: string
              format: binary
         400:
-          description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
         403:
-          description: Recipient nicht in der Empfängerliste der KIM-Mail enthalten
+          description: Recipient not included in the KIM email recipient list.
           content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-        404:
-          description: Ressource unter dem angegebenen Link nicht gefunden
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-        429:
-          description: Anhang zu oft heruntergeladen.
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        404:
+          description: Resource not found at the specified link.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        429:
+          description: Downloaded attachment too many times.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        500:
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
-
-##--
-##------
     delete:
       tags:
       - Attachments
-      summary: E-Mail-Daten von KAS löschen
-      description: Löschen von auf dem KAS abgelegten E-Mail-Daten, Uri entspricht sharedLink aus add_Attachment
+      summary: Delete email data from KAS
+      description: Deletion of email data stored on the KAS, Uri corresponds to sharedLink from add_Attachment.
       operationId: deleteMaildata
 
       security:
-        - basicAuth: []
-        # Die Authentifizierung erfolgt mit username/password von dem Mail Account, des Daten-Einstellers/Absenders
+        - KIMBasicAuth: []
+        # Authentication takes place with username/password from the mail account of the data creator/sender.
 
       parameters:
       - name: attachmentId
         in: path
-        description: Link-Referenz auf den verschlüsselten Anhang im Dienst
+        description: Link reference to the encrypted attachment in the service.
         required: true
         schema:
           type: string
 
       responses:
           200:
-            description: OK - Daten wurden gelöscht
+            description: OK - data has been deleted.
           400:
-            description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
-            description: Authentifizierung fehlgeschlagen.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/401'
           404:
-            description: Ressource unter dem angegebenen Link nicht gefunden
+            description: Resource not found at the specified link.
             content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+             application/json; charset=utf-8:
+               schema:
+                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
           500:
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/500'
 
-##--
-##------
   /attachment/:
     post:
       tags:
       - Attachments
-      summary: Einen Anhang hinzufügen
-      description: Ein verschlüsselter Anhang wird unter einem neu erzeugten Freigabe-Link hinzugefügt
+      summary: Add an attachment
+      description: An encrypted attachment is added under a newly created sharing link.
       operationId: addAttachment
 
       security:
-        - basicAuth: []
-        # Die Authentifizierung erfolgt mit username/password von dem Mail Account
+        - KIMBasicAuth: []
+        # Authentication takes place with username/password from the mail account.
 
       parameters:
         - name: Content-Length
           in: header
-          description: Gesamt-Größe/Länge des Request-Bodys
+          description: Total size/length of the request body.
           required: true
           schema:
             type: integer
@@ -202,11 +174,11 @@ paths:
               properties:
                 messageID:
                     type: string
-                    description: MessageID der zugehörigen KIM-Mail
+                    description: MessageID of the associated KIM email.
                 recipients:
                     type: array
-                    description: Liste aller Empfänger (KIM-Adressen) der KIM-Mail Empfänger; Pro Form-Part wird genau eine Adresse spezifiziert und der Form-Part wird mehrfach angegeben (exploded=true)
-                                # curl Beispiel:
+                    description: List of all recipients (KIM addresses) of the KIM email recipients; Exactly one address is specified per form part and the form part is specified multiple times (exploded=true).
+                                # curl e.g.
                                 # -F 'recipients=user1@example.kim.telematik' \
                                 # -F 'recipients=user2@example.kim.telematik' \
                     items:
@@ -214,7 +186,7 @@ paths:
                       format: email
                 expires:
                     type: string
-                    description: Zeitpunkt zu dem der Anhang geloescht werden muss
+                    description: Time at which the attachment must be deleted.
                                 # (RFC5322 date-time)
                 attachment:
                    type: string
@@ -227,7 +199,7 @@ paths:
                 headers:
                   Content-Length:
                     required: true
-                    description: Datenmenge in Bytes der auf dem KAS zu übertragenden Maildaten
+                    description: Amount of data in bytes of the mail data to be transmitted on the KAS.
                     schema:
                       type: integer
                       format: int64
@@ -241,66 +213,37 @@ paths:
       responses:
           201:
             description: Created
-                       #  Der Anhang wurde erfolgreich unter dem angegebenen Freigabelink erzeugt.
+            # The attachment was successfully created under the shared link provided.
             content:
-             application/json:
+             application/json; charset=utf-8:
               schema:
                type: object
                properties:
                  sharedLink:
                    type: string
-                    # Enthält den Freigabelink
-                    # Über den Freigabelink kann der Anhang vom KAS abgerufen werden. Der Freigabelink enthält die - in Operation read_Attachment nötige - attachmentID.
+                    # Contains the release link.
+                    # The attachment can be accessed from KAS via the release link. The release link contains the attachmentID - required in operation read_Attachment.
           400:
-            description: Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
-            description: Authentifizierung fehlgeschlagen.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/401'
           413:
             description: Payload Too Large
-            # Die maximal zulässige Dokumentengröße wurde überschritten
+            # The maximum permitted document size has been exceeded.
             content:
-              application/json:
+              application/json; charset=utf-8:
                 schema:
-                  $ref: '#/components/schemas/Error'
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
           500:
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/500'
           507:
-            description: Nicht genügend Speicherplatz vorhanden
+            description: Not enough memory available.
             content:
-              application/json:
+              application/json; charset=utf-8:
                 schema:
-                  $ref: '#/components/schemas/Error'
+                  $ref: 'CommonSchemas.yaml#/components/schemas/Error'
 
-##--
-##------
 components:
-
-  schemas:
-
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        traceId:
-          type: string
-          maxLength: 255
-          example: 19aaf69260f63694
-          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
-
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
+    KIMBasicAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth'

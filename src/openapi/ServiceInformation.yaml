@@ -13,74 +13,63 @@ info:
   # - added traceId to Error object
 
 externalDocs:
-  description: GitHub - Dokumentation
+  description: GitHub - documentation
   url: https://github.com/gematik/api-kim
 servers:
 - url: /ServiceInformation/v1.0/
-  # Die URL muss wie folgt gebildet werden:
+  # The URL must be formed as follows:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
 tags:
 - name: ServiceInformation
 
 security:
-  - bearerAuth: []
-    # Die Authentisierung erfolgt für alle Operationen über ein JWT
+  - KIMBearerAuth: []
+    # Authentication is carried out for all operations via a JWT
 
 paths:
-##--
-##------
-  /:
+  /serviceinfo:
     get:
       tags:
       - ServiceInformation
-      summary: Informationen über den KIM Fachdienst abfragen
-      description: Informationen über den KIM Fachdienst abfragen
+      summary: Request information via the KIM backend service
+      description: Request information via the KIM backend service
       operationId: getServiceInformation
       responses:
         200:
           description: OK
-             # Rückgabe der Informationen über den KIM Fachdienst
+             # Return the information via the KIM backend service
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/ServiceInformation'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
   /appTags:
     get:
       tags:
        - appTags
-      summary: Abfrage der Anwendungskennzeichen
-      description: Es wird die Liste der Anwendungskennzeichen abgefragt.
-        Die Anwendungskennzeichen werden als FHIR Codesystem in der
-        Response übergeben
+      summary: Request information for application identifiers (Anwendungskennzeichen)
+      description: The list of application identifiers (Anwendungskennzeichen) is queried.
+        The application identifiers are used as the FHIR code system in the
+         Submit response
       operationId: getAppTags
 
       responses:
         200:
           description: OK
-             # Rückgabe der Anwendungskennzeichen als FHIR CodeSystem (ServiceIdentifierCS)
-             # Siehe https://simplifier.net/app-transport-framework/service-identifier-cs/~json
+             # Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
+             # Please refer https://simplifier.net/app-transport-framework/service-identifier-cs/~json
           content:
-            application/json:
+            application/json; charset=utf-8:
               schema:
                 externalDocs:
-                  description: Rückgabe der Anwendungskennzeichen als FHIR CodeSystem (ServiceIdentifierCS)
+                  description: Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
                   url: https://simplifier.net/app-transport-framework/service-identifier-cs/~json
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-##--
-##------
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
+
 components:
   schemas:
     ServiceInformation:
@@ -88,52 +77,38 @@ components:
       properties:
         kimServiceVersion:
           type: string
-          description: Gibt die Version des KIM Fachdienstes an.
+          description: Specifies the version of the KIM backend service.
         passwordPolicyRegEx:
           type: string
-          description: Gibt die Password Policy, die der AccountManager verlangt, als regulären Ausdruck an.
+          description: Specifies the password policy that the AccountManager requires as a regular expression.
         passwordPolicyDisplay:
           type: string
-          description: Gibt die Password Policy, die der AccountManager verlangt, in Textform an.
+          description: Specifies the password policy that the AccountManager requires in text form.
         jwtExpiration:
           type: integer
           minimum: 300
           maximum: 21600
-          description: Gibt die konfigurierte Ablaufzeitspanne für JWTs an. Der Wert wird in Sekunden angegeben.
+          description: Specifies the configured expiration time range for JWTs. The value is given in seconds.
         referenceIdRequired:
           type: boolean
-          description: Gibt an, ob bei der initialen Registrierung  die referenceID benötigt wird.
+          description: Specifies whether the referenceID is required during initial registration.
         initialPasswordRequired:
           type: boolean
-          description: Gibt an, ob bei der initialen Registrierung  das initiale Passwort benötigt wird.
+          description: Specifies whether the initial password is required during initial registration.
       example:
         kimServiceVersion: 1.5.3
         regPolicy: 11
         passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,?/~_+\-=|\\]).{12,256}$
-        passwordPolicyDisplay: Mindestens eine Zahl [0-9]
-                              Mindestens ein Kleinbuchstabe [a-z]
-                              Mindestens ein Großbuchstabe [A-Z]
-                              Mindestens ein Sonderzeichen [*.!@#$%^&(){}[]:;'<>,?/~_+-=|\]
-                              Mindestlänge 12 Zeichen
-                              Maximallänge 256 Zeichen.
+        passwordPolicyDisplay: At least one number [0-9]
+                              At least one lowercase letter [a-z]
+                              At least one capital letter [A-Z]
+                              At least one special character [*.!@#$%^&(){}[]:;'<>,?/~_+-=|\]
+                              Minimum length 12 characters
+                              Maximum length 256 characters.
         jwtExpiration: 300
         referenceIdRequired: true
         initialPasswordRequired: false
 
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        traceId:
-          type: string
-          maxLength: 255
-          example: 19aaf69260f63694
-          description: Eindeutige Zeichenkette zur Rückverfolgung des Fehlers im Fachdienst
-          
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-       # Das JWT wird in compact serialization (RFC 7515, Section 3.1) kodiert und im HTTP-Header Authorization nach dem Bearer-Schema übertragen.          
+    KIMBearerAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'
