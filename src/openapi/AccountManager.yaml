@@ -131,9 +131,9 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
-          $ref: '#/components/responses/500'
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
-          $ref: '#/components/responses/502'
+          $ref: 'CommonSchemas.yaml#/components/responses/502'
 
   /account/{username}:
     put:
