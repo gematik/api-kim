@@ -10,6 +10,7 @@ image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubuser
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FAttachmentService.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AttachmentService&color=green[link="src/openapi/attachmentService.yaml"]
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FAccountLimit.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AccountLimit&color=green[link="src/openapi/AccountLimit.yaml"]
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FServiceInformation.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=ServiceInformation&color=green[link="src/openapi/ServiceInformation.yaml"]
+image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FCommonSchemas.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=CommonSchemas&color=green[link="src/openapi/ServiceInformation.yaml"]
 
 == Allgemeines
 
