@@ -317,7 +317,7 @@ paths:
       tags:
       - Email-Account
       summary: List of all accounts of a telematics ID.
-      operationId: getAccounts
+      operationId: listAccounts
       parameters:
       - name: username
         in: path
