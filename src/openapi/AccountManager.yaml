@@ -15,6 +15,7 @@ info:
   # - changed servers -url
   # - added "noVzdMailEntry" flag for POST /account and PUT /account/{username}
   # - changed type for password format to byte
+  # - new error code for VZD entry is locked
   ### 2.3.0
   # - change server url to new api version
   # - added /account/{username}/revokeDeregistration
@@ -187,6 +188,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        423:
+          description: VZD entry is locked.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -254,6 +261,8 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
+        423:
+          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -292,6 +301,12 @@ paths:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
+        423:
+          description: VZD entry is locked.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -427,6 +442,12 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
         408:
           description: Request Timeout
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        423:
+          description: new VZD entry is locked.
           content:
             application/json; charset=utf-8:
               schema:
