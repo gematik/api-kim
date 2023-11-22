@@ -46,6 +46,12 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
+    423:
+      description: VZD entry is locked.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
     500:
       description: Internal Server Error
       content:

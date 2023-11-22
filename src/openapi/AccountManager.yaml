@@ -130,6 +130,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        423:
+          description: VZD entry is locked.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
