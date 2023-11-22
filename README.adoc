@@ -83,8 +83,9 @@ KIM-API
 │   ├──── openapi
 │   │    ├── AccountLimit.yaml
 │   │    ├── AccountManager.yaml
-│   │    ├── AccountLimit_past.yaml
-│   │    └── AttachmentServices.yaml
+│   │    ├── AttachmentServices.yaml
+│   │    ├── CommonSchemas.yaml
+│   │    └── ServiceInformation.yaml
 │   ├──── plantuml
 │   │    └── Fachdienst
 │   └──── schema
