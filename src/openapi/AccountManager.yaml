@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: I_AccountManager_Service
   description:  The KIM Account Manager is managed via this interface.
-  #  Für alle Operationen muss der Zeichensatz "utf-8” unterstützt werden.
+  #  The “utf-8” character set must be supported for all operations.
   version: 2.3.1
 ### 2.3.1
   # KIM 1.5.3 changes
