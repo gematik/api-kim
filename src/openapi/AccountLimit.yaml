@@ -85,6 +85,11 @@ paths:
         required: true
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/AccountLimit'
       responses:
         200:
           description: OK
