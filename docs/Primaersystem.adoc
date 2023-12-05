@@ -154,6 +154,8 @@ Die autorisierten Personen werden mit dem KIM-Antrag festgelegt.
 Bei Anwendung der SASL-Mechanismen `PLAIN` und `LOGIN` für die SMTP-Authentifizierung ist es erforderlich, dass das Primärsystem einen persistent gespeicherten SMTP-Benutzernamen gemäß der Tabelle: _Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ verwendet. Das Passwort, das zur Authentifizierung gegenüber dem KIM-Dienst (MTA) verwendet wird, wird ebenfalls dem persistenten Datensatz entnommen. Die Attribute der Tabelle
 _Tab_ILF_PS_Bildungsregel_SMTP_Benutzername_ werden durch das „#“ – Zeichen getrennt.
 
+* *Verwendung der 'X-KIM-Encounter-Id'* +
+Für die Nachverfolgbarkeit von Nachrichten im Kontext eines bestimmten Behandlungsfalls (Encounter) ist es erforderlich, dass das Primärsystem das Header-Element `X-KIM-Encounter-Id` in jeder KIM-Nachricht befüllt. Dieses Header-Element muss eine eindeutige Identifikationsnummer (z.B. eine UUID) enthalten, die für den gesamten Nachrichtenverlauf eines spezifischen Behandlungsfalls konstant bleibt. Bei der Erstellung einer Antwort auf eine Nachricht muss das Empfängersystem die `X-KIM-Encounter-Id` der ursprünglichen Nachricht übernehmen, um die Nachrichten einem gemeinsamen Behandlungsfall zuzuordnen. Wenn eine Encounter-FHIR-Ressource im Body der Nachricht enthalten ist, muss der `Encounter.identifier` mit dem Wert in der `X-KIM-Encounter-Id` übereinstimmen.
 
 [cols="1,2",options="header",autowidth]
 .Tab_ILF_PS_Bildungsregel_SMTP_Benutzername
