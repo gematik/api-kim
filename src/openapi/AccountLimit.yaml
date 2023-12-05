@@ -69,8 +69,8 @@ paths:
     put:
       tags:
       - AccountLimit
-      summary: Query the limits of an account
-      description: Sets the limits of an account
+      summary: Edit the limits of an account
+      description: Sets the limits of an account (dataTimeToLive and maxMailSize)
       operationId: setLimits
       parameters:
       - name: username
