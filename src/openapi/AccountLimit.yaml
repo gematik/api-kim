@@ -5,6 +5,7 @@ info:
   version: 1.1.2
   ### 1.1.2
   # - changed servers -url
+  # - adding new operation setLimits
   # - added object property AccountLimit.kasMailSizeThreshold
   # - added traceId to Error object
   ### 1.1.1
