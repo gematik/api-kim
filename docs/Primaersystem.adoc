@@ -136,6 +136,10 @@ Die E-Mail-Nachricht muss anschließend über das Clientmodul versendet werden.
 Dabei signiert das Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger.
 Hierbei wird der S-MIME-Standard verwendet.
 
+* *Prüfung der Empfängeradressen* +
+KIM-Nachrichten können nur versendet werden, wenn die KIM-Adressen der Empfänger im Verzeichnisdienst existieren. Daher ist es erforderlich, dass das Primärsystem die lokal gespeicherten KIM-Adressen regelmäßig mit den Daten im VZD vergleicht und nicht mehr im VZD vorhandene KIM-Adressen aus dem lokalen Speicher entfernt und gegebenenfalls durch aktuelle KIM-Adressen aus dem VZD ersetzt.
+Es wird empfohlen die lokal gespeicherten KIM-Adressen einmal täglich zu aktualisieren.
+
 * *SMTP-Kommunikation über das KIM-Clientmodul* +
 Es ist erforderlich, dass das Primärsystem ausschließlich mit dem Clientmodul mittels SMTP-Kommandos kommuniziert.
 
@@ -284,6 +288,11 @@ Die KIM-Adresse kann an mehreren Primärsystem-Arbeitsplätzen genutzt werden. D
 Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen kann, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhalten kann.
 
 TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss das PS dem Nutzer ermöglichen auszuwählen, welche KIM-Anwendungen an einem bestimmten PS-Arbeitsplatz verwendet werden (KIM Dienstkennungen). Für den Nachrichtenabruf kann das PS anstatt POP3 RETR zunächst mit POP3 TOP <Message-ID> 0 nur die Header der Nachricht abfragen, um zu prüfen, welche Dienstkennung die Nachricht hat. Falls die Nachricht eine Dienstkennung hat, die an diesem Arbeitsplatz verarbeitet werden soll, kann die vollständige Nachricht mit POP3 RETR empfangen werden. Die Message-ID der Nachricht muss lokal gespeichert werden, um einen erneuten Abruf zu verhindern.
+
+==== Umgang mit Fehlernachrichten
+
+Im KIM Protokoll sind Fehlernachrichten vorgesehen, die dazu dienen den Nutzer über Probleme beim Versand oder Empfang von KIM-Nachrichten zu informieren. Das Primärsystem kann den Nutzer bei der Auswertung von Fehlernachrichten unterstützen. Jede Fehlernachricvht enthält einen Fehlercode im Headerelement ´X-KIM-Fehlermeldung´. In *[gemSpec_CM_KOMLE] Tab_Fehlercodes_KOMLE-Clientmodule* sind die Fehlercodes definiert.
+Es wird empfohlen, den Nutzer im Primärsystem auf Fehlermeldungen hinzuweisen und geeignete Maßnahmen zum Umgang mit der Fehlermeldung vorzuschlagen um Folgefehler zu vermeiden.
 
 == Integration des Clientmoduls in das Primärsystem
 Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärsystem zu integrieren. Somit ist kein separates Clientmodul mehr notwendig. Die folgende Abbildung stellt eine mögliche Integration dar:
