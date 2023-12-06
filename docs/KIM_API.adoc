@@ -662,7 +662,7 @@ Die Operation `createCert()` erzeugt und liefert ein TLS-Auth Zertifikat in eine
   "certPassword": "password"
 }
 ----
-[normal]#`commonName` - FQDN vom Clientmodul# +
+[normal]#`commonName` - Clientmodul Name# +
 [normal]#`certPassword` - Passwort für die PKCS#12-Datei#
 |===
 
