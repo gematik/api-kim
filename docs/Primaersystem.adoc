@@ -290,7 +290,7 @@ TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss
 
 ==== Umgang mit Fehlernachrichten
 
-Im KIM Protokoll sind Fehlernachrichten vorgesehen, die dazu dienen den Nutzer über Probleme beim Versand oder Empfang von KIM-Nachrichten zu informieren. Das Primärsystem kann den Nutzer bei der Auswertung von Fehlernachrichten unterstützen. Jede Fehlernachricvht enthält einen Fehlercode im Headerelement ´X-KIM-Fehlermeldung´. In *[gemSpec_CM_KOMLE] Tab_Fehlercodes_KOMLE-Clientmodule* sind die Fehlercodes definiert.
+Im KIM Protokoll sind Fehlernachrichten vorgesehen, die dazu dienen den Nutzer über Probleme beim Versand oder Empfang von KIM-Nachrichten zu informieren. Das Primärsystem kann den Nutzer bei der Auswertung von Fehlernachrichten unterstützen. Jede Fehlernachricht enthält einen Fehlercode im Headerelement ´X-KIM-Fehlermeldung´. In *[gemSpec_CM_KOMLE] Tab_Fehlercodes_KOMLE-Clientmodule* sind die Fehlercodes definiert.
 Es wird empfohlen, den Nutzer im Primärsystem auf Fehlermeldungen hinzuweisen und geeignete Maßnahmen zum Umgang mit der Fehlermeldung vorzuschlagen um Folgefehler zu vermeiden.
 
 == Integration des Clientmoduls in das Primärsystem
