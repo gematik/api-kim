@@ -285,6 +285,9 @@ Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unter
 
 TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss das PS dem Nutzer ermöglichen auszuwählen, welche KIM-Anwendungen an einem bestimmten PS-Arbeitsplatz verwendet werden (KIM Dienstkennungen). Für den Nachrichtenabruf kann das PS anstatt POP3 RETR zunächst mit POP3 TOP <Message-ID> 0 nur die Header der Nachricht abfragen, um zu prüfen, welche Dienstkennung die Nachricht hat. Falls die Nachricht eine Dienstkennung hat, die an diesem Arbeitsplatz verarbeitet werden soll, kann die vollständige Nachricht mit POP3 RETR empfangen werden. Die Message-ID der Nachricht muss lokal gespeichert werden, um einen erneuten Abruf zu verhindern.
 
+Das Primärsystem muss eine Möglichkeit anbieten, die Abholung von Nachrichten auch außerhalb konfigurierter fester Abrufzeiträume auszulösen. Dies muss bezogen auf eine bestimmte Dienstkennung möglich sein (z. B. eEB) um solchen Anwendungen die zeitnahe Abholung von Antworten zu ermöglichen. 
+
+
 == Integration des Clientmoduls in das Primärsystem
 Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärsystem zu integrieren. Somit ist kein separates Clientmodul mehr notwendig. Die folgende Abbildung stellt eine mögliche Integration dar:
 
