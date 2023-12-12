@@ -105,6 +105,9 @@ Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig an
 * *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
 Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist es erforderlich den Nutzer darüber zu informieren und der Versand per Mail ist abzulehnen.
 
+* *Prüfung der Empfängeradressen* +
+Es ist erforderlich, dass das Primärsystem lokal gespeicherte KIM-Adressen regelmäßig mit den Daten im VZD vergleicht und nicht mehr im VZD vorhandene KIM-Adressen aus dem lokalen Speicher entfernt und gegebenenfalls durch aktuelle KIM-Adressen aus dem VZD ersetzt. Die lokal gespeicherten KIM-Adressen sollen einmal täglich aktualisiert werden.
+
 === Nachrichten generieren und übernehmen
 Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
 Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signierte Dokumente (qualifizierte) in Frage. Alle Anhänge können, abhängig vom verwendeten Schlüsselmaterial, separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt werden.
