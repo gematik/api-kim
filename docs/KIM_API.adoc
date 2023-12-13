@@ -1,4 +1,5 @@
 :imagesdir: ../images
+:doctype: book
 :toc: macro
 :toclevels: 5
 :toc-title: Inhaltsverzeichnis

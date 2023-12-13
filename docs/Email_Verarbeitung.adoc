@@ -8,6 +8,7 @@ endif::[]
 
 :imagesdir: ../images
 :maildir: ../samples/Mails
+:doctype: book
 :toc: macro
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
