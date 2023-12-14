@@ -1,0 +1,77 @@
+info:
+  title: I_CommonSchemas
+  version: 1.0.0
+
+components:
+  schemas:
+    Username:
+      type: string
+      maxLength: 256
+      format: email
+      description: Username/email of the account.
+    Password:
+      type: string
+      minLength: 12
+      maxLength: 256
+      format: byte
+      description: The password is transmitted base64 encoded.
+      writeOnly: true
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        traceId:
+          type: string
+          maxLength: 255
+          example: 19aaf69260f63694
+          description: Unique character string for tracing the error in the KIM service
+
+  responses:
+    400:
+      description: Error in the input data, description of the error is in the error text
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401:
+      description: Authentification failed
+      content:
+       application/json; charset=utf-8:
+        schema:
+         $ref: '#/components/schemas/Error'
+    404:
+      description: Email account not available.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    423:
+      description: VZD entry is locked.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    500:
+      description: Internal Server Error
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    502:
+      description: VZD cannot be reached or returns errors
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  securitySchemes:
+    KIMBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      # The JWT is encoded in compact serialization (RFC 7515, Section 3.1) and transmitted in the HTTP header Authorization according to the bearer schema.
+
+    KIMBasicAuth:
+      type: http
+      scheme: basic

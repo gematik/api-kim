@@ -1,0 +1,57 @@
+@startuml
+/'
+# KIM 1.5.x
+# Primaersystemleitfaden
+# KIM Schnittstellen
+'/
+
+
+skinparam actorStyle awesome
+left to right direction
+scale 6/3
+
+skinparam sequence {
+  ArrowColor black
+  ArrowFontSize 17
+  ActorBorderColor black
+  LifeLineBorderColor black
+  LifeLineBackgroundColor Gainsboro
+
+skinparam component {
+  FontSize 10
+  BackgroundColor<<Apache>> LightCoral
+  BorderColor<<Apache>> #FF6655
+  FontName Courier
+  BorderColor black
+  BackgroundColor gold
+  ArrowFontName Impact
+  ArrowFontSize 8
+  ArrowColor #FF6655
+  ArrowFontColor #777777
+}
+
+ParticipantBorderColor Motivation
+ParticipantBackgroundColor Motivation
+ParticipantFontName Impact
+ParticipantFontSize 20
+ParticipantFontColor black
+ParticipantBorderColor Black
+ParticipantBackgroundColor MOTIVATION
+
+ActorBackgroundColor Gainsboro
+ActorFontColor black
+ActorFontSize 13
+ActorFontName Aapex
+}
+
+package SchnittstellenPS-KIM {
+[Primärsystem] ..> [POP3-Proxy\n&#91;KIM-Clientmodul&#93;] :use
+[Primärsystem] ..> [SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] :use
+[Primärsystem] ..> [LDAPv3-Proxy\n&#91;Konnektor&#93;] :use
+[LDAPv3-Proxy\n&#91;Konnektor&#93;] ..> [Verzeichnisdienst] :use
+[SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [Verzeichnisdienst] :use
+[POP3-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [KIM-Provider] :use
+[SMTP-Proxy\n&#91;KIM-Clientmodul&#93;] ..> [KIM-Provider] :use
+}
+
+@enduml

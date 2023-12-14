@@ -7,6 +7,7 @@ ifdef::env-github[]
 endif::[]
 
 :imagesdir: ../images
+:doctype: book
 :toc: macro
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
@@ -38,7 +39,7 @@ IMPORTANT:  Alle Operationen die vom Administrationsmodul am Account Manager üb
 === Registrierung durchführen
 Zukünftige KIM-Teilnehmer registrieren sich im ersten Schritt am Account Manager über das Frontend (GUI) des Administrationsmoduls (optional ist dies auch über das Primärsystem möglich - das Clientsystem mit dem Administrationsmodul ist in diesem Fall Bestandteil des Primärsystems). Bei Aufruf der Operation `registerAccount()` baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
-Informationen mit den für die Registrierung benötigten Parametern erhält der Teilnehmer vorab von seinem gewählten KIM-Anbieter. Dazu gehören die `referenceID`, das initiale Passwort (`iniPassword`) und ggf. eine vom Anbieter festgelegte KIM-E-Mail-Adresse, die dann als `referenceID` genutzt wird. Nach erfolgreicher Registrierung wird die PKCS#12-Datei mit dem Zertifikat vom Account Manager heruntergeladen, automatisiert entpackt und dem Clientmodul zur Verfügung gestellt. Das Zertifikat wird nur beim Account Manager durch den Aufruf der Operation `createCert()` beantragt, wenn im Clientmodul nicht bereits ein Zertifikat hinterlegt wurde. Das Administrationsmodul muss vor Ablauf dieses Zertifikates ein neues Zertifikat beim Account Manager beantragen und dem Clientmodul zur Verfügung stellen, welches damit das abgelaufene Zertifikat ersetzt. Die während der Registrierung übergebenen KIM-Fachdaten des Nutzers werden vom Account Manager in den zum Nutzer gehörenden Eintrag im Verzeichnisdienst eingetragen (z. B. KIM-Version).
+Informationen mit den für die Registrierung benötigten Parametern erhält der Teilnehmer vorab von seinem gewählten KIM-Anbieter. Dazu gehören die `referenceID`, das initiale Passwort (`iniPassword`) und ggf. eine vom Anbieter festgelegte KIM-E-Mail-Adresse, die dann als `referenceID` genutzt wird. Das an der Registrierung beteiligte Clientmodul kann über eine Abfrage an der Schnittstelle `I_ServiceInformation` prüfen, welche Paramater für die Registrierung am jeweiligen KIM Fachdienst benötigt werden und dem Nutzer eine dem entsprechende Eingabemaske anbieten. Nach erfolgreicher Registrierung wird die PKCS#12-Datei mit dem Zertifikat vom Account Manager heruntergeladen, automatisiert entpackt und dem Clientmodul zur Verfügung gestellt. Das Zertifikat wird nur beim Account Manager durch den Aufruf der Operation `createCert()` beantragt, wenn im Clientmodul nicht bereits ein Zertifikat hinterlegt wurde. Das Administrationsmodul muss vor Ablauf dieses Zertifikates ein neues Zertifikat beim Account Manager beantragen und dem Clientmodul zur Verfügung stellen, welches damit das abgelaufene Zertifikat ersetzt. Die während der Registrierung übergebenen KIM-Fachdaten des Nutzers werden vom Account Manager in den zum Nutzer gehörenden Eintrag im Verzeichnisdienst eingetragen (z. B. KIM-Version).
 
 Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
 
@@ -62,7 +63,7 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 ++++
 
 === Deregistrierung zurücknehmen
-KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine ausgelöste Deregistrierung innerhalb von 30 Tagen zurücknehmen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `revokeDeregistration()` zum Account Manager auf. Nach einem erfolgreichen Aufruf der Operation steht dem Anwender der Account wieder in vollem Umfang zur Verfügung.
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls eine ausgelöste Deregistrierung bis mindestens nach 30 Tagen zurücknehmen. Dafür baut das Administrationsmodul eine TLS-Verbindung durch den Aufruf der Operation `revokeDeregistration()` zum Account Manager auf. Nach einem erfolgreichen Aufruf der Operation steht dem Anwender der Account wieder in vollem Umfang zur Verfügung.
 
 ++++
 <p align="center">
@@ -105,6 +106,17 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 </p>
 ++++
 
+== Anwendungskennzeichen
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Anwendungskennzeichen für ihren e-Mail Account konfigurieren oder einsehen. Für das konfigurieren eines Anwendungskennzeichens ruft das Administrationsmodul `setAccount()` am Account Manager auf. Für das Abfragen von konfigurierten Anwendungskennzeichen wird die Operation `getAccount()` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
+
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
+
+++++
+<p align="center">
+  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_anwendungskennzeichen.svg>
+</p>
+++++
+
 == Abwesenheitnotizen
 KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Abwesenheitsnotizen für einen definierten Zeitraum konfigurieren oder einsehen. Für das konfigurieren einer Abwesenheitsnotiz ruft das Administrationsmodul `updateOutOfOffice()` am Account Manager auf. Für das Abfragen von konfigurierten Abwesenheitsnotizen wird die Operation `getOutOfOffice()` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
 
@@ -128,7 +140,7 @@ Das Senden bzw. Empfangen von KIM-Mails wird durch die Schnittstelle `I_Message_
 === KIM-Mail senden
 Will der KIM-Teilnehmer eine E-Mail versenden, wird im ersten Schritt die erstellte KIM-Nachricht vom Primärsystem/Mail-Client an das Clientmodul übergeben. Das Clientmodul überprüft zunächst die Größe der übergebenen Nachricht. Ist die Nachricht kleiner als 15 MiB behandelt das Clientmodul die Nachricht wie in KIM 1.0 beschrieben.
 
-Übersteigt die Größe der Nachricht die 15 MiB, dann wird zunächst das Header-Element `X-KOM-LE-Version: 1.5` in den E-Mail-Header hinzugefügt. Anschließend prüft das Clientmodul die maximal zulässige Mailgröße für den Nutzer-Account. Danach erzeugt das Clientmodul für die Client-Mail einen symmetrischen Schlüssel, sowie einen Hashwert. Mit Hilfe des symmetrischen Schlüssels wird die Client-Mail verschlüsselt. Anschließend wird die Operation `add_Attachment()` am KAS seines Anbieters aufgerufen, um die verschlüsselte Client-Mail (E-Mail-Daten) hochzuladen. Danach befüllt das Clientmodul die KIM-Attachement Datenstruktur und fügt diese als Ersatz in den Body der originalen Client-Mail ein. Anschließend wird die Client-Mail durch das Clientmodul weiter verarbeitet(z.B. weitere Header Elemente) durch den Konnektor signiert und mit dem asymmetrischen Schlüssel des Empfängers verschlüsselt und als KOM-LE Mail an den Fachdienst versendet. +
+Übersteigt die Größe der Nachricht die 15 MiB, dann wird zunächst das Header-Element `X-KOM-LE-Version: 1.5` in den E-Mail-Header hinzugefügt. Anschließend prüft das Clientmodul die maximal zulässige Mailgröße für den Nutzer-Account. Danach erzeugt das Clientmodul für die Client-Mail einen symmetrischen Schlüssel, sowie einen Hashwert. Mit Hilfe des symmetrischen Schlüssels wird die Client-Mail verschlüsselt. Anschließend wird die Operation `add_Attachment()` am KAS seines Anbieters aufgerufen, um die verschlüsselte Client-Mail (E-Mail-Daten) hochzuladen. Danach befüllt das Clientmodul die KIM-Attachement Datenstruktur und fügt diese als Ersatz in den Body der originalen Client-Mail ein. Anschließend wird die Client-Mail durch das Clientmodul weiter verarbeitet (z.B. weitere Header Elemente), durch den Konnektor signiert, mit dem asymmetrischen Schlüssel des Empfängers verschlüsselt und als KIM Mail an den Fachdienst versendet. +
 
 Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 
@@ -141,7 +153,7 @@ Die folgende Abbildung veranschaulicht den beschriebenen Ablauf:
 === KIM-Mail empfangen
 Will ein KIM-Teilnehmer eine KIM-E-Mail abrufen, überprüft das Clientmodul im ersten Schritt ob beim Mailserver eine neue Nachricht im Postfach vorliegt. Ist dies der Fall, werden die zur Abholung selektierten Nachrichten vom Mailserver an das Clientmodul übergeben. Anschließend wird die Nachricht mit dem asymmetrischen Schlüssel des Empfängers entschlüsselt und die Signatur der Nachricht geprüft. Weiterhin prüft das Clientmodul, um welche KIM-Version es sich bei der Nachricht handelt. Bei einer KIM 1.0 Nachricht wird diese vom Clientmodul entsprechend den Vorgaben aus KIM 1.0 bearbeitet. 
 
-Handelt es sich um eine  KIM 1.5 Nachricht, verwendet das Clientmodul den in der KIM-Attachment-Datenstruktur hinterlegten Freigabelink, um mittels der Operation `read_Attachment()` die verschlüsselte Client-Mail vom KAS herunterzuladen. Anschließend wird die Client-Mail mit dem in der KOM-LE-Mail enthaltenen symmetrischen Schlüsseln entschlüsselt, der Hashwert berechnet und mit dem in der KIM-Attachment-Datenstruktur enthaltenen Hashwert verglichen. Im letzten Schritt wird die entschlüsselte Client-Mail durch das Clientmodul an das Primärsystem oder den E-Mail Client des Leistungserbringers übermittelt. +
+Handelt es sich um eine  KIM 1.5 Nachricht, verwendet das Clientmodul den in der KIM-Attachment-Datenstruktur hinterlegten Freigabelink `link`, um mittels der Operation `read_Attachment()` die verschlüsselte Client-Mail vom KAS herunterzuladen. Anschließend wird die Client-Mail mit dem in der KIM-Mail enthaltenen symmetrischen Schlüsseln `k` entschlüsselt, der Hashwert berechnet und mit dem in der KIM-Attachment-Datenstruktur enthaltenen Hashwert `hash` verglichen. Im letzten Schritt wird die entschlüsselte Client-Mail durch das Clientmodul an das Primärsystem oder den E-Mail Client des Leistungserbringers übermittelt. +
 
 Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar:
 
@@ -152,8 +164,11 @@ Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar
 ++++
 
 == KIM-Dienstkennung
-Der KIM-Teilnehmer kann eine zu versendende Nachricht mit einer Dienstkennung - z. B. "eAU;Lieferung;v1.0" - versehen. Wird durch den Mailclient keine Dienstkennung übergeben wird vom Clientmodul ein default-Dienstkennung eingetragen ("KIM-Mail;Default;V1.0").
+Der KIM-Teilnehmer kann eine zu versendende Nachricht mit einer Dienstkennung - z. B. "eAU;Lieferung;v1.0" - versehen. Wird durch den Mailclient in der für den Versand durch das Clientmodul übergebenen Mail keine Dienstkennung eingetragen, wird vom Clientmodul ein default-Dienstkennung nachträglich ergänzt ("KIM-Mail;Default;V1.0").
 Die Dienstkennung wird in den Nachrichten-Header eingetragen, und kann auf der Empfängerseite für eine automatisierte Bearbeitung verwendet werden. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet `X-KIM-Dienstkennung`. Die Dienstkennung der ursprünglichen Mail wird nach der Verschlüsselung in den Header der verschlüsselten Mail übernommen. Ein Empfänger kann auf Basis der Dienstkennung entscheiden, wie er mit den zur Abholung auf dem Mail-Server bereitstehenden Nachrichten verfahren möchte. 
+
+== KIM Anwendungskennzeichen
+Der KIM-Teilnehmer kann für seinen e-Mail Account Anwendungskennzeichen konfigurieren, die dann durch den Acount Manager seines KIM Fachdienstes im Verzeichnisdienst in den KIM-Fachdaten für die betroffene Mail-Adresse eintragen werden. Der KIM-Teilnehmer nutzt dazu die in seinem KIM Clientmodule angebotene Konfigurations-Option. Für die Übertragung zum Verzeichnisdienst stellt der KIM Fachdienst eine Operation an der Schnittstelle `I_AccountManager_Service` des Account Manager zur Verfügung.
 
 == Multikonnektor Umgebungen
 Ab KIM 1.5 ist es möglich, dass mehrere Konnektoren in einer Umgebung von einem Clientmodul unterstützt werden. Dies ist vor allem im Krankenhausumfeld im Interesse einer notwendigen Lastverteilung sinnvoll. Das folgende Bild veranschaulicht den Einsatz von mehreren Konnektoren in einer Umgebung:

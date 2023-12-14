@@ -1,0 +1,14 @@
+{
+    "description": "Dynamic badges for api-kim",
+    "badges": {
+        "releaseNotes": {
+            "version": " v1.5.3"
+        },
+        "kimClientmodulSpec": {
+            "version": " v1.5.3"
+        },
+        "kimFachdienstSpec": {
+            "version": " v1.5.3"
+        }
+    }
+}

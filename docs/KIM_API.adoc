@@ -1,7 +1,8 @@
 :imagesdir: ../images
+:doctype: book
 :toc: macro
 :toclevels: 5
-:toc-title: Inhaltsverzeichnis 
+:toc-title: Inhaltsverzeichnis
 :numbered:
 
 image:gematik_logo.svg[width=70%]
@@ -10,26 +11,26 @@ toc::[]
 
 
 = Clientsystem
-Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel weiter beschrieben werden. Darüberhinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine weitere Schnittstelle durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
+Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel näher beschrieben werden. Darüber hinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine Schnittstelle (`I_AccountManager_Service`) durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
 
 == Änderungen im Clientmodul ab KIM 1.5
 === Optionale Integration in das Clientsystem
 
-Ab der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu integrieren. Ein seperates Clientmodul ist in diesem Fall nicht mehr notwendig.
+Ab der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu integrieren. Ein seperates Clientmodul ist in diesem Fall nicht mehr notwendig. Zur Sicherstellung einer spezifikationskonformen Umsetzung der Intergration in das Clientsystem wird durch die gematik ein entsprechender Prokttypsteckbrief (gemProdT_iCM_KIM) bereitgestellt.
 
 === Umgang mit E-Mail-Kategorien
 
-Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werden die KIM-Mails mit einer KIM-Dienstkennung markiert (z. B. bei der eAU). Hierfür wird die Dienstkennung als Bestandteil in den äußeren Header (`X-KIM-Dienstkennung`) der KIM-Mail übernommen. Die Benennung der zu verwendenden Dienstkennungen erfolgt durch den Mail-Client. Wurde durch den Mail-Client keine Dienstkennung gesetzt, dann wird durch das Clientmodul eine Default-Dienstkennung eingetragen. Die Anpassungen sind in *[gemSpec_CM_KOMLE#3.6]* und *[gemSMIME_KOMLE#2.1.1.1]* spezifiziert. 
+Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werden die KIM-Mails mit einer KIM-Dienstkennung markiert (z. B. bei der eAU). Hierfür wird die Dienstkennung als Bestandteil in den äußeren Header (`X-KIM-Dienstkennung`) der KIM-Mail übernommen. Die Benennung der zu verwendenden Dienstkennungen erfolgt durch den Mail-Client. Wurde durch den Mail-Client keine Dienstkennung gesetzt, dann wird durch das Clientmodul eine Default-Dienstkennung eingetragen. Die Anpassungen sind in *[gemSpec_CM_KOMLE#3.6]* und *[gemSMIME_KOMLE#2.1.1.1]* spezifiziert.
 
 Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[Dienstkennungen]
 
 === Umgang mit großen Anhängen
 
-E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail auf dem KOM-LE-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit der KIM-Attachment Datenstruktur und versendet diese nach der weiteren Verarbeitung durch das Clientmodul als KOM-LE Nachricht an den Fachdienst. Das KIM-Clientmodul des Empfängers erkennt den Link in der KIM-Attachment Datenstruktur, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben.
+E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail, durch das Clientmodul des Senders verschlüsselt, auf dem KIM-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit der KIM-Attachment Datenstruktur (*[gemSpec_CM_KOMLE#Tabelle 2]*) und versendet diese nach der weiteren Verarbeitung durch das Clientmodul als KIM Nachricht an den Fachdienst. Das KIM-Clientmodul des Empfängers erkennt den `link` in der KIM-Attachment Datenstruktur, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben.
 
 ==== I_Attachment_Service
 
-Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
+Über die Schnittstelle `I_Attachment_Service` stellt der KAS dem Clientmodul die logischen Operationen `add_Attachment()`, und `read_Attachment()` zum Hoch- und Herunterladen von verschlüsselten E-Mail-Daten sowie die Operation `delete_Maildata` für das Löschen der E-Mail-Daten, unmittelbar nach dem Hochladen, zur Verfügung. Im folgenden Kapitel wird der Aufruf der Operationen beschrieben.
 
 //image:I_KAS.png[width=45%]
 
@@ -44,7 +45,7 @@ Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Dat
 
 *Beispiel einer HTTP Nachricht*
 
-[cols="h,a",] 
+[cols="h,a",]
 |===
 |URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/
 |Method     |POST
@@ -58,7 +59,7 @@ Authorization: "Basic Z2VtYXRpazpraW0="
 |Body    |
 [source, bash]
 ----
-messageID: "bde36ec8-9710-47bc-9ea3-bf0425078e33@example"         
+messageID: "bde36ec8-9710-47bc-9ea3-bf0425078e33@example"
 recipients: "user1@example.kim.telematik", "user2@example.kim.telematik"
 expires: "Mon, 15 Aug 22 15:52:01 +0000"
 attachment: "{…file content…}"
@@ -66,7 +67,7 @@ attachment: "{…file content…}"
 [normal]#`messageID` - Message-ID der zugehörigen KIM E-Mail# +
 [normal]#`recipients` - E-Mail Adressen der Empfänger# +
 [normal]#`expires` - Ablaufdatum der E-Mail-Daten# +
-[normal]#`attachment` - verschlüsselte E-Mail-Daten die auf dem KAS abgelegt werden sollen# 
+[normal]#`attachment` - verschlüsselte E-Mail-Daten die auf dem KAS abgelegt werden sollen#
 |===
 
 *Beispielabfrage:*
@@ -93,7 +94,7 @@ Body:
 
 -----------------
 
-*HTTP-Status Codes:* 
+*HTTP-Status Codes:*
 |===
 |Status |Bedeutung
 
@@ -105,11 +106,11 @@ Body:
 [small]#Authentifizierung fehlgeschlagen.#
 |413 |Payload Too Large +
 [small]#Die maximal zulässige Dokumentengröße wurde überschritten.#
-|500 
-|Internal Server Error 
+|500
+|Internal Server Error
 |507 |Insufficient Storage +
 [small]#Nicht genügend Speicherplatz vorhanden.#
-|=== 
+|===
 
 ===== read_Attachment()
 Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden.
@@ -139,7 +140,7 @@ curl -X 'GET' \
 'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
 -H 'accept: application/octet-stream' \
 -H 'recipient: user1@example.kim.telematik'
------------------ 
+-----------------
 
 *Beispielantwort*
 [source, ruby]
@@ -162,15 +163,65 @@ Body:
 [small]#E-Mail-Daten wurden unter dem angegebenen Link nicht gefunden.#
 |429 | Too many Requests +
 [small]#E-Mail-Daten zu oft heruntergeladen.#
-|500 
+|500
 |Internal Server Error
 |===
 
+===== delete_Maildata() +
+Mit Hilfe der Opertion `delete_Maildata()` kann ein Clientmodul die auf dem KAS abgelegten E-Mail Daten, im Falle des fehlerhaften Versands der dazugehörenden KIM-Nachricht, wieder löschen.
+
+*Beispiel einer HTTP Nachricht*
+
+[cols="h,a",]
+|===
+|URI        |\https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/+{attachmentId}+ +
+[normal]#`attachmentId` - Freigabelink, unter dem die E-Mail-Daten gespeichert wurden#
+|Method     |DELETE
+|Header |
+[source, bash]
+----
+HTTP-Version: "HTTP/1.1"
+Content-Type: "multipart/form-data"
+Authorization: "Basic Z2VtYXRpazpraW0="
+----
+|Body    |
+keine Parameter
+|===
+
+*Beispielabfrage:*
+[source, bash]
+-----------------
+curl -X 'DELETE' \
+'https://kas.hrst1.kim.telematik/attachments/v2.3/attachment/b2deea19-c37f-4ef0-a95f-d4e8b5817824' \
+-H 'accept: application/octet-stream' \
+-----------------
+
+*Beispielantwort*
+[source, ruby]
+-----------------
+Code: 200
+-----------------
+
+*HTTP-Status Codes:*
+|===
+|Status |Bedeutung
+
+|200 | OK +
+[small]#Daten wurden gelöscht#
+|400  | Bad Request  +
+[small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext#
+|401 | Unauthorized +
+[small]#Authentifizierung fehlgeschlagen.#
+|404 |no Ressource +
+[small]#Ressource unter dem angegebenen Link nicht gefunden#
+|500
+|Internal Server Error
+|===
 
 ==== I_AccountLimit_Service
-Über die Schnittstelle `I_AccountLimit_Service` stellt der Account Manager dem Clientmodul die logische Operationen `getLimits()` zur Abfrage von technisch konfigurierbaren Parametern eines Nutzer-Accounts zur Verfügung.  
+Über die Schnittstelle `I_AccountLimit_Service` stellt der Account Manager dem Clientmodul die logische Operationen `getLimits()` zur Abfrage von technisch konfigurierbaren Parametern eines Nutzer-Accounts zur Verfügung.
 
-//image:I_AccountLimit.png[width=45%] 
+//image:I_AccountLimit.png[width=45%]
 
 ++++
 <p align="left">
@@ -179,12 +230,12 @@ Body:
 ++++
 
 ===== getLimits()
-Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für E-Mail-Daten (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden. 
+Mit dem Aufruf der Operation `getLimits()` durch das Clientmodul erhält es alle technisch konfigurierbaren Parameter zu einem Nutzer-Account. Bei den Parametern handelt es sich um eine vom Anbieter definierte Größenbeschränkung einer KIM-E-Mail (`maxMailSize`), die vom Nutzer eingestellte Gültigkeitsdauer für E-Mail-Daten (`dataTimeToLive`)und die Angabe des Speichervolumens für den Nutzer-Account (`quota`, `remainQuota`). Das Ergebnis der Operation kann vom Clientmodul für 24 Stunden zwischengespeichert werden.
 
-Der Parameter `maxMailSize` gibt die maximal mögliche Größe einer KIM-E-Mail inklusive aller Anhänge (Base64-kodiert), die der KAS akzeptiert, zurück. Mit diesem Wert prüft das Clientmodul die Einhaltung der maximalen Mailgröße (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails. Dieser Wert wird auf dem Fachdienst definiert. 
+Der Parameter `maxMailSize` gibt die maximal mögliche Größe einer KIM-E-Mail inklusive aller Anhänge (Base64-kodiert), die der KAS akzeptiert, zurück. Mit diesem Wert prüft das Clientmodul die Einhaltung der maximalen Mailgröße (die vom Fachdienst-Anbieter definiert wird) für zu sendende Mails. Dieser Wert wird auf dem Fachdienst definiert.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
 |URI        |\https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0/limit +
 |Method     |GET
@@ -205,7 +256,7 @@ keine Parameter
 curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountLimit/v1.0/limit' \
   -H 'accept: application/json'
------------------ 
+-----------------
 
 *Beispielantwort*
 [source, ruby]
@@ -215,6 +266,7 @@ Body:
 {
   "dataTimeToLive": 90,
   "maxMailSize": 734003200,
+  "kasMailSizeThreshold": 15728640;
   "quota": 160000000000,
   "remainQuota": 112000000000
 }
@@ -230,7 +282,7 @@ Body:
 [small]#Authentifizierung fehlgeschlagen.#
 |404 | Not Found +
 [small]#Mail Account nicht vorhanden content:.#
-|500 
+|500
 |Internal Server Error
 |===
 
@@ -253,7 +305,7 @@ Body:
 Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teilnehmers am KIM-Fachdienst durchgeführt.
 
 *Beispiel einer HTTP Nachricht*
-[cols="h,a"] 
+[cols="h,a"]
 |===
 |URI        |\https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account
 |Method     |POST
@@ -274,15 +326,17 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
+  "appTags": "<Anwendungskennzeichen>"
 }
 ----
 [normal]#`referenceID` - Referenz eines KIM-Teilnehmers# +
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
-[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# 
+[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
+[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en#
 |===
 
-*Beispielabfrage:*
+*Beispielaufruf:*
 [source, bash]
 -----------------
 curl -X 'POST' \
@@ -295,8 +349,9 @@ curl -X 'POST' \
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
+  "appTags": "eAU"
   }'
------------------ 
+-----------------
 
 
 *Beispielantwort:*
@@ -305,7 +360,7 @@ curl -X 'POST' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -315,16 +370,16 @@ Code: 204
 [small]#Fehler in den Eingangsdaten, Beschreibung des Fehlers erfolgt in dem Fehlertext.#
 |401 |Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
-|409 |Conflict + 
+|409 |Conflict +
 [small]#Konflikt mit einem bereits bestehenden Account mit identischer E-Mail-Adresse.#
 |420 |Policy Not Fulfilled +
 [small]#Username oder Passwort entsprechen nicht den Regeln.#
 |422 |Unprocessable Entity +
 [small]#Die KIM-Version wird nicht unterstützt bzw. ist unbekannt.#
-|500 
-|Internal Server Error  
+|500
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -356,7 +411,7 @@ curl -X 'DELETE' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -364,7 +419,7 @@ curl -X 'DELETE' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -375,9 +430,9 @@ Code: 204
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -409,7 +464,7 @@ curl -X 'POST' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: */*' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -417,7 +472,7 @@ curl -X 'POST' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -428,9 +483,9 @@ Code: 204
 |404 | Unauthorized +
 [small]#Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -460,6 +515,7 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
+  "appTags": "<Anwendungskennzeichen>"
   "dataTimeToLive": 90
 }
 ----
@@ -467,6 +523,7 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
 [normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
+[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en# +
 [normal]#`dataTimeToLive` - Speicherdauer in Tagen von Mails und Anhängen auf dem Fachdienst#
 |===
 
@@ -483,9 +540,10 @@ curl -X 'PUT' \
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
+  "appTags": "eAU",
   "dataTimeToLive": 90
 }'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -493,7 +551,7 @@ curl -X 'PUT' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -510,9 +568,9 @@ Code: 204
 |422 |Unprocessable Entity +
 [small]#Die KIM-Version wird nicht unterstützt bzw. ist unbekannt.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -544,7 +602,7 @@ curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik' \
   -H 'accept: application/json' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -555,11 +613,14 @@ Body:
   "username": "user@example.kim.telematik",
   "kimVersion": "1.5",
   "regStat": "registered",
-  "deregDate": 1616588543
+  "deregDate": 1616588543,
+  "maxMailSize": 734003200,
+  "appTags": "eAU",
+  "dataTimeToLive": 90
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -570,9 +631,9 @@ Body:
 |404 | Not Found +
 [small]#E-Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -602,7 +663,7 @@ Die Operation `createCert()` erzeugt und liefert ein TLS-Auth Zertifikat in eine
   "certPassword": "password"
 }
 ----
-[normal]#`commonName` - FQDN vom Clientmodul# +
+[normal]#`commonName` - Clientmodul Name# +
 [normal]#`certPassword` - Passwort für die PKCS#12-Datei#
 |===
 
@@ -618,19 +679,19 @@ curl -X 'POST' \
   "commonName": "Praxis Mustermann",
   "certPassword": "password"
 }'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
 -----------------
 Code: 201
 Body:
-{  
+{
   "file": "…file content…"
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -639,7 +700,7 @@ Body:
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
 
 
@@ -671,19 +732,19 @@ curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/OTP' \
   -H 'accept: application/json' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
 -----------------
 Code: 200
-Body: 
+Body:
 {
   "OTP": "sufglwahföqwklfnwqkalfnesaöjfjdg...jsdnvbruifqwijkvwurizrtqoiwfhbfe8"
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -692,7 +753,7 @@ Body:
 |401 | Unauthorized +
 [small]#Authentifizierung fehlgeschlagen.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
 
 ==== setTID()
@@ -725,7 +786,7 @@ curl -X 'PUT' \
   -H 'accept: */*' \
   -H 'password: password' \
   -H 'OTP: sufglwahföqwklfnwqkalfnesaöjfjdg...jsdnvbruifqwijkvwurizrtqoiwfhbfe8'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -733,7 +794,7 @@ curl -X 'PUT' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -745,10 +806,10 @@ Code: 204
 [small]#E-Mail Account nicht vorhanden.#
 |408 | Request Timeout +
 [small]#Gültigkeitsdauer des One Time Passworts ist abgelaufen.#
-|500 
-|Internal Server Error  
+|500
+|Internal Server Error
 |502
-|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler  
+|Bad Gateway - VZD nicht erreichbar bzw. liefert Fehler
 |===
 
 
@@ -794,7 +855,7 @@ curl -X 'GET' \
   'https://account-manager.hrst1.kim.telematik/AccountMgmt/v2.3/account/user@example.kim.telematik/outofoffice' \
   -H 'accept: application/json' \
   -H 'password: password'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -809,7 +870,7 @@ Body:
 }
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -822,7 +883,7 @@ Body:
 |404 | Not Found +
 [small]#E-Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===
 
 
@@ -875,7 +936,7 @@ curl -X 'PUT' \
   "message": "Sehr geehrte Damen und Herren...",
   "active": true
 }'
------------------ 
+-----------------
 
 *Beispielantwort:*
 [source, ruby]
@@ -883,7 +944,7 @@ curl -X 'PUT' \
 Code: 204
 -----------------
 
-*HTTP-Status Codes:* + 
+*HTTP-Status Codes:* +
 |===
 |Status |Bedeutung
 
@@ -896,5 +957,5 @@ Code: 204
 |404 | Not Found +
 [small]#E-Mail Account nicht vorhanden.#
 |500
-|Internal Server Error  
+|Internal Server Error
 |===

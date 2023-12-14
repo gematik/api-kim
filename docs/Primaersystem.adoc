@@ -9,6 +9,7 @@ ifdef::env-github[]
 endif::[]
 
 :imagesdir: ../images
+:doctype: book
 :toc: macro
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
@@ -49,8 +50,8 @@ Das folgende Komponentendiagramm stellt die Abhängigkeitsbeziehungen zwischen d
 //image:Int_PS-KOMLE.png[width=50%]
 
 ++++
-<p align="left">
-  <img width="70%" src=../images/Int_PS-KOMLE.png>
+<p align="center">
+  <img width="70%" src=../images/Int_PS-KIM.svg>
 </p>
 ++++
 
@@ -66,20 +67,10 @@ In der folgenden Abbildung sind die vom Primärsystem umzusetzenden KIM-Anwendun
 //image:UC_PS-KOMLE.png[width=40%]
 
 ++++
-<p align="left">
-  <img width="50%" src=../images/UC_PS-KOMLE.png>
+<p align="center">
+  <img width="50%" src=../images/UC_PS-KIM.svg>
 </p>
 ++++
-
-=== Nachrichten generieren und übernehmen
-Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
-Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signierte Dokumente (qualifizierte) in Frage. Alle Anhänge können, abhängig vom verwendeten Schlüsselmaterial, separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt werden.
-
-* *Nachrichtengenerierung im Primärsystem* +
-Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-Mail (inkl. weiterer Anhänge) zu erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
-
-* *E-Mail-Kategorisierung im Primärsystem* +
-Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden.
 
 === Empfänger ermitteln
 Es können nur KIM-E-Mails an Empfänger versendet werden, die als Teilnehmer im Verzeichnisdienst aufgenommen und deren Verschlüsselungszertifikate sowie deren KIM-E-Mail-Adressen hinterlegt sind.
@@ -87,7 +78,7 @@ Es können nur KIM-E-Mails an Empfänger versendet werden, die als Teilnehmer im
 TIP: E-Mail-Nachrichten können nur für KIM-Teilnehmer verschlüsselt werden.
 
 * *Verwendung von KIM-E-Mail-Adressen* +
-Zum Versand einer E-Mail ist es erforderlich, dass das Primärsystem die Header-Felder `to`, `cc`, `bcc` gemäß *[RFC822]* mit KIM-E-Mail-Adressen aus dem Verzeichnisdienst befüllt. Die Empfänger-Adressen können dabei aus dem Verzeichnisdienst abgefragt werden.
+Zum Versand einer E-Mail ist es erforderlich, dass das Primärsystem die Header-Felder `to`, `cc` gemäß *[RFC822]* mit KIM-E-Mail-Adressen aus dem Verzeichnisdienst befüllt. Die Empfänger-Adressen können dabei aus dem Verzeichnisdienst abgefragt werden.
 
 Zur Abfrage der Empfänger-Adressen aus dem Verzeichnisdienst, agiert das Primärsystem als LDAP-Client gegenüber dem LDAP-Proxy des Konnektors.
 Falls die Verbindung zwischen Primärsystem und Konnektor über TLS abgesichert wird, ist LDAPS zu verwenden.
@@ -112,12 +103,30 @@ Mittels der Suchkriterien kann das Primärsystem die KIM-E-Mail-Empfänger im Ve
 Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere
 Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
+* *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
+Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist es erforderlich den Nutzer darüber zu informieren und der Versand per Mail ist abzulehnen.
+
+* *Prüfung der Empfängeradressen* +
+Es ist erforderlich, dass das Primärsystem lokal gespeicherte KIM-Adressen regelmäßig mit den Daten im VZD vergleicht und nicht mehr im VZD vorhandene KIM-Adressen aus dem lokalen Speicher entfernt und gegebenenfalls durch aktuelle KIM-Adressen aus dem VZD ersetzt. Die lokal gespeicherten KIM-Adressen sollen einmal täglich aktualisiert werden.
+
+=== Nachrichten generieren und übernehmen
+Die Eingabe des Nachrichtentextes der vom Nutzer erzeugten E-Mail und/oder das Anfordern einer Zustellbestätigung wird im Primärsystem vorgenommen.
+Als Anhänge einer KIM-Nachricht kommen neben unsignierten Dokumenten auch signierte Dokumente (qualifizierte) in Frage. Alle Anhänge können, abhängig vom verwendeten Schlüsselmaterial, separat für Leistungserbringer oder Leistungserbringerinstitutionen verschlüsselt werden.
+
+* *Nachrichtengenerierung im Primärsystem* +
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-Mail (inkl. weiterer Anhänge) zu erzeugen. Insbesondere Arztbriefe, wie der VhitG-Arztbrief, können direkt aus dem Primärsystem bzw. der Behandlungsdokumentation heraus erzeugt und editiert werden.
+Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-editor.org/rfc/rfc5322.html[RFC5322]). Dies gilt insbesondere für die Header-Elemente der Mail-Nachricht.
+Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
+
+* *E-Mail-Kategorisierung im Primärsystem* +
+Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden und abhängig von der zu versendenden Nachricht in dem Attribut `X-KIM-Dienstkennung` als zusätzliches Header Element in die Nachricht eingetragen.
+
 ===  Nachrichten versenden
 Der Versand von KIM–Nachrichten erfolgt über das Clientmodul, das die Nachricht für jeden Empfänger zuerst signiert und anschließend verschlüsselt. +
 
 TIP: In der KIM Version 1.0 darf die Gesamtgröße einer KIM-Nachricht inkl. Anhänge 15 MiB nicht überschreiten.
 
-Die Einschränkung auf 15 MiB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 15 MiB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit größeren Anhängen zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der auf den KAS ausgelagerten E-Mail-Daten.
+Die Einschränkung auf 15 MiB ist auf die Leistung des Konnektors zurückzuführen, der für die Ausführung von kryptographischen Operationen größer 15 MiB nicht ausgelegt ist. Ab KIM 1.5 ist es möglich Nachrichten mit  einer Gesamtgröße größerals 15 MiB zu versenden. Hierfür übernimmt das Clientmodul, anstelle des Konnektors, die Verschlüsselung der dann auf den KAS ausgelagerten E-Mail-Daten.
 
 * *E-Mail-Versand als Funktion des Primärsystems* +
 Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus seinem E-Mail-Modul heraus versendet.
@@ -136,6 +145,9 @@ Es ist erforderlich, dass das Primärsystem ausschließlich mit dem Clientmodul 
 
 * *SMTP-Authentifizierung über KIM–Clientmodul* +
 Für die SMTP-Authentifizierung über das Clientmodul ist es erforderlich, dass das Primärsystem die SASL-Mechanismen `PLAIN` und `LOGIN` verwendet.
+
+* *Verwendung der 'KIM-Encounter-Id'* +
+Für die Nachverfolgbarkeit von Nachrichten im Kontext eines bestimmten Behandlungsfalls (Encounter) ist es erforderlich, dass das Primärsystem das Header-Element `KIM-Encounter-Id` in jeder KIM-Nachricht befüllt. Dieses Header-Element muss eine eindeutige Identifikationsnummer (z.B. eine UUID) enthalten, die für den gesamten Nachrichtenverlauf eines spezifischen Behandlungsfalls konstant bleibt. Bei der Erstellung einer Antwort auf eine Nachricht muss das Empfängersystem die `KIM-Encounter-Id` der ursprünglichen Nachricht übernehmen, um die Nachrichten einem gemeinsamen Behandlungsfall zuzuordnen. Wenn eine Encounter-FHIR-Ressource im Body der Nachricht enthalten ist, muss der `Encounter.identifier` mit dem Wert in der `KIM-Encounter-Id` übereinstimmen.
 
 Beim Aufbau der SMTP-Verbindung ist es erforderlich, Kartenverwaltungsinformationen zur SM-B mitzuliefern, die zum Integritätsschutz der
 Nachricht verwendet werden sollen. Dazu müssen `MandantId`, `ClientsystemId` und `WorkplaceId`, der Kartensitzung der erforderlichen SM-B,
@@ -183,7 +195,7 @@ Zeichensequenz „`<CRLF>`.`<CRLF>`“ wird das Ende der Nachricht markiert und 
 Es ist erforderlich, dass das Primärsystem die SMTP-Verbindung mit dem `QUIT`-Kommando beendet.
 
 * *Aufnahme des Sendersystems* +
-Es ist erforderlich, dass das Primärsystem das Header Element `X-KIM-Sendersystem` befüllt. Das Header Element muss der Notation <name des systems>;<version> entsprechen. Der Inhalt muss erkennen lassen, welches Sofware-System für die Erstellung der fachlichen Inhalte und in diesem Zusammenhang mit dem Umgang eventueller Rückmeldungen und deren Inhalten verantwortlich ist.
+Es ist erforderlich, dass das Primärsystem (z.B. PVS oder andere Software-System der Kassen) das Header Element `X-KIM-Sendersystem` befüllt. Das Header Element muss der Notation <name des systems>;<version> entsprechen. Der Inhalt muss erkennen lassen, welches Software-System für die Erstellung der fachlichen Inhalte und in diesem Zusammenhang mit dem Umgang eventueller Rückmeldungen und deren Inhalten verantwortlich ist.
 
 * *Aufnahme der Supportadresse* +
 Es ist erforderlich, dass das Primärsystem das Header Element `X-KIM-Support` befüllt. Das Header Element muss die Supportadresse des Herstellers des Primärsystems enthalten. Dadurch wird es möglich, dass Hersteller des Empfänger-Systems bei Fehlern Kontakt mit dem Hersteller des Sender-Systems aufnehmen können.
@@ -204,12 +216,29 @@ _„Die Nachricht wurde nur an einen Teil der gewünschten Adressaten versendet,
 === Nachrichten empfangen
 Der Empfang von KIM-Nachrichten erfolgt über das Clientmodul, das die Nachricht für den Empfänger entschlüsselt, sofern die dafür erforderliche Smartcard/HSM im System registriert und freigeschaltet ist.
 
+==== Voraussetzungen
+
 * *Nutzerkreis der KIM-E-Mail-Adresse beim Nachrichtenempfang* +
 Es ist erforderlich, dass die Nutzerverwaltung des Primärsystems sicherstellt, dass der Zugriff auf empfangene KIM-Nachrichten nur durch autorisierte Personen erfolgt.
 
 * *Freischaltung der für KIM erforderlichen Smartcards* +
 Für den Empfang entschlüsselter Nachrichten ist es erforderlich, dass Smartcards/HSMs freigeschaltet vorliegen. Ohne diese Freischaltung können Nachrichten nicht entschlüsselt entgegengenommen werden. Es ist erforderlich, dass das Primärsystem den Status der Freischaltung
 der Smartcards sichtbar macht. Ebenfalls ist es erforderlich, dass der Benutzer darauf aufmerksam gemacht wird, dass er zum Empfang entschlüsselter Nachrichten diese Smartcards freischalten muss.
+
+* *Nachrichten mittels POP3 abholen* +
+Es ist erforderlich, dass das Primärsystem gemäß *[RFC2449]* dem Clientmodul POP3-Anfragen zusenden kann sowie POP3-Antwortcodes von ihm erhält.
+
+* *Anzeige entgegengenommener Nachrichten* +
+Es ist erforderlich, dass das Primärsystem empfangene Nachrichten entgegennehmen kann sowie eine Anzeige der Nachricht ermöglicht.
+
+* *E-Mail-Anhänge darstellen* +
+Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den Standardformaten `PDF`, `JPEG`, `GIF` und `TXT` anzeigen kann.
+
+* *E-Mail-Anhänge verarbeiten* +
+Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der
+Patientenidentifikation benutzt.
+
+==== Login
 
 Das Primärsystem übergibt dem Clientmodul in der POP3-Kommunikation alle zum Nachrichtenempfang erforderlichen Informationen.
 Auch für die Abholung von Nachrichten ist es erforderlich, dass Angaben über die Ansteuerung der Smartcards des Empfängers
@@ -242,30 +271,29 @@ erik.mustermann@hrst_domain.kim.telematik#hrst_domain.kim.telematik:995#1#KOM_LE
 
 TIP: Erfolgt die Einbindung von KIM in ein bestehendes Mail-Systeme, kann ein übergebener Delimiter ":" zwischen dem Serveranteil und dem Port (z. B. hrst_domain.kim.telematik:9959) des POP3-Benutzernamens zu Fehlern bei der Interpretation im Bestandsystem führen. Es werden daher weitere Delimiter im Benutzernamen unterstützt, sofern die Funktionalität gemäß der Bestandsanforderungen zu den Benutzernamen, in semantischer Abgrenzung, uneingeschränkt erhalten bleiben. Es gilt, dass die Bestandteile des POP3-Benutzernames in ihrem semantischen Bezug gemäß [RFC1123, RFC2822] einhalten müssen.
 
+==== Ablauf
+
 Die folgende POP3-Kommunikation erfolgt gemäß POP3-Protokoll über das Clientmodul.
 
 Das Clientmodul leitet die POP3-Anfragen des Primärsystems an den KIM-Fachdienst (MTA) weiter und entschlüsselt abgeholte Nachrichten,
 um sie in entschlüsselter und verifizierter Form an das Primärsystem weiterzugeben.
 
-Enthält eine KIM-Nachricht externe Anhänge die auf einem KAS abgelegt wurden, so werden diese in KOM-LE 1.5 vom Clientmodul automatisch heruntergeladen und für das Primärsystem in die KIM-E-Mail eingefügt.
+Primärsysteme dürfen nur bisher unbekannte KIM-Nachrichten abrufen. Durch den folgenden Ablauf können die unbekannten KIM-Nachrichten abgefragt werden:
 
-* *Nachrichten mittels POP3 abholen* +
-Es ist erforderlich, dass das Primärsystem gemäß *[RFC2449]* dem Clientmodul POP3-Anfragen zusenden kann sowie POP3-Antwortcodes von ihm erhält.
-
-* *Anzeige entgegengenommener Nachrichten* +
-Es ist erforderlich, dass das Primärsystem empfangene Nachrichten entgegennehmen kann sowie eine Anzeige der Nachricht ermöglicht.
-
-* *E-Mail-Anhänge darstellen* +
-Es ist erforderlich, dass das Primärsystem mindestens E-Mail-Anhänge in den Standardformaten `PDF`, `JPEG`, `GIF`, `TXT` und `DOC` anzeigen kann.
-
-* *E-Mail-Anhänge verarbeiten* +
-Es ist erforderlich, dass das Primärsystem E-Mail-Anhänge, wie zum Beispiel den VhitG-Arztbrief, weiter verarbeiten kann und dabei Methoden der
-Patientenidentifikation benutzt.
+* Das PS sendet POP3 LIST an das Clientsystem. Es werden alle Message-IDs und die Größe der Nachrichten abgefragt
+* Das PS prüft anhand der empfangenen Message-IDs ob die Nachricht im PS bekannt ist und ermittelt so die Message-IDs der unbekannten Nachrichten
+* Das PS sendet POP3 RETR <Message-ID> an das Clientsystem für alle unbekannten Message-IDs. Die Message-ID der empfangenen Nachricht wird lokal gespeichert, damit sie bei folgenden Nachrichtenabrufen nicht erneut abgefragt wird.
 
 Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
 
-* *Umgang mit unbekannten Dienstkennungen* +
-Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhält.
+Die KIM-Adresse kann an mehreren Primärsystem-Arbeitsplätzen genutzt werden. Daher kann es erforderlich sein, dass die Nachrichten nach dem Empfang nicht auf dem Server gelöscht werden, damit sie auch von anderen Arbeitsplätzen empfangen werden können. Nachrichten älter als 90 Tage werden auf dem Mail-Server automatisch gelöscht. Der Nutzer kann die Aufbewahrungszeit der Nachrichten über die Administrationsoberfläche des Clientmoduls anpassen.
+
+Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen kann, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhalten kann.
+
+TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss das PS dem Nutzer ermöglichen auszuwählen, welche KIM-Anwendungen an einem bestimmten PS-Arbeitsplatz verwendet werden (KIM Dienstkennungen). Für den Nachrichtenabruf kann das PS anstatt POP3 RETR zunächst mit POP3 TOP <Message-ID> 0 nur die Header der Nachricht abfragen, um zu prüfen, welche Dienstkennung die Nachricht hat. Falls die Nachricht eine Dienstkennung hat, die an diesem Arbeitsplatz verarbeitet werden soll, kann die vollständige Nachricht mit POP3 RETR empfangen werden. Die Message-ID der Nachricht muss lokal gespeichert werden, um einen erneuten Abruf zu verhindern.
+
+Das Primärsystem muss eine Möglichkeit anbieten, die Abholung von Nachrichten auch außerhalb konfigurierter fester Abrufzeiträume auszulösen. Dies muss bezogen auf eine bestimmte Dienstkennung möglich sein (z. B. eEB) um solchen Anwendungen die zeitnahe Abholung von Antworten zu ermöglichen. 
+
 
 == Integration des Clientmoduls in das Primärsystem
 Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärsystem zu integrieren. Somit ist kein separates Clientmodul mehr notwendig. Die folgende Abbildung stellt eine mögliche Integration dar:

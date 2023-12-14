@@ -1,8 +1,16 @@
 openapi: 3.0.3
 info:
   title: I_AccountLimit_Service
-  description:  Über diese Schnittstelle werden die Limits eines Nutzer-Accounts abgefragt
-  version: 1.1
+  description:  The limits of a user account are queried via this interface
+  version: 1.1.2
+  ### 1.1.2
+  # - changed servers -url
+  # - adding new operation setLimits
+  # - added object property AccountLimit.kasMailSizeThreshold
+  # - added traceId to Error object
+  ### 1.1.1
+  # - changed minimum value for maxMailSize
+  # - changed descriptions
   ### 1.1
   # - changed version number in server url
   # - removed quotation marks and added minimum value for maxMailSize
@@ -10,95 +18,133 @@ info:
   # - initial Version of I_AccountLimit_Service
 
 externalDocs:
-  description: GitHub - Dokumentation
+  description: GitHub - documentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: https://account-manager.hrst1.kim.telematik/AccountLimit/v1.1/
+- url: /AccountLimit/v1.2/
+  # Die URL muss wie folgt gebildet werden:
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
 tags:
 - name: AccountLimit
 
+security:
+  - KIMBearerAuth: []
+    # Authentication is carried out for all operations via a JWT
+    
 paths:
-##--
-##------
-  /limit:
+  /limit/{username}:
     get:
       tags:
       - AccountLimit
-      summary: Limits eines Accounts abgefragen
-      description: Gibt die Limits eines Accounts zurück
+      summary: Query the limits of an account
+      description: Query the limits of an account
       operationId: getLimits
-      
-      security:
-        - basicAuth: []
-
+      parameters:
+      - name: username
+        in: path
+        description: Username/email of the account
+        required: true
+        schema:
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
+      - in: header
+        name: password
+        description: Password for the email account. The password is base64 encoded.
+        required: true
+        schema:
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         200:
           description: OK
-             # Rückgabe der Metadaten eines Nutzer-Accounts 
+             # Returning the metadata of a user account
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/AccountLimit'
+        401:
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
+        404:
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
+        500:
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
+    put:
+      tags:
+      - AccountLimit
+      summary: Edit the limits of an account
+      description: Sets the limits of an account (dataTimeToLive and maxMailSize)
+      operationId: setLimits
+      parameters:
+      - name: username
+        in: path
+        description: Username/email of the account
+        required: true
+        schema:
+          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
+      - in: header
+        name: password
+        description: Password for the email account. The password is base64 encoded.
+        required: true
+        schema:
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/AccountLimit'
+      responses:
+        200:
+          description: OK
+             # Returning the metadata of a user account
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountLimit'
         401:
-          description: Authentifizierung fehlgeschlagen
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
-          description: Mail Account nicht vorhanden
-          content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error' 
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
-          description: Internal Server Error          
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'                  
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
 
-##--
-##------               
 components:
-
   schemas:
-  
     AccountLimit:
       type: object
       properties:
-        dataTimeToLive: 
+        dataTimeToLive:
           type: integer
-          maxLength: 3
           minimum: 10
-          maximum: 365
+          maximum: 90
           default: 90
           example: 90
-          description: Speicherdauer von Mails und Anhängen auf dem KAS Fachdienst/KAS. Angabe in Tagen
+          description: Storage duration of emails on the mail server and attachments on the KAS backend service. Specified in days.
         maxMailSize:
           type: integer
           format: int64
-          minimum: 524288000
+          minimum: 734003200
           example: 734003200
-          description: Setzt die maximale Größe einer KIM-Mail in Bytes
+          description: Sets the maximum size of a KIM email in bytes.
+        kasMailSizeThreshold:
+          type: integer
+          format: int64
+          readOnly: true
+          minimum: 0
+          maximum: 15728640
+          default: 15728640
+          description: Threshold value of the amount of data received in the KIM client module, from which the data is processed via the defined KAS process.
         quota:
           type: integer
           format: int64
+          readOnly: true
           example: 160000000000
-          description: Gibt das maximale Speichervolumen für einen Nutzer-Account an
+          description: Specifies the maximum storage volume for a user account.
         remainQuota:
           type: integer
           format: int64
+          readOnly: true          
           example: 112000000000
-          description: Gibt das verbleibende Speichervolumen für einen Nutzer-Account an
+          description: Specifies the remaining storage volume for a user account.
 
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-  
-  securitySchemes: 
-    basicAuth: 
-      type: http
-      scheme: basic
+  securitySchemes:
+    KIMBearerAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'

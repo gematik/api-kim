@@ -7,6 +7,7 @@ ifdef::env-github[]
 endif::[]
 
 :imagesdir: ../images
+:doctype: book
 :toc: macro
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
@@ -17,7 +18,7 @@ image:gematik_logo.svg[width=70%]
 toc::[]
 
 == Verzeichnisdienst
-Ab der KIM Version 1.5 können zur Abfrage der KIM-Fachdaten ausschließlich die Protokolle LDAPv3 und HTTP (REST) an der Schnittstelle `I_Directory_Application_Maintenance` am Verzeichnisdienst verwenden werden. Zu den Fachdaten gehören die KIM-Mail-Adressen, sowie die verwendete KOM-LE-Version der Clientmodule. Ausgehend von dieser Version entscheidet das Clientmodul des Senders, ob das Clientmodul des Empfängers kompatibel ist. Die neue Datenstruktur `komLeData` ist in *[gemSpec_VZD#5]* spezifiziert.
+Ab der KIM Version 1.5 können zur Abfrage der KIM-Fachdaten ausschließlich die Protokolle LDAPv3 und HTTP (REST) an der Schnittstelle `I_Directory_Application_Maintenance` am Verzeichnisdienst verwenden werden. Zu den Fachdaten gehören die KIM-Mail-Adressen, die verwendete KOM-LE-Version der Clientmodule sowie ein oder mehrere Anwendungskennzeichen. Ausgehend von dieser KOM-LE-Version entscheidet das Clientmodul des Senders, ob das Clientmodul des Empfängers kompatibel ist. Mit dem Hinterlegen eines oder mehrerer Anwendungskennzeichen signalisiert der jeweilige KIM Teilnehmer die Möglichkeit Nachrichten im Rahmen spezieller Anwendungen (z. B. eAU, eArztbrief u.a.) entgegenzunehmen und zu verarbeiten. Ein Primär- bzw. Clientsystem kann, mit Kenntnis der für einen geplanten Empfänger hinterlegten Anwendungskennzeichen, bereits bei der Erstellung einer Nachricht entscheiden ob diese vom Empfänger verarbeitet werden kann und die Bearbeitung im Negativfall abbrechen. Die neuen Datenstrukturen `komLeData` und `kimData` sind in *[gemSpec_VZD#5]* spezifiziert.
 
 Die Beschreibung der REST-Schnittstelle `I_Directory_Application_Maintenance` für KIM ist hier zu finden: link:https://github.com/gematik/api-vzd/blob/main/src/openapi/DirectoryApplicationMaintenance.yaml[DirectoryApplicationMaintenance.yaml] 
 
@@ -26,8 +27,8 @@ Im Folgenden sind die LDAP-Directory-Attribute der KIM-Fachdaten dargestellt: +
 //image:KOMLE_Fachdaten.PNG[width=45%]
 
 ++++
-<p align="left">
-  <img width="60%" src=../images/KOMLE_Fachdaten.PNG>
+<p align="center">
+  <img width="60%" src=../images/KOMLE_Fachdaten.svg>
 </p>
 ++++
 

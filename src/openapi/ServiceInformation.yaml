@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: I_ServiceInformation
+  description:  Information about the KIM service is requested via this interface.
+  version: 1.0.2
+  ### 1.0.2
+  # - added operation GET /appTags
+  # - added regPolicy to ServiceInformation scheme
+  ### 1.0.1
+  # - added kimServiceVersion and jwtExpirations to the ServiceInformation object
+  ### 1.0.0
+  # - initial Version of I_ServiceInformation
+  # - added traceId to Error object
+
+externalDocs:
+  description: GitHub - documentation
+  url: https://github.com/gematik/api-kim
+servers:
+- url: /ServiceInformation/v1.0/
+  # The URL must be formed as follows:
+  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
+  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
+tags:
+- name: ServiceInformation
+
+security:
+  - KIMBearerAuth: []
+    # Authentication is carried out for all operations via a JWT
+
+paths:
+  /serviceinfo:
+    get:
+      tags:
+      - ServiceInformation
+      summary: Request information via the KIM backend service
+      description: Request information via the KIM backend service
+      operationId: getServiceInformation
+      responses:
+        200:
+          description: OK
+             # Return the information via the KIM backend service
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceInformation'
+        500:
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
+
+  /appTags:
+    get:
+      tags:
+       - appTags
+      summary: Request information for application identifiers (Anwendungskennzeichen)
+      description: The list of application identifiers (Anwendungskennzeichen) is queried.
+        The application identifiers are used as the FHIR code system in the
+         Submit response
+      operationId: getAppTags
+
+      responses:
+        200:
+          description: OK
+             # Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
+             # Please refer https://simplifier.net/app-transport-framework/service-identifier-cs/~json
+          content:
+            application/json; charset=utf-8:
+              schema:
+                externalDocs:
+                  description: Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
+                  url: https://simplifier.net/app-transport-framework/service-identifier-cs/~json
+        500:
+          $ref: 'CommonSchemas.yaml#/components/responses/500'
+
+components:
+  schemas:
+    ServiceInformation:
+      type: object
+      properties:
+        kimServiceVersion:
+          type: string
+          description: Specifies the version of the KIM backend service.
+        passwordPolicyRegEx:
+          type: string
+          description: Specifies the password policy that the AccountManager requires as a regular expression.
+        passwordPolicyDisplay:
+          type: string
+          description: Specifies the password policy that the AccountManager requires in text form.
+        jwtExpiration:
+          type: integer
+          minimum: 300
+          maximum: 21600
+          description: Specifies the configured expiration time range for JWTs. The value is given in seconds.
+        referenceIdRequired:
+          type: boolean
+          description: Specifies whether the referenceID is required during initial registration.
+        initialPasswordRequired:
+          type: boolean
+          description: Specifies whether the initial password is required during initial registration.
+      example:
+        kimServiceVersion: 1.5.3
+        regPolicy: 11
+        passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,?/~_+\-=|\\]).{12,256}$
+        passwordPolicyDisplay: At least one number [0-9]
+                              At least one lowercase letter [a-z]
+                              At least one capital letter [A-Z]
+                              At least one special character [*.!@#$%^&(){}[]:;'<>,?/~_+-=|\]
+                              Minimum length 12 characters
+                              Maximum length 256 characters.
+        jwtExpiration: 300
+        referenceIdRequired: true
+        initialPasswordRequired: false
+
+  securitySchemes:
+    KIMBearerAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'

@@ -3,16 +3,18 @@
 
 image:gematik_logo.svg[width=70%]
 
-image:https://shields.io/badge/Release Notes-v1.5.2--1-red?style=plastic&logo=github&logoColor=red[link="https://github.com/gematik/api-kim/blob/main/ReleaseNotes.md"] +
-image:https://shields.io/badge/AccountManager-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountManager.yaml"]
-image:https://shields.io/badge/AttachmentService-v2.3.0-blue?style=plastic&logo=github&logoColor=lightblue[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AttachmentService.yaml"]
-image:https://shields.io/badge/AccountLimit-v1.1.0-blue?style=plastic&logo=github&logoColor=lightblue"[link="https://github.com/gematik/api-kim/blob/main/src/openapi/AccountLimit.yaml"] +
-image:https://shields.io/badge/Spezifikation KIM-v1.0-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/downloadcenter/releases/aktuelle-releases#c5917"]
-image:https://shields.io/badge/Spezifikation KIM-v1.5-green?style=plastic&logo=github&logoColor=green"[link="https://fachportal.gematik.de/downloadcenter/releases/aktuelle-releases#c5917"]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.releaseNotes.version&prefix=%20&style=plastic&logo=github&logoColor=blue&label=ReleaseNotes&labelColor=%24.badges.releaseNotes.color&color=blue[link="ReleaseNotes.adoc"] +
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.kimClientmodulSpec.version&style=plastic&logo=adobeacrobatreader&logoColor=red&label=Spezifikation%20KIM%20Clientmodul&color=red&[link=https://fachportal.gematik.de/Fanwendungen/kommunikation-im-medizinwesen]
+image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.kimFachdienstSpec.version&style=plastic&logo=adobeacrobatreader&logoColor=red&label=Spezifikation%20KIM%20Fachdienst&color=red&[link=https://fachportal.gematik.de/Fanwendungen/kommunikation-im-medizinwesen] +
+image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FAccountManager.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AccountManager&color=green[link="src/openapi/AccountManager.yaml"]
+image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FAttachmentService.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AttachmentService&color=green[link="src/openapi/attachmentService.yaml"]
+image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FAccountLimit.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AccountLimit&color=green[link="src/openapi/AccountLimit.yaml"]
+image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FServiceInformation.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=ServiceInformation&color=green[link="src/openapi/ServiceInformation.yaml"]
+image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fdevelop%2Fsrc%2Fopenapi%2FCommonSchemas.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=CommonSchemas&color=green[link="src/openapi/CommonSchemas.yaml"]
 
 == Allgemeines
 
-Die folgende Dokumentation beschreibt die systemspezifische Lösung von KIM 1.5 und baut auf dem Konzept von KIM 1.0 "Kommunikation Leistungserbringer" gemäß *[gemSysL_KOMLE]* auf. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5 verwenden.
+Die folgende Dokumentation beschreibt KIM 1.5.3. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5.3 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5.3 verwenden.
 
 Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie folgt:
 
@@ -24,11 +26,13 @@ Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie fo
 
 * das Einrichten von Abwesenheitsnotizen
 
-* die Unterstützung syntaktischer Nachrichtenkategorien
+* das Einrichten von Anwendungskennzeichen
+
+* die Unterstützung syntaktischer Nachrichtenkategorien (Dienstkennungen)
 
 * die Unterstützung von Multikonnektor-Umgebungen
 
-_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer, sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. ist aktuell nicht geplant._
+_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer, sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. erfolgt schrittweise und an geeigneter Stelle._
 
 == Systemarchitektur
 
@@ -54,14 +58,14 @@ link:docs/Fachdienst.adoc[*Fachdienst*]
 Der Mail Server stellt die Schnittstelle `I_Message_Service` bereit und wird über die Protokolle SMTP und POP3 angesprochen. In der KIM Version 1.5 wurden am Mail Server keine Änderungen vorgenommen.
 
 * *Account Manager:* +
-Für die einfache Verwaltung des Accounts sowie das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers bietet der Account Manager ab der KIM Version 1.5 zwei Webservices (`I_AccountManager_Service` und `I_AccountLimit_Service`) an.
+Für die einfache Verwaltung des Accounts, das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers und für die Abfrage von Konfigurationsparametern des jeweiligen KIM Fachdienstes bietet der Account Manager ab der KIM Version 1.5 drei Webservices (`I_AccountManager_Service`, `I_AccountLimit_Service` und `I_ServiceInformation`) an.
 
-* *KOM-LE Attachment Service:* +
-Der Fachdienst wird um die Komponente KOM-LE Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
+* *KIM Attachment Service:* +
+Der Fachdienst wird um die Komponente KIM Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
 
 link:docs/Verzeichnisdienst.adoc[*Verzeichnisdienst*]
 
-* Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um eine neue Datenstruktur `komLeData` ergänzt.
+* Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um die zusätzlichen Datenstrukturen `komLeData` und `kimData` ergänzt.
 * Der Verzeichnisdienst wird um die REST-Schnittstelle `I_Directory_Application_Maintenance` erweitert.
 
 == Ordnerstruktur
@@ -76,17 +80,22 @@ KIM-API
 |   ├──── KAS
 │   └──── SMIME-Profil.zip
 ├─ src
-│   ├──── openapi
+│   ├──── json
+│   │    └── badges.json
+|   ├──── openapi
 │   │    ├── AccountLimit.yaml
 │   │    ├── AccountManager.yaml
-│   │    └── AttachmentServices.yaml
+│   │    ├── AttachmentServices.yaml
+│   │    ├── CommonSchemas.yaml
+│   │    └── ServiceInformation.yaml
 │   ├──── plantuml
 │   │    └── Fachdienst
 │   └──── schema
 │        └── Attachment_schema.json
 ├── LICENSE
 ├── README.adoc
-└── ReleaseNotes.md
+├── ReleaseNotes.md
+└── SECURITY.adoc
 ----
 
 == Ausbaustufen
@@ -96,7 +105,7 @@ Mit der Einführung von KIM unterstützt die gematik das Gesundheitswesen durch 
 |===
 |KIM 1.0 |KIM 1.5
 
-|https://fachportal.gematik.de/schnelleinstieg/downloadcenter/releases#c6557[R3.1.3-2] |https://fachportal.gematik.de/schnelleinstieg/downloadcenter/releases#c6557[KIM 1.6.2-2]
+|https://fachportal.gematik.de/schnelleinstieg/downloadcenter/releases#c6557[R1.3.3-2] |https://fachportal.gematik.de/schnelleinstieg/downloadcenter/releases#c8094[KIM 1.6.3-0]
 |===
 
 Weitere Informationen zu den Versionen finden Sie hier: https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen[KIM]
@@ -114,7 +123,8 @@ Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation r
 |*[gemSpec_FD]* |gematik: Spezifikation Fachdienst KOM-LE
 |*[gemSpec_VZD]* |gematik: Spezifikation Verzeichnisdienst
 |*[gemSpec_OM]* |gematik: Übergreifende Spezifikation Operations und Maintenance
-|*[gemProdT_CM_KOMLE_PTV]* | gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
+|*[gemProdT_CM_KOMLE_PTV]* |gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
+|*[gemProdT_iCM_KIM]* |gematik: Produkttypsteckbrief Prüfvorschrift Integriertes Clientmodul KIM
 |===
 
 == Weiterführende Seiten
