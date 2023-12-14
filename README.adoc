@@ -80,7 +80,9 @@ KIM-API
 |   ├──── KAS
 │   └──── SMIME-Profil.zip
 ├─ src
-│   ├──── openapi
+│   ├──── json
+│   │    └── badges.json
+|   ├──── openapi
 │   │    ├── AccountLimit.yaml
 │   │    ├── AccountManager.yaml
 │   │    ├── AttachmentServices.yaml
