@@ -663,6 +663,7 @@ components:
           description: After this point, the out-of-office notice will no longer be sent.
         message:
           type: string
+          maxLength: 2048
           description: Contents of the out-of-office note.
         active:
           type: boolean
