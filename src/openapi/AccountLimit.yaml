@@ -30,7 +30,7 @@ tags:
 
 security:
   - KIMBearerAuth: []
-    # Authentication is carried out for all operations via a JWT
+    # Authentication is carried out for all operations via a JWT. The JWT is created via SMC-B verification.
     
 paths:
   /limit/{username}:
