@@ -134,20 +134,19 @@ Es ist erforderlich, dass das Primärsystem die zu versendende Nachricht aus sei
 Die zu versendenden Dokumente können vor dem Versand vom Primärsystem über einen Aufruf der Signaturschnittstelle des Konnektors vom Leistungserbringer signiert werden.
 
 * *Erstellung von MIME-Nachrichten* +
-Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt. Die Message-IDs der Nachrichten dürfen keine datenschutzrelevanten Informationen - wie z. B. FQDNs - enthalten.
-Die E-Mail-Nachricht muss anschließend über das Clientmodul versendet werden.
+Es ist erforderlich, dass das Primärsystem eine E-Mail-Nachricht als `message/rfc822` MIME Einheit erzeugt und in eine `multipart/mixed` MIME-Nachricht verpackt. Für die Gruppierung von E-Mail-Nachrichten zu Konversationsverläufen, wird jede E-Mail mit einer einzigartigen `Message-ID` versehen. Die Message-IDs der Nachrichten dürfen keine datenschutzrelevanten Informationen - wie z. B. FQDNs - enthalten.
 
-Dabei signiert das Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger.
+Die E-Mail-Nachricht wird anschließend über das Clientmodul versendet. Dabei signiert das Clientmodul die Nachricht automatisch mit der SM-B der Organisation des Absenders und verschlüsselt diese für alle Empfänger.
 Hierbei wird der S-MIME-Standard verwendet.
+
+* *Antworten auf MIME_Nachrichten* +
+Beim Antworten fügt der E-Mail-Client die erhaltenen Message-IDs in das 'In-Reply-To'-Feld der Antwortnachricht ein. Zusätzlich kann das `References`-Feld genutzt werden, um eine Verbindung zu allen vorherigen Nachrichten in der Konversation herzustellen. Diese strukturierte Verwendung von `Message-ID`, `In-Reply-To` und `References` ermöglicht es, Nachrichten effektiv in Konversationsverläufen zu organisieren.
 
 * *SMTP-Kommunikation über das KIM-Clientmodul* +
 Es ist erforderlich, dass das Primärsystem ausschließlich mit dem Clientmodul mittels SMTP-Kommandos kommuniziert.
 
 * *SMTP-Authentifizierung über KIM–Clientmodul* +
 Für die SMTP-Authentifizierung über das Clientmodul ist es erforderlich, dass das Primärsystem die SASL-Mechanismen `PLAIN` und `LOGIN` verwendet.
-
-* *Verwendung der 'KIM-Encounter-Id'* +
-Für die Nachverfolgbarkeit von Nachrichten im Kontext eines bestimmten Behandlungsfalls (Encounter) ist es erforderlich, dass das Primärsystem das Header-Element `KIM-Encounter-Id` in jeder KIM-Nachricht befüllt. Dieses Header-Element muss eine eindeutige Identifikationsnummer (z.B. eine UUID) enthalten, die für den gesamten Nachrichtenverlauf eines spezifischen Behandlungsfalls konstant bleibt. Bei der Erstellung einer Antwort auf eine Nachricht muss das Empfängersystem die `KIM-Encounter-Id` der ursprünglichen Nachricht übernehmen, um die Nachrichten einem gemeinsamen Behandlungsfall zuzuordnen. Wenn eine Encounter-FHIR-Ressource im Body der Nachricht enthalten ist, muss der `Encounter.identifier` mit dem Wert in der `KIM-Encounter-Id` übereinstimmen.
 
 Beim Aufbau der SMTP-Verbindung ist es erforderlich, Kartenverwaltungsinformationen zur SM-B mitzuliefern, die zum Integritätsschutz der
 Nachricht verwendet werden sollen. Dazu müssen `MandantId`, `ClientsystemId` und `WorkplaceId`, der Kartensitzung der erforderlichen SM-B,
