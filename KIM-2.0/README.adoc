@@ -9,5 +9,62 @@ endif::[]
 
 ifndef::env-github[:source-style: source]
 
+:imagesdir: images
+= KIM 2.0 - Konzept
 
-💡 Hier entstehen die ersten Lösungsideen für die Architektur von KIM 2.0. Hierbei handelt es sich um einen Arbeitstand der noch nicht intern vollständig abgestimmt ist!
+image:gematik_logo.svg[width=70%]
+
+💡 Hier entstehen die ersten Lösungsideen für die Architektur von KIM 2.0. Es handelt sich um einen Arbeitstand der noch nicht intern vollständig abgestimmt ist und sich häufig ändern kann!
+
+== Einführung
+
+<Motivation>
+
+<Ziele>
+
+=== Einordnung des Dokuments
+
+==== Zielsetzung
+
+==== Zielgruppe
+
+==== Abgrenzungen
+
+
+== Lösungsstrategie
+
+== Kontextabgrenzung
+
+== Bausteinsicht
+
+== Features
+
+=== <Featurename>
+
+==== Ausgangslage
+
+==== Anwendungsfall
+
+==== Lösung und Architekturentscheidung
+
+===== Laufzeitsicht
+
+
+
+== Querschnittliche Aspekte
+
+=== Verteilungssicht
+
+=== Testvorgehen
+
+=== Betriebsmodell
+
+=== Sicherheitsbetrachtung
+
+
+
+== Abwärtskompatibilität
+
+
+
+
