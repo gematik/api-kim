@@ -1,0 +1,13 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:source-style: listing
+endif::[]
+
+ifndef::env-github[:source-style: source]
+
+
+💡 Hier entstehen die ersten Lösungsideen für die Architektur von KIM 2.0. Hierbei handelt es sich um einen Arbeitstand der noch nicht intern vollständig abgestimmt ist!
