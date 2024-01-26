@@ -39,6 +39,20 @@ image:gematik_logo.svg[width=70%]
 
 == Features
 
+=== Authentisierung
+
+==== Ausgangslage
+
+Die Anwendung KIM ist für für Organisationen des Gesundheitswesens und deren Mitarbeiter sowie für Leistungserbringer (Personen) vorgesehen. Versicherte oder andere dürfen KIM nicht nutzen.
+Daher ist es erforderlich, dass bei der Registrierung neuer KIM Accounts geprüft wird, ob der Nutzer berechtigt ist KIM zu nutzen. Wenn für bestehende Accounts die Nutzungsberechtigung nicht mehr gegeben ist, dann muss die Weiternutzung von KIM verhindert werden.
+
+
+==== Anwendungsfall
+
+==== Lösung und Architekturentscheidung
+
+===== Laufzeitsicht
+
 === <Featurename>
 
 ==== Ausgangslage
@@ -48,8 +62,6 @@ image:gematik_logo.svg[width=70%]
 ==== Lösung und Architekturentscheidung
 
 ===== Laufzeitsicht
-
-
 
 == Querschnittliche Aspekte
 
