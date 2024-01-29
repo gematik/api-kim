@@ -3,13 +3,16 @@ info:
   title: I_Attachment_Service
   description:  Encrypted email attachments can be sent via this interface
                 uploaded and made available.
-  version: 2.3.2
+  version: 2.3.3
+  ### 2.3.3
+  # - changed operationId readMaildata
   ### 2.3.2
   # - added distinct definition for header element Content-Length in add_Attachment:
   #   - Content-Length full request body
   #   - Content-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
   # - added traceId to Error object
   # - changed servers -url
+  # - changed operationId readAttachment
   ### 2.3.1
   # - added delete_Maildata feature
   ### 2.3.0
@@ -50,16 +53,16 @@ servers:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
 tags:
-- name: Attachments
+- name: Maildata
 
 paths:
   /attachment/{attachmentId}:
     get:
       tags:
-      - Attachments
+      - Maildata
       summary: Download an attachment
       description: returns the attachment encrypted under a share link.
-      operationId: readAttachment
+      operationId: readMaildata
 
       parameters:
       - name: attachmentId
@@ -110,7 +113,7 @@ paths:
 
     delete:
       tags:
-      - Attachments
+      - Maildata
       summary: Delete email data from KAS
       description: Deletion of email data stored on the KAS, Uri corresponds to sharedLink from add_Attachment.
       operationId: deleteMaildata
@@ -146,10 +149,10 @@ paths:
   /attachment/:
     post:
       tags:
-      - Attachments
+      - Maildata
       summary: Add an attachment
       description: An encrypted attachment is added under a newly created sharing link.
-      operationId: addAttachment
+      operationId: addMaildata
 
       security:
         - KIMBasicAuth: []
@@ -177,7 +180,9 @@ paths:
                     description: MessageID of the associated KIM email.
                 recipients:
                     type: array
-                    description: List of all recipients (KIM addresses) of the KIM email recipients; Exactly one address is specified per form part and the form part is specified multiple times (exploded=true).
+                    description: List of all recipients (KIM addresses) of the KIM email recipients;
+                                 Exactly one address is specified per form part and the form part is
+                                 specified multiple times (exploded=true).
                                 # curl e.g.
                                 # -F 'recipients=user1@example.kim.telematik' \
                                 # -F 'recipients=user2@example.kim.telematik' \
@@ -187,11 +192,11 @@ paths:
                 expires:
                     type: string
                     description: Time at which the attachment must be deleted.
-                                # (RFC5322 date-time)
+                                 (Format RFC5322 date-time)
                 attachment:
                    type: string
                    format: binary
-                   description: Der Anhang
+                   description: Contains the encrypted maildata.
 
             encoding:
               attachment:
@@ -221,8 +226,9 @@ paths:
                properties:
                  sharedLink:
                    type: string
-                    # Contains the release link.
-                    # The attachment can be accessed from KAS via the release link. The release link contains the attachmentID - required in operation read_Attachment.
+                    # Contains the link to the download point.
+                    # The attachment can be accessed from KAS via the link.
+                    # The link contains the attachmentID - required in operation read_Attachment.
           400:
             $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
