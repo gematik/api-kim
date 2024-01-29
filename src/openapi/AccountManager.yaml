@@ -672,10 +672,8 @@ components:
         commonName:
           type: string
           writeOnly: true
-          description: Will be included in the certificate as commonName
-                       This certificate is also called a TLS server certificate for connecting to the client/primary system
-                       used. For a successful certificate check - by the client - the server must be in the common name
-                       Name of the client module (as configured, e.g. example.com, www.example.com).
+          description: Will be included in the certificate attribute cn as <commonName> + ";CM"
+                       The certificate is used as TLS client certificate for connecting to the KIM services.
         certPassword:
            # base64 encoded password for the PKCS#12 container in which the certificate is transported.
            # If no certPassword is specified, then the PKCS#12 container will not be encrypted.
