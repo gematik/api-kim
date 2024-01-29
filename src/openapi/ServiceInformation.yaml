@@ -23,10 +23,6 @@ servers:
 tags:
 - name: ServiceInformation
 
-security:
-  - KIMBearerAuth: []
-    # Authentication is carried out for all operations via a JWT
-
 paths:
   /serviceinfo:
     get:
@@ -109,6 +105,3 @@ components:
         referenceIdRequired: true
         initialPasswordRequired: false
 
-  securitySchemes:
-    KIMBearerAuth:
-      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'
