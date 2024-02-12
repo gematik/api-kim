@@ -672,7 +672,7 @@ components:
         commonName:
           type: string
           writeOnly: true
-          description: Will be included in the certificate attribute cn as <commonName> + ";CM"
+          description: Will be included in the certificate attribute cn as <commonName> + "#CM"
                        The certificate is used as TLS client certificate for connecting to the KIM services.
         certPassword:
            # base64 encoded password for the PKCS#12 container in which the certificate is transported.
