@@ -310,6 +310,14 @@ Durch die optionale Integration entfallen alle Anforderungen an die Schnittstell
 
 Die zu erfüllenden Anforderungen für die Integration des Clientmoduls in das Primärsystem können dem Produkttypsteckbrief für das Primärsystem mit integrieten Clientmodul *[gemProdT_KIM_iCM]* entnommen werden.
 
+=== Umgang mit HTML Mails
+
+Für KIM-Nachrichten, für die es keine sektorspezifischen Festlegungen gibt, MUSS das Primärsystem robust implementiert sein: Bei Multipart-Mails MUSS das Primärsystem in der Lage sein, den text/plain-Teil der Multipart-Mail anzuzeigen. Idealerweise kann der Empfänger festlegen ob Multipart-Mails als HTML ODER text/plain im Primärsystem dargestellt werden.
+
+Primärsysteme MÜSSEN für Nachrichten mit der Dienstkennung KIM-Mail den MIME type text/plain verwenden. Multipart- bzw. HTML-Mails sind nicht zugelassen. Anhänge sind erlaubt.
+
+Weitere Informationen zu Multipart finden Sie in RFC 2387.
+
 == Fehlernachrichten
 
 Kommt es bei der Verarbeitung vom Nachrichten durch das Clientmodul zu Fehlern, werden durch das Clientmodul fallbezogene Fehlernachrichten erzeugt. Durch das Clientmodul wird in jeder Fehlernachricht ein Mail-Header-Attribut X-KIM-Fehlermeldung in den Header der Fehlernachricht mit einem entsprechenden Fehlercode befüllt. Eine Liste der möglichen Fehlercodes wird in der Spezifikation des KOM-LE-Clientmodul gezeigt. Zusätzlich zu den dort festgelegten Fehlercodes sind auch herstellerspezifische Fehlercodes erlaubt. Diese herstellerspezifischen Fehlercodes welche mit einem „x“ beginnen, werden zusätzlich zu den von der gematik festgelegten Fehlercodes verwendet. Treten mehrere negative Ergebnisse auf, kann das Mail-Header-Attribut X-KIM-Fehlermeldung mehrmals verwendet werden.
