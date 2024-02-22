@@ -302,6 +302,7 @@ Primärsysteme MÜSSEN für Nachrichten mit der Dienstkennung KIM-Mail den MIME 
 Weitere Informationen zu Multipart finden Sie in RFC 2387.
 
 == Integration des Clientmoduls in das Primärsystem
+
 Ab KIM 1.5 ist es möglich, die Funktionalität des Clientmoduls in das Primärsystem zu integrieren. Somit ist kein separates Clientmodul mehr notwendig. Die folgende Abbildung stellt eine mögliche Integration dar:
 
 //image:CM_Integration.png[width=70%]
