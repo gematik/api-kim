@@ -293,7 +293,7 @@ TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss
 
 Das Primärsystem muss eine Möglichkeit anbieten, die Abholung von Nachrichten auch außerhalb konfigurierter fester Abrufzeiträume auszulösen. Dies muss bezogen auf eine bestimmte Dienstkennung möglich sein (z. B. eEB) um solchen Anwendungen die zeitnahe Abholung von Antworten zu ermöglichen. 
 
-=== Umgang mit HTML Mails
+==== Umgang mit HTML Mails
 
 Für KIM-Nachrichten, für die es keine sektorspezifischen Festlegungen gibt, MUSS das Primärsystem robust implementiert sein: Bei Multipart-Mails MUSS das Primärsystem in der Lage sein, den text/plain-Teil der Multipart-Mail anzuzeigen. Idealerweise kann der Empfänger festlegen ob Multipart-Mails als HTML ODER text/plain im Primärsystem dargestellt werden.
 
