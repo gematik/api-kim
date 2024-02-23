@@ -295,11 +295,11 @@ Das Primärsystem muss eine Möglichkeit anbieten, die Abholung von Nachrichten 
 
 ==== Umgang mit HTML Mails
 
-Für KIM-Nachrichten, für die es keine sektorspezifischen Festlegungen gibt, MUSS das Primärsystem robust implementiert sein: Bei Multipart-Mails MUSS das Primärsystem in der Lage sein, den text/plain-Teil der Multipart-Mail anzuzeigen. Idealerweise kann der Empfänger festlegen ob Multipart-Mails als HTML ODER text/plain im Primärsystem dargestellt werden.
+Für KIM-Nachrichten, für die es keine sektorspezifischen Festlegungen gibt, ist es erforderlich, dass das Primärsystem robust implementiert ist: Bei Multipart-Mails muss das Primärsystem den 'text/plain' Teil anzeigen. Idealerweise kann der Empfänger festlegen ob Multipart-Mails als HTML ODER text/plain im Primärsystem dargestellt werden.
 
-Primärsysteme MÜSSEN für Nachrichten mit der Dienstkennung KIM-Mail den MIME type text/plain verwenden. Multipart- bzw. HTML-Mails sind nicht zugelassen. Anhänge sind erlaubt.
+Primärsysteme müssen für Nachrichten mit der Dienstkennung KIM-Mail den MIME type 'text/plain' verwenden. Multipart- bzw. HTML-Mails sind nicht zugelassen. Anhänge sind erlaubt.
 
-Weitere Informationen zu Multipart finden Sie in RFC 2387.
+Weitere Informationen zu Multipart finden Sie in https://www.rfc-editor.org/rfc/rfc2387.html[RFC 2387].
 
 == Integration des Clientmoduls in das Primärsystem
 
