@@ -279,9 +279,9 @@ um sie in entschlüsselter und verifizierter Form an das Primärsystem weiterzug
 
 Primärsysteme dürfen nur bisher unbekannte KIM-Nachrichten abrufen. Durch den folgenden Ablauf können die unbekannten KIM-Nachrichten abgefragt werden:
 
-* Das PS sendet POP3 LIST an das Clientsystem. Es werden alle Message-IDs und die Größe der Nachrichten abgefragt
-* Das PS prüft anhand der empfangenen Message-IDs ob die Nachricht im PS bekannt ist und ermittelt so die Message-IDs der unbekannten Nachrichten
-* Das PS sendet POP3 RETR <Message-ID> an das Clientsystem für alle unbekannten Message-IDs. Die Message-ID der empfangenen Nachricht wird lokal gespeichert, damit sie bei folgenden Nachrichtenabrufen nicht erneut abgefragt wird.
+* Das PS sendet `POP3 LIST` an das Clientsystem. Es werden alle Message-Nummern und die Größe der Nachrichten abgefragt
+* Das PS prüft anhand der empfangenen Message-Nummern ob die Nachricht im PS bekannt ist und ermittelt so die Message-Nummern der unbekannten Nachrichten
+* Das PS sendet `POP3 RETR <Message-Nummer>` an das Clientsystem für alle unbekannten Message-Nummern. Die Message-Nummer der empfangenen Nachricht wird lokal gespeichert, damit sie bei folgenden Nachrichtenabrufen nicht erneut abgefragt wird.
 
 Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
 
@@ -289,17 +289,17 @@ Die KIM-Adresse kann an mehreren Primärsystem-Arbeitsplätzen genutzt werden. D
 
 Es ist erforderlich, dass das Primärsystem auch KIM-Nachrichten von nicht unterstützten Dienstkennungen dem Anwender zur Anzeige bringen kann, sodass der Anwender in jedem Fall Kenntnis über alle KIM-Nachrichten in seinem KIM-Postfach erhalten kann.
 
-TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss das PS dem Nutzer ermöglichen auszuwählen, welche KIM-Anwendungen an einem bestimmten PS-Arbeitsplatz verwendet werden (KIM Dienstkennungen). Für den Nachrichtenabruf kann das PS anstatt POP3 RETR zunächst mit POP3 TOP <Message-ID> 0 nur die Header der Nachricht abfragen, um zu prüfen, welche Dienstkennung die Nachricht hat. Falls die Nachricht eine Dienstkennung hat, die an diesem Arbeitsplatz verarbeitet werden soll, kann die vollständige Nachricht mit POP3 RETR empfangen werden. Die Message-ID der Nachricht muss lokal gespeichert werden, um einen erneuten Abruf zu verhindern.
+TIP: Um nur bestimmte KIM Nachrichten an einem Arbeitsplatz zu verarbeiten, muss das PS dem Nutzer ermöglichen auszuwählen, welche KIM-Anwendungen an einem bestimmten PS-Arbeitsplatz verwendet werden (KIM Dienstkennungen). Für den Nachrichtenabruf kann das PS anstatt `POP3 RETR` zunächst mit `POP3 TOP <Message-Nummer> 0` nur die Header der Nachricht abfragen, um zu prüfen, welche Dienstkennung die Nachricht hat. Falls die Nachricht eine Dienstkennung hat, die an diesem Arbeitsplatz verarbeitet werden soll, kann die vollständige Nachricht mit `POP3 RETR` empfangen werden. Die Message-Nummer der Nachricht muss lokal gespeichert werden, um einen erneuten Abruf zu verhindern.
 
 Das Primärsystem muss eine Möglichkeit anbieten, die Abholung von Nachrichten auch außerhalb konfigurierter fester Abrufzeiträume auszulösen. Dies muss bezogen auf eine bestimmte Dienstkennung möglich sein (z. B. eEB) um solchen Anwendungen die zeitnahe Abholung von Antworten zu ermöglichen. 
 
 ==== Umgang mit HTML Mails
 
-Für KIM-Nachrichten, für die es keine sektorspezifischen Festlegungen gibt, MUSS das Primärsystem robust implementiert sein: Bei Multipart-Mails MUSS das Primärsystem in der Lage sein, den text/plain-Teil der Multipart-Mail anzuzeigen. Idealerweise kann der Empfänger festlegen ob Multipart-Mails als HTML ODER text/plain im Primärsystem dargestellt werden.
+Für KIM-Nachrichten, für die es keine sektorspezifischen Festlegungen gibt, ist es erforderlich, dass das Primärsystem robust implementiert ist: Bei Multipart-Mails muss das Primärsystem den `text/plain` Teil anzeigen. Idealerweise kann der Empfänger festlegen ob Multipart-Mails als HTML ODER text/plain im Primärsystem dargestellt werden.
 
-Primärsysteme MÜSSEN für Nachrichten mit der Dienstkennung KIM-Mail den MIME type text/plain verwenden. Multipart- bzw. HTML-Mails sind nicht zugelassen. Anhänge sind erlaubt.
+Primärsysteme müssen für Nachrichten mit der Dienstkennung KIM-Mail den MIME type `text/plain` verwenden. Multipart- bzw. HTML-Mails sind nicht zugelassen. Anhänge sind erlaubt.
 
-Weitere Informationen zu Multipart finden Sie in RFC 2387.
+Weitere Informationen zu Multipart finden Sie in https://www.rfc-editor.org/rfc/rfc2387.html[RFC 2387].
 
 == Integration des Clientmoduls in das Primärsystem
 
