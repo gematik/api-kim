@@ -279,9 +279,9 @@ um sie in entschlüsselter und verifizierter Form an das Primärsystem weiterzug
 
 Primärsysteme dürfen nur bisher unbekannte KIM-Nachrichten abrufen. Durch den folgenden Ablauf können die unbekannten KIM-Nachrichten abgefragt werden:
 
-* Das PS sendet `POP3 LIST` an das Clientsystem. Es werden alle Message-Nummern und die Größe der Nachrichten abgefragt
-* Das PS prüft anhand der empfangenen Message-Nummern ob die Nachricht im PS bekannt ist und ermittelt so die Message-Nummern der unbekannten Nachrichten
-* Das PS sendet `POP3 RETR <Message-Nummer>` an das Clientsystem für alle unbekannten Message-Nummern. Die Message-Nummer der empfangenen Nachricht wird lokal gespeichert, damit sie bei folgenden Nachrichtenabrufen nicht erneut abgefragt wird.
+* Das PS sendet `POP3 UIDL` an das Clientsystem. Es werden alle Message-Nummern und die eindeutigen IDs (UID) der Nachrichten abgefragt
+* Das PS prüft anhand der empfangenen UID-Nummern ob die Nachricht im PS bekannt ist und ermittelt so die Message-Nummern der unbekannten Nachrichten
+* Das PS sendet `POP3 RETR <Message-Nummer>` an das Clientsystem für alle unbekannten Message-Nummern. Die UID-Nummer der empfangenen Nachricht wird lokal gespeichert, damit sie bei folgenden Nachrichtenabrufen nicht erneut abgefragt wird.
 
 Im KIM-Postfach eines Nutzers können Nachrichten mit verschiedenen, für das Primärsystem bekannten oder unbekannten, Dienstkennungen eingehen. Das bedeutet, dass unter Umständen die Nutzung weiterer Dienstkennung als die link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[hier] genannten möglich sein muss. KIM Nachrichten werden vom Primärsystem i.d.R. innerhalb einer bestimmten Primärsystemanwendungen angezeigt bzw. verarbeitet, sofern die Dienstkennung unterstützt wird.
 
