@@ -352,6 +352,9 @@ Es ist erforderlich, dass das Primärsystem die Aufrufvarianten SMTP-/POP3-Benut
 
 Siehe https://github.com/gematik/api-kim/blob/master/docs/Lastverteilung%20und%20Performance%20beim%20Einsatz%20von%20KIM%201.0.pdf[Lastverteilung und Performance beim Einsatz von KIM 1.0]
 
+== Umgang mit Middleware
+Grundsätzlich ist die Implementierung einer Middleware, die mit verschiedenen Anwendungen oder Komponenten kommuniziert, in der KIM-Architektur erlaubt. Dies gilt für den Transportweg zwischen dem Mailclient beim Leistungserbringer und dem Fachdienst beim Anbieter. Hierbei ist zu beachten, dass die Middleware zusätzlich das Attribut `X-KIM-Middleware` im Header Element in die Nachricht einträgt. 
+
 == Umgang mit Multikonnektor-Umgebungen
 Um in einer Umgebung mit mehreren Konnektoren mit dem für das Schlüsselmaterial (SMC-B) notwendigen Konnektor zu kommunizieren, muss dieser eindeutig adressierbar sein. Aus diesem Grund wird zusätzlich im SMTP/POP3-Benutzername ein weiterer Parameter vom Clientsystem an das Clientmodul übergeben. Das folgende Bild zeigt beispielhaft in einer Multikonnektor-Umgebung, wie das Clientmodul mit Hilfe des optionalen Parameters mit dem Konnektor (A) kommuniziert.
 
