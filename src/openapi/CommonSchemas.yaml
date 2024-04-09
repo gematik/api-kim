@@ -2,6 +2,11 @@ info:
   title: I_CommonSchemas
   version: 1.0.0
 
+### 1.0.1
+# - removed minLength from Password for KIM 1.5.2 compatability
+### 1.0.0
+# - created
+
 components:
   schemas:
     Username:
@@ -11,7 +16,6 @@ components:
       description: Username/email of the account.
     Password:
       type: string
-      minLength: 12
       maxLength: 256
       format: byte
       description: The password is transmitted base64 encoded.

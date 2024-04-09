@@ -3,7 +3,15 @@ info:
   title: I_AccountManager_Service
   description:  The KIM Account Manager is managed via this interface.
   #  The “utf-8” character set must be supported for all operations.
-  version: 2.3.1
+  version: 2.3.2
+### 2.3.2
+  # - changed servers -url for KIM 1.5.2 compatability
+  # - changed path (/account) for KIM 1.5.2 compatability
+  # - changed parameter iniPassword (maxlength and format)
+  # - changed parameter referenceId (maxlength) for KIM 1.5.2 compatability
+  # - added enum for regStat in schemas /Account for KIM 1.5.2 compatability
+  # - added in schemas /Account dataTimeToLive for KIM 1.5.2 compatability
+  # - added in schemas /Account maxMailSize (changed minimum and added maximum value) for KIM 1.5.2 compatability
 ### 2.3.1
   # KIM 1.5.3 changes
   # - values for regStat defined (registered and deregistered)
@@ -64,9 +72,9 @@ info:
 externalDocs:
   description: Github documentation
   url: https://github.com/gematik/api-kim
-  
+
 servers:
-- url: /AccountMgmt/v2.4/
+- url: /AccountMgmt/v2.3/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
@@ -81,7 +89,7 @@ security:
     # Authentication is carried out for all operations via a JWT
 
 paths:
-  /account/registerAccount:
+  /account:
     post:
       tags:
       - Email-Account
@@ -198,7 +206,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
     delete:
       tags:
       - Email-Account
@@ -230,7 +238,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
     get:
       tags:
       - Email-Account
@@ -267,7 +275,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
   /account/{username}/revokeDeregistration:
     put:
       tags:
@@ -311,7 +319,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
   /account/{username}/accounts:
     get:
       tags:
@@ -340,9 +348,9 @@ paths:
       responses:
         200:
           description: List of all accounts of a telematics ID.
-          content: 
-            application/json; charset=utf-8: 
-              schema: 
+          content:
+            application/json; charset=utf-8:
+              schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Account"
@@ -356,7 +364,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
   /account/{username}/OTP:
     get:
       tags:
@@ -388,7 +396,11 @@ paths:
               type: object
               properties:
                 otp:
-                  $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+                  type: string
+                  maxLength: 256
+                  format: byte
+                  description: One time password for porting the KIM email address to another telematikID.
+                               The password is transmitted base64 encoded.
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
@@ -456,7 +468,7 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
-          
+
   /account/{username}/cert:
     post:
       tags:
@@ -510,7 +522,7 @@ paths:
         502:
           $ref: 'CommonSchemas.yaml#/components/responses/502'
           # CMP service cannot be reached or returns errors
-          
+
   /account/{username}/outofoffice:
     get:
       tags:
@@ -586,7 +598,7 @@ components:
       properties:
         referenceId:
           type: string
-          maxLength: 32
+          maxLength: 256
           description: The KIM provider determines the referenceID and communicates it to the KIM participant.
                        For example, it can contain a contract number or a registration code.
                        The KIM provider must inform its KIM participants about the use of this parameter.
@@ -595,7 +607,7 @@ components:
                        Operation, this value cannot be changed.
         username:
           $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-          
+
         password:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
 
@@ -605,25 +617,46 @@ components:
           example: 1.5+
           description: The KIM participant can change his KIM version. The range of values supported
                        KIM versions should be specified by the client module.
-                      
+
         regStat:
           type: string
+          enum:
+            - registered
+            - deregistered
           maxLength: 16
           example: registered
           description: The registration status of the account. Valid values are registered and deregistered.
-        
+
         deregDate:
           type: integer
           format: int64
           example: 1616588543
-          description: Confirmed termination date (Unix timestamp)
-          
+          description: Confirmed termination date (Unix timestamp).
+                       Until deregDate POP3 is usable.
+
+        dataTimeToLive:
+          type: integer
+          maxLength: 3
+          minimum: 10
+          maximum: 365
+          default: 90
+          example: 90
+          description: Storage period for emails and attachments on the KAS service.
+                       Specified in days.
+        maxMailSize:
+          type: integer
+          format: int64
+          minimum: 734003200
+          maximum: 734003200
+          example: 734003200
+          readOnly: true
+          description: The maximum size of a KIM email in bytes.
+
         appTags:
           type: array
           items:
             type: string
-          description: The appTags parameter contains all application tags associated with the email address
-                       be assigned.
+          description: The appTags parameter contains all application tags associated with the assigned email address.
                        Exactly one application identifier is specified per form part. For multiple application indicators
                        the form part is specified multiple times (exploded=true). If no application identifier is specified
                        then existing application identifiers will be deleted.
@@ -631,7 +664,7 @@ components:
           type: boolean
           description: If "noVzdMailEntry == true" then the AccountManager will use the VZD "mail" and "komLeData"
                        Attributes not filled or, in the case of PUT, existing mail and komLeData attributes are deleted.
-                       This new attribute should only be supported on the client side by the basic consumer.
+                       This new attribute should only be supported on the client side by the Basis Consumer.
 
     CertificateParameters:
       type: object
@@ -639,10 +672,8 @@ components:
         commonName:
           type: string
           writeOnly: true
-          description: Will be included in the certificate as commonName
-                       This certificate is also called a TLS server certificate for connecting to the client/primary system
-                       used. For a successful certificate check - by the client - the server must be in the common name
-                       Name of the client module (as configured, e.g. example.com, www.example.com).
+          description: Will be included in the certificate attribute cn as <commonName> + "#CM"
+                       The certificate is used as TLS client certificate for connecting to the KIM services.
         certPassword:
            # base64 encoded password for the PKCS#12 container in which the certificate is transported.
            # If no certPassword is specified, then the PKCS#12 container will not be encrypted.
@@ -668,7 +699,7 @@ components:
         active:
           type: boolean
           description: Aktiviert bzw. deaktiviert die Abwesenheitsnotiz.
-          
+
   securitySchemes:
     KIMBearerAuth:
       $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBearerAuth'
