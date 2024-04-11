@@ -3,7 +3,9 @@ info:
   title: I_AccountManager_Service
   description:  The KIM Account Manager is managed via this interface.
   #  The “utf-8” character set must be supported for all operations.
-  version: 2.3.2
+  version: 2.3.3
+### 2.3.3
+  # - new eror code 424, when default Anwendungskennzeichen will be lost
 ### 2.3.2
   # - changed servers -url for KIM 1.5.2 compatability
   # - changed path (/account) for KIM 1.5.2 compatability
