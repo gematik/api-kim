@@ -56,6 +56,12 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
+    424:
+      description: default Anwendungskennzeichen will be lost.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
     500:
       description: Internal Server Error
       content:

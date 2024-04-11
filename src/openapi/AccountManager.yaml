@@ -145,6 +145,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        424:
+          description: default Anwendungskennzeichen will be lost.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -202,6 +208,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        424:
+          description: default Anwendungskennzeichen will be lost.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -234,6 +246,8 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
+        424:
+          $ref: 'CommonSchemas.yaml#/components/responses/424'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
