@@ -40,8 +40,8 @@ E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegung
 </p>
 ++++
 
-===== add_Attachment() +
-Mit Hilfe der Opertion `add_Attachment()` werden die verschlüsselten E-Mail-Daten unter einem neu erzeugten Freigabe-Link auf dem KAS für einen begrenzten Empfängerkreis abgelegt. Hierfür werden in der Operation zusammen mit den E-Mail-Daten die berechtigten Empfänger, die Message-ID der dazugehörenden KIM-Nachricht und das Ablaufdatum der abgelegten E-Mail-Daten übergeben.
+===== add_Maildata() +
+Mit Hilfe der Opertion `add_Maildata()` werden die verschlüsselten E-Mail-Daten unter einem neu erzeugten Freigabe-Link auf dem KAS für einen begrenzten Empfängerkreis abgelegt. Hierfür werden in der Operation zusammen mit den E-Mail-Daten die berechtigten Empfänger, die Message-ID der dazugehörenden KIM-Nachricht und das Ablaufdatum der abgelegten E-Mail-Daten übergeben.
 
 *Beispiel einer HTTP Nachricht*
 
@@ -112,8 +112,8 @@ Body:
 [small]#Nicht genügend Speicherplatz vorhanden.#
 |===
 
-===== read_Attachment()
-Die Opertion `read_Attachment()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden.
+===== read_Maildata()
+Die Opertion `read_Maildata()` gibt den unter einem Freigabelink verschlüsselten E-Mail-Daten zurück. Beim Aufruf der Operation muss die E-Mail-Adresse des Empfängers übergeben werden.
 
 *Beispiel einer HTTP Nachricht*
 [cols="h,a"]
