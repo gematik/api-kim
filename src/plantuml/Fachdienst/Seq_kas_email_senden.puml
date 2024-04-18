@@ -59,7 +59,7 @@ L->P: Email mit großen\n Anhängen erzeugen
  KM->KM: Erzeugung eines symmetrischen\n Schlüssels für die Mail
  KM->KM: Bildung des Hashwertes
  KM->KM: Verschlüsselung der Mail \nmit dem symmetrischen Schlüssel
- KM->K: addMaildata (recipients, messageID, expires, verschlüsselte E-Mail)
+ KM->K: add_Maildata (recipients, messageID, expires, verschlüsselte E-Mail)
  activate K
  K->K: Berechtigung prüfen
  K->K: Dateigröße prüfen
