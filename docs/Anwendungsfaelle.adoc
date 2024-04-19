@@ -82,6 +82,8 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 </p>
 ++++
 
+Zusätzlich zu den hier beschriebenen Operationen `getAccount()` und `setAccount()` besteht die Möglichkeit durch den Aufruf der Operation `listAccounts()`, am Account Manager, eine Liste aller, für eine Telematik ID, existierenden Accounts zu erhalten.
+
 === Portierung einer Telematik-ID
 Am Administrationsmoduls kann ein KIM-Teilnehmer eine Portierung seiner KIM-E-Mail-Adresse zu einer anderen Telematik-ID (neue Smartcard) durchführen. Dafür ruft das Administrationsmodul die Operationen `getOTP()` und `setTID()` mit einer TLS gesicherten Verbindung am Account Manager auf.  
 
