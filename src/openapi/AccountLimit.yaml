@@ -33,10 +33,6 @@ servers:
 tags:
 - name: AccountLimit
 
-security:
-  - KIMBearerAuth: []
-    # Authentication is carried out for all operations via a JWT. The JWT is created via SMC-B verification.
-
 paths:
   /limit/{username}:
     get:
