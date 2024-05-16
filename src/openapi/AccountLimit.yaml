@@ -34,16 +34,13 @@ tags:
 - name: AccountLimit
 
 paths:
-  /limit/{username}:
+  /limit/:
     get:
       tags:
       - AccountLimit
       summary: Query the limits of an account
       description: Query the limits of an account
       operationId: getLimits
-
-      security:
-        - basicAuth: []
 
       responses:
         200:
@@ -92,6 +89,5 @@ components:
           description: Specifies the remaining storage volume for a user account.
 
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
+    KIMBasicAuth:
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth'
