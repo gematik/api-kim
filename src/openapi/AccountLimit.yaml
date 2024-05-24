@@ -34,7 +34,7 @@ tags:
 - name: AccountLimit
 
 paths:
-  /limit/:
+  /limit:
     get:
       tags:
       - AccountLimit
