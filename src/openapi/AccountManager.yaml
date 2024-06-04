@@ -676,6 +676,11 @@ components:
                        Exactly one application identifier is specified per form part. For multiple application indicators
                        the form part is specified multiple times (exploded=true). If no application identifier is specified
                        then existing application identifiers will be deleted.
+        newStAKowner:
+          type: string
+          maxLength: 256
+          format: email
+          description: email of new the Standard Anwendungskennzeichen account.
         noVzdMailEntry:
           type: boolean
           description: If "noVzdMailEntry == true" then the AccountManager will use the VZD "mail" and "komLeData"
