@@ -5,6 +5,7 @@ info:
   #  The “utf-8” character set must be supported for all operations.
   version: 2.3.3
 ### 2.3.3
+  # - new parameter newStAKowner (new owner Standard Anwendungskennzeichen)
   # - new eror code 424, when default Anwendungskennzeichen will be lost
 ### 2.3.2
   # - changed servers -url for KIM 1.5.2 compatability
@@ -681,6 +682,7 @@ components:
           maxLength: 256
           format: email
           description: email of new the Standard Anwendungskennzeichen account.
+
         noVzdMailEntry:
           type: boolean
           description: If "noVzdMailEntry == true" then the AccountManager will use the VZD "mail" and "komLeData"
