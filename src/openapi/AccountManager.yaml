@@ -240,6 +240,11 @@ paths:
         required: true
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/Account'
       responses:
         204:
           description: Account deregistered successfully.
