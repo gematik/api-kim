@@ -75,7 +75,7 @@ components:
           description: Specifies the version of the KIM backend service.
         passwordPolicyRegEx:
           type: string
-          description: Specifies the password policy that the AccountManager requires as a regular expression.
+          description: Specifies the password policy that the AccountManager requires as a regular expression (in java compatible style).
         passwordPolicyDisplay:
           type: string
           description: Specifies the password policy that the AccountManager requires in text form.
