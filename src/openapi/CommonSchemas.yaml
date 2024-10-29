@@ -3,7 +3,7 @@ info:
   version: 1.0.2
 
 ### 1.0.2
-# - new eror code 424, when default Anwendungskennzeichen will be lost
+# - new eror code 424, when default Anwendungskennzeichen will be lost or is necessary
 ### 1.0.1
 # - removed minLength from Password for KIM 1.5.2 compatability
 ### 1.0.0
