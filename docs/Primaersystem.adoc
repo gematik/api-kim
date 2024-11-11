@@ -118,6 +118,21 @@ Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht eine KIM-E-
 Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-editor.org/rfc/rfc5322.html[RFC5322]). Dies gilt insbesondere für die Header-Elemente der Mail-Nachricht.
 Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
 
+* *Anhänge* +
+Werden Anhänge zusammen mit einer KIM-E-Mail übertragen, ist bei der Benahmung der (https://www.rfc-editor.org/rfc/rfc2047.html[RFC2047]) einzuhalten. Das heißt, werden Anhänge deren Dateinamen Umlaute enthalten, genutzt, muss dieser, wie im RFC gefordert, vollständig UTF-8 kodiert in den Nachrichten Body eingetrage werden. Es folgt ein Beispiel mit dem Dateinamen `Handbuch-ÄÜÖß.pdf`.
+
+*Beispiel für eine korrekte UTF-8 Kodierung*
+----
+     Content-Type: application/pdf; name="=?UTF-8?B?SGFuZGJ1Y2gtw4TDnMOWw58ucGRm?="
+
+     Content-Disposition: attachment;
+
+      filename*0*=UTF-8''%48%61%6E%64%62%75%63%68%2D%C3%84%C3%9C%C3%96%C3%9F%2E;
+
+      filename*1*=%70%64%66
+----
+`Hinweis: Im Beispiel wird gezeigt, wie die korrekte Trennung des filename erfolgt, um der Empfehlung nachzukommen, die maximale Zeilelänge zu bgrenzen.` 
+
 * *E-Mail-Kategorisierung im Primärsystem* +
 Es ist erforderlich, dass das Primärsystem dem Benutzer ermöglicht, eine KIM-E-Mail entsprechend zu kategorisieren. Erfolgt keine Kategorisierung durch den Nutzer, wird automatisch vom Clientmodul eine Standard-Kategorie verwendet. Die Kategorien können aus dem link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Fachportal] der gematik entnommen werden und abhängig von der zu versendenden Nachricht in dem Attribut `X-KIM-Dienstkennung` als zusätzliches Header Element in die Nachricht eingetragen.
 

@@ -82,6 +82,8 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 </p>
 ++++
 
+Zusätzlich zu den hier beschriebenen Operationen `getAccount()` und `setAccount()` besteht die Möglichkeit durch den Aufruf der Operation `listAccounts()`, am Account Manager, eine Liste aller, für eine Telematik ID, existierenden Accounts zu erhalten.
+
 === Portierung einer Telematik-ID
 Am Administrationsmoduls kann ein KIM-Teilnehmer eine Portierung seiner KIM-E-Mail-Adresse zu einer anderen Telematik-ID (neue Smartcard) durchführen. Dafür ruft das Administrationsmodul die Operationen `getOTP()` und `setTID()` mit einer TLS gesicherten Verbindung am Account Manager auf.  
 
@@ -103,28 +105,6 @@ Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul u
 ++++
 <p align="center">
   <img width="40%" src=../images/diagrams/Fachdienst/Seq_acc_zertifikat.svg>
-</p>
-++++
-
-== Anwendungskennzeichen
-KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Anwendungskennzeichen für ihren e-Mail Account konfigurieren oder einsehen. Für das konfigurieren eines Anwendungskennzeichens ruft das Administrationsmodul `setAccount()` am Account Manager auf. Für das Abfragen von konfigurierten Anwendungskennzeichen wird die Operation `getAccount()` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
-
-Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
-
-++++
-<p align="center">
-  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_anwendungskennzeichen.svg>
-</p>
-++++
-
-== Abwesenheitnotizen
-KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Abwesenheitsnotizen für einen definierten Zeitraum konfigurieren oder einsehen. Für das konfigurieren einer Abwesenheitsnotiz ruft das Administrationsmodul `updateOutOfOffice()` am Account Manager auf. Für das Abfragen von konfigurierten Abwesenheitsnotizen wird die Operation `getOutOfOffice()` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
-
-Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
-
-++++
-<p align="center">
-  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_abwesenheitsnotiz.svg>
 </p>
 ++++
 
@@ -163,12 +143,31 @@ Das folgende Sequenzdiagramm stellt den Ablauf des Empfanges einer Nachricht dar
 </p>
 ++++
 
+== Anwendungskennzeichen
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Anwendungskennzeichen für ihren e-Mail Account konfigurieren oder einsehen. Für das konfigurieren eines oder mehrerer Anwendungskennzeichen ruft das Administrationsmodul die Operation `setAccount()` an der Schnittstelle `I_AccountManager_Service` des Account Managers seines KIM Fachdienstes auf, der diese dann im Verzeichnisdienst in den KIM-Fachdaten für die betroffene Mail-Adresse einträgt. Für das Abfragen von konfigurierten Anwendungskennzeichen wird die Operation `getAccount()` an der Schnittstelle `I_AccountManager_Service` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
+
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
+
+++++
+<p align="center">
+  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_anwendungskennzeichen.svg>
+</p>
+++++
+
 == KIM-Dienstkennung
 Der KIM-Teilnehmer kann eine zu versendende Nachricht mit einer Dienstkennung - z. B. "eAU;Lieferung;v1.0" - versehen. Wird durch den Mailclient in der für den Versand durch das Clientmodul übergebenen Mail keine Dienstkennung eingetragen, wird vom Clientmodul ein default-Dienstkennung nachträglich ergänzt ("KIM-Mail;Default;V1.0").
 Die Dienstkennung wird in den Nachrichten-Header eingetragen, und kann auf der Empfängerseite für eine automatisierte Bearbeitung verwendet werden. Der Bezeichner des hierfür vorgesehenen Header-Feldes lautet `X-KIM-Dienstkennung`. Die Dienstkennung der ursprünglichen Mail wird nach der Verschlüsselung in den Header der verschlüsselten Mail übernommen. Ein Empfänger kann auf Basis der Dienstkennung entscheiden, wie er mit den zur Abholung auf dem Mail-Server bereitstehenden Nachrichten verfahren möchte. 
 
-== KIM Anwendungskennzeichen
-Der KIM-Teilnehmer kann für seinen e-Mail Account Anwendungskennzeichen konfigurieren, die dann durch den Acount Manager seines KIM Fachdienstes im Verzeichnisdienst in den KIM-Fachdaten für die betroffene Mail-Adresse eintragen werden. Der KIM-Teilnehmer nutzt dazu die in seinem KIM Clientmodule angebotene Konfigurations-Option. Für die Übertragung zum Verzeichnisdienst stellt der KIM Fachdienst eine Operation an der Schnittstelle `I_AccountManager_Service` des Account Manager zur Verfügung.
+== Abwesenheitnotizen
+KIM-Teilnehmer können über das Frontend (GUI) des Administrationsmoduls Abwesenheitsnotizen für einen definierten Zeitraum konfigurieren oder einsehen. Für das konfigurieren einer Abwesenheitsnotiz ruft das Administrationsmodul `updateOutOfOffice()` am Account Manager auf. Für das Abfragen von konfigurierten Abwesenheitsnotizen wird die Operation `getOutOfOffice()` am Account Manager verwendet. Für jede Operation baut das Administrationsmodul eine TLS-Verbindung zum Account Manager auf. 
+
+Im folgenden Sequenzdiagramm ist die Interaktion zwischen Administrationsmodul und dem Account Manager dargestellt.
+
+++++
+<p align="center">
+  <img width="55%" src=../images/diagrams/Fachdienst/Seq_acc_abwesenheitsnotiz.svg>
+</p>
+++++
 
 == Multikonnektor Umgebungen
 Ab KIM 1.5 ist es möglich, dass mehrere Konnektoren in einer Umgebung von einem Clientmodul unterstützt werden. Dies ist vor allem im Krankenhausumfeld im Interesse einer notwendigen Lastverteilung sinnvoll. Das folgende Bild veranschaulicht den Einsatz von mehreren Konnektoren in einer Umgebung:

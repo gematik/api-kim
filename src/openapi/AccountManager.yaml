@@ -3,7 +3,10 @@ info:
   title: I_AccountManager_Service
   description:  The KIM Account Manager is managed via this interface.
   #  The “utf-8” character set must be supported for all operations.
-  version: 2.3.2
+  version: 2.3.3
+### 2.3.3
+  # - new parameter newStAKowner (new owner Standard Anwendungskennzeichen)
+  # - new eror code 424, when default Anwendungskennzeichen will be lost
 ### 2.3.2
   # - changed servers -url for KIM 1.5.2 compatability
   # - changed path (/account) for KIM 1.5.2 compatability
@@ -145,6 +148,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        424:
+          description: default Anwendungskennzeichen will be lost.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -202,6 +211,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        424:
+          description: default Anwendungskennzeichen will be lost.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -225,6 +240,11 @@ paths:
         required: true
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      requestBody:
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/Account'
       responses:
         204:
           description: Account deregistered successfully.
@@ -234,6 +254,8 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
+        424:
+          $ref: 'CommonSchemas.yaml#/components/responses/424'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -464,6 +486,12 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+        424:
+          description: default Anwendungskennzeichen will be lost.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -660,6 +688,12 @@ components:
                        Exactly one application identifier is specified per form part. For multiple application indicators
                        the form part is specified multiple times (exploded=true). If no application identifier is specified
                        then existing application identifiers will be deleted.
+        newStAKowner:
+          type: string
+          maxLength: 256
+          format: email
+          description: email of new the Standard Anwendungskennzeichen account.
+
         noVzdMailEntry:
           type: boolean
           description: If "noVzdMailEntry == true" then the AccountManager will use the VZD "mail" and "komLeData"

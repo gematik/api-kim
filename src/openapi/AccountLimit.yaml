@@ -90,5 +90,4 @@ components:
 
   securitySchemes:
     KIMBasicAuth:
-      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth' 
-
+      $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth'
