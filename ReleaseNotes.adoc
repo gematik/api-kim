@@ -3,10 +3,26 @@
 image:gematik_logo.svg[width=70%]
 
 
+== KIM 1.5.3-2 Release Notes
+
+=== Neu
+- Das Feature Standard Anwendungskennzeichen wurde in der gemSpec_CM_KOMLE und in der gemSpec_FD_KOMLE spezifiziert. Das Clientmodul ermöglicht die Pflege über das Administrationsmodul und der Account Manager realisiert die Eintragung in den VZD.
+- Übermittlung von zusätzlichen Header-Informationen durch das Clientmodul.
+- Optionale Meldungen beim Einsatz eines Virenscanners zur Information von Clientsystemen.
+- Spezifikationsanpassungen zur Sicherstellung der ECC Migration für das Clientmodul und den KIM Fachdienst.
+- Das Verhalten des Account Manager bei der Administration von Verzeichnisdiensteinträgen wurde angepasst.
+
+===Geändert
+- Parameter der KIM-Attachment-Datenstruktur konkretisiert.
+- Das Verhalten des Clientmodul bei der Prüfung der Version des Empfängers wurde überarbeitet.
+- Erläuterungen zu den Fehlercodes bei der Entschlüsselung und Integritätsprüfung angepasst.
+- Die Client Authentisierung (Administrationsmodul) am Accountmanager mit neuem Parameter für die ECC Migrtion.
+- A_25232-01 TLS-Zertifikate für die Authentisierung gegenüber Clientsystemen wurde überarbeitet.
+
 == KIM 1.5.3 Release Notes
 
 === Neu
-- Das Feature Anwendungskennzeichen wurde in der gemSpec_CM_KOMLE und in der gemSpec_FD_KOMLE spezifiziert. Das Clientmodul ermöglicht die Administration über den Administrationsmodul und der Account Manager realisiert die Eintragung in den VZD.
+- Das Feature Anwendungskennzeichen wurde in der gemSpec_CM_KOMLE und in der gemSpec_FD_KOMLE spezifiziert. Das Clientmodul ermöglicht die Administration über das Administrationsmodul und der Account Manager realisiert die Eintragung in den VZD.
 - Anforderungen zum Einbringen der Anwendungskennung am Clientmodule sind erstellt (A_23713)
 - Anforderungen zur Einbringung der Anwendungskennung durch den KIM Fachdienst in den VZD sind erstellt (A_23718, A_23722)
 - Anforderungen für die Einbringung der Anwendungskennzeichen für den Verzeichnisdienst sind erstellt.
