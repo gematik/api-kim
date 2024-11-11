@@ -12,7 +12,7 @@ image:gematik_logo.svg[width=70%]
 - Spezifikationsanpassungen zur Sicherstellung der ECC Migration für das Clientmodul und den KIM Fachdienst.
 - Das Verhalten des Account Manager bei der Administration von Verzeichnisdiensteinträgen wurde angepasst.
 
-===Geändert
+=== Geändert
 - Parameter der KIM-Attachment-Datenstruktur konkretisiert.
 - Das Verhalten des Clientmodul bei der Prüfung der Version des Empfängers wurde überarbeitet.
 - Erläuterungen zu den Fehlercodes bei der Entschlüsselung und Integritätsprüfung angepasst.
