@@ -2,7 +2,7 @@
     "description": "Dynamic badges for api-kim",
     "badges": {
         "releaseNotes": {
-            "version": " v1.5.3"
+            "version": " v1.5.3-2"
         },
         "kimClientmodulSpec": {
             "version": " v1.5.3"
