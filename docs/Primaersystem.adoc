@@ -104,7 +104,7 @@ Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adress
 Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
 * *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
-Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist dem Nutzer die mit dem Standard Anwendungskennzeichen markierte E-Mail-Adresse anzuzeigen. Nutzer kann entscheiden, ob diese Adresse verwendet wird. Ist dies nicht der Fall ist der Versand der Mail abzulehnen.
+Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist dem Nutzer die mit dem Standard Anwendungskennzeichen markierte E-Mail-Adresse anzuzeigen. Der Nutzer kann entscheiden, ob diese Adresse verwendet wird. Ist dies nicht der Fall ist der Versand der Mail abzulehnen.
 
 * *Prüfung der Empfängeradressen* +
 Es ist erforderlich, dass das Primärsystem lokal gespeicherte KIM-Adressen regelmäßig mit den Daten im VZD vergleicht und nicht mehr im VZD vorhandene KIM-Adressen aus dem lokalen Speicher entfernt und gegebenenfalls durch aktuelle KIM-Adressen aus dem VZD ersetzt. Die lokal gespeicherten KIM-Adressen sollen einmal täglich aktualisiert werden.
