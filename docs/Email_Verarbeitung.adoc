@@ -19,7 +19,7 @@ image:gematik_logo.svg[width=70%]
 toc::[]
 
 = E-Mail Handling
-Diese Seite gibt einen Überblick über den Prozess der E-Mail Verarbeitung durch ein KIM-Clientmodul und einen beispielhaften Einblick in den Aufbau der E-Mail nach den jeweiligen Prozesschritten. Als Beispiel wird das Happy Day Szenario vom Versand einer Mail gewählt, die wegen ihrer Größe(20 MiB) einen Versand unter Einbezug des KIM-Attachment Service nach sich zieht. In die Client-Mail wurde ebenfalls die Verwendung eines modifizierten From Headers inkludiert. Das folgende Kapitel befasst sich mit dem Versandvorgang einer Clientmail, während der Empfangsvorgang dann in Kapitel <<Empfang einer E-Mail>> beschrieben wird.
+Diese Seite gibt einen Überblick über den Prozess der E-Mail Verarbeitung durch ein KIM-Clientmodul und einen beispielhaften Einblick in den Aufbau der E-Mail nach den jeweiligen Prozesschritten. Als Beispiel wird das Happy Day Szenario vom Versand einer Mail gewählt, die wegen ihrer Größe (20 MiB) einen Versand unter Einbezug des KIM-Attachment Service nach sich zieht. In die Client-Mail wurde ebenfalls die Verwendung eines modifizierten From Headers inkludiert. Das folgende Kapitel befasst sich mit dem Versandvorgang einer Clientmail, während der Empfangsvorgang dann in Kapitel <<Empfang einer E-Mail>> beschrieben wird.
 
 == Versand einer E-Mail
 Der Versand einer Mail startet, wenn von einem Client-System über SMTP eine MIME-Mail an das KIM-Clientmodul übergeben wird.
@@ -98,8 +98,8 @@ Content-Transfer-Encoding: 7bit
 Text der Testnachricht
 
 --------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
-Content-Type: text/plain; charset=UTF-8; name="1mb.test"
-Content-Disposition: attachment; filename="1mb.test"
+Content-Type: text/plain; charset=UTF-8; name="20mb.test"
+Content-Disposition: attachment; filename="20mb.test"
 Content-Transfer-Encoding: base64
 
 fHx3d3cuZGFzaW50ZXJuZXQubmV[...]
@@ -109,7 +109,7 @@ fHx3d3cuZGFzaW50ZXJuZXQubmV[...]
 ====
 
 === Client-Mail hochgeladen
-Von der korrigierten (*_From_* Header) und um die Dienstkennung erweiterte Mail wird eine Kopie angelegt, die die Basis für die an den Fachdienst zu übermittelnde KOM-LE Nachricht bildet. Anschließen wir die modifizierte Client-Mail signiert und verschlüsselt und das binäre Ergebnis und durch Aufruf der Methode addAttachment auf den KIM Attachment Service hochgeladen. Nach einem erfolgreichen Upload ersetzt das KOM-LE Modul den Body der KOM-LE Nachricht durch die KIM Attachment Datenstruktur.
+Von der korrigierten (*_From_* Header) und um die Dienstkennung erweiterte Mail wird eine Kopie angelegt, die die Basis für die an den Fachdienst zu übermittelnde KOM-LE Nachricht bildet. Anschließen wir die modifizierte Client-Mail durch das KOM-LE Clientmodul signiert und verschlüsselt und das binäre Ergebnis durch Aufruf der Methode addMaildata auf den KIM Attachment Service hochgeladen. Nach einem erfolgreichen Upload ersetzt das KOM-LE Clientmodul den Body der KOM-LE Nachricht durch die KIM Attachment Datenstruktur.
 
 .KOM-LE Nachricht mit Attachment Datenstruktur
 [%collapsible%open]
@@ -135,7 +135,7 @@ Content-Disposition: x-kas
 ====
 
 === KOM-LE Mail finalisiert
-Der Body der KOM-LE Nachricht wird ebenfalls signiert und verschlüsselt und im Header Informationen zum verwendeten Clientmodul, der Produkltypversion und dem verwendeten Konnektor hinterlegt. Anschließend wird die Nachricht per SMTP an den Fachdienst übertragen.
+Der Body der KOM-LE Nachricht enthält die durch den Konnektor signierte und verschlüsselte modifizierte Client-Mail. Im Header werden Informationen zum verwendeten Clientmodul, der Produkltypversion und dem verwendeten Konnektor hinzugefügt. Anschließend wird die Nachricht per SMTP an den Fachdienst übertragen.
 
 .signierte und verschlüsselte KOM-LE Nachricht
 [%collapsible%open]
@@ -216,7 +216,7 @@ MIAGCyqGSIb3DQEJEAEXoIAwg[...]
 
 === KOM-LE Mail prozessiert
 Das KIM-Clientmodul entschlüsselt die KOM-LE Nachricht und führt die Integritätsprüfungsschritte durch.
-Nach der Entschlüsselung ist die KIM-Attachment Datenstruktur lesbar und die Informationen können genutzt werden, um die auf dem KAS abgelegte Client Mail abzurufen.
+Nach der Entschlüsselung ist die KIM-Attachment Datenstruktur lesbar und die Informationen können genutzt werden, um die auf dem KAS abgelegte Client-Mail abzurufen.
 
 .entschlüsselte KOM-LE Mail
 [%collapsible%open]
@@ -282,7 +282,7 @@ fHx3d3cuZGFzaW50ZXJuZX[...]
 ====
 
 === Client-Mail finalisiert
-Die Header Felder der vom KAS heruntergeladenen Client-Mail werden mit den Header Feldern der KOM-LE Nachricht abgeglichen. In der Client-Mail werden die Header Felder (Received, Return Path, X-KIM Check Results) befüllt und Fehlertexte im Body ergänzt. Anschließend wird die Client-Mail Base64 codiert an das via POP3 abfragende Clientsystem ausgeliefert.
+Die Header Felder der vom KAS heruntergeladenen Client-Mail werden mit den Header Feldern der KOM-LE Nachricht abgeglichen. In der Client-Mail werden die Header Felder (Received, Return Path, X-KIM Check Results) befüllt. Anschließend wird die Client-Mail Base64 codiert an das via POP3 abfragende Clientsystem ausgeliefert.
 
 .Fertige Client Mail
 [%collapsible%open]
@@ -315,14 +315,9 @@ Content-Transfer-Encoding: 7bit
 
 Text der Testnachricht
 
-
----------------------------------------------
-Die Nachricht wurde entschlÃ¼sselt.
-Die Signatur wurde erfolgreich geprÃ¼ft.
-
 --------------v0Sp8vvZ1qGfAWh1MYiwrJ0W
-Content-Type: text/plain; charset=UTF-8; name="1mb.test"
-Content-Disposition: attachment; filename="1mb.test"
+Content-Type: text/plain; charset=UTF-8; name="20mb.test"
+Content-Disposition: attachment; filename="20mb.test"
 Content-Transfer-Encoding: base64
 
 fHx3d3cuZGFzaW50ZXJuZX[...]
