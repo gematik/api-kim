@@ -10,8 +10,8 @@ image:gematik_logo.svg[width=70%]
 toc::[]
 
 
-= Clientsystem
-Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel näher beschrieben werden. Darüber hinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten wird eine Schnittstelle (`I_AccountManager_Service`) durch die gematik am Account Manager normativ festgelegt. Diese wird durch das Administrationsmodul aufgerufen und ermöglicht die Konfiguration der Nutzer-Accounts.
+= Clientmodul
+Beginnend mit der KIM Version 1.5 werden weitere Funktionalitäten im Clientmodul bereitgestellt, die im folgenden Kapitel näher beschrieben werden. Darüber hinaus kann ab dieser Version das Clientmodul optional in das Primärsystem integriert werden. Zur Sicherstellung der Interoperabilität zwischen den Clientmodulen und den Fachdiensten werden die Schnittstellen (`I_AccountManager_Service`), (`I_Attachment_Service`), (`I_AccountLimit_Service`) und  (`I_ServiceInformation`) durch die gematik am Account Manager eines KIM Fachdienstes normativ festgelegt. Diese werden durch das im Clientmodul integrierte Administrationsmodul aufgerufen und ermöglichen die Konfiguration der Nutzer-Accounts.
 
 == Änderungen im Clientmodul ab KIM 1.5
 === Optionale Integration in das Clientsystem
@@ -20,7 +20,7 @@ Ab der KIM Version 1.5 ist es möglich das Clientmodul in ein Clientsystem zu in
 
 === Umgang mit E-Mail-Kategorien
 
-Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werden die KIM-Mails mit einer KIM-Dienstkennung markiert (z. B. bei der eAU). Hierfür wird die Dienstkennung als Bestandteil in den äußeren Header (`X-KIM-Dienstkennung`) der KIM-Mail übernommen. Die Benennung der zu verwendenden Dienstkennungen erfolgt durch den Mail-Client. Wurde durch den Mail-Client keine Dienstkennung gesetzt, dann wird durch das Clientmodul eine Default-Dienstkennung eingetragen. Die Anpassungen sind in *[gemSpec_CM_KOMLE#3.6]* und *[gemSMIME_KOMLE#2.1.1.1]* spezifiziert.
+Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werden die KIM-Mails mit einer KIM-Dienstkennung markiert (z. B. bei der eAU). Hierfür wird die Dienstkennung als Bestandteil in den äußeren Header (`X-KIM-Dienstkennung`) der KIM-Mail übernommen. Die Festlegung der zu verwendenden Dienstkennungen erfolgt durch den Mail-Client. Wurde durch den Mail-Client keine Dienstkennung gesetzt, dann wird durch das Clientmodul eine Default-Dienstkennung `KIM-Mail;Default;V1.0` eingetragen. Die Anpassungen sind in *[gemSpec_CM_KOMLE#3.6]* und *[gemSMIME_KOMLE#2.1.1.1]* spezifiziert.
 
 Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[Dienstkennungen]
 
