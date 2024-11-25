@@ -103,6 +103,9 @@ Mittels der Suchkriterien kann das Primärsystem die KIM-E-Mail-Empfänger im Ve
 Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere
 Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
+* *Versand einer großen E-Mail* +
+Für den Versand einer goßen E-Mail (Gesamtgröße übersteigt 15 MB) ist die im VZD durch einen Nutzer hinterlegte Freigabe zum Empfang großer E-Mails zu berücksichtigen. Ist bei der Erstellung einer zu versendenden Nachricht abzusehen, dass die Größe der Nachricht den Wert 15 MB übersteigt, dann sollte ein Empfänger, ohne die dafür hinterlegte Kennung `1.5+`, nicht zur Liste der Empfänger hinzugegfügt werden.
+
 * *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
 Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist dem Nutzer die mit dem Standard Anwendungskennzeichen markierte E-Mail-Adresse anzuzeigen. Der Nutzer kann entscheiden, ob diese Adresse verwendet wird. Ist dies nicht der Fall ist der Versand der Mail abzulehnen.
 
