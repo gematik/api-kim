@@ -32,4 +32,4 @@ Im Folgenden sind die LDAP-Directory-Attribute der KIM-Fachdaten dargestellt: +
 </p>
 ++++
 
-TIP: Die Abfrage der KIM-Fachdaten sollte aus den strukturierten KIM-Fachdaten erfolgen (nicht aus der flachen Liste). Die flache Liste enthält die niedrigste KIM-Version aller KIM-Anbieter für diesen Verzeichniseintrag.  
+TIP: Die Abfrage der KIM-Fachdaten sollte aus den strukturierten KIM-Fachdaten erfolgen (nicht aus der flachen Liste).  
