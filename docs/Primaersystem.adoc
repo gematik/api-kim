@@ -423,7 +423,7 @@ Um ein Load-Balancing für den Netzwerk-Verkehr in das zentrale Netz der TI zu e
 
 Aufgrund von vereinzelten Rückmeldungen zur schlechten Performance und Bedienbarkeit von Primärsystemen sollen hier einige allgemeine Implementierungshinweise gegeben werden.
 
-_Hinweis: Zeitlimits, die durch menschliche Wahrnehmungsfähigkeiten bestimmt werden, und die bei der Web -und Anwendugsprogrammierung beachtet werden sollten, werden unter link:https://www.nngroup.com/articles/response-times-3-important-limits/[Zeitlimits] beschrieben_.
+_Hinweis: Zeitlimits, die durch menschliche Wahrnehmungsfähigkeiten bestimmt werden, und die bei der Web -und Anwendungsprogrammierung beachtet werden sollten, werden unter link:https://www.nngroup.com/articles/response-times-3-important-limits/[Zeitlimits] beschrieben_.
 
 Die Benutzeroberfläche sollte immer auf Eingaben reagieren können und der Benutzer durch geeignete Hinweise zum Stand der Bearbeitung informiert werden. Für die Aufrechterhaltung der Reaktionsfähigkeit der Oberfläche hat jedes UI-Framework eigene Konzepte, üblicherweise wird das Rendern der UI in einem eigenen Thread ausgelagert. Dieser Thread darf nicht durch andere Operationen, wie z.B. Konnektor-Operationen, blockiert werden.
 
