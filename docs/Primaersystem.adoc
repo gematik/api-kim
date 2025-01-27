@@ -122,7 +122,7 @@ Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-edito
 Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
 
 * *Anhänge* +
-Werden Anhänge zusammen mit einer KIM-E-Mail übertragen, ist bei der Benahmung der (https://www.rfc-editor.org/rfc/rfc2047.html[RFC2047]) einzuhalten. Das heißt, werden Anhänge deren Dateinamen Umlaute enthalten, genutzt, muss dieser, wie im RFC gefordert, vollständig UTF-8 kodiert in den Nachrichten Body eingetrage werden. Es folgt ein Beispiel mit dem Dateinamen `Handbuch-ÄÜÖß.pdf`.
+Werden Anhänge zusammen mit einer KIM-E-Mail übertragen, ist bei der Benennung der (https://www.rfc-editor.org/rfc/rfc2047.html[RFC2047]) einzuhalten. Das heißt, werden Anhänge deren Dateinamen Umlaute enthalten, genutzt, muss dieser, wie im RFC gefordert, vollständig UTF-8 kodiert in den Nachrichten Body eingetrage werden. Es folgt ein Beispiel mit dem Dateinamen `Handbuch-ÄÜÖß.pdf`.
 
 *Beispiel für eine korrekte UTF-8 Kodierung*
 ----
