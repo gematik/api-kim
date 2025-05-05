@@ -1,9 +1,10 @@
 info:
   title: I_CommonSchemas
-  version: 1.0.2
-
+  version: 1.0.3
+### 1.0.3
+# - error code 424 removed
 ### 1.0.2
-# - new eror code 424, when default Anwendungskennzeichen will be lost or is necessary
+# - new error code 424, when default Anwendungskennzeichen will be lost or is necessary
 ### 1.0.1
 # - removed minLength from Password for KIM 1.5.2 compatability
 ### 1.0.0
@@ -54,12 +55,6 @@ components:
             $ref: '#/components/schemas/Error'
     423:
       description: VZD entry is locked.
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/Error'
-    424:
-      description: default Anwendungskennzeichen will be lost or is necessary.
       content:
         application/json; charset=utf-8:
           schema:

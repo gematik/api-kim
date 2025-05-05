@@ -3,17 +3,21 @@ info:
   title: I_AccountManager_Service
   description:  The KIM Account Manager is managed via this interface.
   #  The “utf-8” character set must be supported for all operations.
-  version: 2.3.3
+  version: 2.3.4
+### 2.3.4
+  # - changed servers url, for compatibility
+  # - remove parameter appTags and newStAKowner
+  # - remove error code 424
 ### 2.3.3
   # - new parameter newStAKowner (new owner Standard Anwendungskennzeichen)
-  # - new eror code 424, when default Anwendungskennzeichen will be lost
+  # - new error code 424, when default Anwendungskennzeichen will be lost
 ### 2.3.2
-  # - changed servers -url for KIM 1.5.2 compatability
-  # - changed path (/account) for KIM 1.5.2 compatability
+  # - changed servers -url for KIM 1.5.2 compatibility
+  # - changed path (/account) for KIM 1.5.2 compatibility
   # - changed parameter iniPassword (maxlength and format)
-  # - changed parameter referenceId (maxlength) for KIM 1.5.2 compatability
-  # - added enum for regStat in schemas /Account for KIM 1.5.2 compatability
-  # - added in schemas /Account dataTimeToLive for KIM 1.5.2 compatability
+  # - changed parameter referenceId (maxlength) for KIM 1.5.2 compatibility
+  # - added enum for regStat in schemas /Account for KIM 1.5.2 compatibility
+  # - added in schemas /Account dataTimeToLive for KIM 1.5.2 compatibility
   # - added in schemas /Account maxMailSize (changed minimum and added maximum value) for KIM 1.5.2 compatability
 ### 2.3.1
   # KIM 1.5.3 changes
@@ -77,7 +81,7 @@ externalDocs:
   url: https://github.com/gematik/api-kim
 
 servers:
-- url: /AccountMgmt/v2.3/
+- url: /AccountMgmt/v2.4/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
@@ -148,12 +152,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        424:
-          description: default Anwendungskennzeichen will be lost.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -211,12 +209,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        424:
-          description: default Anwendungskennzeichen will be lost.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -254,8 +246,6 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
-        424:
-          $ref: 'CommonSchemas.yaml#/components/responses/424'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -486,12 +476,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        424:
-          description: default Anwendungskennzeichen will be lost.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -671,6 +655,7 @@ components:
           example: 90
           description: Storage period for emails and attachments on the KAS service.
                        Specified in days.
+
         maxMailSize:
           type: integer
           format: int64
@@ -679,20 +664,6 @@ components:
           example: 734003200
           readOnly: true
           description: The maximum size of a KIM email in bytes.
-
-        appTags:
-          type: array
-          items:
-            type: string
-          description: The appTags parameter contains all application tags associated with the assigned email address.
-                       Exactly one application identifier is specified per form part. For multiple application indicators
-                       the form part is specified multiple times (exploded=true). If no application identifier is specified
-                       then existing application identifiers will be deleted.
-        newStAKowner:
-          type: string
-          maxLength: 256
-          format: email
-          description: email of new the Standard Anwendungskennzeichen account.
 
         noVzdMailEntry:
           type: boolean

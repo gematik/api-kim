@@ -3,7 +3,10 @@ info:
   title: I_Attachment_Service
   description:  Encrypted email attachments can be sent via this interface
                 uploaded and made available.
-  version: 2.3.3
+  version: 2.3.4
+  ### 2.3.4
+  # - change servers url for compatibility
+  # - changed Attachment to maildata file
   ### 2.3.3
   # - changed operationId readMaildata
   ### 2.3.2
@@ -48,7 +51,7 @@ externalDocs:
   description: GitHub - documentation
   url: https://github.com/gematik/api-kim
 servers:
-- url: /attachments/v2.3/
+- url: /attachments/v2.4/
   # Die URL muss wie folgt gebildet werden:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
@@ -60,14 +63,14 @@ paths:
     get:
       tags:
       - Maildata
-      summary: Download an attachment
-      description: returns the attachment encrypted under a share link.
+      summary: Download an maildata file
+      description: returns the maildata file encrypted under a share link.
       operationId: readMaildata
 
       parameters:
       - name: attachmentId
         in: path
-        description: Link reference to the encrypted attachment in the service.
+        description: Link reference to the encrypted maildata file in the service.
         required: true
         schema:
           type: string
@@ -82,7 +85,7 @@ paths:
       responses:
         200:
           description: OK
-             # Attachment was downloaded successfully
+             # maildata file was downloaded successfully
           content:
            application/octet-stream:
             schema:
@@ -103,7 +106,7 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         429:
-          description: Downloaded attachment too many times.
+          description: Downloaded maildata file too many times.
           content:
             application/json; charset=utf-8:
               schema:
@@ -114,8 +117,8 @@ paths:
     delete:
       tags:
       - Maildata
-      summary: Delete email data from KAS
-      description: Deletion of email data stored on the KAS, Uri corresponds to sharedLink from add_Attachment.
+      summary: Delete maildata file from KAS
+      description: Deletion of maildata file stored on the KAS, uri corresponds to sharedLink from add_Maildata.
       operationId: deleteMaildata
 
       security:
@@ -125,7 +128,7 @@ paths:
       parameters:
       - name: attachmentId
         in: path
-        description: Link reference to the encrypted attachment in the service.
+        description: Link reference to the encrypted maildata file in the service.
         required: true
         schema:
           type: string
@@ -150,8 +153,8 @@ paths:
     post:
       tags:
       - Maildata
-      summary: Add an attachment
-      description: An encrypted attachment is added under a newly created sharing link.
+      summary: Add an maildata file
+      description: An encrypted maildata file is added under a newly created sharing link.
       operationId: addMaildata
 
       security:
@@ -173,7 +176,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
-              required: [messageID, attachment, recipients, expires]
+              required: [messageID, maildata file, recipients, expires]
               properties:
                 messageID:
                     type: string
@@ -191,7 +194,7 @@ paths:
                       format: email
                 expires:
                     type: string
-                    description: Time at which the attachment must be deleted.
+                    description: Time at which the maildata file must be deleted.
                                  (Format RFC5322 date-time)
                 attachment:
                    type: string
@@ -218,7 +221,7 @@ paths:
       responses:
           201:
             description: Created
-            # The attachment was successfully created under the shared link provided.
+            # The Maildata file was successfully created under the shared link provided.
             content:
              application/json; charset=utf-8:
               schema:
@@ -227,8 +230,8 @@ paths:
                  sharedLink:
                    type: string
                     # Contains the link to the download point.
-                    # The attachment can be accessed from KAS via the link.
-                    # The link contains the attachmentID - required in operation read_Attachment.
+                    # The Maildata file can be accessed from KAS via the link.
+                    # The link contains the attachmentID - required in operation read_Maildata.
           400:
             $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
