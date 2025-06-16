@@ -3,8 +3,8 @@ info:
   title: I_AccountManager_Service
   description:  The KIM Account Manager is managed via this interface.
   #  The “utf-8” character set must be supported for all operations.
-  version: 2.3.4
-### 2.3.4
+  version: 2.4.0
+### 2.4.0
   # - changed servers url, for compatibility
   # - remove parameter appTags and newStAKowner
   # - remove error code 424
