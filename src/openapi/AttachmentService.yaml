@@ -3,8 +3,8 @@ info:
   title: I_Attachment_Service
   description:  Encrypted email attachments can be sent via this interface
                 uploaded and made available.
-  version: 2.3.4
-  ### 2.3.4
+  version: 2.4.0
+  ### 2.4.0
   # - change servers url for compatibility
   # - changed Attachment to maildata file
   # - added head methode to provide file size
