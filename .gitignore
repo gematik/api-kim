@@ -1,1 +1,11 @@
-.vscode/settings.json
+.idea
+.vscode
+.idea
+*.log
+*.tar.gz
+*.pyc
+__pycache__/
+var/
+console
+poetry.lock
+dist/
