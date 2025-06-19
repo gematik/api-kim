@@ -178,7 +178,7 @@ paths:
       parameters:
         - name: Content-Length
           in: header
-          description: Total size/length of the encrypted Maildata.
+          description: Total size/length of the request body.
           required: true
           schema:
             type: integer
