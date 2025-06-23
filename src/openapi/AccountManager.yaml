@@ -232,11 +232,6 @@ paths:
         required: true
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      requestBody:
-        content:
-          application/json; charset=utf-8:
-            schema:
-              $ref: '#/components/schemas/Account'
       responses:
         204:
           description: Account deregistered successfully.
@@ -327,51 +322,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-        502:
-          $ref: 'CommonSchemas.yaml#/components/responses/502'
-
-  /account/{username}/accounts:
-    get:
-      tags:
-      - Email-Account
-      summary: List of all accounts of a telematics ID.
-      operationId: listAccounts
-      parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
-      - name: telematikId
-        in: header
-        description: Optional parameter, if specified, the accounts can be found with one VZD query; two VZD queries are necessary for the username.
-        required: false
-        schema:
-          type: string
-          maxLength: 256
-      responses:
-        200:
-          description: List of all accounts of a telematics ID.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
-        400:
-          $ref: 'CommonSchemas.yaml#/components/responses/400'
-        401:
-          $ref: 'CommonSchemas.yaml#/components/responses/401'
-        404:
-          $ref: 'CommonSchemas.yaml#/components/responses/404'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
