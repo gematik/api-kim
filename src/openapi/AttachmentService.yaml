@@ -13,7 +13,7 @@ info:
   ### 2.3.2
   # - added distinct definition for header element Content-Length in add_Attachment:
   #   - Content-Length full request body
-  #   - Content-Length of the actual mail data of the "attachment" form-data in body, which is required in order to check against maxMailSize + performant storage streaming
+  #   - Content-Length of the actual mail data of the "attachment" form-data in body, which is required  in order to check against quota (when quota handling is realized) + performant storage streaming
   # - added traceId to Error object
   # - changed servers -url
   # - changed operationId readAttachment
