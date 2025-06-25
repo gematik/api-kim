@@ -190,7 +190,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
-              required: [messageID, maildata file, recipients, expires]
+              required: [messageID, attachment, recipients, expires]
               properties:
                 messageID:
                     type: string
