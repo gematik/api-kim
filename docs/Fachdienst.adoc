@@ -31,7 +31,7 @@ Die Beschreibung der REST-Schnittstelle `I_AccountLimit_Service` ist hier zu fin
 Die Beschreibung der REST-Schnittstelle `I_ServiceInformation` ist hier zu finden: link:../src/openapi/ServiceInformation.yaml[ServiceInformation.yaml]
 
 == KIM Attachment Service (KAS)
-Ab KIM 1.5 werden die E-Mail-Daten einer Mail, die größer 15 MiB ist, ausgelagert. Für die Ablage der E-Mail-Daten wird der Fachdienst um die Teilkomponente KIM Attachment Service (KAS) erweitert. Die Teilkomponente KAS des Fachdienstes stellt dem Clientmodul die REST-Schnittstelle `I_Attachment_Service` bereit. Die Teilkomponente KAS ist in *[gemSpec_FD_KOMLE#4.2]* spezifiziert. 
+Ab KIM 1.5 werden die E-Mail-Daten einer Mail, die größer 15 MiB ist, ausgelagert. Für die Ablage der E-Mail-Daten stellt der Fachdienst die Teilkomponente KIM Attachment Service (KAS) bereit. Die Teilkomponente KAS des Fachdienstes wird durch das Clientmodul über die REST-Schnittstelle `I_Attachment_Service` genutzt. Die Teilkomponente KAS ist in *[gemSpec_FD_KOMLE#4.2]* spezifiziert. 
 
 Die Beschreibung der REST-Schnittstelle `I_Attachment_Service` ist hier zu finden: link:../src/openapi/AttachmentService.yaml[AttachmentService.yaml] 
 

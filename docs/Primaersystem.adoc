@@ -103,8 +103,11 @@ Mittels der Suchkriterien kann das Primärsystem die KIM-E-Mail-Empfänger im Ve
 Aus den Resultaten der LDAP-Suche übernimmt das Primärsystem die E-Mail-Adresse des gewünschten Empfängers. Falls es mehrere
 Suchergebnisse gibt, werden die Ergebnisinformationen dem Nutzer vollständig angezeigt, damit dieser die gewünschte E-Mail-Adresse auswählt.
 
+* *Versand einer großen E-Mail* +
+Für den Versand einer goßen E-Mail (Gesamtgröße übersteigt 15 MB) ist die im VZD durch einen Nutzer hinterlegte Freigabe zum Empfang großer E-Mails zu berücksichtigen. Ist bei der Erstellung einer zu versendenden Nachricht abzusehen, dass die Größe der Nachricht den Wert 15 MB übersteigt, dann sollte ein Empfänger, ohne die dafür in seinem VZD Eintrag hinterlegte Kennung `1.5+`, nicht zur Liste der Empfänger hinzugegfügt werden.
+
 * *Berücksichtigung des&#47;der Anwendungskennzeichen des Empfängers* +
-Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist dem Nutzer die mit dem Standard Anwendungskennzeichen markierte E-Mail-Adresse anzuzeigen. Der Nutzer kann entscheiden, ob diese Adresse verwendet wird. Ist dies nicht der Fall ist der Versand der Mail abzulehnen.
+Es ist erforderlich, dass das Primärsystem die im Suchergebnis enthaltenen Anwendungskennzeichen, die ein KIM Teilnehmer im VZD für seinen Eintrag hinterlegt hat, berücksichtigt. Erkennt das Primärsystem, dass für die verwendete Anwendung kein Eintragung im VZD Eintrag des beabsichtigten Empfängers vorliegt, dann ist dem Nutzer die mit dem Standard Anwendungskennzeichen markierte E-Mail-Adresse anzuzeigen. Der Nutzer kann entscheiden, ob diese Adresse verwendet wird. Ist dies nicht der Fall, oder durch den Sender nicht gewünscht, ist der Versand der Mail abzulehnen.
 
 * *Prüfung der Empfängeradressen* +
 Es ist erforderlich, dass das Primärsystem lokal gespeicherte KIM-Adressen regelmäßig mit den Daten im VZD vergleicht und nicht mehr im VZD vorhandene KIM-Adressen aus dem lokalen Speicher entfernt und gegebenenfalls durch aktuelle KIM-Adressen aus dem VZD ersetzt. Die lokal gespeicherten KIM-Adressen sollen einmal täglich aktualisiert werden.
@@ -119,7 +122,7 @@ Die Nachrichten müssen konform zu RFC5322 erzeugt werden (https://www.rfc-edito
 Die message-id ist für KIM-Nachrichten nicht optional und muss gemäß https://www.rfc-editor.org/rfc/rfc5322.html#section-3.6.4[RFC5322 Kapitel 3.6.4] erzeugt werden.
 
 * *Anhänge* +
-Werden Anhänge zusammen mit einer KIM-E-Mail übertragen, ist bei der Benahmung der (https://www.rfc-editor.org/rfc/rfc2047.html[RFC2047]) einzuhalten. Das heißt, werden Anhänge deren Dateinamen Umlaute enthalten, genutzt, muss dieser, wie im RFC gefordert, vollständig UTF-8 kodiert in den Nachrichten Body eingetrage werden. Es folgt ein Beispiel mit dem Dateinamen `Handbuch-ÄÜÖß.pdf`.
+Werden Anhänge zusammen mit einer KIM-E-Mail übertragen, ist bei der Benennung der (https://www.rfc-editor.org/rfc/rfc2047.html[RFC2047]) einzuhalten. Das heißt, werden Anhänge deren Dateinamen Umlaute enthalten, genutzt, muss dieser, wie im RFC gefordert, vollständig UTF-8 kodiert in den Nachrichten Body eingetrage werden. Es folgt ein Beispiel mit dem Dateinamen `Handbuch-ÄÜÖß.pdf`.
 
 *Beispiel für eine korrekte UTF-8 Kodierung*
 ----
@@ -420,7 +423,7 @@ Um ein Load-Balancing für den Netzwerk-Verkehr in das zentrale Netz der TI zu e
 
 Aufgrund von vereinzelten Rückmeldungen zur schlechten Performance und Bedienbarkeit von Primärsystemen sollen hier einige allgemeine Implementierungshinweise gegeben werden.
 
-_Hinweis: Zeitlimits, die durch menschliche Wahrnehmungsfähigkeiten bestimmt werden, und die bei der Web -und Anwendugsprogrammierung beachtet werden sollten, werden unter link:https://www.nngroup.com/articles/response-times-3-important-limits/[Zeitlimits] beschrieben_.
+_Hinweis: Zeitlimits, die durch menschliche Wahrnehmungsfähigkeiten bestimmt werden, und die bei der Web -und Anwendungsprogrammierung beachtet werden sollten, werden unter link:https://www.nngroup.com/articles/response-times-3-important-limits/[Zeitlimits] beschrieben_.
 
 Die Benutzeroberfläche sollte immer auf Eingaben reagieren können und der Benutzer durch geeignete Hinweise zum Stand der Bearbeitung informiert werden. Für die Aufrechterhaltung der Reaktionsfähigkeit der Oberfläche hat jedes UI-Framework eigene Konzepte, üblicherweise wird das Rendern der UI in einem eigenen Thread ausgelagert. Dieser Thread darf nicht durch andere Operationen, wie z.B. Konnektor-Operationen, blockiert werden.
 

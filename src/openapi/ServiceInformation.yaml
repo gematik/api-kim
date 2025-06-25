@@ -2,7 +2,9 @@ openapi: 3.0.3
 info:
   title: I_ServiceInformation
   description:  Information about the KIM service is requested via this interface.
-  version: 1.0.2
+  version: 1.0.3
+  ### 1.0.3
+  # - removed operation GET /appTags
   ### 1.0.2
   # - added operation GET /appTags
   ### 1.0.1
@@ -38,30 +40,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/ServiceInformation'
-        500:
-          $ref: 'CommonSchemas.yaml#/components/responses/500'
-
-  /appTags:
-    get:
-      tags:
-       - appTags
-      summary: Request information for application identifiers (Anwendungskennzeichen)
-      description: The list of application identifiers (Anwendungskennzeichen) is queried.
-        The application identifiers are used as the FHIR code system in the
-         Submit response
-      operationId: getAppTags
-
-      responses:
-        200:
-          description: OK
-             # Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
-             # Please refer https://simplifier.net/app-transport-framework/service-identifier-cs/~json
-          content:
-            application/json; charset=utf-8:
-              schema:
-                externalDocs:
-                  description: Return of the application identifiers as FHIR CodeSystem (ServiceIdentifierCS)
-                  url: https://simplifier.net/app-transport-framework/service-identifier-cs/~json
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
 
