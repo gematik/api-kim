@@ -241,6 +241,8 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
+        423:
+          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -276,8 +278,6 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
-        423:
-          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
