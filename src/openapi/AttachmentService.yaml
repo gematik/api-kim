@@ -65,6 +65,22 @@ paths:
       tags:
       - Maildata
       summary: Check if the resource is available.
+
+      parameters:
+      - name: attachmentId
+        in: path
+        description: Link reference to the encrypted maildata file in the service.
+        required: true
+        schema:
+          type: string
+      - name: recipient
+        in: header
+        description: The recipient's passed email (KIM) address.
+        required: true
+        schema:
+          type: string
+          format: email
+
       responses:
         200:
           description: returns the requested HEAD info when resource is available
