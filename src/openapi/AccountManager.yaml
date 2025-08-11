@@ -558,7 +558,7 @@ components:
     Account:
       type: object
       properties:
-        referenceId:
+        referenceID:
           type: string
           maxLength: 256
           description: The KIM provider determines the referenceID and communicates it to the KIM participant.
