@@ -95,7 +95,7 @@ paths:
       - Maildata
       summary: Download an maildata file
       description: returns the maildata file encrypted under a share link.
-      operationId: readMaildata
+      operationId: read_Maildata
 
       parameters:
       - name: attachmentId
@@ -149,7 +149,7 @@ paths:
       - Maildata
       summary: Delete maildata file from KAS
       description: Deletion of maildata file stored on the KAS, uri corresponds to sharedLink from add_Maildata.
-      operationId: deleteMaildata
+      operationId: delete_Maildata
 
       security:
         - KIMBasicAuth: []
@@ -185,7 +185,7 @@ paths:
       - Maildata
       summary: Add an maildata file
       description: An encrypted maildata file is added under a newly created sharing link.
-      operationId: addMaildata
+      operationId: add_Maildata
 
       security:
         - KIMBasicAuth: []
