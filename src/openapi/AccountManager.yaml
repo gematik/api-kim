@@ -147,11 +147,7 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         423:
-          description: VZD entry is locked.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -204,11 +200,7 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         423:
-          description: VZD entry is locked.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -317,11 +309,7 @@ paths:
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
         423:
-          description: VZD entry is locked.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
@@ -421,11 +409,7 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         423:
-          description: new VZD entry is locked.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
         502:
