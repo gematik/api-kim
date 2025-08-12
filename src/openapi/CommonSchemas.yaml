@@ -54,7 +54,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     423:
-      description: VZD entry is locked.
+      description: VZD entry is locked. VZD attribute 'active' for the targetted entry is in state "inactive".
       content:
         application/json; charset=utf-8:
           schema:
