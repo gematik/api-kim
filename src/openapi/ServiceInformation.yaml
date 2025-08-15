@@ -50,7 +50,7 @@ components:
       properties:
         kimServiceVersion:
           type: string
-          description: Specifies the version of the KIM backend service.
+          description: Specifies the version of the KIM backend service. There can be more then one Version if compatible, separated by ";".
         passwordPolicyRegEx:
           type: string
           description: Specifies the password policy that the AccountManager requires as a regular expression (in java compatible style).
@@ -69,7 +69,7 @@ components:
           type: boolean
           description: Specifies whether the initial password is required during initial registration.
       example:
-        kimServiceVersion: 1.5.3
+        kimServiceVersion: 1.5.4
         passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,?/~_+\-=|\\]).{12,256}$
         passwordPolicyDisplay: At least one number [0-9]
                               At least one lowercase letter [a-z]
