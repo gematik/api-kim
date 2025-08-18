@@ -5,11 +5,12 @@ info:
                 uploaded and made available.
   version: 2.4.0
   ### 2.4.0
+  # - change naming of operation identifiers to MailData
   # - change servers url for compatibility
   # - changed Attachment to maildata file
   # - added head methode to provide file size
   ### 2.3.3
-  # - changed operationId readMaildata
+  # - changed operationId read_Maildata
   ### 2.3.2
   # - added distinct definition for header element Content-Length in add_Attachment:
   #   - Content-Length full request body
@@ -57,19 +58,19 @@ servers:
   # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
   # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
 tags:
-- name: Maildata
+- name: MailData
 
 paths:
   /attachment/{attachmentId}:
     head:
       tags:
-      - Maildata
+      - MailData
       summary: Check if the resource is available.
 
       parameters:
       - name: attachmentId
         in: path
-        description: Link reference to the encrypted maildata file in the service.
+        description: Link reference to the encrypted mail data file in the service.
         required: true
         schema:
           type: string
@@ -92,15 +93,15 @@ paths:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
     get:
       tags:
-      - Maildata
-      summary: Download an maildata file
-      description: returns the maildata file encrypted under a share link.
-      operationId: read_Maildata
+      - MailData
+      summary: Download a mail data file
+      description: returns the mail data file encrypted under a share link.
+      operationId: readMailData
 
       parameters:
       - name: attachmentId
         in: path
-        description: Link reference to the encrypted maildata file in the service.
+        description: Link reference to the encrypted mail data file in the service.
         required: true
         schema:
           type: string
@@ -115,7 +116,7 @@ paths:
       responses:
         200:
           description: OK
-             # maildata file was downloaded successfully
+             # mail data file was downloaded successfully
           content:
            application/octet-stream:
             schema:
@@ -136,7 +137,7 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         429:
-          description: Downloaded maildata file too many times.
+          description: Downloaded mail data file too many times.
           content:
             application/json; charset=utf-8:
               schema:
@@ -146,10 +147,10 @@ paths:
 
     delete:
       tags:
-      - Maildata
-      summary: Delete maildata file from KAS
-      description: Deletion of maildata file stored on the KAS, uri corresponds to sharedLink from add_Maildata.
-      operationId: delete_Maildata
+      - MailData
+      summary: Delete mail data file from KAS
+      description: Deletion of mail data file stored on the KAS, uri corresponds to sharedLink from addMailData.
+      operationId: deleteMailData
 
       security:
         - KIMBasicAuth: []
@@ -158,7 +159,7 @@ paths:
       parameters:
       - name: attachmentId
         in: path
-        description: Link reference to the encrypted maildata file in the service.
+        description: Link reference to the encrypted mail data file in the service.
         required: true
         schema:
           type: string
@@ -182,10 +183,10 @@ paths:
   /attachment/:
     post:
       tags:
-      - Maildata
-      summary: Add an maildata file
-      description: An encrypted maildata file is added under a newly created sharing link.
-      operationId: add_Maildata
+      - MailData
+      summary: Add a mail data file
+      description: An encrypted mail data file is added under a newly created sharing link.
+      operationId: addMailData
 
       security:
         - KIMBasicAuth: []
@@ -224,12 +225,12 @@ paths:
                       format: email
                 expires:
                     type: string
-                    description: Time at which the maildata file must be deleted.
+                    description: Time at which the mail data file must be deleted.
                                  (Format RFC5322 date-time)
                 attachment:
                    type: string
                    format: binary
-                   description: Contains the encrypted maildata.
+                   description: Contains the encrypted mail data.
 
             encoding:
               attachment:
@@ -251,7 +252,7 @@ paths:
       responses:
           201:
             description: Created
-            # The Maildata file was successfully created under the shared link provided.
+            # The mail data file was successfully created under the shared link provided.
             content:
              application/json; charset=utf-8:
               schema:
@@ -260,8 +261,8 @@ paths:
                  sharedLink:
                    type: string
                     # Contains the link to the download point.
-                    # The Maildata file can be accessed from KAS via the link.
-                    # The link contains the attachmentID - required in operation read_Maildata.
+                    # The mail data file can be accessed from KAS via the link.
+                    # The link contains the attachmentID - required in operation readMailData.
           400:
             $ref: 'CommonSchemas.yaml#/components/responses/400'
           401:
