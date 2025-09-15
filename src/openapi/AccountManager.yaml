@@ -567,7 +567,6 @@ components:
           enum:
             - registered
             - deregistered
-          maxLength: 16
           example: registered
           description: The registration status of the account. Valid values are registered and deregistered.
 
