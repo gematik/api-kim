@@ -2,6 +2,16 @@
 
 image:gematik_logo.svg[width=70%]
 
+== KIM 1.5.4 Release Notes
+
+=== Neu
+- Anpassung zur Betriebsdatenerfassung BDE2.0
+- ECC Prefered als Nutzungsmethode bei der Signierung und Verschlüsselung vom KIM Nachrichten
+- Server URI und Port als optionaler Bestandteil im SMTP und POP3 Benutzernamen
+- Anpassungen an Fachdienstschnittstellen (API)
+- neue Fehlermeldung an der Schnittstelle KIM Fachdienst / VZD
+- Neues Attribut "noVZDMailEntry" bei der Kommunikation zum VZD
+
 == KIM 1.5.3-3 Release Notes
 
 === Neu
