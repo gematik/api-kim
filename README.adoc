@@ -14,7 +14,7 @@ image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubuser
 
 == Allgemeines
 
-Die folgende Dokumentation beschreibt KIM 1.5.3. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5.3 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5.3 verwenden.
+Die folgende Dokumentation beschreibt KIM 1.5.4. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5.4 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5.4 verwenden.
 
 Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie folgt:
 
