@@ -171,7 +171,7 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 
 See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.
 
-## Additional Notes and Disclaimer from gematik GmbH
+== Additional Notes and Disclaimer from gematik GmbH
 
 1. Copyright notice: Each published work result is accompanied by an explicit statement of the license conditions for use. These are regularly typical conditions in connection with open source or free software. Programs described/provided/linked here are free software, unless otherwise stated.
 2. Permission notice: Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions::
