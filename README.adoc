@@ -3,9 +3,6 @@
 
 image:gematik_logo.svg[width=70%]
 
-image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.releaseNotes.version&prefix=%20&style=plastic&logo=github&logoColor=blue&label=ReleaseNotes&labelColor=%24.badges.releaseNotes.color&color=blue[link="ReleaseNotes.adoc"] +
-image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.kimClientmodulSpec.version&style=plastic&logo=adobeacrobatreader&logoColor=red&label=Spezifikation%20KIM%20Clientmodul&color=red&[link=https://fachportal.gematik.de/Fanwendungen/kommunikation-im-medizinwesen]
-image:https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fjson%2Fbadges.json&query=%24.badges.kimFachdienstSpec.version&style=plastic&logo=adobeacrobatreader&logoColor=red&label=Spezifikation%20KIM%20Fachdienst&color=red&[link=https://fachportal.gematik.de/Fanwendungen/kommunikation-im-medizinwesen] +
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FAccountManager.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AccountManager&color=green[link="src/openapi/AccountManager.yaml"]
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FAttachmentService.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AttachmentService&color=green[link="src/openapi/attachmentService.yaml"]
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FAccountLimit.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=AccountLimit&color=green[link="src/openapi/AccountLimit.yaml"]
@@ -14,7 +11,7 @@ image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubuser
 
 == Allgemeines
 
-Die folgende Dokumentation beschreibt KIM 1.5.4. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert. Die Version KIM 1.5.4 ist vollständig abwärtskompatibel. Dadurch wird gewährleistet, dass Teilnehmer mit einer früheren Version uneingeschränkt Nachrichten an Teilnehmer versenden können, die bereits KIM 1.5.4 verwenden.
+Die folgende Dokumentation beschreibt Release-Zustand KIM. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert.
 
 Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie folgt:
 
@@ -25,8 +22,6 @@ Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie fo
 * ein Administrationsmodul für die Konfiguration des Nutzer-Accounts
 
 * das Einrichten von Abwesenheitsnotizen
-
-* das Einrichten von Anwendungskennzeichen
 
 * die Unterstützung syntaktischer Nachrichtenkategorien (Dienstkennungen)
 

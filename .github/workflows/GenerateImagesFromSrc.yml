@@ -19,8 +19,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Check plantuml sources
+        id: check_plantuml
+        run: |
+          if [ -d "./src/plantuml" ] && find ./src/plantuml -type f -name '*.puml' | grep -q .; then
+            echo "has_plantuml=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_plantuml=false" >> "$GITHUB_OUTPUT"
+          fi
+
       # Installs Java distribution for running the plantUML jar
       - name: Install Java
+        if: steps.check_plantuml.outputs.has_plantuml == 'true'
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -29,15 +39,18 @@ jobs:
       
       # Install graphviz for plantuml     
       - name: Setup Graphviz
+        if: steps.check_plantuml.outputs.has_plantuml == 'true'
         uses: ts-graphviz/setup-graphviz@v1
       
       # Download plantUML jar 
       - name: Download plantuml file
+        if: steps.check_plantuml.outputs.has_plantuml == 'true'
         run: |
           wget -O plantuml.jar "https://github.com/plantuml/plantuml/releases/download/v1.2023.10/plantuml-1.2023.10.jar" 
                                 
       # Runs a single command using the runners shell
       - name: Generate images
+        if: steps.check_plantuml.outputs.has_plantuml == 'true'
         run: |
           imagedir=images/diagrams
           mkdir -p $imagedir
@@ -71,9 +84,19 @@ jobs:
               #cat "${fullname}" | java -jar plantuml.jar -p -tsvg -checkmetadata  > "${outdir}/${base}.svg"
           done
           tree ./images
+
+      - name: Check drawio sources
+        id: check_drawio
+        run: |
+          if [ -d "./src/drawio" ] && find ./src/drawio -type f -name '*.drawio' | grep -q .; then
+            echo "has_drawio=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_drawio=false" >> "$GITHUB_OUTPUT"
+          fi
       
       # creates png files from draw io image files
       - name: Export drawio files as png
+        if: steps.check_drawio.outputs.has_drawio == 'true'
         uses: rlespinasse/drawio-export-action@v2
         with:
           path: ./src/drawio/ 
@@ -83,6 +106,7 @@ jobs:
 
       # creates svg files from draw io image files
       - name: Export drawio files 
+        if: steps.check_drawio.outputs.has_drawio == 'true'
         uses: rlespinasse/drawio-export-action@v2
         with:
           path: ./src/drawio/ 
@@ -92,6 +116,7 @@ jobs:
 
       # copies the created png & svg files to the images/diagrams folder and deletes the drawio files
       - name: Copy draw io
+        if: steps.check_drawio.outputs.has_drawio == 'true'
         run: |
           imagedir=images/diagrams
           cp -RT ./src/drawio $imagedir

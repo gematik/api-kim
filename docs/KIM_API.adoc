@@ -24,11 +24,6 @@ Für die automatisierte Auswertung der KIM-Mails auf Seiten des Empfängers werd
 
 Eine Übersicht über alle Dienstkennungen kann hier eingesehen werden: link:https://fachportal.gematik.de/toolkit/dienstkennung-kim-kom-le[Dienstkennungen]
 
-=== Umgang mit Anwendungskennzeichen (ab KIM 1.5.3)
-
-Für die geziehlte Auswahl einer KIM E-Mail-Adresse können die im TI VZD (LDAP) hinterlegten Adressen mit einem Anwendungskennzeichen versehen werden. So kann z. B. sichergestellt werden, dass eine gesendete Nachricht an diese KIM E-Mail-Adresse durch den Empfänger verarbeitet werden kann. Es können für eine KIM E-Mail-Adresse mehrere Anwendungskennzeichen hinterlegt werden. +
-Neben den auf eine explizite Anwendung bezogenen Anwendungskennzeichen wird ein Standard Anwendungskennzeichen konfiguriert. Dieses ermöglicht es, den Empfang von Nachrichten sicherzustellen, auch wenn kein passendes Anwendungskennzeichen gefunden wurde. Jeder Fachdiensteintrag (FAD) innerhalb eines Verzeichnisdiensteintrages (mit TelematikID) *MUSS eine* KIM E-Mail-Adresse mit einem Standard Anwendungskennzeichen besitzen. Wird eine KIM E-Mail-Adresse, die das Standard Anwendungskennzeichen zugewiesen hat, gelöscht, dann *MUSS* sichergestellt werden, dass eine Zuweisung für eine andere KIM E-Mail-Adresse im selben FAD eine Neuvergabe erfolgt. Das vor Ort befindliche KIM Clientmodul (Administrations-Modul) stellt die dafür notwendige Oberfläche bereit.
-
 === Umgang mit großen Anhängen
 
 E-Mails mit einer Gesamtgröße bis zu 15 MiB werden entsprechend den Festlegungen im KIM 1.0 behandelt. Übersteigt die Größe einer E-Mail die 15 MiB Grenze, wird die gesamte Client-Mail, durch das Clientmodul des Senders verschlüsselt, auf dem KIM-Attachment-Service (KAS) des Fachdiensts des Absenders abgelegt. Das Clientmodul ersetzt den Body der originalen Mail mit der KIM-Attachment Datenstruktur (*[gemSpec_CM_KOMLE#Tabelle 2]*) und versendet diese nach der weiteren Verarbeitung durch das Clientmodul als KIM Nachricht an den Fachdienst. Das KIM-Clientmodul des Empfängers erkennt den `link` in der KIM-Attachment Datenstruktur, lädt die E-Mail-Daten vom KAS des Absenders und entschlüsselt sie. Die damit wieder hergestellte originale Client-Mail wird dem Mail-Client des Empfängers zugestellt. Der Umgang mit großen Anhängen ist in *[gemSpec_CM_KOMLE#3.2]* spezifiziert. Die vom KAS dazu bereitgestellte Schnittstelle wird im folgenden genauer beschrieben.
@@ -331,14 +326,12 @@ Mittels der Operation `registerAccount()` wird die Registrierung eines KIM-Teiln
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
-  "appTags": "<Anwendungskennzeichen>"
 }
 ----
 [normal]#`referenceID` - Referenz eines KIM-Teilnehmers# +
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
-[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
-[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en#
+[normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version#
 |===
 
 *Beispielaufruf:*
@@ -354,7 +347,6 @@ curl -X 'POST' \
   "username": "user@example.kim.telematik",
   "password": "new_password",
   "kimVersion": "1.5"
-  "appTags": "eAU"
   }'
 -----------------
 
@@ -520,7 +512,6 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
-  "appTags": "<Anwendungskennzeichen>"
   "dataTimeToLive": 90
 }
 ----
@@ -528,7 +519,6 @@ Die Operation `setAccount()` ermöglicht die Verwaltung eines Accounts eines KIM
 [normal]#`username` - E-Mail Adresse eines KIM-Teilnehmers# +
 [normal]#`password` - Neues Passwort festlegen# +
 [normal]#`kimVersion` - Die vom Clientmodul eingesetzte KIM-Version# +
-[normal]#`appTags` - Die vom KIM-Teilnehmers unterstützte/n Anwendung/en# +
 [normal]#`dataTimeToLive` - Speicherdauer in Tagen von Mails und Anhängen auf dem Fachdienst#
 |===
 
@@ -545,7 +535,6 @@ curl -X 'PUT' \
   "username": "user@example.kim.telematik",
   "password": "password",
   "kimVersion": "1.5",
-  "appTags": "eAU",
   "dataTimeToLive": 90
 }'
 -----------------
@@ -620,7 +609,6 @@ Body:
   "regStat": "registered",
   "deregDate": 1616588543,
   "maxMailSize": 734003200,
-  "appTags": "eAU",
   "dataTimeToLive": 90
 }
 -----------------

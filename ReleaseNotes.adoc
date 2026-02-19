@@ -2,6 +2,10 @@
 
 image:gematik_logo.svg[width=70%]
 
+== KIM 1.5.5 Release Notes
+
+siehe https://gemspec.gematik.de/releases/KIM_1_5_5/
+
 == KIM 1.5.4 Release Notes
 
 === Neu
