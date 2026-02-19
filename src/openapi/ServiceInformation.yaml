@@ -69,7 +69,7 @@ components:
           type: boolean
           description: Specifies whether the initial password is required during initial registration.
       example:
-        kimServiceVersion: 1.5.4
+        kimServiceVersion: 1.5.5
         passwordPolicyRegEx: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;'<>,?/~_+\-=|\\]).{12,256}$
         passwordPolicyDisplay: At least one number [0-9]
                               At least one lowercase letter [a-z]
