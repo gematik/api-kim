@@ -19,28 +19,84 @@ image:gematik_logo.svg[width=70%]
 
 toc::[]
 
-= Primärsystem
-Der folgende Leitfaden beschreibt, wie das Primärsystem die Funktionalitäten von KIM umsetzt.
+= Implementierungsleitfaden KIM für Primärsysteme (ILF KIM)
+Dieser Leitfaden beschreibt die technische Basis zur Anbindung von Primärsystemen an KIM.
+[.green-background]
+****
+*Abgrenzung* +
+Konkrete technische Festlegungen bzgl. KIM-Komponenten in der TI erfolgen durch link:https://gemspec.gematik.de/docs/gemSpec/[Spezifikation] der gematik und beschreiben keine Primärsystem-Funktionalitäten.
+****
 
-TIP: Die Nutzung der in diesem Leitfaden geschilderten Funktionalitäten ist abhängig von der Verfügbarkeit eines QES-fähigen Konnektors.
-
-_Hinweis: Die Primärsystemschnittstellenversion sowie der Wertebereich von Datenfeldern kann sich im Laufe der Zeit ändern, insbesondere aufgrund von Änderungen/Updates am Konnektor. In diesem Leitfaden werden nur Änderungen aufgeführt, die für das sichere Übermittlungsverfahren KIM wichtig sind. Informationen zu den Unterschieden zwischen Primärsystemschnittstellenversionen veröffentlicht die gematik auf ihrem link:https://fachportal.gematik.de[Fachportal]_.
+[.green-background]
+****
+*Empfehlung* +
+Es wird empfohlen, diesen Leitfaden in Verbindung mit der link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[Spezifikation des KIM-Clientmoduls] zu betrachten, da die Anforderungen an die Schnittstelle und damit Integration in Primärsystem darin definiert sind.
+****
 
 == Übersicht
-Das sichere Übermittlungsverfahren KIM stellt Primärsystemen die Möglichkeit zur Verfügung, mit anderen KIM-Teilnehmern (Ärzten, Arztpraxen, Krankenhäusern usw.) eine Ende-zu-Ende-gesicherte E-Mail-Kommunikation zu führen. Die Ver-/Entschlüsselung sowie die Erstellung der Signatur und Signaturprüfung werden unter Nutzung der Smartcards (SM-B und HBA) vollständig vom KIM-Clientmodul übernommen.
+Das sichere Übermittlungsverfahren KIM stellt Primärsystemen die Möglichkeit zur Verfügung, mit anderen KIM-Teilnehmern (Ärzten, Arztpraxen, Krankenhäusern usw.) eine Ende-zu-Ende-gesicherte E-Mail-Kommunikation zu führen. Die *Ver-/Entschlüsselung sowie die Sicherstellung der Integrität von KIM-Nachrichten* (E-Mails) wird mittels und damit in Abhängigkeit zu Funktionen der dezentralen TI-Komponenten: TI-Konnektor, TI-Kartenterminals & Smartcards (SM-B und HBA) *durch das KIM-Clientmodul umgesetzt*. 
+
+== Abkürzungen und Begeriffe
+Generell sind Abkürzungen und Begriffe im link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_KOMLE/latest/[gematik Glossar] beschrieben. Die folgenden Abkürzungen und Begriffe sind für dieses Dokument wesentlich:
+
+[cols="1,4"]
+|===
+|*ILF*
+|Implementierungsleitfaden
+
+|*KIM*
+|Kommunikation im Medizinwesen
+
+|*VZD*
+|Verzeichnisdienst
+
+|*LE(I)*
+|Leistungserbringer(-institution)
+
+|*TI*
+|Telematikinfrastruktur
+
+|*VPN*
+|Virtual-Private-Network
+
+|*TSP*
+|Trust-Service-Provider
+
+|*Primärsystem/Clientsystem*
+|Software, welche als Client Funktionen der TI-Plattform (KIM-Clientmodul, TI-Konnektor) nutzt
+|===
 
 == Voraussetzungen
 Für die Nutzung von KIM müssen die folgenden Punkte erfüllt sein:
 
-TIP: - die Basisdaten (z. B. Zertifikat) des KIM-Nutzers sind in dem Verzeichnisdienst eingetragen, +
-     - der Nutzer hat sich bei einem KIM-Provider registriert, +
-     - die Fachdaten (z. B. KIM-E-Mail-Adresse) für den Nutzer sind im Verzeichnisdienst hinterlegt, +
-     - der Nutzer verfügt über eine freigeschaltete SM-B (bzw. einen freigeschalteten HBA) +
-     - der Konnektor ist für den Online-Modus konfiguriert.
+[cols="1,9,5"]
+|===
+|Nr. |Voraussetzung |Verantwortlichkeit
 
-* *Umkonfigurieren in den Online-Modus* +
-Es ist erforderlich, dass das Primärsystem den Anwender darüber informiert, wenn sich der Konnektor im Offline-Modus befindet.
-In diesem Fall ist eine Umkonfiguration des Konnektors durch den Anwender vorzunehmen.
+|1
+|Die Basisdaten der TI-Identität (u.a. Anschrift, Zertifikate) des KIM-Nutzers sind im VZD eingetragen
+|Kartenherausgeber und oder TSP im Auftrag von Verbänden, Kammern, ...
+
+|2
+|Registrierung bei einem KIM-Provider und erhalt einer KIM-Adresse
+|Nutzer, LE(I) oder Organisation
+
+|3
+|Die KIM-Fachdaten (u.a. KIM-Adresse, entspricht einer E-Mail-Adresse) sind im VZD der TI-Identität des Nutzers angegeben
+|KIM-Provider, automatisch bei Registrierung KIM-Adresse durch Nutzer
+
+|4
+|Der Nutzer verfügt über eine freigeschaltete SM-B (und ggf. einen freigeschalteten HBA)
+|Nutzer, LE(I) oder Organisation
+
+|5
+|Funktionsfähige, online TI-Anbindung des Primärsystems (TI-Konnektor, VPN, ...) ist vorhanden
+|Nutzer, LE(I) oder Organisation, Dienstleister
+
+|6
+|Funktionsfähige SMTP- & POP3 E-Mail-Client-Funktion im Primärsystem oder standalone E-Mail-Clientsoftware, sowie Konfiguration
+|Nutzer, LE(I) oder Organisation, Primärsystemhersteller, Dienstleister
+|===
 
 == Schnittstellen
 Das Primärsystem nutzt die Schnittstellen des Konnektors sowie des KIM-Clientmoduls. Die LDAP-Schnittstelle des Konnektors wird durch das Primärsystem genutzt, um mit dem Verzeichnisdienst zu kommunizieren. Damit ist es dem Primärsystem möglich, die KIM-Mailadresse eines Empfängers zu ermitteln. Das Primärsystem kommuniziert mit dem KIM-Clientmodul unter Verwendung der gängigen E-Mail–Standards (SMTP und POP3). Dabei agiert das Clientmodul als Mail Transport Agent (MTA). +
