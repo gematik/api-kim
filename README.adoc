@@ -38,7 +38,9 @@ Die in diesem Dokument formulierten Anforderungen sind informativ für Primärsy
 
 == Systemarchitektur
 
-KIM (vormals: KOM-LE) ermöglicht den sicheren elektronischen Datenaustausch zwischen registrierten, authentifizierten Nutzern der Telematikinfrastruktur (TI). KIM vermeidet Medienbrüche und sichert den geschützten Versand der behandlungs-, therapie- und abrechnungsrelevanten Daten wie Arztbriefe, Befunde oder Abrechnungen. 
+KIM (vormals: KOM-LE) ermöglicht den sicheren elektronischen Datenaustausch zwischen registrierten, authentifizierten Nutzern der Telematikinfrastruktur (TI). KIM vermeidet Medienbrüche und sichert den geschützten Versand der behandlungs-, therapie- und abrechnungsrelevanten Daten wie Arztbriefe, Befunde oder Abrechnungen. +
+
+Das folgende Schaubild zeigt alle am Versand um Empfang einer KIM Nachricht beteiligten TI Komponenten.
 
 //image:csm_KIM_Nachrichtenversand_und_Empfang_gematik_mitTIZugang__1__242ea5444f.png[width=45%]
 
@@ -48,6 +50,18 @@ KIM (vormals: KOM-LE) ermöglicht den sicheren elektronischen Datenaustausch zwi
 </p>
 ++++
 
+== Querverweis zu Dokumenten der gematik ==
+
+|===
+|*Dokument* | *Name* | *Zielgruppe* 
+|*gemSpec_CM_KOMLE* | Spezifikation KOM-LE_Clientmodul | 
+|*gemSpec_FD_KOMLE* | Spezifikation Fachdienst KOM-LE |
+|*gemSMIME_KOMLE* | S/MIME-Profil Kommunikation Leistungserbringer(KOM-LE) |
+|*gemSpec_VZD* | SpezifikationVerzeichnisdienst | Hersteller von Primärsystemen
+|*gemSpec_Kon* | SpezifikationKonnektor | Hersteller von Primärsystemen
+| | |
+|link:https://fachportal.gematik.de/test-und-serviceprodukte/dienstkennung-kim-kom-le[*Dienstkennung KIM (KOM-LE)*] | Die Dienstkennungen für die Anwendung Kommunikation im Medizinwesen als Übersicht | Hersteller von Primärsystemen
+|===
 
 == License
 
