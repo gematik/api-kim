@@ -1,4 +1,20 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+:doctype: book
+:toc: macro
 :imagesdir: images
+:toclevels: 5
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+toc::[]
+
 = KIM - Dokumentation
 
 image:gematik_logo.svg[width=70%]
@@ -9,154 +25,29 @@ image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubuser
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FServiceInformation.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=ServiceInformation&color=green[link="src/openapi/ServiceInformation.yaml"]
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FCommonSchemas.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=CommonSchemas&color=green[link="src/openapi/CommonSchemas.yaml"]
 
-== Allgemeines
+== Einordnung des Dokuments
 
-Die folgende Dokumentation beschreibt Release-Zustand KIM. An dieser Stelle werden insbesondere die Komponenten der Lösung sowie deren Schnittstellen dargestellt und erläutert.
+=== Zielsetzung ===
+Das Dokument beschreibt die für die Implementierung von KIM erforderlichen Vorgaben.
 
-Der Funktionsumfang der KIM Version 1.5 erweitert sich gegenüber KIM 1.0 wie folgt:
+=== Zielgruppe ===
+Das Dokument richtet sich maßgeblich an Hersteller von Primärsystemen (Praxisverwaltungssysteme, Krankenhausinformationssysteme und Apothekenverwaltungssysteme) von Leistungserbringerinstitutionen (LEI).
 
-* die Aufhebung der Größenbeschränkung von Nachrichten
-
-* die optionale Integration des Clientmoduls in das Primärsystem
-
-* ein Administrationsmodul für die Konfiguration des Nutzer-Accounts
-
-* das Einrichten von Abwesenheitsnotizen
-
-* die Unterstützung syntaktischer Nachrichtenkategorien (Dienstkennungen)
-
-* die Unterstützung von Multikonnektor-Umgebungen
-
-_Hinweis: Seit März 2020 verwendet die gematik die Bezeichnung „KIM – Kommunikation im Medizinwesen“ für die Anwendung KOM-LE. Diese neue Benennung findet sich insbesondere in Informationsmaterialien für die Zielgruppe Leistungserbringer, sowie in Presseveröffentlichungen. Eine Umbenennung in den technisch-normativen Dokumenten wie Spezifikationen, Konzepten, Zulassungsdokumenten etc. mit Ausnahme von Angaben zu Domänen, E-Mail-Adressen, technischen Schnittstellen, Parametern u.ä. erfolgt schrittweise und an geeigneter Stelle._
+=== Geltungsbereich ===
+Die in diesem Dokument formulierten Anforderungen sind informativ für Primärsysteme, die am Produktivbetrieb der Telematikinfrastruktur (TI) teilnehmen. Der Gültigkeitszeitraum der vorliegenden Version und deren Anwendung in Zulassungsverfahren wird durch die gematik GmbH in gesonderten Dokumenten (z. B. gemPTV_ATV_Festlegungen, Produkttypsteckbrief, Leistungsbeschreibung) festgelegt und bekannt gegeben.
 
 == Systemarchitektur
 
-Die folgende Abbildung gibt einen Überblick über die Systemarchitektur von KIM 1.5. Die Änderungen bei Komponenten und Schnittstellen von KIM 1.0 zu KIM 1.5 sind in der Abbildung rot dargestellt.
+KIM (vormals: KOM-LE) ermöglicht den sicheren elektronischen Datenaustausch zwischen registrierten, authentifizierten Nutzern der Telematikinfrastruktur (TI). KIM vermeidet Medienbrüche und sichert den geschützten Versand der behandlungs-, therapie- und abrechnungsrelevanten Daten wie Arztbriefe, Befunde oder Abrechnungen. 
+
+//image:csm_KIM_Nachrichtenversand_und_Empfang_gematik_mitTIZugang__1__242ea5444f.png[width=45%]
 
 ++++
-<p align="left">
-  <img width="90%" src=/images/kim_overview.png>
+<p align="center">
+  <img width="90%" src=images/csm_KIM_Nachrichtenversand_und_Empfang_gematik_mitTIZugang__1__242ea5444f.png>
 </p>
 ++++
 
-link:docs/KIM_API.adoc[*Clientsystem*]
-
-* *Clientmodul:* +
-Das Clientmodul kann jetzt optional in das Clientsystem (z. B. Primärsystem) integriert werden.
-
-* *Administrationsmodul:* +
-Die Erweiterung des Clientmoduls um das Administrationsmodul ermöglicht die Kommunikation mit dem Account Manager des Fachdienstes zur Administration und Konfiguration des Accounts eines KIM-Teilnehmers.
-
-link:docs/Fachdienst.adoc[*Fachdienst*]
-
-* *Mail Server:* +
-Der Mail Server stellt die Schnittstelle `I_Message_Service` bereit und wird über die Protokolle SMTP und POP3 angesprochen. In der KIM Version 1.5 wurden am Mail Server keine Änderungen vorgenommen.
-
-* *Account Manager:* +
-Für die einfache Verwaltung des Accounts, das Einrichten von Abwesenheitsnotizen eines KIM-Teilnehmers und für die Abfrage von Konfigurationsparametern des jeweiligen KIM Fachdienstes bietet der Account Manager ab der KIM Version 1.5 drei Webservices (`I_AccountManager_Service`, `I_AccountLimit_Service` und `I_ServiceInformation`) an.
-
-* *KIM Attachment Service:* +
-Der Fachdienst wird um die Komponente KIM Attachment Services (KAS) erweitert, der die sichere Speicherung größerer Client-Mails (E-Mail-Daten) ermöglicht. Die Komponente kann über die REST-Schnitstelle `I_Attachment_Service` erreicht werden.
-
-link:docs/Verzeichnisdienst.adoc[*Verzeichnisdienst*]
-
-* Um die Kompatibilität von KIM 1.5 zu früheren Versionen zu gewährleisten, wird der Verzeichnisdienst um die zusätzlichen Datenstrukturen `komLeData` und `kimData` ergänzt.
-* Der Verzeichnisdienst wird um die REST-Schnittstelle `I_Directory_Application_Maintenance` erweitert.
-
-== Ordnerstruktur
-
-Im Folgenden ist die Organisation der Ordnerstruktur dargestellt.
-
-----
-KIM-API
-├─ docs
-├─ images
-├─ samples
-|   ├──── KAS
-│   └──── SMIME-Profil.zip
-├─ src
-│   ├──── json
-│   │    └── badges.json
-|   ├──── openapi
-│   │    ├── AccountLimit.yaml
-│   │    ├── AccountManager.yaml
-│   │    ├── AttachmentServices.yaml
-│   │    ├── CommonSchemas.yaml
-│   │    └── ServiceInformation.yaml
-│   ├──── plantuml
-│   │    └── Fachdienst
-│   └──── schema
-│        └── Attachment_schema.json
-├── LICENSE
-├── README.adoc
-├── ReleaseNotes.md
-└── SECURITY.adoc
-----
-
-== Ausbaustufen
-
-Mit der Einführung von KIM unterstützt die gematik das Gesundheitswesen durch einen sektorenübergreifenden, sicheren E-Maildienst. In mehreren Versionen wird der Funktionsumfang von KIM kontinuierlich erweitert. Aktuell existieren die folgenden Versionen mit ihren dazugehörigen aktuellen Releases.
-
-|===
-|KIM 1.0 |KIM 1.5
-
-|https://fachportal.gematik.de/schnelleinstieg/downloadcenter/releases#c6557[R1.3.3-2] |https://fachportal.gematik.de/schnelleinstieg/downloadcenter/releases#c8094[KIM 1.6.3-0]
-|===
-
-Weitere Informationen zu den Versionen finden Sie hier: https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen[KIM]
-
-== Referenzierte Dokumente
-
-Die nachfolgende Tabelle enthält die in der vorliegenden Online Dokumentation referenzierten Dokumente der gematik zur Telematikinfrastruktur. Deren zu diesem Dokument jeweils gültige Versionsnummer entnehmen Sie bitte der aktuellen, auf der Internetseite der gematik veröffentlichten, Dokumentenlandkarte, in der die vorliegende Version aufgeführt wird.
-
-|===
-|[Quelle] |Herausgeber: Titel
-
-|*[gemSysL_KOMLE]* |gematik: Systemspezifisches Konzept Kommunikation Leistungserbringer (KOM-LE)
-|*[gemSMIME_KOMLE]* |gematik: S/MIME-Profil Kommunikation Leistungserbringer (KOM-LE)
-|*[gemSpec_CM]* |gematik: Spezifikation KOM-LE-Clientmodul
-|*[gemSpec_FD]* |gematik: Spezifikation Fachdienst KOM-LE
-|*[gemSpec_VZD]* |gematik: Spezifikation Verzeichnisdienst
-|*[gemSpec_OM]* |gematik: Übergreifende Spezifikation Operations und Maintenance
-|*[gemProdT_CM_KOMLE_PTV]* |gematik: Produkttypsteckbrief Prüfvorschrift KOM-LE-Clientmodul
-|*[gemProdT_iCM_KIM]* |gematik: Produkttypsteckbrief Prüfvorschrift Integriertes Clientmodul KIM
-|===
-
-== Weiterführende Seiten
-*Anwendungsfälle* +
-link:docs/Anwendungsfaelle.adoc[- Anwendungsfälle]
-
-*Produkttypen* +
-link:docs/KIM_API.adoc[- Clientsystem] +
-link:docs/Fachdienst.adoc[- Fachdienst] +
-link:docs/Verzeichnisdienst.adoc[- Verzeichnisdienst]
-
-*Leitfaden für Primärsystemhersteller* +
-link:docs/Primaersystem.adoc[- Primärsystem]
-
-*Diverses* +
-link:docs/Authentisierung.adoc[- Authentisierung] +
-link:docs/Versionierung.adoc[- Versionierung] +
-link:docs/Email_Verarbeitung.adoc[- Beispiel für große E-Mails] +
-link:docs/faq.adoc[- Fragen und Antworten zur aktuellen Spezifikation &#91;FAQ&#93;]
-
-
-*Referenz-Implementierungen* +
-https://github.com/gematik/kim-attachment-service[- KIM-Attachment-Service] +
-https://github.com/gematik/app-thunderbird-kim-plugin[- KIM-Thunderbird Plugin]
-
-== api-kim Branch Modell
-
-Im GitHub gematik/api-kim Repository werden Branches verwendet um den Status der Weiterentwicklung und das Review von Änderungen abzubilden.
-
-Folgende Branches werden verwendet
-
-- *main* (enthält den letzten freigegebenen Stand der Entwicklung; besteht permanent)
-- *develop* (enthält den Stand der fertig entwickelten Features und wird zum Review durch Industriepartner und Gesellschafter verwendet; basiert auf main; nach Freigabe erfolgt ein merge in main und ein Release wird erzeugt; besteht permanent)
-- *feature/<name>* (in feature branches werden neue Features entwickelt; basiert auf develop; nach Fertigstellung erfolgt ein merge in develop; wird nach dem merge gelöscht)
-- *hotfix/<name>* (in hotfix branches werden Hotfixes entwickelt; basiert auf main; nach Fertigstellung erfolgt ein merge in develop und in main; wird nach dem merge gelöscht)
-- *concept/<name>* (in feature branches werden neue Konzepte entwickelt; basiert auf develop; dient der Abstimmung mit Dritten; es erfolgt kein merge; wird nach Bedarf gelöscht)
-- *misc/<name>* (nur für internen Gebrauch der gematik; es erfolgt kein merge; wird nach Bedarf gelöscht)
 
 == License
 
