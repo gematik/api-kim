@@ -33,11 +33,11 @@ toc::[]
 |Datum |Version |Beschreibung
 
 | bis Ende 2025
-| 1.0.0
+| link:https://github.com/gematik/api-kim/tree/ILF_1.0.0[1.0.0]
 | Initiale Version & Maintenance-Änderungn sowie klarstellende Ergänzungen
 
 |19.02.2026
-|1.0.1
+|link:https://github.com/gematik/api-kim/tree/ILF_1.0.1[1.0.1]
 | Korrekturen & Bereinigung von Inhalten zu aktuell entfallem der Anwendungskennzeichen und `appTags`
 
 |===
