@@ -546,7 +546,7 @@ Das PS MUSS dem Nutzer Nachrichten mit `X-KIM-IntegrityCheckResult` und einem We
 [.teal-background]
 ****
 *Beachte* +
-KIM-E-Mail-Nachrichten, werden nach einer festgelegten Zeitspanne (default 90 Tage) automatisch durch den KIM-Fachdienst/-Provider gelöscht. 
+KIM-E-Mail-Nachrichten werden nach einer festgelegten Zeitspanne (default 90 Tage) automatisch durch den KIM-Fachdienst/-Provider gelöscht. 
 ****
 
 === Fehlerzustände 
@@ -682,7 +682,7 @@ Das CM agiert als TLS-Server gegenüber dem Primärsystem (TLS-Client). Die ents
 Das CM unterstützt: 
 
 * *(Empfohlen)* zertifikatsbasierte Client-Authentisierung link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#KOM-LE-A_2181[(mTLS - gemSpec_CM_KOMLE#KOM-LE-A_2181)] +
-  * Bietet höheres Sicherheitsniveau, da auch Client ein Authentisierungsmerkmal im TLS-Handshake angeben muss +
+  ** Bietet höheres Sicherheitsniveau, da auch Client ein Authentisierungsmerkmal im TLS-Handshake angeben muss +
 * TLS *ohne* zertifikatsbasierte Client-Authentisierung
 
 Dazu MUSS das PS folgendes unterstützen und in der Reihenfolge priorisieren: +
