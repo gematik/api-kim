@@ -90,11 +90,12 @@ Das sichere Übermittlungsverfahren KIM stellt Nutzern von Primärsystemen die M
 
 [.green-background]
 ****
-Dieser Leitfaden beschreibt die technische Basis zur Anbindung an sowie Nutzung von KIM durch Primärsysteme. +
+Dieser Leitfaden beschreibt die technische Basis zur Anbindung an sowie Nutzung von KIM durch *Primärsysteme*. +
 
 *Abgrenzung* +
 
 * Konkrete technische Festlegungen bzgl. KIM-Komponenten in der TI erfolgen durch link:https://gemspec.gematik.de/docs/gemSpec/[Spezifikation] der gematik und beschreiben keine Primärsystem-Funktionalitäten. +
+** Dazu zählen auch weitere Festlegungen aus bspw. [link:https://github.com/gematik/api-kim[api-kim github gematik]], die nicht explizit für für die Audienz der Primärsysteme und Hersteller dieser ausgewiesen werden. +
 * Spezifische Festlegungen bzgl. sog. "Fachverfahren" oder "payloads" link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[(i.d.R. Dienstkennungen KIM)] gelten als ergänzende Festlegungen. Sie sind *nicht* Bestandteil dieses Leitfadens.
 
 *Empfehlung* +
@@ -178,9 +179,9 @@ Dieses Kapitel beschreibt die wesentlichen, durch ein PS umzusetzenden Anwendung
 
 KIM-E-Mails können ausschließlich durch einen identifizierten Sender an identifizierte Empfänger übermittelt werden, die gemäß der <<Voraussetzungen>> KIM-E-Mail-Adresse(n), Verschlüsselungszertifikat(e) im VZD hinterlegt haben. Die Ermittlung dieser Informationen erfolgt über die LDAP-Schnittstelle des TI-Konnektors (LDAP-Proxy).
 
-* *Verbindungsaufbau & Authentifizierung* +
+* *Verbindungsaufbau & Authentisierung* +
 
-Für den Verbindungsaufbau und Authentifizierung zum TI-Konnektor bzw. LDAP-Proxy gelten die Festlegungen gemäß link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/#4.1.1.3[Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)].
+Für den Verbindungsaufbau und Authentisierung zum TI-Konnektor bzw. LDAP-Proxy gelten die Festlegungen gemäß link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/#4.1.1.3[Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)].
 
 * *Suche im VZD* +
 
@@ -337,9 +338,9 @@ CM → PS:  221 Bye
 . Timeouts für den Versandvorgang MÜSSEN, auch durch den Nutzer, einfach konfigurierbar sein. +
 . Das PS MUSS Vorgaben gemäß Kapitel [<<Transportsicherung zwischen Primärsystem und KIM-Clientmodul>>] umsetzen +
 
-*Authentifizierung*
+*Authentisierung*
 
-. Das PS MUSS SASL `PLAIN` und/oder `LOGIN` für die SMTP-Authentifizierung gemäß *[RFC4616]*, *[RFC4954]* verwenden. +
+. Das PS MUSS SASL `PLAIN` und/oder `LOGIN` für die SMTP-Authentisierung gemäß *[RFC4616]*, *[RFC4954]* verwenden. +
 . Das PS MUSS die Angabe des SMTP-Benutzernamen in KIM ermöglichen. +
 .. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.3.2.2[gemSpec_CM_KOMLE#3.3.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
@@ -412,9 +413,9 @@ Durch Trigger des PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab e
 . Timeouts für den Abrufvorgang MÜSSEN, auch durch den Nutzer, einfach konfigurierbar sein. +
 . Das PS MUSS Vorgaben gemäß Kapitel [<<Transportsicherung zwischen Primärsystem und KIM-Clientmodul>>] umsetzen +
 
-*Authentifizierung*
+*Authentisierung*
 
-. Das PS MUSS für die POP3-Authentifizierung `USER`+`PASS` gemäß *[RFC1939]* und/oder SASL `PLAIN` gemäß *[RFC4616]* verwenden +
+. Das PS MUSS für die POP3-Authentisierung `USER`+`PASS` gemäß *[RFC1939]* und/oder SASL `PLAIN` gemäß *[RFC4616]* verwenden +
 . Das PS MUSS die Angabe des POP3-Benutzernamen in KIM ermöglichen. +
 .. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.4.2.2[gemSpec_CM_KOMLE#3.4.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
@@ -447,6 +448,7 @@ Durch Trigger des PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab e
 . Das PS *MUSS alle verfügbaren KIM-E-Mail-Nachrichten abrufen*, auswerten und einem Nutzer anzeigen können +
 .. Sofern eine E-Mail/MimeMessage mit `multipart/alternative` & `text/plain` (nur Text) als auch `text/html` (formatierter Text) MimeParts vorliegt, ist die Anzeige des formatierten Inhalts (`text/html`) zu bevorzugen, siehe dazu link:https://www.rfc-editor.org/rfc/rfc2387.html[RFC 2387]. +
 . KIM-E-Mail-Daten MÜSSEN so gespeichert werden, dass gleiche Daten nicht wiederholt abgerufen werden, siehe `POP3 UIDL` +
+.. *_Beachte_*: Hinweise zum (automatischen) Löschen von KIM-E-Mail-Daten, siehe Kapitel [<<Löschen von KIM-E-Mail-Nachrichten>>]. +
 . Anhänge von KIM-E-Mail-Nachrichten MÜSSEN weitergenutzt, -verarbeitet werden können. +
 . Die Anforderung Lesebestätigung - *Message Disposition Notification (MDN)*, gemäß *[RFC8098]* muss erkannt, ausgewertet und ggf. dem Nutzer angezeigt werden. +
 . Für Analysezwecke MÜSSEN *alle Header-Elemente* der KIM-E-Mail-Nachrichten angezeigt werden können. 
@@ -509,7 +511,7 @@ JVBERi0xLjQKJ... (Base64 kodierter Inhalt) ...
 ====
 ****
 
-*Auswertung X-KIM-Header empfangener Nachrichten* +
+==== Auswertung X-KIM-Header empfangener Nachrichten +
 
 Entschlüsselte Nachrichten enthalten spezifische X-KIM-Header, welche konkrete Statusaussagen bieten. 
 
@@ -533,15 +535,19 @@ Entschlüsselte Nachrichten enthalten spezifische X-KIM-Header, welche konkrete 
 [.teal-background]
 ****
 *Beachte* +
-
 Das PS MUSS dem Nutzer Nachrichten mit `X-KIM-IntegrityCheckResult` und einem Wert ungleich `01` *mit deutlicher Warnung* präsentieren. Den Inhalten dieser Nachrichten darf nicht vertraut werden.
 ****
 
-*Löschen von KIM-E-Mail-Nachrichten* +
+==== Löschen von KIM-E-Mail-Nachrichten +
 
 * Da eine KIM-E-Mail-Adresse (Postfach) an mehreren Arbeitsplätzen genutzt und damit KIM-E-Mail-Nachrichten abgerufen werden können, SOLLEN Nachrichten per `POP3 DELE` vom Server erst dann gelöscht werden, wenn diese gesichert nicht erneut abgerufen werden müssen. +
 * Das PS MUSS dem Nutzer das manuelle Löschen von Nachrichten einfach ermöglichen (UI/UX). +
 
+[.teal-background]
+****
+*Beachte* +
+KIM-E-Mail-Nachrichten, werden nach einer festgelegten Zeitspanne (default 90 Tage) automatisch durch den KIM-Fachdienst/-Provider gelöscht. 
+****
 
 === Fehlerzustände 
 
@@ -657,7 +663,7 @@ Das CM agiert als TLS-Server gegenüber dem Primärsystem (TLS-Client). Die ents
 .. Das PS MUSS mit diesem Szenario umgehen können, z.B. durch regelmäßige Überprüfung des TLS-Server-Zertifikats und erneutem Import, erneuter Vertrauensherstellung bei Änderung. +
 . Es sind die zulässigen kryptographische Verfahren gemäß link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_25232-01][`TLS-Zertifikate für die Authentisierung gegenüber Clientsystemen - gemSpec_CM_KOMLE:A_25232-*`]] zu beachten.
 . Das PS MUSS in der Lage sein, (selbstsignierte) TLS-Zertifikate des CM zu importieren und zu nutzen, für bspw.:
-.. Import und Nutzung eines Client-Zertifikats (siehe <<TLS-Client-Authentifizierung (mTLS)>>)
+.. Import und Nutzung eines Client-Zertifikats (siehe <<TLS-Client-Authentisierung>>)
 .. Prüfungen wie bspw. fingerprint-basierte Vergleich
 . _Beachte_: Prüfung gegen Root/Sub-CAs (bspw. des OS) reichen i.d.R. nicht aus. 
 
@@ -671,13 +677,19 @@ Das CM agiert als TLS-Server gegenüber dem Primärsystem (TLS-Client). Die ents
 ** Keine public PKI = keine öffentlich Zertifikatskette, i.d.R. für Betriebssystem unbekannt CAs +
 ****
 
-=== TLS-Client-Authentifizierung (mTLS)
+=== TLS-Client-Authentisierung
 
-Das CM unterstützt sowohl TLS mit als auch ohne link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#KOM-LE-A_2181[zertifikatsbasierte Client-Authentifizierung ( gemSpec_CM_KOMLE#KOM-LE-A_2181).]
+Das CM unterstützt: 
 
-. Das PS MUSS TLS ohne zertifikatsbasierte Client-Authentifizierung unterstützen.
-. *(Empfohlen)* Das PS MUSS TLS mit zertifikatsbasierter Client-Authentifizierung unterstützen (*mTLS*), wenn diese im CM konfiguriert ist. +
-. Das zu nutzenden TLS-Client-Zertifikat MUSS entweder vom PS bereitgestellt und in das CM importiert, oder vom CM bereitgestellt und in das PS importiert werden können.
+* *(Empfohlen)* zertifikatsbasierte Client-Authentisierung link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#KOM-LE-A_2181[(mTLS - gemSpec_CM_KOMLE#KOM-LE-A_2181)] +
+  * Bietet höheres Sicherheitsniveau, da auch Client ein Authentisierungsmerkmal im TLS-Handshake angeben muss +
+* TLS *ohne* zertifikatsbasierte Client-Authentisierung
+
+Dazu MUSS das PS folgendes unterstützen und in der Reihenfolge priorisieren: +
+
+. *(Empfohlen)* Das PS MUSS TLS mit zertifikatsbasierter Client-Authentisierung unterstützen (*mTLS*) +
+.. Das zu nutzenden TLS-Client-Zertifikat/die zugrundeliegende Zertifikatsinformation MUSS entweder vom PS bereitgestellt und in das CM importiert, oder vom CM bereitgestellt und in das PS importiert werden können.
+. Das PS MUSS TLS ohne zertifikatsbasierte Client-Authentisierung unterstützen.
 
 == Umgang mit Multikonnektor-Umgebungen
 
