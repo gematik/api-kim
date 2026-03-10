@@ -10,6 +10,7 @@ endif::[]
 
 :imagesdir: ../images
 :doctype: book
+:docinfo: private
 :toc: macro
 :toclevels: 3
 :toc-title: Inhaltsverzeichnis
@@ -78,7 +79,7 @@ Generell sind Abkürzungen und Begriffe im link:https://fachportal.gematik.de/gl
 |Trust-Service-Provider
 
 |*PS/CS*
-|Primärsystem/Clientsystem - Software, welche Funktionen der TI-Plattform (KIM-Clientmodul, TI-Konnektor) nutzt
+|Primärsystem/Clientsystem - Software, die Funktionen der TI-Plattform (KIM-Clientmodul, TI-Konnektor) nutzt
 
 |*QES*
 |Qualifizierte elektronische Signatur
@@ -86,7 +87,7 @@ Generell sind Abkürzungen und Begriffe im link:https://fachportal.gematik.de/gl
 
 
 == Einleitung
-Das sichere Übermittlungsverfahren KIM stellt Nutzern von Primärsystemen die Möglichkeit zur Verfügung, mit anderen KIM-Teilnehmern eine Ende-zu-Ende-gesicherte E-Mail-Kommunikation zu führen. Die *Ver-/Entschlüsselung sowie die Sicherstellung der Integrität von KIM-Nachrichten* (E-Mails) wird u.a. in Abhängigkeit zu Funktionen der dezentralen TI-Komponenten: TI-Konnektor, TI-Kartenterminals & Smartcards (SM-B und HBA) *durch das KIM-Clientmodul umgesetzt*. 
+Das sichere Übermittlungsverfahren KIM stellt Nutzern von Primärsystemen die Möglichkeit zur Verfügung, mit anderen KIM-Teilnehmern eine Ende-zu-Ende-gesicherte E-Mail-Kommunikation zu führen. Die *Ver-/Entschlüsselung* sowie die *Sicherstellung der Integrität von KIM-Nachrichten* (E-Mails) wird u.a. in Abhängigkeit zu Funktionen der dezentralen TI-Komponenten: TI-Konnektor, TI-Kartenterminals & Smartcards (SM-B und HBA) *durch das KIM-Clientmodul umgesetzt*. 
 
 [.green-background]
 ****
@@ -94,12 +95,12 @@ Dieser Leitfaden beschreibt die technische Basis zur Anbindung an sowie Nutzung 
 
 *Abgrenzung* +
 
-* Konkrete technische Festlegungen bzgl. KIM-Komponenten in der TI erfolgen durch link:https://gemspec.gematik.de/docs/gemSpec/[Spezifikation] der gematik und beschreiben keine Primärsystem-Funktionalitäten. +
-** Dazu zählen auch weitere Festlegungen aus bspw. [link:https://github.com/gematik/api-kim[api-kim github gematik]], die nicht explizit für für die Audienz der Primärsysteme und Hersteller dieser ausgewiesen werden. +
+* Konkrete technische Festlegungen bzgl. KIM-Komponenten in der TI erfolgen durch link:https://gemspec.gematik.de/docs/gemSpec/[Spezifikationen] der gematik und beschreiben keine Primärsystem-Funktionalitäten. +
+** Dazu zählen auch weitere Festlegungen aus bspw. [link:https://github.com/gematik/api-kim[api-kim github gematik]], die nicht explizit für die Audienz der Primärsysteme und Hersteller dieser ausgewiesen werden. +
 * Spezifische Festlegungen bzgl. sog. "Fachverfahren" oder "payloads" link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[(i.d.R. Dienstkennungen KIM)] gelten als ergänzende Festlegungen. Sie sind *nicht* Bestandteil dieses Leitfadens.
 
 *Empfehlung* +
-Es wird empfohlen, diesen Leitfaden in Verbindung mit der link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[Spezifikation des KIM-Clientmoduls] und des link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/[Basis Implementierungsleitfadens für Primärsysteme] zu betrachten, da u.a. die Anforderungen an Schnittstellen und Integration in Primärsystem darin bedingt, definiert sind.
+Es wird empfohlen, diesen Leitfaden in Verbindung mit der link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[Spezifikation des KIM-Clientmoduls] und des link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/[Basis Implementierungsleitfadens für Primärsysteme] zu betrachten, da u.a. die Anforderungen an Schnittstellen und die Integration in ein Primärsystem darin bedingt, definiert sind.
 ****
 
 
@@ -115,7 +116,7 @@ Für die Nutzung von KIM müssen die folgenden Punkte erfüllt sein:
 |Nutzer, LE(I) oder Organisation, Dienstleister
 
 |2
-|Der Nutzer verfügt über eine freigeschaltete SM(C)-B (und ggf. einen freigeschalteten HBA)
+|Der Nutzer verfügt über eine freigeschaltete SM&lpar;C&rpar;-B (und ggf. einen freigeschalteten HBA)
 |Nutzer, LE(I) oder Organisation
 
 |3
@@ -146,9 +147,9 @@ Zur Anbindung an KIM sind folgende Schnittstellen des KIM-Clientmoduls wesentlic
 * *SMTP-Schnittstelle* - Versand von KIM-E-Mail-Nachrichten +
 * *POP3-Schnittstelle* - Abruf von KIM-E-Mail-Nachrichten +
 
-Da die E-Mail-Kommunikation via KIM eine gerichtete Kommunikation zwischen identifizierten Sender und Empfänger(n) ist, müssen zum Versand von E-Mails über KIM, die KIM-E-Mail-Adressen der Empfänger bekannt sein bzw. können über den VZD ermittelt werden. Die KIM-E-Mail-Adressen können über die LDAP-Schnittstelle des TI-Konnektors (siehe dazu link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Kon/latest/[Spezifikation LDAP-Proxy TI-Konnektor]) ermittelt werden:
+Da die E-Mail-Kommunikation via KIM eine gerichtete Kommunikation zwischen identifiziertem Sender und Empfänger(n) ist, müssen zum Versand von E-Mails über KIM, die KIM-E-Mail-Adressen der Empfänger bekannt sein bzw. können über den VZD der TI ermittelt werden. Die KIM-E-Mail-Adressen können über die LDAP-Schnittstelle des TI-Konnektors (siehe dazu link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Kon/latest/[Spezifikation LDAP-Proxy TI-Konnektor]) ermittelt werden:
 
-* *LDAP-Schnittstelle* - Ermittlung und Abruf von Identitätsinformationen und KIM-E-Mail-Adressen aus VZD +
+* *LDAP-Schnittstelle* - Ermittlung und Abruf von Identitätsinformationen und KIM-E-Mail-Adressen aus dem VZD +
 
 Die folgende Abbildung stellt die Abhängigkeitsbeziehungen zwischen den einzelnen Komponenten dar.
 
@@ -163,13 +164,13 @@ Die folgende Abbildung stellt die Abhängigkeitsbeziehungen zwischen den einzeln
 *Beachte* +
 
 * Ein *PS hat keine direkte Verbindung* zum KIM-Fachdienst eines KIM-Providers oder dem VZD.
-* KIM-Clientmodul und TI-Konnektor bauen direkte Verbindungen zu zentralen Diensten auf und agieren als Proxy für das PS.
+* Das KIM-Clientmodul und der vorgelagerte TI-Konnektor bauen direkte Verbindungen zu zentralen Diensten auf und agieren als Proxy für das PS.
 ****
 
 
 == Umsetzung
 
-Dieses Kapitel beschreibt die wesentlichen, durch ein PS umzusetzenden Anwendungsfälle und daran abgeleiteten technischen Anforderungen der KIM-Nutzung. Die Implementierung eines KIM-fähigen E-Mail-Clients erfordert über die reine SMTP- & POP3-Anbindung hinaus auch eine robuste Umsetzung wesentlicher Basis-Funktionalitäten zur Nutzung und Bedienung eines E-Mail-Clients aus Sicht eines Nutzers sowie spezieller Festlegungen zu KIM.
+Dieses Kapitel beschreibt die wesentlichen, durch ein PS umzusetzenden Anwendungsfälle und daraus abgeleitetn technische Anforderungen der KIM-Nutzung. Die Implementierung eines KIM-fähigen E-Mail-Clients erfordert über die reine SMTP- & POP3-Anbindung hinaus auch eine robuste Umsetzung wesentlicher Basis-Funktionalitäten zur Nutzung und Bedienung eines E-Mail-Clients aus Sicht eines Nutzers sowie spezieller Festlegungen zu KIM.
 
 
 
@@ -177,11 +178,11 @@ Dieses Kapitel beschreibt die wesentlichen, durch ein PS umzusetzenden Anwendung
 
 ==== Empfänger ermitteln
 
-KIM-E-Mails können ausschließlich durch einen identifizierten Sender an identifizierte Empfänger übermittelt werden, die gemäß der <<Voraussetzungen>> KIM-E-Mail-Adresse(n), Verschlüsselungszertifikat(e) im VZD hinterlegt haben. Die Ermittlung dieser Informationen erfolgt über die LDAP-Schnittstelle des TI-Konnektors (LDAP-Proxy).
+KIM-E-Mails können ausschließlich durch einen identifizierten Sender an identifizierte Empfänger übermittelt werden, die gemäß der <<Voraussetzungen>> KIM-E-Mail-Adresse(n) und dazu gehörende Verschlüsselungszertifikat(e) im VZD hinterlegt haben. Die Ermittlung dieser Informationen erfolgt über die LDAP-Schnittstelle des TI-Konnektors (LDAP-Proxy).
 
 * *Verbindungsaufbau & Authentisierung* +
 
-Für den Verbindungsaufbau und Authentisierung zum TI-Konnektor bzw. LDAP-Proxy gelten die Festlegungen gemäß link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/#4.1.1.3[Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)].
+Für den Verbindungsaufbau zum TI-Konnektor bzw. LDAP-Proxy und dabei stattfindender Authentisierung gelten die Festlegungen gemäß link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/#4.1.1.3[Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)].
 
 * *Suche im VZD* +
 
@@ -193,27 +194,27 @@ Für den Verbindungsaufbau und Authentisierung zum TI-Konnektor bzw. LDAP-Proxy 
 ** link:https://github.com/gematik/api-vzd/blob/main/docs/LDAP_Search.adoc[Beispiele LDAP-VZD-Suche]
 
 . Beim Versand von E-Mail-Daten, die 15 MiB überschreiten, MUSS die durch einen Empfänger im VZD hinterlegte Freigabe zum Empfang großer E-Mails-Datenmengen berücksichtigt werden. Diese Angabe erfolgt durch ein *[+ (plus)]* hinter der KIM-Version im Attribut *"kimData"*. Ist diese Angabe nicht vorhanden, DARF die E-Mail NICHT an diesen Empfänger versendet werden. Dies MUSS dem Nutzer mit einer entsprechenden Fehlermeldung angezeigt werden.
-. Daten im VZD können sich ändern. Das PS MUSS lokal gespeicherte KIM-Adress-Daten regelmäßig mit den Daten im VZD vergleichen und aktuell halten. Lokal gespeicherte KIM-E-Mail-Adresse sollen einmal täglich aktualisiert und ggf. gelöscht werden.
+. Daten im VZD können sich ändern. Das PS MUSS lokal gespeicherte KIM-Adress-Daten regelmäßig mit den Daten im VZD vergleichen und aktuell halten. Lokal gespeicherte KIM-E-Mail-Adresse sollen einmal täglich geprüft und ggf. aktualisiert werden.
 
 
 
 ==== Erstellung von KIM-E-Mails
 
-Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und deren Übergabe per SMTP an das CM. Das PS trägt die Verantwortung für korrekte Nachrichtenstruktur sowie aller Pflicht-Angaben vor dem Versand.
+Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und deren Übergabe per SMTP an das CM. Das PS trägt die Verantwortung für eine korrekte Nachrichtenstruktur sowie aller Pflicht-Angaben vor dem Versand.
 
 . Das PS MUSS Nachrichten gemäß `[RFC5322]`, `[RFC2045]`, `[RFC2046]`, `[RFC2047]`, `[RFC4021]` erzeugen
 
 . Generell MUSS UTF-8 als Standard-Kodierung verwendet werden +
-.. Beachte u.a. `[RFC2047]`, betrifft u.a. explizit Header-Elemente sowie Dateinamen in Anhängen- Beispiel: Dateiname `Handbuch-ÄÜÖß.pdf`: `Content-Type: application/pdf; name="=?UTF-8?B?SGFuZGJ1Y2gtw4TDnMOWw58ucGRm?="` +
+.. Beachte u.a. `[RFC2047]`, betrifft bspw. explizit Header-Elemente sowie Dateinamen in Anhängen- Beispiel: Dateiname `Handbuch-ÄÜÖß.pdf`: `Content-Type: application/pdf; name="=?UTF-8?B?SGFuZGJ1Y2gtw4TDnMOWw58ucGRm?="` +
 
 . Das Header-Element `Message-ID` ist für KIM-Nachrichten *obligatorisch*. Der Wert MUSS durch das PS gemäß *[RFC5322 §3.6.4]* eindeutig erzeugt werden, *darf nicht wiederverwendet werden* und darf *keine datenschutzrelevanten Informationen*, wie bspw. interne FQDNs oder personenbezogene Daten enthalten. Empfohlen wird die Verwendung einer UUID nach *[RFC4122]*: `Message-ID: <\550e8400-e29b-41d4-a716-446655440000@kim.local>` +
 
 . Konversationsreferenzen, zur Möglichkeit einer korrekten Anzeigen von Konversationsverläufen  +
-.. Beim Antworten aus KIM-E-Mail-Nachrichten MUSS das PS `In-Reply-To` mit der `Message-ID` der Ursprungsnachricht befüllen. +
+.. Beim Antworten auf KIM-E-Mail-Nachrichten MUSS das PS `In-Reply-To` mit der `Message-ID` der Ursprungsnachricht befüllen. +
 .. Das Header-Element `References` KANN zur Verkettung des gesamten Konversationsverlaufes genutzt werden. Dies ermöglicht anderen KIM-Clients die korrekte Anzeige von Konversationsverläufen.
 
 . Nachfolgende *Header-Elemente* MÜSSEN durch das PS gesetzt werde können *[Pflicht]*: +
-.. Werte der Header-Elemente mit Vermerk *[REGEX]* müssen konform den regulären Ausdrücken unter folgendem Link sein (Sanitization): link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Perf/latest/[gemSpec_Perf#A_23167-*]
+.. Werte der Header-Elemente mit Vermerk *[REGEX]* müssen konform zu den regulären Ausdrücken unter folgendem Link sein (Sanitization): link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Perf/latest/[gemSpec_Perf#A_23167-*]
 
 
 [options="header",autowidth]
@@ -230,10 +231,10 @@ Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und
 |*[Pflicht]*; *[REGEX]* Support-E-Mail-Adresse des PS-Herstellers. Ermöglicht Kontaktaufnahme bei bspw. Fehleranalyse.
 
 |`X-KIM-Dienstkennung`
-|*[Pflicht]*; *[REGEX]* Kategorisierung der Nachricht. Ohne Angabe setzt das CM den Standardwert. K ann auf der Empfängerseite für Abrufsteuerung sowie automatisierte Verarbeitung verwendet werden. Aktuelle Kennungen: link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Dienstkennungen KIM - Fachportal gematik]
+|*[Pflicht]*; *[REGEX]* Kategorisierung der Nachricht. Ohne Angabe setzt das KIM CM den Standardwert. Kann auf der Empfängerseite für Abrufsteuerung sowie automatisierte Verarbeitung verwendet werden. Aktuelle Kennungen: link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Dienstkennungen KIM - Fachportal gematik]
 
 |`X-KIM-Middleware`
-|*[REGEX]* Wird von einer zwischengeschalteten Middleware-Komponente gesetzt, sofern eine solche zwischen PS und CM eingesetzt wird. Format: `<Middlewarename>;<Version>` — z.B. `MiddlewareXYZ;2.0.0`
+|*[REGEX]* Wird von einer zwischengeschalteten Middleware-Komponente gesetzt, sofern eine solche zwischen PS und KIM CM eingesetzt wird. Format: `<Middlewarename>;<Version>` — z.B. `MiddlewareXYZ;2.0.0`
 
 |`X-TI-User-Agent`
 |*[Pflicht]*; *[REGEX]* Übermittlung einer bei der gematik registrierten, eindeutigen Identifikators (client-id/product-id) des PS gemäß (link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Perf/gemSpec_Perf_V2.75.0/#A_27784[A_27784-* - Senden eines User-Agents (Clientsysteme)])
@@ -299,7 +300,7 @@ JVBERi0xLjQKJ... (Base64 kodierter Inhalt) ...
 Dokumente, welche mit einer KIM-E-Mail-Nachricht, bspw. als Anhang, übertragen werden sollen, können oder müssen ggf. vorab mittels Funktionen des TI-Konnektors signiert werden (QES). Dies ist *nicht* Teil der KIM-Funktionalität.
 
 *Größenprüfung vor dem Versand* +
-Die 15-MiB-Grenze aus Abschnitt <<Empfänger ermitteln>> bezieht sich auf die *dekodierte* MIME-Message (ohne Kodierungs-Overhead). Da bspw. die Base64-Kodierung die Transportgröße um den Faktor ~1,37 erhöht, muss das PS die resultieren Datenmenge, die an das CM übermittelt werden würde als Größe bzgl. der in <<Empfänger ermitteln>> geforderten Prüfung zur Empfangsfähigkeit verwenden.
+Die 15-MiB-Grenze aus Abschnitt <<Empfänger ermitteln>> bezieht sich auf die *dekodierte* MIME-Message (ohne Kodierungs-Overhead). Da bspw. die Base64-Kodierung die Transportgröße um den Faktor ~1,37 erhöht, muss das PS die daraus resultierende Datenmenge, die an das KIM CM übermittelt werden würde als Größe bzgl. der in <<Empfänger ermitteln>> geforderten Prüfung zur Empfangsfähigkeit verwenden.
 ****
 
 
@@ -342,7 +343,7 @@ CM → PS:  221 Bye
 
 . Das PS MUSS SASL `PLAIN` und/oder `LOGIN` für die SMTP-Authentisierung gemäß *[RFC4616]*, *[RFC4954]* verwenden. +
 . Das PS MUSS die Angabe des SMTP-Benutzernamen in KIM ermöglichen. +
-.. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.3.2.2[gemSpec_CM_KOMLE#3.3.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
+.. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation des KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.3.2.2[gemSpec_CM_KOMLE#3.3.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
 [.teal-background]
 ****
@@ -405,13 +406,13 @@ CM → PS:  +OK Goodbye
 
 * Das PS *MUSS alle verfügbaren KIM-E-Mail-Nachrichten* über das CM abrufen. 
 
-Durch Trigger des PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab entschlüsselt, prüft diese und stellt sie dem PS über eine POP3-Schnittstelle in Klartext zur Verfügung. Das PS ist verantwortlich für den korrekten, robusten Abruf, die Verarbeitung, Speicherung und Verwaltung der E-Mail-Daten.
+Getriggert vom PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab entschlüsselt, prüft diese und stellt sie dem PS über eine POP3-Schnittstelle in Klartext zur Verfügung. Das PS ist verantwortlich für den korrekten, robusten Abruf, die Verarbeitung, Speicherung und Verwaltung der E-Mail-Daten.
 
 *Verbindungsaufbau*
 
 . Die POP3-Verbindung zum CM MUSS per POP3, gemäß *[RFC1939]* mit Extensions gemäß *[RFC2449]* erfolgen +
 . Timeouts für den Abrufvorgang MÜSSEN, auch durch den Nutzer, einfach konfigurierbar sein. +
-. Das PS MUSS Vorgaben gemäß Kapitel [<<Transportsicherung zwischen Primärsystem und KIM-Clientmodul>>] umsetzen +
+. Das PS MUSS die Vorgaben gemäß Kapitel [<<Transportsicherung zwischen Primärsystem und KIM-Clientmodul>>] umsetzen +
 
 *Authentisierung*
 
@@ -423,9 +424,9 @@ Durch Trigger des PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab e
 ****
 *Beachte* +
 
-* Die Parameter-Reihenfolge des POP3-Benutzernamens untercheidet sich von der Reihenfolge im SMTP-Benutzernamen.
+* Die Parameter-Reihenfolge des POP3-Benutzernamens unterscheidet sich von der Reihenfolge im SMTP-Benutzernamen.
 
-* Ist die versendende KIM-E-Mail-Adresse/KIM-Account einer HBA-Identität zugeordnet, MUSS eine `UserId` des TI-Konnektor-Aufrufskontextes im Benutzernamen angegeben werden +
+* Ist die versendende KIM-E-Mail-Adresse/KIM-Account einer HBA-Identität zugeordnet, MUSS die `UserId`, identisch zum TI-Konnektor-Aufrufskontext, im POP3-Benutzernamen angegeben werden +
 
 * Bei Integration in bestehende Mail-Systeme kann der Delimiter `:` zwischen Hostname und Port (z. B. `hrst_domain.kim.telematik:465`) zu Problemen führen. Das CM unterstützt alternative Delimitervarianten, sofern die semantische Abgrenzung der Bestandteile gemäß *[RFC1123, RFC2822]* erhalten bleibt.
 ****
@@ -435,7 +436,7 @@ Durch Trigger des PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab e
 . Das PS *MUSS* `POP3 UIDL` nutzen, um ausschließlich *neue, bisher unbekannte KIM-E-Mail-Daten* abzurufen:
 
 .. *`UIDL`:* Abruf aller Message-Nummern <MsgNr> und deren UIDs im Postfach. Anhand lokal gespeicherter UIDs können neue Nachrichten identifiziert werden
-.. (optional) *`TOP <MsgNr> 0`:* Abruf Header der neuen Nachrichten, ggf. für Vorschau, Verarbeitungssteuerung nutzen (`X-KIM-Dienstkennung`, `X-KIM-Fehlermeldung`, Größe, ...)
+.. (optional) *`TOP <MsgNr> 0`:* Abruf der Header von neuen Nachrichten, ggf. für Vorschau, Verarbeitungssteuerung nutzen (`X-KIM-Dienstkennung`, `X-KIM-Fehlermeldung`, Größe, ...)
   ... Bereits bekannte Header-Informationen einer bekannten KIM-E-Mail-Nachrichten SOLLEN NICHT wiederholt abgerufen werden
   ... _Beachte:_ Das CM setzt den Parameter `<N>` des TOP-Kommandos, unabhängig vom übergebenen Wert, immer auf `0` [gemSpec_CM_KOMLE#KOM-LE-A_2041]. `TOP <MsgNr> 0` liefert ausschließlich den E-Mail-Header ohne Nachrichteninhalt.
 .. *`RETR <MsgNr>`:* Abruf vollständiger KIM-E-Mail-Nachricht
@@ -449,10 +450,10 @@ Durch Trigger des PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab e
 .. Sofern eine E-Mail/MimeMessage mit `multipart/alternative` & `text/plain` (nur Text) als auch `text/html` (formatierter Text) MimeParts vorliegt, ist die Anzeige des formatierten Inhalts (`text/html`) zu bevorzugen, siehe dazu link:https://www.rfc-editor.org/rfc/rfc2387.html[RFC 2387]. +
 . KIM-E-Mail-Daten MÜSSEN so gespeichert werden, dass gleiche Daten nicht wiederholt abgerufen werden, siehe `POP3 UIDL` +
 .. *_Beachte_*: Hinweise zum (automatischen) Löschen von KIM-E-Mail-Daten, siehe Kapitel [<<Löschen von KIM-E-Mail-Nachrichten>>]. +
-. Anhänge von KIM-E-Mail-Nachrichten MÜSSEN weitergenutzt, -verarbeitet werden können. +
-. Die Anforderung Lesebestätigung - *Message Disposition Notification (MDN)*, gemäß *[RFC8098]* muss erkannt, ausgewertet und ggf. dem Nutzer angezeigt werden. +
+. Anhänge von KIM-E-Mail-Nachrichten MÜSSEN weitergenutzt bzw. -verarbeitet werden können. +
+. Die Anforderung einer Lesebestätigung - *Message Disposition Notification (MDN)*, gemäß *[RFC8098]* muss erkannt, ausgewertet und ggf. dem Nutzer angezeigt werden. +
 . Für Analysezwecke MÜSSEN *alle Header-Elemente* der KIM-E-Mail-Nachrichten angezeigt werden können. 
-.. Es SOLLTE der gesamte Nachrichten-Quelle-Text (MIME-Tree) angezeigt werden können. +
+.. Es SOLLTE der gesamte Nachrichten-Quelle-Text (MIME-Tree) angezeigt werden. +
 
 [.transparent-background]
 ****
@@ -525,7 +526,7 @@ Entschlüsselte Nachrichten enthalten spezifische X-KIM-Header, welche konkrete 
 
 .. (optional) link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[`X-KIM-Dienstkennung`]: Kategorisierung der Nachricht, z.B. `eEB`, `eRezept;Rezeptanforderung`, ...; *wichtig* für spezifische Verarbeitung, Kategorisierung, Anzeige, ... einer Nachricht
 
-.. link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_28582[`X-KIM-Auth`] (SOLL NICHT als Abbruchkriterium verwendet werden): JWT zur 
+.. link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_28582[`X-KIM-Auth`] (SOLL NICHT als Abbruchkriterium verwendet werden): Ein JWT zur 
 ... Anzeige von Signatur-Informationen anhand des link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_PKI/latest/[AUT-Zertifikats] aus `x5c`-Claim 
 ... (optional) Zertifikatsprüfung anhand des link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_PKI/latest/[AUT-Zertifikats] aus `x5c`-Claim 
 ... (optional) Absenderverifikation über `sub`-Claim (Absenderadresse)
@@ -563,7 +564,7 @@ KIM-E-Mail-Nachrichten werden nach einer festgelegten Zeitspanne (default 90 Tag
 ****
 *Beachte* +
 
- * Beschränkungen auf bestimmte Fehlercodes o.ä. sind zu vermeiden. Eine Allgemeine Prüfung auf Fehlerzustände, wie z.B. das Vorhandensein von `X-KIM-Fehlermeldung`-Headern ist zu bevorzugen, da Klassifikation und Bedeutung von Fehlerzuständen in der Fehleranalyse relevant sind bzw. sich diese ändern können (Erweiterungen neue Fehlertypen, -codes, ...). +
+ * Beschränkungen auf bestimmte Fehlercodes o.ä. sind zu vermeiden. Eine allgemeine Prüfung auf Fehlerzustände, wie z.B. das Vorhandensein von `X-KIM-Fehlermeldung`-Headern ist zu bevorzugen, da Klassifikation und Bedeutung von Fehlerzuständen in der Fehleranalyse relevant sind bzw. sich diese ändern können (Erweiterungen neue Fehlertypen, -codes, ...). +
 
  * Weitere Fehlerzustände/-ursachen, die das PS kennt oder selbst verursacht sind analog zu betrachten.
 ****
@@ -573,8 +574,8 @@ KIM-E-Mail-Nachrichten werden nach einer festgelegten Zeitspanne (default 90 Tag
 Dieses Kapitel beschreibt die grundlegenden Anforderungen an die Benutzeroberfläche und Benutzerinteraktion eines Primärsystems zur Nutzung von KIM.
 Dies setzt voraus, dass das PS über eine Benutzeroberfläche mit Nutzern interagiert.
 
-. Die Benutzeroberfläche des PS MUSS es Nutzern ermöglichen, KIM-E-Mails zu erstellen, zu versenden, zu empfangen, anzuzeigen, zu verwalten, Fehler zu erkennen, notwendige Konfigurationen vorzunehmen. +
-. Das PS MUSS erkennbar mindestens die folgenden Funktionsaspekte in Benutzeroberfläche und für Benutzerinteraktion bereitstellen.
+. Die Benutzeroberfläche des PS MUSS es Nutzern ermöglichen, KIM-E-Mails zu erstellen, zu versenden, zu empfangen, anzuzeigen, zu verwalten, Fehler zu erkennen und notwendige Konfigurationen vorzunehmen. +
+. Das PS MUSS erkennbar mindestens die folgenden Funktionsaspekte in seiner Benutzeroberfläche für Benutzerinteraktionen bereitstellen.
 
 *Bereiche der E-Mail-Verwaltung*
 
@@ -584,7 +585,7 @@ Dies setzt voraus, dass das PS über eine Benutzeroberfläche mit Nutzern intera
 
 . Auslistung zur Übersicht der KIM-E-Mail-Nachrichten in einem ausgewählten Bereich +
 . Listenelemente müssen mindestens folgende Informationen ausweisen: `Absender`, `Betreff`, `Datum`, `Status (gelesen / ungelesen)` +
-. Klassifikationen, bspw. anhand von `X-KIM-Dienstkennung`, werden empfohlen und ermöglichen Filterung, Sortierung, (farbliche) Hervorhebung, ... +
+. Klassifikationen, bspw. anhand von `X-KIM-Dienstkennung`, werden empfohlen und ermöglichen u.a. Filterung, Sortierung, (farbliche) Hervorhebung, ... +
 
 *Konfiguration & Einstellungen* 
 
@@ -602,7 +603,7 @@ Dies setzt voraus, dass das PS über eine Benutzeroberfläche mit Nutzern intera
 .. Möglichkeit zum Speichern einer Nachricht als Entwurf +
 .. Schaltfläche zum Versenden der Nachricht +
 . Suche im VZD anhand kombinierbarer Suchkriterien, siehe dazu <<Empfänger ermitteln>>
-.. Die Suchkriterien und Ergebnissen MÜSSEN in einer für den Nutzer verständlichen Weise dargestellt werden.
+.. Die Suchkriterien und Ergebnisse der Suche MÜSSEN in einer für den Nutzer verständlichen Weise dargestellt werden.
 .. Bei mehreren Suchergebnissen MÜSSEN die Ergebnisinformationen dem Nutzer vollständig zur Auswahl angezeigt werden.
 
 
@@ -627,9 +628,9 @@ Dies setzt voraus, dass das PS über eine Benutzeroberfläche mit Nutzern intera
 . Alle abgerufenen KIM-E-Mail-Nachrichten müsssen angezeigt werden können +
 . Die Benutzeroberfläche muss folgende Informationen darstellen: `Absender`, `Empfänger`, `Betreff`, `Datum`, `Nachrichtentext` +
 . Anhänge müssen weiterverarbeitet werden können (öffnen, herunterladen, speichern, ...) +
-. Bedarfsgerechte Möglichkeit zur Anzeige *sämtlicher Header-Elemente einer KIM-E-Mail-Nachricht*, (optional) Anzeige gesamter Nachrichten-Quelletext +
+. Bedarfsgerechte Möglichkeit zur Anzeige *sämtlicher Header-Elemente einer KIM-E-Mail-Nachricht*, (optional) Anzeige des gesamten Nachrichten-Quelletextes +
 . "Antworten" & "Weiterleiten" einer KIM-E-Mail-Nachricht MUSS funktional vorhanden und auswählbar sein
-. Dedizierte Anzeige dem Vertrauen relevanter KIM-Eigenschaften +
+. Dedizierte Anzeige relevanter KIM-Eigenschaften +
 .. Anzeige, dass es eine KIM-E-Mail-Nachricht ist. Abgrenzung von anderen E-Mails, Nachrichten anderer Kommunikationsmodalitäten +
 .. Anzeige von Information aus KIM-spezifische Header `X-KIM-Auth` (Authentizitätsinformationen), wenn vorhanden +
 
@@ -659,8 +660,8 @@ Das CM agiert als TLS-Server gegenüber dem Primärsystem (TLS-Client). Die ents
 
 === TLS-Zertifikate des Clientmoduls
 
-. Das CM bezieht sein TLS-Server-Zertifikat automatisch oder erzeugt ein selbstsigniertes, importiert ein TLS-Server-Zertifikat in administrativer Verantwortung.
-.. Das PS MUSS mit diesem Szenario umgehen können, z.B. durch regelmäßige Überprüfung des TLS-Server-Zertifikats und erneutem Import, erneuter Vertrauensherstellung bei Änderung. +
+. Das CM bezieht sein TLS-Server-Zertifikat automatisch bei der ersten Registrierung an seinem KIM Fachdienst. Allerdigs ist es möglich sowohl ein selbstsigniertes als auch ein importiertes TLS-Server-Zertifikat in eigener administrativer Verantwortung zu verwenden.
+.. Das PS MUSS mit diesem Szenario umgehen können, z. B. durch regelmäßige Überprüfung des TLS-Server-Zertifikats und erneutem Import sowie erneuter Vertrauensherstellung bei Änderung. +
 . Es sind die zulässigen kryptographische Verfahren gemäß link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_25232-01][`TLS-Zertifikate für die Authentisierung gegenüber Clientsystemen - gemSpec_CM_KOMLE:A_25232-*`]] zu beachten.
 . Das PS MUSS in der Lage sein, (selbstsignierte) TLS-Zertifikate des CM zu importieren und zu nutzen, für bspw.:
 .. Import und Nutzung eines Client-Zertifikats (siehe <<TLS-Client-Authentisierung>>)
@@ -688,7 +689,7 @@ Das CM unterstützt:
 Dazu MUSS das PS folgendes unterstützen und in der Reihenfolge priorisieren: +
 
 . *(Empfohlen)* Das PS MUSS TLS mit zertifikatsbasierter Client-Authentisierung unterstützen (*mTLS*) +
-.. Das zu nutzenden TLS-Client-Zertifikat/die zugrundeliegende Zertifikatsinformation MUSS entweder vom PS bereitgestellt und in das CM importiert, oder vom CM bereitgestellt und in das PS importiert werden können.
+.. Das zu nutzende TLS-Client-Zertifikat/die zugrundeliegende Zertifikatsinformation MUSS entweder vom PS bereitgestellt und in das CM importiert, oder vom CM bereitgestellt und in das PS importiert werden können.
 . Das PS MUSS TLS ohne zertifikatsbasierte Client-Authentisierung unterstützen.
 
 == Umgang mit Multikonnektor-Umgebungen
@@ -750,7 +751,7 @@ Content-Type: text/plain; charset=UTF-8
 
 * Die Originalnachricht wird unvollständig, als `text/plain`-Bestandteil inline eingefügt, anstatt sie als `message/rfc822`-Teil einzubetten. +
 * Beim Weiterleiten wird die `Message-ID` der Originalnachricht in der neuen Nachricht übernommen oder wiederverwendet. Jede neu erzeugte Nachricht MUSS eine eigene, eindeutige `Message-ID` erhalten.
-* Das `Content-Disposition` des `message/rfc822`-MIME-Parts wird auf `attachment` statt auf `inline` gesetzt, was bei manchen Empfangssystemen zu einer falschen Darstellung füjhren kann.
+* Das `Content-Disposition` Element des `message/rfc822`-MIME-Parts wird auf `attachment` statt auf `inline` gesetzt, was bei manchen Empfangssystemen zu einer falschen Darstellung führen kann.
 
 
 === Verwaltung abgerufener E-Mail-Daten anhand fremder, externer ID´s
@@ -798,7 +799,7 @@ Die folgende Tabelle gibt eine vollständige Übersicht aller KIM-spezifischen H
 
 |`X-KIM-Dienstkennung`
 |*Ja*
-|Kategorisierung der Nachricht. Ohne Angabe setzt das CM den Standardwert. K ann auf der Empfängerseite für Abrufsteuerung sowie automatisierte Verarbeitung verwendet werden. Aktuelle Kennungen: link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Dienstkennungen KIM - Fachportal gematik]
+|Kategorisierung der Nachricht. Ohne Angabe setzt das CM den Standardwert. Kann auf der Empfängerseite für Abrufsteuerung sowie automatisierte Verarbeitung verwendet werden. Aktuelle Kennungen: link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[Dienstkennungen KIM - Fachportal gematik]
 
 |`X-KIM-Sendersystem`
 |*Ja*
