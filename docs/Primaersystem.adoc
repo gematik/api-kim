@@ -209,7 +209,7 @@ Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und
 . Generell MUSS UTF-8 als Standard-Kodierung verwendet werden +
 .. Beachte u.a. `[RFC2047]`, betrifft bspw. explizit Header-Elemente sowie Dateinamen in Anhängen- Beispiel: Dateiname `Handbuch-ÄÜÖß.pdf`: `Content-Type: application/pdf; name="=?UTF-8?B?SGFuZGJ1Y2gtw4TDnMOWw58ucGRm?="` +
 
-. Das Header-Element `Message-ID` ist für KIM-Nachrichten *obligatorisch*. Der Wert MUSS durch das PS gemäß *[RFC5322 §3.6.4]* eindeutig erzeugt werden, *darf nicht wiederverwendet werden* und darf *keine datenschutzrelevanten Informationen*, wie bspw. interne FQDNs oder personenbezogene Daten enthalten. Empfohlen wird die Verwendung einer UUID nach *[RFC4122]*: `Message-ID: <\550e8400-e29b-41d4-a716-446655440000@kim.local>` +
+. Das Header-Element `Message-ID` ist für KIM-Nachrichten *obligatorisch*. Der Wert MUSS durch das PS gemäß *[RFC5322#3.6.4]* eindeutig erzeugt werden, *darf nicht wiederverwendet werden* und darf *keine datenschutzrelevanten Informationen*, wie bspw. interne FQDNs oder personenbezogene Daten enthalten. Empfohlen wird die Verwendung einer UUID nach *[RFC4122]*: `Message-ID: <\550e8400-e29b-41d4-a716-446655440000@kim.local>` +
 
 . Konversationsreferenzen, zur Möglichkeit einer korrekten Anzeigen von Konversationsverläufen  +
 .. Beim Antworten auf KIM-E-Mail-Nachrichten MUSS das PS `In-Reply-To` mit der `Message-ID` der Ursprungsnachricht befüllen. +
@@ -766,7 +766,7 @@ _Erläuterung am Beispiel des Identifikators `Message-ID`._
 
 Die `Message-ID` einer E-Mail ist *kein geeignetes Mittel zur eindeutigen Identifikation sowie Verwaltung* abgerufener KIM-E-Mail-Daten im PS
 
-* Die `Message-ID` wird vom sendenden E-Mail-Client erzeugt und liegt damit außerhalb des Einflussbereichs des Empfängers. Sie kann fehlerhaft, leer, uneindeutig oder nicht gemäß *[RFC5322 §3.6.4]* gebildet sein
+* Die `Message-ID` wird vom sendenden E-Mail-Client erzeugt und liegt damit außerhalb des Einflussbereichs des Empfängers. Sie kann fehlerhaft, leer, uneindeutig oder nicht gemäß *[RFC5322#3.6.4]* gebildet sein
 * Die `Message-ID` kann datenschutzrelevante Informationen enthalten
 * Auch andere Fremd-IDs, aus bspw. Header-Elementen, dürfen *nicht als Speicher- oder Referenzschlüssel* verwendet werden, da sie weder eindeutig noch vertrauenswürdig sind.
 
