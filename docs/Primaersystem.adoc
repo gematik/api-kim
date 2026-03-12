@@ -89,17 +89,17 @@ Generell sind Abkürzungen und Begriffe im link:https://fachportal.gematik.de/gl
 == Einleitung
 Das sichere Übermittlungsverfahren KIM stellt Nutzern von Primärsystemen die Möglichkeit zur Verfügung, mit anderen KIM-Teilnehmern eine Ende-zu-Ende-gesicherte E-Mail-Kommunikation zu führen. Die *Ver-/Entschlüsselung* sowie die *Sicherstellung der Integrität von KIM-Nachrichten* (E-Mails) wird u.a. in Abhängigkeit zu Funktionen der dezentralen TI-Komponenten: TI-Konnektor, TI-Kartenterminals & Smartcards (SM-B und HBA) *durch das KIM-Clientmodul umgesetzt*. 
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |Dieser Leitfaden beschreibt die technische Basis zur Anbindung an sowie Nutzung von KIM durch *Primärsysteme*. +
 
 *Abgrenzung* +
 
-Konkrete technische Festlegungen bzgl. KIM-Komponenten in der TI erfolgen durch link:https://gemspec.gematik.de/docs/gemSpec/[Spezifikationen] der gematik und beschreiben keine Primärsystem-Funktionalitäten. +
+* Konkrete technische Festlegungen bzgl. KIM-Komponenten in der TI erfolgen durch link:https://gemspec.gematik.de/docs/gemSpec/[Spezifikationen] der gematik und beschreiben keine Primärsystem-Funktionalitäten. +
 
-Dazu zählen auch weitere Festlegungen aus bspw. [link:https://github.com/gematik/api-kim[api-kim github gematik]], die nicht explizit für die Audienz der Primärsysteme und Hersteller dieser ausgewiesen werden. +
+** Dazu zählen auch weitere Festlegungen aus bspw. [link:https://github.com/gematik/api-kim[api-kim github gematik]], die nicht explizit für die Audienz der Primärsysteme und Hersteller dieser ausgewiesen werden. +
 
-Spezifische Festlegungen bzgl. sog. "Fachverfahren" oder "payloads" link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[(i.d.R. Dienstkennungen KIM)] gelten als ergänzende Festlegungen. Sie sind *nicht* Bestandteil dieses Leitfadens.
+* Spezifische Festlegungen bzgl. sog. "Fachverfahren" oder "payloads" link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[(i.d.R. Dienstkennungen KIM)] gelten als ergänzende Festlegungen. Sie sind *nicht* Bestandteil dieses Leitfadens.
 
 *Empfehlung* +
 Es wird empfohlen, diesen Leitfaden in Verbindung mit der link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[Spezifikation des KIM-Clientmoduls] und des link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/[Basis Implementierungsleitfadens für Primärsysteme] zu betrachten, da u.a. die Anforderungen an Schnittstellen und die Integration in ein Primärsystem darin bedingt, definiert sind.
@@ -161,12 +161,12 @@ Die folgende Abbildung stellt die Abhängigkeitsbeziehungen zwischen den einzeln
 </p>
 ++++
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
-Ein *PS hat keine direkte Verbindung* zum KIM-Fachdienst eines KIM-Providers oder dem VZD. +
-Das KIM-Clientmodul und der vorgelagerte TI-Konnektor bauen direkte Verbindungen zu zentralen Diensten auf und agieren als Proxy für das PS.
+* Ein *PS hat keine direkte Verbindung* zum KIM-Fachdienst eines KIM-Providers oder dem VZD.
+* Das KIM-Clientmodul und der vorgelagerte TI-Konnektor bauen direkte Verbindungen zu zentralen Diensten auf und agieren als Proxy für das PS.
 |===
 
 
@@ -294,7 +294,7 @@ JVBERi0xLjQKJ... (Base64 kodierter Inhalt) ...
 ====
 ****
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Hinweise* +
 
@@ -347,15 +347,15 @@ CM → PS:  221 Bye
 . Das PS MUSS die Angabe des SMTP-Benutzernamen in KIM ermöglichen. +
 .. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation des KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.3.2.2[gemSpec_CM_KOMLE#3.3.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
-Die Parameter-Reihenfolge des SMTP-Benutzernamens untercheidet sich von der Reihenfolge im POP3-Benutzernamen. +
+* Die Parameter-Reihenfolge des SMTP-Benutzernamens untercheidet sich von der Reihenfolge im POP3-Benutzernamen. +
 
-Ist die versendende KIM-E-Mail-Adresse/KIM-Account einer HBA-Identität zugeordnet, MUSS eine `UserId` des TI-Konnektor-Aufrufskontextes im Benutzernamen angegeben werden. +
+* Ist die versendende KIM-E-Mail-Adresse/KIM-Account einer HBA-Identität zugeordnet, MUSS eine `UserId` des TI-Konnektor-Aufrufskontextes im Benutzernamen angegeben werden. +
 
-Bei Integration in bestehende Mail-Systeme kann der Delimiter `:` zwischen Hostname und Port (z. B. `hrst_domain.kim.telematik:465`) zu Problemen führen. Das CM unterstützt alternative Delimitervarianten, sofern die semantische Abgrenzung der Bestandteile gemäß *[RFC1123, RFC2822]* erhalten bleibt.
+* Bei Integration in bestehende Mail-Systeme kann der Delimiter `:` zwischen Hostname und Port (z. B. `hrst_domain.kim.telematik:465`) zu Problemen führen. Das CM unterstützt alternative Delimitervarianten, sofern die semantische Abgrenzung der Bestandteile gemäß *[RFC1123, RFC2822]* erhalten bleibt.
 |===
 
 *Zustellbestätigungen -  Delivery Status Notification (DSN)* +
@@ -422,15 +422,15 @@ Getriggert vom PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab ents
 . Das PS MUSS die Angabe des POP3-Benutzernamen in KIM ermöglichen. +
 .. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.4.2.2[gemSpec_CM_KOMLE#3.4.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
-Die Parameter-Reihenfolge des POP3-Benutzernamens unterscheidet sich von der Reihenfolge im SMTP-Benutzernamen. +
+* Die Parameter-Reihenfolge des POP3-Benutzernamens unterscheidet sich von der Reihenfolge im SMTP-Benutzernamen. +
 
-Ist die versendende KIM-E-Mail-Adresse/KIM-Account einer HBA-Identität zugeordnet, MUSS die `UserId`, identisch zum TI-Konnektor-Aufrufskontext, im POP3-Benutzernamen angegeben werden +
+* Ist die versendende KIM-E-Mail-Adresse/KIM-Account einer HBA-Identität zugeordnet, MUSS die `UserId`, identisch zum TI-Konnektor-Aufrufskontext, im POP3-Benutzernamen angegeben werden +
 
-Bei Integration in bestehende Mail-Systeme kann der Delimiter `:` zwischen Hostname und Port (z. B. `hrst_domain.kim.telematik:465`) zu Problemen führen. Das CM unterstützt alternative Delimitervarianten, sofern die semantische Abgrenzung der Bestandteile gemäß *[RFC1123, RFC2822]* erhalten bleibt.
+* Bei Integration in bestehende Mail-Systeme kann der Delimiter `:` zwischen Hostname und Port (z. B. `hrst_domain.kim.telematik:465`) zu Problemen führen. Das CM unterstützt alternative Delimitervarianten, sofern die semantische Abgrenzung der Bestandteile gemäß *[RFC1123, RFC2822]* erhalten bleibt.
 |===
 
 *POP3 UIDL-basierter Nachrichtenabruf* +
@@ -535,7 +535,7 @@ Entschlüsselte Nachrichten enthalten spezifische X-KIM-Header, welche konkrete 
 .. Das PS MUSS Header-Felder, die in empfangenen Nachrichten mit unbekanntem `X-KIM-*` vorkommen, nicht auswerten, jedoch anzeigen können.
 
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
@@ -547,7 +547,7 @@ Das PS MUSS dem Nutzer Nachrichten mit `X-KIM-IntegrityCheckResult` und einem We
 * Da eine KIM-E-Mail-Adresse (Postfach) an mehreren Arbeitsplätzen genutzt und damit KIM-E-Mail-Nachrichten abgerufen werden können, SOLLEN Nachrichten per `POP3 DELE` vom Server erst dann gelöscht werden, wenn diese gesichert nicht erneut abgerufen werden müssen. +
 * Das PS MUSS dem Nutzer das manuelle Löschen von Nachrichten einfach ermöglichen (UI/UX). +
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
@@ -564,13 +564,13 @@ KIM-E-Mail-Nachrichten werden nach einer festgelegten Zeitspanne (default 90 Tag
 ... link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.4.4.2.2[`X-KIM-IntegrityCheckResult`]: → Ergebnis der Integritätsprüfung
 ... link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_20650-07[`X-KIM-Fehlermeldung`]  →  Fehlernachricht
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
-Beschränkungen auf bestimmte Fehlercodes o.ä. sind zu vermeiden. Eine allgemeine Prüfung auf Fehlerzustände, wie z.B. das Vorhandensein von `X-KIM-Fehlermeldung`-Headern ist zu bevorzugen, da Klassifikation und Bedeutung von Fehlerzuständen in der Fehleranalyse relevant sind bzw. sich diese ändern können (Erweiterungen neue Fehlertypen, -codes, ...). +
+* Beschränkungen auf bestimmte Fehlercodes o.ä. sind zu vermeiden. Eine allgemeine Prüfung auf Fehlerzustände, wie z.B. das Vorhandensein von `X-KIM-Fehlermeldung`-Headern ist zu bevorzugen, da Klassifikation und Bedeutung von Fehlerzuständen in der Fehleranalyse relevant sind bzw. sich diese ändern können (Erweiterungen neue Fehlertypen, -codes, ...). +
 
-Weitere Fehlerzustände/-ursachen, die das PS kennt oder selbst verursacht sind analog zu betrachten.
+* Weitere Fehlerzustände/-ursachen, die das PS kennt oder selbst verursacht sind analog zu betrachten.
 |===
 
 == Anforderungen an Benutzeroberfläche und Benutzerinteraktion eines Primärsystems
@@ -673,15 +673,15 @@ Das CM agiert als TLS-Server gegenüber dem Primärsystem (TLS-Client). Die ents
 . _Beachte_: Prüfung gegen Root/Sub-CAs (bspw. des OS) reichen i.d.R. nicht aus. 
 
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Beachte* +
 
-Eine standardmäßige Zertifikats-Validierung selbstsignierter oder automatisch aus TI bezogener Standard-TLS-Zertifikate des CM ist i.d.R. nicht möglich: +
+* Eine standardmäßige Zertifikats-Validierung selbstsignierter oder automatisch aus TI bezogener Standard-TLS-Zertifikate des CM ist i.d.R. nicht möglich: +
 
-* Per Definition veränderte Host-Angabe in `cn` des TLS-Server-Zertifikts des CM +
+** Per Definition veränderte Host-Angabe in `cn` des TLS-Server-Zertifikts des CM +
 
-* Keine public PKI = keine öffentlich Zertifikatskette, i.d.R. für Betriebssystem unbekannt CAs +
+** Keine public PKI = keine öffentlich Zertifikatskette, i.d.R. für Betriebssystem unbekannt CAs +
 |===
 
 === TLS-Client-Authentisierung
@@ -771,14 +771,14 @@ Die `Message-ID` einer E-Mail ist *kein geeignetes Mittel zur eindeutigen Identi
 * Auch andere Fremd-IDs, aus bspw. Header-Elementen, dürfen *nicht als Speicher- oder Referenzschlüssel* verwendet werden, da sie weder eindeutig noch vertrauenswürdig sind.
 
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Warnung*
 
-*Entsprechende Verwendung solcher Identifikatoren kann zu schwerwiegenden Fehlern (Kollision) und ggf. Verlust von Daten führen.* +
+* *Entsprechende Verwendung solcher Identifikatoren kann zu schwerwiegenden Fehlern (Kollision) und ggf. Verlust von Daten führen.* +
 |===
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Abgrenzung*
 
@@ -863,7 +863,7 @@ Die folgende Tabelle gibt eine vollständige Übersicht aller KIM-spezifischen H
 |Größe der *verschlüsselten* E-Mail-Daten auf dem KAS in Byte. Nur bei KAS-Nachrichten vorhanden. Wird vom empfangenden CM zur Integritätsprüfung vor dem Download verwendet.
 |===
 
-[width="100%",cols="100%"]
+[width="100%",cols="1a"]
 |===
 |*Hinweis* +
 
