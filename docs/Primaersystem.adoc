@@ -193,7 +193,6 @@ Für den Verbindungsaufbau zum TI-Konnektor bzw. LDAP-Proxy und dabei stattfinde
 . Das PS muss die LDAP `search`-Operation gemäß `[RFC4511#4.5.1]`umsetzen. Diese Suche erfolgt anhand definierter Suchkriterien, den LDAP-Directory-Basisdatensatz-Attributen des VZD, siehe dazu:
 
 ** link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_VZD/latest[gemSpec_VZD#Tab_VZD_Datenbeschreibung]
-** link:https://github.com/gematik/api-vzd/blob/main/docs/LDAP_Attribute.adoc[LDAP-VZD-Attribute]
 ** link:https://github.com/gematik/api-vzd/blob/main/docs/LDAP_Search.adoc[Beispiele LDAP-VZD-Suche]
 
 . Beim Versand von E-Mail-Daten, die 15 MiB überschreiten, MUSS die durch einen Empfänger im VZD hinterlegte Freigabe zum Empfang großer E-Mails-Datenmengen berücksichtigt werden. Diese Angabe erfolgt durch ein *[+ (plus)]* hinter der KIM-Version im Attribut *"kimData"*. Ist diese Angabe nicht vorhanden, DARF die E-Mail NICHT an diesen Empfänger versendet werden. Dies MUSS dem Nutzer mit einer entsprechenden Fehlermeldung angezeigt werden.
