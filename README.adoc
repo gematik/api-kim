@@ -61,6 +61,7 @@ Das folgende Schaubild zeigt alle am Versand um Empfang einer KIM Nachricht bete
 |*gemSpec_Kon* | SpezifikationKonnektor | Hersteller von Primärsystemen
 | | |
 |link:https://fachportal.gematik.de/test-und-serviceprodukte/dienstkennung-kim-kom-le[*Dienstkennung KIM (KOM-LE)*] | Die Dienstkennungen für die Anwendung Kommunikation im Medizinwesen als Übersicht | Hersteller von Primärsystemen
+|link:docs/Primaersystem.adoc[*Implementierungsleitfaden KIM für Primärsysteme*] | Implementierungsleitfaden KIM für Primärsysteme | Hersteller von Primärsystemen
 |===
 
 == License
