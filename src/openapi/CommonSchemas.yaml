@@ -1,3 +1,4 @@
+openapi: 3.0.3
 info:
   title: I_CommonSchemas
   version: 1.0.3
@@ -10,19 +11,23 @@ info:
 ### 1.0.0
 # - created
 
+# Shared components-only document.
+# OpenAPI 3.0.x still requires a top-level paths object.
+paths: {}
+
 components:
   schemas:
     Username:
       type: string
       maxLength: 256
       format: email
-      description: Username/email of the account.
+      description: Username or email address of the account.
     Password:
       type: string
       maxLength: 256
       format: byte
       # Value must be base64 encoded.
-      description: The password is transmitted base64 encoded.
+      description: The password must be transmitted as a base64-encoded value.
       writeOnly: true
     Error:
       type: object
@@ -37,25 +42,31 @@ components:
 
   responses:
     400:
-      description: Error in the input data, description of the error is in the error text
+      description: Invalid input data. Further details are provided in the error message.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
     401:
-      description: Authentification failed
+      description: Authentication failed.
       content:
        application/json; charset=utf-8:
         schema:
          $ref: '#/components/schemas/Error'
     404:
-      description: Email account not available.
+      description: The requested resource is not available.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422:
+      description: The kimVersion is unknown or not supported.
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/Error'
     423:
-      description: VZD entry is locked. VZD attribute 'active' for the targetted entry is in state "inactive".
+      description: The VZD entry is locked. The VZD attribute 'active' for the targeted entry is in state "inactive".
       content:
         application/json; charset=utf-8:
           schema:
@@ -67,7 +78,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     502:
-      description: Dependent service could not be reached or returned error
+      description: A dependent service could not be reached or returned an error.
       content:
         application/json; charset=utf-8:
           schema:

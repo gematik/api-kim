@@ -77,7 +77,7 @@ info:
   # - initial Version of I_AccountManager_Service
 
 externalDocs:
-  description: Github documentation
+  description: GitHub documentation
   url: https://github.com/gematik/api-kim
 
 servers:
@@ -90,6 +90,7 @@ tags:
 - name: Email-Account
 - name: Certificate
 - name: Out of Office Notification
+- name: Porting
 
 security:
   - KIMBearerAuth: []
@@ -106,13 +107,13 @@ paths:
       parameters:
       - in: header
         name: iniPassword
-        description: Optional initial password for the email account. The value must be base64 encoded when provided.
+        description: Optional initial password for the email account. When provided, the value must be base64 encoded.
         # To see if the service requires an initial password, check ServiceInformation.initialPasswordRequired.
         required: false
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
-        description: Register new account
+        description: Register a new account.
         content:
           application/json; charset=utf-8:
               schema:
@@ -128,17 +129,13 @@ paths:
           # Authentication via referenceID/iniPassword and signature of the operation failed.
           # This error also occurs if the referenceID does not match the signature's AUT certificate (cert) or was not specified.
         409:
-          description: Conflict with existing account with identical e-mail (e-mail address already taken).
+          description: An account with the same email address already exists.
           content:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
-          description: KimVersion not supported or unknown.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/422'
         423:
           $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
@@ -151,21 +148,12 @@ paths:
       tags:
       - Email-Account
       summary: Change account values.
-              The values of unspecified writable parameters are not changed.
+              Unspecified writable properties remain unchanged.
               # referenceID & username (in the body) cannot be changed via this operation
       operationId: setAccount
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       requestBody:
         content:
           application/json; charset=utf-8:
@@ -181,11 +169,7 @@ paths:
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
         422:
-          description: KimVersion not supported or unknown.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/422'
         423:
           $ref: 'CommonSchemas.yaml#/components/responses/423'
         500:
@@ -199,18 +183,8 @@ paths:
       summary: Deregisters a mail account.
       operationId: deregisterAccount
       parameters:
-      - name: username
-        in: path
-        description: Username/E-Mail des Accounts
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       responses:
         204:
           description: Account deregistered successfully.
@@ -228,20 +202,11 @@ paths:
     get:
       tags:
       - Email-Account
-      summary: Display the account
+      summary: Display the account details.
       operationId: getAccount
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       responses:
         200:
           description: Display the account.
@@ -264,29 +229,20 @@ paths:
     put:
       tags:
       - Email-Account
-      summary: Cancel account unregister.
+      summary: Revoke account deregistration.
       operationId: revokeDeregistration
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       responses:
         204:
-          description: Deregistration successfully canceled.
+          description: Deregistration revoked successfully.
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         403:
-          description: Email account has not yet been deregistered.
+          description: The email account has not been deregistered yet.
           content:
             application/json; charset=utf-8:
               schema:
@@ -304,24 +260,14 @@ paths:
     get:
       tags:
       - Porting
-      summary: The operation is used to port the email address to a new telematikID.
-               A one-time password will be issued for this.
+      summary: Generate a one-time password (OTP) for porting the email address to a new telematikID.
       operationId: getOTP
       description: This operation creates a One Time Password (OTP) for the KIM account/email address,
                    with which the email address can be ported to a telematikID (card).
                    Authentication takes place with the previous card.
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       responses:
         200:
           description: OTP generated successfully.
@@ -335,8 +281,8 @@ paths:
                   maxLength: 256
                   format: byte
                   # Value must be base64 encoded.
-                  description: One time password for porting the KIM email address to another telematikID.
-                               The password is transmitted base64 encoded.
+                  description: One-time password for porting the KIM email address to another telematikID.
+                               The password must be transmitted as a base64-encoded value.
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
@@ -350,32 +296,23 @@ paths:
     put:
       tags:
       - Porting
-      summary: Porting the e-mail address to a new telematikID.
+      summary: Port the email address to a new telematikID.
       operationId: setTID
-      description: This operation removes the e-mail address from the previous VZD entry and carries the e-mail address
-                   into the new VZD entry (which corresponds to the authentication data of this operation setTID
-                   corresponds). Authentication takes place with the new card.
+      description: This operation removes the email address from the previous VZD entry and writes it
+           to the new VZD entry that corresponds to the authentication data used for setTID.
+           Authentication is performed with the new card/identitity.
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       - in: header
         name: otp
-        description: One Time Password (OTP) (returned by getOTP)
+        description: One-time password (OTP) returned by getOTP.
         required: true
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       responses:
         204:
-          description: Change of TelematikID successful.
+          description: TelematikID changed successfully.
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
@@ -405,20 +342,11 @@ paths:
     post:
       tags:
       - Certificate
-      summary: Create TLS AUT certificate
+      summary: Create a TLS AUT certificate.
       operationId: createCert
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       requestBody:
         content:
           application/json; charset=utf-8:
@@ -427,7 +355,7 @@ paths:
 
       responses:
         200:
-          description: Certificate is returned.
+          description: Returns the certificate.
           content:
            application/json; charset=utf-8:
             schema:
@@ -436,15 +364,11 @@ paths:
                 file:
                   type: string
                   format: binary
-                  description: Base64 encoded PKCS#12 container. If a password was passed in certPassword in the request,
-                               then the container is protected with the password.
+                  description: Base64-encoded PKCS#12 container. If certPassword is provided in the request,
+                               the container is protected with that password.
         400:
-          description: Error in the input data, description of the error is in the error text
-                       # e.g. no CommonName or CertPassword specified
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/400'
+          # e.g. no CommonName or CertPassword specified
         401:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
@@ -462,20 +386,11 @@ paths:
       summary: Read the Out of Office Notification
       operationId: getOutOfOffice
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       responses:
         200:
-          description: Read the out-of-office message successfully.
+          description: Out-of-office message returned successfully.
           content:
            application/json; charset=utf-8:
             schema:
@@ -495,17 +410,8 @@ paths:
       summary: Update the Out of Office Notification
       operationId: updateOutOfOffice
       parameters:
-      - name: username
-        in: path
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Username'
-      - in: header
-        name: password
-        description: Password for the email account. The password is base64 encoded.
-        required: true
-        schema:
-          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+      - $ref: '#/components/parameters/AccountUsername'
+      - $ref: '#/components/parameters/AccountPassword'
       requestBody:
         content:
           application/json; charset=utf-8:
@@ -513,7 +419,7 @@ paths:
              $ref: '#/components/schemas/OutOfOfficeNotification'
       responses:
         204:
-          description: Change of out-of-office notice successful.
+          description: Out-of-office notification updated successfully.
         400:
           $ref: 'CommonSchemas.yaml#/components/responses/400'
         401:
@@ -524,6 +430,23 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/500'
 
 components:
+  parameters:
+    AccountUsername:
+      name: username
+      in: path
+      description: Username or email address of the account.
+      required: true
+      schema:
+        $ref: 'CommonSchemas.yaml#/components/schemas/Username'
+
+    AccountPassword:
+      in: header
+      name: password
+      description: Password for the email account. The value must be base64 encoded.
+      required: true
+      schema:
+        $ref: 'CommonSchemas.yaml#/components/schemas/Password'
+
   schemas:
     Account:
       type: object
@@ -535,8 +458,8 @@ components:
                        For example, it can contain a contract number or a registration code.
                        The KIM provider must inform its KIM participants about the use of this parameter.
                        All administration modules (or client modules) must use this parameter - because of the
-                       Interoperability with all KIM specialist services - support. Through the “setAccount”
-                       Operation, this value cannot be changed.
+                       Interoperability support required by all KIM specialist services. This value cannot be changed
+                       through the "setAccount" operation.
         username:
           $ref: 'CommonSchemas.yaml#/components/schemas/Username'
 
@@ -585,9 +508,9 @@ components:
 
         noVzdMailEntry:
           type: boolean
-          description: If "noVzdMailEntry == true" then the AccountManager will use the VZD "mail" and "komLeData"
-                       Attributes not filled or, in the case of PUT, existing mail and komLeData attributes are deleted.
-                       This new attribute should only be supported on the client side by the Basis Consumer.
+          description: If "noVzdMailEntry == true", the VZD does not populate the data in "mail" and
+                       "komLeData" attributes. In the case of PUT, existing "mail" and "komLeData" attributes are deleted by the VZD.
+                       This attribute should only be supported on the client side by the Basis Consumer.
 
     CertificateParameters:
       type: object
@@ -595,8 +518,8 @@ components:
         commonName:
           type: string
           writeOnly: true
-          description: Will be included in the certificate attribute cn as <commonName> + "#CM"
-                       The certificate is used as TLS client certificate for connecting to the KIM services.
+          description: Included in the certificate attribute cn as <commonName> + "#CM".
+                       The certificate is used as a TLS client certificate when connecting to the KIM services.
         certPassword:
            # base64 encoded password for the PKCS#12 container in which the certificate is transported.
            # If no certPassword is specified, then the PKCS#12 container will not be encrypted.
@@ -621,7 +544,7 @@ components:
           description: Contents of the out-of-office note.
         active:
           type: boolean
-          description: Aktiviert bzw. deaktiviert die Abwesenheitsnotiz.
+          description: Enables or disables the out-of-office notification.
 
   securitySchemes:
     KIMBearerAuth:
