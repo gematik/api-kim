@@ -67,7 +67,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     502:
-      description: VZD cannot be reached or returns errors
+      description: Dependent service could not be reached or returned error
       content:
         application/json; charset=utf-8:
           schema:
