@@ -132,12 +132,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
-        420:
-          description: Username or password do not comply with the rules.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
           description: KimVersion not supported or unknown.
           content:
@@ -185,12 +179,6 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
         404:
           $ref: 'CommonSchemas.yaml#/components/responses/404'
-        420:
-          description: New password does not comply with the rules.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         422:
           description: KimVersion not supported or unknown.
           content:
