@@ -106,8 +106,9 @@ paths:
       parameters:
       - in: header
         name: iniPassword
-        description: Initial password for the email account. The password is base64 encoded.
-        required: true
+        description: Optional initial password for the email account. The value must be base64 encoded when provided.
+        # To see if the service requires an initial password, check ServiceInformation.initialPasswordRequired.
+        required: false
         schema:
           $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
