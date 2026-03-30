@@ -333,6 +333,7 @@ paths:
                   type: string
                   maxLength: 256
                   format: byte
+                  # Value must be base64 encoded.
                   description: One time password for porting the KIM email address to another telematikID.
                                The password is transmitted base64 encoded.
         400:

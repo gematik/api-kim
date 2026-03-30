@@ -21,6 +21,7 @@ components:
       type: string
       maxLength: 256
       format: byte
+      # Value must be base64 encoded.
       description: The password is transmitted base64 encoded.
       writeOnly: true
     Error:
