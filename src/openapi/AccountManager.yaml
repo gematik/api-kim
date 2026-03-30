@@ -109,9 +109,7 @@ paths:
         description: Initial password for the email account. The password is base64 encoded.
         required: true
         schema:
-          type: string
-          maxLength: 256
-          format: byte
+          $ref: 'CommonSchemas.yaml#/components/schemas/Password'
       requestBody:
         description: Register new account
         content:
