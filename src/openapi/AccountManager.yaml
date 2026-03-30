@@ -565,7 +565,6 @@ components:
 
         dataTimeToLive:
           type: integer
-          maxLength: 3
           minimum: 10
           maximum: 365
           default: 90
