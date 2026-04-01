@@ -15,7 +15,7 @@ endif::[]
 
 toc::[]
 
-= KIM - Dokumentation
+= KIM - Kommunikation im Medizinwesen
 
 image:gematik_logo.svg[width=70%]
 
@@ -25,24 +25,21 @@ image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubuser
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FServiceInformation.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=ServiceInformation&color=green[link="src/openapi/ServiceInformation.yaml"]
 image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgematik%2Fapi-kim%2Fmain%2Fsrc%2Fopenapi%2FCommonSchemas.yaml&query=%24.info.version&style=plastic&logo=openapiinitiative&logoColor=green&label=CommonSchemas&color=green[link="src/openapi/CommonSchemas.yaml"]
 
-== Einordnung des Dokuments
+== Inhalte & Zielgruppe
 
-=== Zielsetzung ===
-Das Dokument beschreibt die für die Implementierung von KIM erforderlichen Vorgaben.
-
-=== Zielgruppe ===
-Das Dokument richtet sich maßgeblich an Hersteller von Primärsystemen (Praxisverwaltungssysteme, Krankenhausinformationssysteme und Apothekenverwaltungssysteme) von Leistungserbringerinstitutionen (LEI).
+. *Für Hersteller Primärsysteme*
+.. link:docs/Primaersystem.adoc[*Implementierungsleitfaden KIM für Primärsysteme*] zur Integration und geeigneten Nutzung von KIM in Primärsystemen
+. *Für link:https://fachportal.gematik.de/anwendungen/kommunikation-im-medizinwesen[Hersteller von KIM-Produkten]*
+.. link:src/openapi/[*OpenAPI Spezifikationen von Schnittstellen am KIM Fachdienst*], zur Implementierung von Schnittstellen im KIM Fachdienst, sowie Anbindung des KIM-Clientmodul an diese Schnittstellen
 
 === Geltungsbereich ===
 Die in diesem Dokument formulierten Anforderungen sind informativ für Primärsysteme, die am Produktivbetrieb der Telematikinfrastruktur (TI) teilnehmen. Der Gültigkeitszeitraum der vorliegenden Version und deren Anwendung in Zulassungsverfahren wird durch die gematik GmbH in gesonderten Dokumenten (z. B. gemPTV_ATV_Festlegungen, Produkttypsteckbrief, Leistungsbeschreibung) festgelegt und bekannt gegeben.
 
 == Systemarchitektur
 
-KIM (vormals: KOM-LE) ermöglicht den sicheren elektronischen Datenaustausch zwischen registrierten, authentifizierten Nutzern der Telematikinfrastruktur (TI). KIM vermeidet Medienbrüche und sichert den geschützten Versand der behandlungs-, therapie- und abrechnungsrelevanten Daten wie Arztbriefe, Befunde oder Abrechnungen. +
+KIM (vormals: KOM-LE) ermöglicht den sicheren elektronischen Datenaustausch zwischen registrierten, authentifizierten Nutzern der Telematikinfrastruktur (TI). KIM ermöglicht geschützten Versand der behandlungs-, therapie- und abrechnungsrelevanten Daten wie Arztbriefe, Befunde oder Abrechnungen. +
 
-Das folgende Schaubild zeigt alle am Versand um Empfang einer KIM Nachricht beteiligten TI Komponenten.
-
-//image:csm_KIM_Nachrichtenversand_und_Empfang_gematik_mitTIZugang__1__242ea5444f.png[width=45%]
+Das folgende Schaubild zeigt die direkt am Versand um Empfang einer KIM-E-Mail-Nachricht beteiligten TI-Komponenten (TI-Zugang = TI-Konnektor + VPN-Zugangsdienst oder TI-Gateway/HSK).
 
 ++++
 <p align="center">
@@ -51,26 +48,25 @@ Das folgende Schaubild zeigt alle am Versand um Empfang einer KIM Nachricht bete
 ++++
 
 == Querverweis zu Dokumenten der gematik ==
-
+Generell wird *EMPFHOLEN*, dass mindestens die folgenden Dokumente der gematik, in ihrer Gesamtheit gelesen werden, um ein umfassendes Verständnis der Anforderungen, Abhängigkeiten und Spezifikationen zu erhalten. Ein Hersteller einer Clientanwendung muss Kenntnis von Eigenschaften des Services haben, den die Clientanwendung nutzen soll. Im Folgenden sind die wichtigsten Dokumente aufgelistet, die sich mit KIM beschäftigen, sowie deren Zielgruppen:
 |===
 |*Dokument* | *Name* | *Zielgruppe* 
-|*gemSpec_CM_KOMLE* | Spezifikation KOM-LE_Clientmodul | 
-|*gemSpec_FD_KOMLE* | Spezifikation Fachdienst KOM-LE |
-|*gemSMIME_KOMLE* | S/MIME-Profil Kommunikation Leistungserbringer(KOM-LE) |
-|*gemSpec_VZD* | SpezifikationVerzeichnisdienst | Hersteller von Primärsystemen
-|*gemSpec_Kon* | SpezifikationKonnektor | Hersteller von Primärsystemen
-| | |
+|link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[*gemSpec_CM_KOMLE*] | Spezifikation KOM-LE/KIM Clientmodul | Hersteller KIM-Produkte
+|link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_FD_KOMLE/latest/[*gemSpec_FD_KOMLE*] | Spezifikation KOM-LE/KIM Fachdienst | Hersteller KIM-Produkte
+|link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_VZD/latest/[*gemSpec_VZD*] | SpezifikationVerzeichnisdienst | Hersteller von Primärsystemen; Hersteller KIM-Produkte
+|link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Kon/latest/[*gemSpec_Kon*] | Spezifikation Konnektor | Hersteller von Primärsystemen; Hersteller KIM-Produkte
 |link:https://fachportal.gematik.de/test-und-serviceprodukte/dienstkennung-kim-kom-le[*Dienstkennung KIM (KOM-LE)*] | Die Dienstkennungen für die Anwendung Kommunikation im Medizinwesen als Übersicht | Hersteller von Primärsystemen
 |link:docs/Primaersystem.adoc[*Implementierungsleitfaden KIM für Primärsysteme*] | Implementierungsleitfaden KIM für Primärsysteme | Hersteller von Primärsystemen
+|link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/[*Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)*] | Basis-Implementierungsleitfaden für Primärsysteme | Hersteller von Primärsystemen
 |===
 
 == License
 
-Copyright 2025 gematik GmbH
+Copyright 2026 gematik GmbH
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+Apache License, Version 2.0
 
-See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License.
+See the link:LICENSE[LICENSE] for the specific language governing permissions and limitations under the License.
 
 == Additional Notes and Disclaimer from gematik GmbH
 
