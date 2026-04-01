@@ -18,9 +18,7 @@ externalDocs:
   url: https://github.com/gematik/api-kim
 servers:
 - url: /ServiceInformation/v1.0/
-  # The URL must be formed as follows:
-  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
-  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
+  # The URL must be formed as described in requirement [A_19524-*], see https://gemspec.gematik.de/docs/gemSpec/gemSpec_FD_KOMLE/latest
 tags:
 - name: ServiceInformation
 
