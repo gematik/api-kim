@@ -720,7 +720,7 @@ Nachfolgend werden weitere Aspekte aufgeführt, welche nicht bereits in anderen 
 
 === Umsetzung der Funktion "E-Mail Weiterleiten"
 
-Das Weiterleiten einer KIM-E-Mail-Nachricht erfordert, dass die Originalnachricht als eigenständiger MIME-Part vom Typ `message/rfc822` (link:https://datatracker.ietf.org/doc/html/rfc2046#section-5.2.1[RFC2046#5.2.1]) in die neu erzeugte Nachricht eingebettet wird. Nur so bleibt die ursprüngliche Nachricht vollständig und unverändert erhalten.
+Bestimmte Fehlerfälle in KIM weisen das Weiterleiten einer KIM-Fehler-E-Mail-Nachricht durch den Nutzer an. Die Weiterleitung einer solchen E-Mail-Nachricht erfordert, dass diese als eigenständiger MIME-Part vom Typ `message/rfc822` (link:https://datatracker.ietf.org/doc/html/rfc2046#section-5.2.1[RFC2046#5.2.1]) in die neu erzeugte "Weiterleitungs"-Nachricht eingebettet wird. Nur so bleibt die ursprüngliche Nachricht = KIM-Fehler-E-Mail-Nachricht vollständig und unverändert erhalten.
 
 *Beispiel des Aufbau einer weitergeleiteten KIM-E-Mail:*
 
