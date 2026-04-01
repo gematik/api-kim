@@ -22,7 +22,7 @@ image:gematik_logo.svg[width=70%]
 
 
 
-= Implementierungsleitfaden KIM für Primärsysteme (ILF KIM)
+= Implementierungsleitfaden KIM für Primärsysteme (ILF KIM PS)
 
 toc::[]
 
@@ -102,7 +102,7 @@ Das sichere Übermittlungsverfahren KIM stellt Nutzern von Primärsystemen die M
 * Spezifische Festlegungen bzgl. sog. "Fachverfahren" oder "payloads" link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[(i.d.R. Dienstkennungen KIM)] gelten als ergänzende Festlegungen. Sie sind *nicht* Bestandteil dieses Leitfadens.
 
 *Empfehlung* +
-Es wird empfohlen, diesen Leitfaden in Verbindung mit der link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[Spezifikation des KIM-Clientmoduls] und des link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/[Basis Implementierungsleitfadens für Primärsysteme] zu betrachten, da u.a. die Anforderungen an Schnittstellen und die Integration in ein Primärsystem darin bedingt, definiert sind.
+Es wird empfohlen, diesen Leitfaden in Verbindung mit der link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/[Spezifikation des KIM-Clientmoduls] und des link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/[Basis Implementierungsleitfadens für Primärsysteme] zu betrachten, da u.a. die Anforderungen an Schnittstellen definiert werden, was Informationsgrundlage zur Integration in ein Primärsystem darstellt.
 |===
 
 
@@ -123,7 +123,7 @@ Für die Nutzung von KIM müssen die folgenden Punkte erfüllt sein:
 
 |3
 |Die Basisdaten der TI-Identität (u.a. Anschrift, Zertifikate) des KIM-Nutzers sind im VZD eingetragen
-|Kartenherausgeber und oder TSP im Auftrag von Verbänden, Kammern, ...
+|Kartenherausgeber und/oder TSP im Auftrag von Verbänden, Kammern, ...
 
 |4
 |Installation, Konfiguration, Betrieb KIM-Clientmodul
@@ -149,7 +149,7 @@ Zur Anbindung an KIM sind folgende Schnittstellen des KIM-Clientmoduls wesentlic
 * *SMTP-Schnittstelle* - Versand von KIM-E-Mail-Nachrichten +
 * *POP3-Schnittstelle* - Abruf von KIM-E-Mail-Nachrichten +
 
-Da die E-Mail-Kommunikation via KIM eine gerichtete Kommunikation zwischen identifiziertem Sender und Empfänger(n) ist, müssen zum Versand von E-Mails über KIM, die KIM-E-Mail-Adressen der Empfänger bekannt sein bzw. können über den Verzeichnisdienst (VZD) der TI ermittelt werden. Die KIM-E-Mail-Adressen können über die LDAP-Schnittstelle des TI-Konnektors (siehe dazu link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Kon/latest/[Spezifikation LDAP-Proxy TI-Konnektor]) ermittelt werden:
+Da die E-Mail-Kommunikation via KIM eine gerichtete Kommunikation zwischen identifiziertem Sender und Empfänger(n) ist, müssen zum Versand von E-Mails über KIM die KIM-E-Mail-Adressen der Empfänger bekannt sein bzw. können über den Verzeichnisdienst (VZD) der TI ermittelt werden. Die KIM-E-Mail-Adressen können über die LDAP-Schnittstelle des TI-Konnektors (siehe dazu link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Kon/latest/[Spezifikation LDAP-Proxy TI-Konnektor]) ermittelt werden:
 
 * *LDAP-Schnittstelle* - Ermittlung und Abruf von Identitätsinformationen und KIM-E-Mail-Adressen aus dem VZD +
 
@@ -183,19 +183,22 @@ Dieses Kapitel beschreibt die wesentlichen, durch ein PS umzusetzenden Anwendung
 
 KIM-E-Mails können ausschließlich durch identifizierte Sender an identifizierte Empfänger übermittelt werden, die gemäß der <<Voraussetzungen>> KIM-E-Mail-Adresse(n) und dazu gehörende Verschlüsselungszertifikat(e) im VZD hinterlegt haben. Die Ermittlung dieser Informationen erfolgt über die LDAP-Schnittstelle des TI-Konnektors (LDAP-Proxy).
 
-* *Verbindungsaufbau & Authentisierung* +
+*Verbindungsaufbau & Authentisierung* +
 
-Für den Verbindungsaufbau zum LDAP-Proxy des TI-Konnektors und dabei stattfindender Authentisierung gelten die Festlegungen gemäß link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/#4.1.1.3[Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)].
+* Für den Verbindungsaufbau zum LDAP-Proxy des TI-Konnektors und dabei stattfindender Authentisierung gelten die Festlegungen gemäß link:https://gemspec.gematik.de/docs/gemILF/gemILF_PS/latest/#4.1.1.3[Implementierungsleitfaden Primärsysteme – Telematikinfrastruktur (TI)].
 
-* *Suche im VZD* +
+*Suche im VZD* +
 
 . Das PS MUSS Empfängerdaten über die LDAP-Schnittstelle des TI-Konnektors ermitteln, siehe dazu: link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_Kon/latest/#4.1.12[Spezifikation LDAP-Proxy TI-Konnektor] +
-. Das PS muss die LDAP `search`-Operation gemäß `[RFC4511#4.5.1]`umsetzen. Diese Suche erfolgt anhand definierter Suchkriterien, den LDAP-Directory-Basisdatensatz-Attributen des VZD, siehe dazu:
+. Das PS muss die LDAP `search`-Operation gemäß `[RFC4511#4.5.1]` umsetzen. Diese Suche erfolgt anhand definierter Suchkriterien, den LDAP-Directory-Basisdatensatz-Attributen des VZD, siehe dazu:
 
 ** link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_VZD/latest[gemSpec_VZD#Tab_VZD_Datenbeschreibung]
 ** link:https://github.com/gematik/api-vzd/blob/main/docs/LDAP_Search.adoc[Beispiele LDAP-VZD-Suche]
 
+. KIM-E-Mail-Nachrichten können nur an Empfänger versendet werden, die über eine gültige KIM-E-Mail-Adresse verfügen. Das PS KANN vor dem Versand einer KIM-E-Mail-Nachricht an einen Empfänger prüfen, ob für diesen eine gültige KIM-E-Mail-Adresse sowie ein Verschlüsselungszertifikat im VZD hinterlegt ist. Ist dies nicht der Fall, DARF die E-Mail NICHT an diesen Empfänger versendet werden. Dies MUSS dem Nutzer mit einer entsprechenden Fehlermeldung kenntlich gemacht werden. Dies Prüfungen werden ebenfalls durch das KIM-Clientmodul durchgeführt und ggf. als Fehlerfall abgebildet (SMTP-Error, KIM-E-Mail-Fehlernachrichten).
+
 . Beim Versand von E-Mail-Daten, die 15 MiB überschreiten, MUSS die durch einen Empfänger im VZD hinterlegte Freigabe zum Empfang großer E-Mails-Datenmengen berücksichtigt werden. Diese Freigabe wird durch ein *[+ (plus)]* hinter der KIM-Version im VZD Attribut *"kimData"* erteilt. Ist diese Freigabe nicht erfolgt, DARF die E-Mail NICHT an diesen Empfänger versendet werden. Dies MUSS dem Nutzer mit einer entsprechenden Fehlermeldung kenntlich gemacht werden.
+
 . Daten im VZD können sich ändern. Das PS MUSS lokal gespeicherte KIM-Adress-Daten regelmäßig mit den Daten im VZD vergleichen und aktuell halten. Lokal gespeicherte KIM-E-Mail-Adresse sollen einmal täglich geprüft und ggf. aktualisiert werden.
 
 
@@ -204,7 +207,7 @@ Für den Verbindungsaufbau zum LDAP-Proxy des TI-Konnektors und dabei stattfinde
 
 Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und deren Übergabe per SMTP an das CM. Das PS trägt die Verantwortung für eine korrekte Nachrichtenstruktur sowie aller Pflicht-Angaben vor dem Versand.
 
-. Das PS MUSS Nachrichten gemäß `[RFC5322]`, `[RFC2045]`, `[RFC2046]`, `[RFC2047]`, `[RFC4021]` erzeugen
+. Das PS MUSS E-Mail-Nachrichten gemäß `[RFC5322]`, `[RFC2045]`, `[RFC2046]`, `[RFC2047]`, `[RFC4021]` erzeugen
 
 . Generell MUSS UTF-8 als Standard-Kodierung verwendet werden +
 .. Beachte u.a. `[RFC2047]`, betrifft bspw. explizit Header-Elemente sowie Dateinamen in Anhängen- Beispiel: Dateiname `Handbuch-ÄÜÖß.pdf`: `Content-Type: application/pdf; name="=?UTF-8?B?SGFuZGJ1Y2gtw4TDnMOWw58ucGRm?="` +
@@ -223,7 +226,7 @@ Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und
 |===
 |Header |Beschreibung / Verbindlichkeit / Format
 
-|`From`, `To` ggf. `Cc`, `Date`, `Message-ID`
+|`From`, `To`, (ggf.) `Cc`, `Date`, `Message-ID`
 |*[Pflicht].* gemäß *[RFC5322]*
 
 |`X-KIM-Sendersystem`
@@ -346,7 +349,7 @@ CM → PS:  221 Bye
 *Authentisierung*
 
 . Das PS MUSS SASL `PLAIN` und/oder `LOGIN` für die SMTP-Authentisierung gemäß *[RFC4616]*, *[RFC4954]* verwenden. +
-. Das PS MUSS die Angabe des SMTP-Benutzernamen in KIM, wie im folgenden beschrieben, ermöglichen. +
+. Das PS MUSS den KIM SMTP-Benutzernamen, wie im folgenden beschrieben, unterstützen. +
 .. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation des KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.3.2.2[gemSpec_CM_KOMLE#3.3.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
 [width="100%",cols="1a"]
@@ -373,7 +376,7 @@ CM → PS:  221 Bye
 *Asynchrone Fehlernachrichten* +
 
 * Fehlernachrichten die beim Versand einer KIM-Nachricht erstellt werden, werden automatisch als neue E-Mail durch das CM erzeugt und an die Absenderadresse gesendet. Erst beim nächsten POP3-Abruf durch das PS können diese sichtbar werden. 
-** Das PS *MUSS* diese E-Mail-Fehlernachrichten anhand des `X-KIM-Fehlermeldung`-Headers erkennen, selektiv abrufen und anzeigen können.
+** Das PS *MUSS* diese E-Mail-Fehlernachrichten anhand des `X-KIM-Fehlermeldung`-Headers erkennen, abrufen und anzeigen können.
 
 
 
@@ -399,8 +402,12 @@ CM → PS:  +OK
           1 <uid-nachricht-1>
           2 <uid-nachricht-2>
           .
+PS → CM:  TOP 1 0
+CM → PS:  +OK (Header von Nachricht 1)
 PS → CM:  TOP 2 0
 CM → PS:  +OK (Header von Nachricht 2)
+PS → CM:  RETR 1
+CM → PS:  +OK (vollständige Nachricht 1, entschlüsselt)
 PS → CM:  RETR 2
 CM → PS:  +OK (vollständige Nachricht 2, entschlüsselt)
 PS → CM:  QUIT
@@ -421,7 +428,7 @@ Getriggert vom PS, ruft das CM KIM-E-Mail-Nachrichten vom KIM-Fachdienst ab, ent
 *Authentisierung*
 
 . Das PS MUSS für die POP3-Authentisierung `USER`+`PASS` gemäß *[RFC1939]* und/oder SASL `PLAIN` gemäß *[RFC4616]* verwenden +
-. Das PS MUSS die Angabe des SMTP-Benutzernamen in KIM, wie im folgenden beschrieben, ermöglichen. +
+. Das PS MUSS den KIM POP3-Benutzernamen, wie im folgenden beschrieben, unterstützen. +
 .. Diesbezüglich gelten spezifische Festlegungen aus der Spezifikation KIM-Clientmodul link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#3.4.2.2[gemSpec_CM_KOMLE#3.4.2.2]. Darin sind ebenfalls Beispiele für Benutzernamen aufgeführt.
 
 [width="100%",cols="1a"]
@@ -720,7 +727,7 @@ Nachfolgend werden weitere Aspekte aufgeführt, welche nicht bereits in anderen 
 
 === Umsetzung der Funktion "E-Mail Weiterleiten"
 
-Bestimmte Fehlerfälle in KIM weisen das Weiterleiten einer KIM-Fehler-E-Mail-Nachricht durch den Nutzer an. Die Weiterleitung einer solchen E-Mail-Nachricht erfordert, dass diese als eigenständiger MIME-Part vom Typ `message/rfc822` (link:https://datatracker.ietf.org/doc/html/rfc2046#section-5.2.1[RFC2046#5.2.1]) in die neu erzeugte "Weiterleitungs"-Nachricht eingebettet wird. Nur so bleibt die ursprüngliche Nachricht = KIM-Fehler-E-Mail-Nachricht vollständig und unverändert erhalten.
+Bestimmte Fehlerfälle in KIM weisen das Weiterleiten einer KIM-E-Mail-Fehlernachrichten durch den Nutzer an. Die Weiterleitung einer solchen E-Mail-Nachricht erfordert, dass diese als eigenständiger MIME-Part vom Typ `message/rfc822` (link:https://datatracker.ietf.org/doc/html/rfc2046#section-5.2.1[RFC2046#5.2.1]) in die neu erzeugte "Weiterleitungs"-Nachricht eingebettet wird. So bleibt die ursprüngliche Nachricht = KIM-E-Mail-Fehlernachrichten vollständig und unverändert erhalten.
 
 *Beispiel des Aufbau einer weitergeleiteten KIM-E-Mail:*
 
