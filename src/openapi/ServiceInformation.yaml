@@ -18,9 +18,7 @@ externalDocs:
   url: https://github.com/gematik/api-kim
 servers:
 - url: /ServiceInformation/v1.0/
-  # The URL must be formed as follows:
-  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml Datei>
-  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <accmgr_service_name> zu finden.
+  # The URL must be formed as described in requirement [A_19524-*], see https://gemspec.gematik.de/docs/gemSpec/gemSpec_FD_KOMLE/latest
 tags:
 - name: ServiceInformation
 
@@ -50,10 +48,10 @@ components:
       properties:
         kimServiceVersion:
           type: string
-          description: Specifies the version of the KIM backend service. There can be more then one Version if compatible, separated by ";".
+          description: Specifies the version of the KIM backend service. There can be more than one compatible version, separated by ";".
         passwordPolicyRegEx:
           type: string
-          description: Specifies the password policy that the AccountManager requires as a regular expression (in java compatible style).
+          description: Specifies the password policy required by the AccountManager as a regular expression in a Java-compatible style.
         passwordPolicyDisplay:
           type: string
           description: Specifies the password policy that the AccountManager requires in text form.

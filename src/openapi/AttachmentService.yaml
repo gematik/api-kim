@@ -8,7 +8,7 @@ info:
   # - change naming of operation identifiers to MailData
   # - change servers url for compatibility
   # - changed Attachment to maildata file
-  # - added head methode to provide file size
+  # - added HEAD method to provide file size
   ### 2.3.3
   # - changed operationId read_Maildata
   ### 2.3.2
@@ -54,9 +54,7 @@ externalDocs:
   url: https://github.com/gematik/api-kim
 servers:
 - url: /attachments/v2.4/
-  # Die URL muss wie folgt gebildet werden:
-  # https://<FQDN gemäß DNS-SD SRV RR>:<Port gemäß DNS-SD SRV RR><Base-path gemäß TXT RR><path gemäß yaml# Datei>
-  # Die SRV und TXT RR sind unter dem Resource Record Bezeichner <kas_service_name> zu finden.
+  # The URL must be formed as described in requirement [A_19524-*], see https://gemspec.gematik.de/docs/gemSpec/gemSpec_FD_KOMLE/latest
 tags:
 - name: MailData
 
@@ -68,50 +66,24 @@ paths:
       summary: Check if the resource is available.
 
       parameters:
-      - name: attachmentId
-        in: path
-        description: Link reference to the encrypted mail data file in the service.
-        required: true
-        schema:
-          type: string
-      - name: recipient
-        in: header
-        description: The recipient's passed email (KIM) address.
-        required: true
-        schema:
-          type: string
-          format: email
+      - $ref: '#/components/parameters/AttachmentId'
+      - $ref: '#/components/parameters/Recipient'
 
       responses:
         200:
-          description: returns the requested HEAD info when resource is available
+          description: Returns the requested HEAD information when the resource is available.
         404:
-          description: Resource not found at the specified link.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
     get:
       tags:
       - MailData
       summary: Download a mail data file
-      description: returns the mail data file encrypted under a share link.
+      description: Returns the encrypted mail data requested via sharedLink.
       operationId: readMailData
 
       parameters:
-      - name: attachmentId
-        in: path
-        description: Link reference to the encrypted mail data file in the service.
-        required: true
-        schema:
-          type: string
-      - name: recipient
-        in: header
-        description: The recipient's passed email (KIM) address.
-        required: true
-        schema:
-          type: string
-          format: email
+      - $ref: '#/components/parameters/AttachmentId'
+      - $ref: '#/components/parameters/Recipient'
 
       responses:
         200:
@@ -131,11 +103,7 @@ paths:
               schema:
                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
         404:
-          description: Resource not found at the specified link.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+          $ref: 'CommonSchemas.yaml#/components/responses/404'
         429:
           description: Downloaded mail data file too many times.
           content:
@@ -149,7 +117,7 @@ paths:
       tags:
       - MailData
       summary: Delete mail data file from KAS
-      description: Deletion of mail data file stored on the KAS, uri corresponds to sharedLink from addMailData.
+      description: Deletes mail data stored on the KAS. The URI corresponds to the sharedLink returned by addMailData.
       operationId: deleteMailData
 
       security:
@@ -157,12 +125,7 @@ paths:
         # Authentication takes place with username/password from the mail account of the data creator/sender.
 
       parameters:
-      - name: attachmentId
-        in: path
-        description: Link reference to the encrypted mail data file in the service.
-        required: true
-        schema:
-          type: string
+      - $ref: '#/components/parameters/AttachmentId'
 
       responses:
           200:
@@ -172,11 +135,7 @@ paths:
           401:
             $ref: 'CommonSchemas.yaml#/components/responses/401'
           404:
-            description: Resource not found at the specified link.
-            content:
-             application/json; charset=utf-8:
-               schema:
-                 $ref: 'CommonSchemas.yaml#/components/schemas/Error'
+            $ref: 'CommonSchemas.yaml#/components/responses/404'
           500:
             $ref: 'CommonSchemas.yaml#/components/responses/500'
 
@@ -185,7 +144,7 @@ paths:
       tags:
       - MailData
       summary: Add a mail data file
-      description: An encrypted mail data file is added under a newly created sharing link.
+      description: Adds an encrypted mail data under a newly created sharedLink.
       operationId: addMailData
 
       security:
@@ -215,8 +174,8 @@ paths:
                 recipients:
                     type: array
                     description: List of all recipients (KIM addresses) of the KIM email recipients;
-                                 Exactly one address is specified per form part and the form part is
-                                 specified multiple times (exploded=true).
+                                 Exactly one address is specified per form part, and the form part is
+                                 repeated multiple times (exploded=true).
                                 # curl e.g.
                                 # -F 'recipients=user1@example.kim.telematik' \
                                 # -F 'recipients=user2@example.kim.telematik' \
@@ -225,8 +184,12 @@ paths:
                       format: email
                 expires:
                     type: string
+                    example: "Tue, 01 Apr 2026 12:00:00 +0000"
                     description: Time at which the mail data file must be deleted.
-                                 (Format RFC5322 date-time)
+                                 Expected as an RFC 5322 date-time string, for example
+                                 "Tue, 01 Apr 2026 12:00:00 +0000".
+                                 A formal validation pattern is not enforced here to
+                                 preserve compatibility with existing clients.
                 attachment:
                    type: string
                    format: binary
@@ -284,6 +247,24 @@ paths:
                   $ref: 'CommonSchemas.yaml#/components/schemas/Error'
 
 components:
+  parameters:
+    AttachmentId:
+      name: attachmentId
+      in: path
+      description: Reference to the encrypted mail data in the service.
+      required: true
+      schema:
+        type: string
+
+    Recipient:
+      name: recipient
+      in: header
+      description: The recipient's email address (KIM address).
+      required: true
+      schema:
+        type: string
+        format: email
+
   securitySchemes:
     KIMBasicAuth:
       $ref: 'CommonSchemas.yaml#/components/securitySchemes/KIMBasicAuth'
