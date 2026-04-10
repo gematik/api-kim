@@ -125,6 +125,12 @@ paths:
           $ref: 'CommonSchemas.yaml#/components/responses/401'
           # Authentication via referenceID/iniPassword and signature of the operation failed.
           # This error also occurs if the referenceID does not match the signature's AUT certificate (cert) or was not specified.
+        403:
+          description: Initial password must be changed before this operation is allowed; it was not changed as required (see A_21385-*).
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: 'CommonSchemas.yaml#/components/schemas/Error'       
         409:
           description: An account with the same email address already exists.
           content:
