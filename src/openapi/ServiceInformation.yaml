@@ -48,7 +48,7 @@ components:
       properties:
         kimServiceVersion:
           type: string
-          description: Specifies the version of the KIM backend service. There can be more than one compatible version, separated by ";".
+          description: Specifies the KIM release version of the service according to gematik specification [gemSpec_OM]. There can be more than one compatible version, separated by ";".
         passwordPolicyRegEx:
           type: string
           description: Specifies the password policy required by the AccountManager as a regular expression in a Java-compatible style.
