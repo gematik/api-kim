@@ -207,10 +207,30 @@ KIM-E-Mails können ausschließlich durch identifizierte Sender an identifiziert
 
 Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und deren Übergabe per SMTP an das CM. Das PS trägt die Verantwortung für eine korrekte Nachrichtenstruktur sowie aller Pflicht-Angaben vor dem Versand.
 
-. Das PS MUSS E-Mail-Nachrichten gemäß `[RFC5322]`, `[RFC2045]`, `[RFC2046]`, `[RFC2047]`, `[RFC4021]` erzeugen
+. Das PS MUSS E-Mail-Nachrichten gemäß `[RFC5322]`, `[RFC2045]`, `[RFC2046]`, `[RFC4021]` erzeugen
 
-. Generell MUSS UTF-8 als Standard-Kodierung verwendet werden +
-.. Beachte u.a. `[RFC2047]`, betrifft bspw. explizit Header-Elemente sowie Dateinamen in Anhängen- Beispiel: Dateiname `Handbuch-ÄÜÖß.pdf`: `Content-Type: application/pdf; name="=?UTF-8?B?SGFuZGJ1Y2gtw4TDnMOWw58ucGRm?="` +
+. Generell MUSS UTF-8 als Standard-Kodierung verwendet werden
+
+.. Für *definierte, i.d.R. strukturierte Header-Felder* (z. B. `Subject`, `From`) gilt `[RFC2047]`. +
+.. Für *MIME-Parameter* wie `name` und `filename` ist `[RFC2047]` *nicht* vorgesehen (vgl. RFC 2047 §5). Systeme verhalten sich diesbezüglich jedoch meist robust. Stattdessen MÜSSEN Werte der Parameter gemäß `[RFC2231]` als erweiterte Parameter-Werte kodiert werden.
++
+   *Beispiel:* Dateiname `Handbuch-ÄÜÖß.pdf`
++
+[source]
+----
+Content-Disposition: attachment;
+  filename*=utf-8''Handbuch-%C3%84%C3%9C%C3%96%C3%9F.pdf
+----
++
+Für Systeme, die `[RFC2231]` nicht vollständig unterstützen (Legacy-Kompatibilität), KANN zusätzlich ein ASCII-Fallback-Parameter ohne Erweiterungssyntax angegeben werden.
++
+[source]
+----
+Content-Disposition: attachment;
+  filename="Handbuch-AEUEOESS.pdf";
+  filename*=utf-8''Handbuch-%C3%84%C3%9C%C3%96%C3%9F.pdf
+----
++
 
 . Das Header-Element `Message-ID` ist für KIM-Nachrichten *obligatorisch*. Der Wert MUSS durch das PS gemäß *[RFC5322#3.6.4]* eindeutig erzeugt werden, *darf nicht wiederverwendet werden* und darf *keine datenschutzrelevanten Informationen*, wie bspw. interne FQDNs oder personenbezogene Daten enthalten. Empfohlen wird die Verwendung einer UUID nach *[RFC4122]*: `Message-ID: <\550e8400-e29b-41d4-a716-446655440000@kim.local>` +
 
