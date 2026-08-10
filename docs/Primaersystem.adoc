@@ -211,7 +211,7 @@ Das PS ist verantwortlich für die Erstellung RFC-konformer MIME-Nachrichten und
 
 . Es sind Festlegungen entsprechend "A_XXXXX – Allgemeine Anforderungen an Zeichen- und Tranfer-Koderierung generierter MIME-Entitäten" [gemSpec_CM_KOMLE] zu beachten, wesentlich daraus:
 
-.. Generell MUSS UTF-8 als Zeichenkodierung verwendet werden
+.. Für textuelle Werte MUSS generell UTF-8 als Zeichenkodierung verwendet werden
 .. Für Nicht-ASCII-Text in Header-Elementen MÜSSEN die Kodierungsmechanismen gemäß `[RFC2047]` verwendet werden +
 .. Für Nicht-ASCII-Zeichen und lange Werte in MIME-Parametern (bspw. name="..." oder filename="...") MÜSSEN die Kodierungs- sowie Fortsetzungsmechanismen gemäß `[RFC 2231]` verwendet werden.
 +
