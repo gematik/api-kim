@@ -521,8 +521,11 @@ components:
         commonName:
           type: string
           writeOnly: true
-          description: Included in the certificate attribute cn as <commonName> + "#CM".
-                       The certificate is used as a TLS client certificate when connecting to the KIM services.
+          description: Common Name value for the certificate subject. The value is inserted into
+                       the subject commonName attribute (OID 2.5.4.3); it is not a distinguished
+                       name string and therefore MUST NOT include the attribute type prefix "CN=".
+                       If the value does not end with the suffix "#CM", the centralized PMS (PKI-Management-System) will append this suffix
+                       automatically.
         certPassword:
            # base64 encoded password for the PKCS#12 container in which the certificate is transported.
            # If no certPassword is specified, then the PKCS#12 container will not be encrypted.
