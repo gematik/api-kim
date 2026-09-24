@@ -558,7 +558,9 @@ Entschlüsselte Nachrichten enthalten spezifische X-KIM-Header, welche konkrete 
 
 .. (optional) link:https://fachportal.gematik.de/service/dienstkennung-kim-kom-le/[`X-KIM-Dienstkennung`]: Kategorisierung der Nachricht, z.B. `eEB`, `eRezept;Rezeptanforderung`, ...; *wichtig* für spezifische Verarbeitung, Kategorisierung, Anzeige, ... einer Nachricht
 
-.. link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_28582[`X-KIM-Auth`] (SOLL NICHT als Abbruchkriterium verwendet werden): Ein JWT zur 
+.. link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_28582[`X-KIM-Auth`]: Ein JWT/JWS zur Anzeige von Signatur-Informationen
+... MUSS gemäß [gemSpec_CM_KOMLE#A_30326-*] vor der Verarbeitung rekonstruiert werden
+... DARF NICHT als Abbruchkriterium verwendet werden
 ... Anzeige von Signatur-Informationen anhand des link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_PKI/latest/[AUT-Zertifikats] aus `x5c`-Claim 
 ... (optional) Zertifikatsprüfung anhand des link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_PKI/latest/[AUT-Zertifikats] aus `x5c`-Claim 
 ... (optional) Absenderverifikation über `sub`-Claim (Absenderadresse)
@@ -870,7 +872,7 @@ Die folgende Tabelle gibt eine vollständige Übersicht aller KIM-spezifischen H
 
 |`X-KIM-Auth`
 |Nein
-|JSON Web Token (JWT) gem. *[RFC7519]* als Authentizitätsnachweis der KIM-E-Mail-Nachricht. Vom CM beim Senden erzeugt und in den inneren Header eingefügt, siehe link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_28582[`Spezifikation X-KIM-Auth`]
+|Bearer Token (JWT/JWS) als Authentizitätsnachweis der KIM-E-Mail-Nachricht. Vom CM beim Senden erzeugt als Header in Nachricht eingefügt, siehe link:https://gemspec.gematik.de/docs/gemSpec/gemSpec_CM_KOMLE/latest/#A_28582[`Spezifikation X-KIM-Auth`]. Muss vor der Verarbeitung gemäß [gemSpec_CM_KOMLE#A_30326-*] rekonstruiert werden.
 
 |`X-KIM-Fehlermeldung`
 |Nein
