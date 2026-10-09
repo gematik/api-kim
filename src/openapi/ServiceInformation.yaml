@@ -49,7 +49,7 @@ components:
         kimServiceVersion:
           type: string
           description: Specifies the KIM release version(s) of the service according to gematik specification [gemSpec_OM]. Multiple versions MAY be provided as a semicolon-separated (";") list.
-          example: "1.5.2;1.5.5-1"
+          example: "1.5.2;1.5.5"
         passwordPolicyRegEx:
           type: string
           description: Specifies the password policy required by the AccountManager as a regular expression in a Java-compatible style.
