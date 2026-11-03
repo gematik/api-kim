@@ -41,7 +41,7 @@ toc::[]
 |link:https://github.com/gematik/api-kim/tree/ILF_1.0.1[1.0.1]
 | Korrekturen & Bereinigung von Inhalten bezüglich der aktuell entfallenen Anwendungskennzeichen und `appTags`
 
-|02.11.2026
+|03.11.2026
 |link:https://github.com/gematik/api-kim/tree/ILF_1.0.2[1.0.2]
 | Einarbeitung Feedback
 
@@ -391,15 +391,19 @@ CM → PS:  221 Bye
 * Bei Integration in bestehende Mail-Systeme kann der Delimiter `:` zwischen Hostname und Port (z. B. `hrst_domain.kim.telematik:465`) zu Problemen führen. Das CM unterstützt alternative Delimitervarianten, sofern die semantische Abgrenzung der Bestandteile gemäß *[RFC1123, RFC2822]* erhalten bleibt.
 |===
 
-*Zustellbestätigungen -  Delivery Status Notification (DSN)* +
+*Delivery Status Notification (DSN)* +
 
-* Das PS KANN per `RCPT TO:<...> NOTIFY=SUCCESS,FAILURE,DELAY` DSN-Rückmeldungen gemäß *[RFC3461]* anfordern. +
-** DSN-E-Mail-Nachrichten werden vom KIM-Fachdienst generiert und durch diesen an den Absender zurückgesendet.
+* Das PS KANN per `RCPT TO:<...> NOTIFY=SUCCESS,FAILURE,DELAY` Rückmeldungen vom Mailserver gemäß *[RFC3461]* anfordern. +
+** DSN ist eine System-Rückmeldung des Mailservers über die Zustellung und wird vom KIM-Fachdienst generiert, durch diesen an den Absender zurückgesendet.
 
-*Lesebestätigung - Message Disposition Notification (MDN)* +
+*Message Disposition Notification (MDN)* +
 
-* Das PS KANN u.a. per `Disposition-Notification-To`-Header gemäß *[RFC8098]* eine Lesebestätigung vom empfangenden E-Mail-Client anfordern. +
-** _Beachte_: Es kann nicht garantiert werden, dass der empfangende E-Mail-Client wie angefordert, mit einer MDN darauf antwortet.
+* Das PS KANN u.a. per `Disposition-Notification-To`-Header gemäß *[RFC8098]* eine Bestätigung vom empfangenden E-Mail-Client anfordern. +
+** MDN ist eine optionale Empfänger-Rückmeldung über die Verarbeitung durch den E-Mail-Client der die E-Mail-Nachricht abgerufen hat (bspw. "displayed", "deleted", ...). 
+** _Beachte_: +
+*** Es kann nicht garantiert werden, dass der empfangende E-Mail-Client wie angefordert, mit einer MDN darauf antwortet. 
+*** MDN ist im Kontext dezidierter Fachverfahren ggf. **verpflichtend**. 
+*** Die MDN ist nur im erweiterten Sinne als "Lesebestätigung" zu verstehen.
 
 *Asynchrone Fehlernachrichten* +
 
