@@ -33,7 +33,7 @@ image:https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubuser
 .. link:src/openapi/[*OpenAPI Spezifikationen von Schnittstellen am KIM Fachdienst*], zur Implementierung von Schnittstellen im KIM Fachdienst, sowie Anbindung des KIM-Clientmodul an diese Schnittstellen
 
 === Geltungsbereich ===
-Die in diesem Dokument formulierten Anforderungen sind informativ für Primärsysteme, die am Produktivbetrieb der Telematikinfrastruktur (TI) teilnehmen. Der Gültigkeitszeitraum der vorliegenden Version und deren Anwendung in Zulassungsverfahren wird durch die gematik GmbH in gesonderten Dokumenten (z. B. gemPTV_ATV_Festlegungen, Produkttypsteckbrief, Leistungsbeschreibung) festgelegt und bekannt gegeben.
+Die in diesem Dokument formulierten Anforderungen richten sich an Primärsysteme, die am Produktivbetrieb der Telematikinfrastruktur (TI) teilnehmen sowie KIM integrieren. Der Gültigkeitszeitraum der vorliegenden Version und deren Anwendung in Zulassungsverfahren wird durch die gematik GmbH in gesonderten Dokumenten (z. B. gemPTV_ATV_Festlegungen, Produkttypsteckbrief, Leistungsbeschreibung) festgelegt und bekannt gegeben.
 
 == Systemarchitektur
 
